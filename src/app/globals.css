@@ -1,26 +1,242 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Fonds très clairs et fonctionnels (E-commerce standard) */
+  --background: oklch(0.995 0 0); 
+  --foreground: oklch(0.15 0.02 260); /* Texte presque noir très lisible */
+  
+  --card: oklch(1 0 0); /* Pur blanc */
+  --card-foreground: oklch(0.15 0.02 260);
+  
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.02 260);
+  
+  /* Primary : Bleu foncé technique / institutionnel */
+  --primary: oklch(0.25 0.08 260); 
+  --primary-foreground: oklch(0.98 0 0); 
+  
+  /* Secondary : Gris très pâle pour les zones de fond (Headers top, sidebars) */
+  --secondary: oklch(0.96 0.01 260); 
+  --secondary-foreground: oklch(0.3 0.05 260); 
+  
+  --muted: oklch(0.94 0.01 260);
+  --muted-foreground: oklch(0.5 0.02 260);
+  
+  /* Accent : Orange/Rouge de conversion (Type Signals.fr / Prozon) */
+  --accent: oklch(0.65 0.22 35);
+  --accent-foreground: oklch(1 0 0);
+  
+  --destructive: oklch(0.6 0.2 20);
+  --destructive-foreground: oklch(0.98 0 0);
+  
+  --border: oklch(0.92 0.01 260); /* Bordures plus douces bleutées */
+  --input: oklch(0.92 0.01 260);
+  --ring: oklch(0.35 0.1 260); /* Anneau de focus saphir */
+  
+  --radius: 0.75rem; /* Cartes plus rondes et douces (12px) */
+}
+
+.dark {
+  --background: oklch(0.12 0.02 260); /* Ardoise foncée, pas noir pur */
+  --foreground: oklch(0.98 0.01 260); 
+  
+  --card: oklch(0.16 0.03 260);
+  --card-foreground: oklch(0.98 0.01 260);
+  
+  --popover: oklch(0.16 0.03 260);
+  --popover-foreground: oklch(0.98 0.01 260);
+  
+  --primary: oklch(0.85 0.1 260); /* Bleu Saphir clair sur fond sombre */
+  --primary-foreground: oklch(0.15 0.05 260); 
+  
+  --secondary: oklch(0.2 0.04 260);
+  --secondary-foreground: oklch(0.98 0.01 260);
+  
+  --muted: oklch(0.2 0.04 260);
+  --muted-foreground: oklch(0.65 0.02 260);
+  
+  --accent: oklch(0.7 0.15 65); /* Ambre reste visible */
+  --accent-foreground: oklch(0.12 0.02 260);
+  
+  --destructive: oklch(0.4 0.2 20);
+  --destructive-foreground: oklch(0.98 0 0);
+  
+  --border: oklch(0.25 0.03 260);
+  --input: oklch(0.25 0.03 260);
+  --ring: oklch(0.85 0.1 260);
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-background/70 backdrop-blur-xl border border-border/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
+  .premium-shadow {
+    @apply shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.12)] transition-shadow duration-500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  /* Heading font utility */
+  .font-heading {
+    font-family: var(--font-heading), Georgia, serif;
+  }
+
+  /* Road marking stripe decoration */
+  .road-stripe {
+    position: relative;
+  }
+  .road-stripe::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-accent) 0px,
+      var(--color-accent) 20px,
+      transparent 20px,
+      transparent 30px
+    );
+    border-radius: 2px;
+  }
+
+  /* Diagonal section divider */
+  .section-divider {
+    position: relative;
+  }
+  .section-divider::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: inherit;
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  /* Accent line for section titles */
+  .accent-line {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+  .accent-line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    bottom: 0.15em;
+    width: 4px;
+    background: var(--color-accent);
+    border-radius: 2px;
+  }
+
+  /* Subtle grid pattern background */
+  .bg-grid {
+    background-image:
+      linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    background-position: center;
+  }
+
+  /* Button fill animation */
+  .btn-fill {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .btn-fill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+  }
+  .btn-fill:hover::before {
+    transform: translateX(0);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-heading: var(--font-heading), Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
   }
-}
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    scroll-behavior: smooth;
+    @apply antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Mobile touch improvements */
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Ensure minimum tap target size on mobile */
+  @media (pointer: coarse) {
+    button,
+    a,
+    [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    /* Exception for inline text links and small badges */
+    p a,
+    li a,
+    span a,
+    nav a {
+      min-height: auto;
+      min-width: auto;
+      padding-block: 0.5rem;
+    }
+  }
 }
