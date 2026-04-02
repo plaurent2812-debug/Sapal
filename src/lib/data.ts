@@ -48,6 +48,7 @@ export async function getVariantsByProduct(productId: string): Promise<ClientVar
 export interface ClientProduct {
   id: string
   categoryId: string
+  categorySlug?: string
   name: string
   slug: string
   description: string
@@ -55,12 +56,17 @@ export interface ClientProduct {
   imageUrl: string
   price: number
   reference: string
+  supplier?: string
+  procitySheet?: string
+  procityFamily?: string
+  procityType?: string
 }
 
-export function toClientProduct(p: Product): ClientProduct {
+export function toClientProduct(p: Product, categorySlug?: string): ClientProduct {
   return {
     id: p.id,
     categoryId: p.category_id,
+    categorySlug,
     name: p.name,
     slug: p.slug,
     description: p.description,
@@ -68,6 +74,10 @@ export function toClientProduct(p: Product): ClientProduct {
     imageUrl: p.image_url,
     price: Number(p.price) || 0,
     reference: p.reference || '',
+    supplier: p.supplier ?? undefined,
+    procitySheet: p.procity_sheet ?? undefined,
+    procityFamily: p.procity_family ?? undefined,
+    procityType: p.procity_type ?? undefined,
   }
 }
 
@@ -123,7 +133,7 @@ export async function getProductsByCategory(categoryId: string): Promise<ClientP
     .order('name')
 
   if (error) throw error
-  return (data ?? []).map(toClientProduct)
+  return (data ?? []).map(p => toClientProduct(p))
 }
 
 export async function getAllProducts(): Promise<ClientProduct[]> {
@@ -134,7 +144,7 @@ export async function getAllProducts(): Promise<ClientProduct[]> {
     .order('name')
 
   if (error) throw error
-  return (data ?? []).map(toClientProduct)
+  return (data ?? []).map(p => toClientProduct(p))
 }
 
 export async function getProductsCount(): Promise<number> {
@@ -157,7 +167,7 @@ export async function getFeaturedProducts(limit: number = 4): Promise<ClientProd
     .limit(limit)
 
   if (error) throw error
-  return (data ?? []).map(toClientProduct)
+  return (data ?? []).map(p => toClientProduct(p))
 }
 
 export async function getProductBySlug(slug: string): Promise<ClientProduct | null> {
@@ -182,7 +192,7 @@ export async function getRelatedProducts(categoryId: string, excludeId: string, 
     .limit(limit)
 
   if (error) throw error
-  return (data ?? []).map(toClientProduct)
+  return (data ?? []).map(p => toClientProduct(p))
 }
 
 export interface SearchFilters {
@@ -206,7 +216,7 @@ export async function searchProducts(query: string, filters?: SearchFilters): Pr
       max_results: 50,
     })
     if (error) throw error
-    let results = (data ?? []).map(toClientProduct)
+    let results = (data ?? []).map((p: Product) => toClientProduct(p))
     // Appliquer le tri côté client si demandé
     const sort = filters?.sort || 'name-asc'
     if (sort !== 'name-asc') {
@@ -263,7 +273,7 @@ export async function searchProducts(query: string, filters?: SearchFilters): Pr
   const { data, error } = await q
 
   if (error) throw error
-  return (data ?? []).map(toClientProduct)
+  return (data ?? []).map(p => toClientProduct(p))
 }
 
 // ---------- Recherche fuzzy (autocomplete) ----------
@@ -341,4 +351,18 @@ export async function getOptionsByProduct(productId: string): Promise<ProductOpt
     product: toClientProduct(p),
     variants: variantsByProduct.get(p.id) ?? [],
   }))
+}
+
+export async function getProcityProducts(): Promise<ClientProduct[]> {
+  const supabase = createBrowserClient()
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, categories(slug)')
+    .eq('supplier', 'procity')
+    .order('name')
+
+  if (error) throw error
+  return (data ?? []).map((p: Product & { categories?: { slug: string } }) =>
+    toClientProduct(p, p.categories?.slug)
+  )
 }

@@ -49,6 +49,10 @@ export interface ProductRow {
   price: number
   reference: string
   supplier_url: string
+  supplier: string | null
+  procity_sheet: string | null
+  procity_family: string | null
+  procity_type: string | null
   created_at: string
 }
 
