@@ -5,6 +5,9 @@ import { ProductCard } from "@/components/catalogue/product-card"
 import type { ClientProduct } from "@/lib/data"
 import { ChevronDown } from "lucide-react"
 
+const ALL_FAMILIES = "Toutes"
+const ALL_TYPES = "Tous"
+
 const SHEETS = [
   "MOBILIER URBAIN",
   "AIRES DE JEUX",
@@ -20,8 +23,17 @@ interface Props {
 
 export function ProcityCatalogueClient({ products }: Props) {
   const [activeSheet, setActiveSheet] = useState<Sheet>("MOBILIER URBAIN")
-  const [activeFamily, setActiveFamily] = useState<string>("Toutes")
-  const [activeType, setActiveType] = useState<string>("Tous")
+  const [activeFamily, setActiveFamily] = useState<string>(ALL_FAMILIES)
+  const [activeType, setActiveType] = useState<string>(ALL_TYPES)
+
+  // Comptages par onglet
+  const sheetCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const p of products) {
+      if (p.procitySheet) counts[p.procitySheet] = (counts[p.procitySheet] ?? 0) + 1
+    }
+    return counts
+  }, [products])
 
   // Produits de l'onglet actif
   const sheetProducts = useMemo(
@@ -32,34 +44,34 @@ export function ProcityCatalogueClient({ products }: Props) {
   // Familles disponibles pour l'onglet actif
   const families = useMemo(() => {
     const set = new Set(sheetProducts.map((p) => p.procityFamily).filter(Boolean) as string[])
-    return ["Toutes", ...Array.from(set).sort()]
+    return [ALL_FAMILIES, ...Array.from(set).sort()]
   }, [sheetProducts])
 
   // Types disponibles pour la famille active
   const types = useMemo(() => {
-    const source = activeFamily === "Toutes" ? sheetProducts : sheetProducts.filter((p) => p.procityFamily === activeFamily)
+    const source = activeFamily === ALL_FAMILIES ? sheetProducts : sheetProducts.filter((p) => p.procityFamily === activeFamily)
     const set = new Set(source.map((p) => p.procityType).filter(Boolean) as string[])
-    return ["Tous", ...Array.from(set).sort()]
+    return [ALL_TYPES, ...Array.from(set).sort()]
   }, [sheetProducts, activeFamily])
 
   // Produits filtrés finaux
   const filtered = useMemo(() => {
     return sheetProducts.filter((p) => {
-      if (activeFamily !== "Toutes" && p.procityFamily !== activeFamily) return false
-      if (activeType !== "Tous" && p.procityType !== activeType) return false
+      if (activeFamily !== ALL_FAMILIES && p.procityFamily !== activeFamily) return false
+      if (activeType !== ALL_TYPES && p.procityType !== activeType) return false
       return true
     })
   }, [sheetProducts, activeFamily, activeType])
 
   function handleSheetChange(sheet: Sheet) {
     setActiveSheet(sheet)
-    setActiveFamily("Toutes")
-    setActiveType("Tous")
+    setActiveFamily(ALL_FAMILIES)
+    setActiveType(ALL_TYPES)
   }
 
   function handleFamilyChange(family: string) {
     setActiveFamily(family)
-    setActiveType("Tous")
+    setActiveType(ALL_TYPES)
   }
 
   return (
@@ -67,7 +79,7 @@ export function ProcityCatalogueClient({ products }: Props) {
       {/* Onglets principaux */}
       <div className="flex flex-wrap gap-2 mb-8 border-b border-border/40 pb-1">
         {SHEETS.map((sheet) => {
-          const count = products.filter((p) => p.procitySheet === sheet).length
+          const count = sheetCounts[sheet] ?? 0
           return (
             <button
               key={sheet}
@@ -93,11 +105,12 @@ export function ProcityCatalogueClient({ products }: Props) {
       <div className="flex flex-wrap gap-4 mb-8">
         {/* Dropdown Catégorie */}
         <div className="relative">
-          <label className="block text-[10px] uppercase font-bold text-muted-foreground tracking-wider mb-1.5">
+          <label htmlFor="filter-family" className="block text-[10px] uppercase font-bold text-muted-foreground tracking-wider mb-1.5">
             Catégorie
           </label>
           <div className="relative">
             <select
+              id="filter-family"
               value={activeFamily}
               onChange={(e) => handleFamilyChange(e.target.value)}
               className="appearance-none bg-white border border-border/60 rounded-lg px-4 py-2.5 pr-9 text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent cursor-pointer min-w-[220px]"
@@ -114,11 +127,12 @@ export function ProcityCatalogueClient({ products }: Props) {
 
         {/* Dropdown Type de produit */}
         <div className="relative">
-          <label className="block text-[10px] uppercase font-bold text-muted-foreground tracking-wider mb-1.5">
+          <label htmlFor="filter-type" className="block text-[10px] uppercase font-bold text-muted-foreground tracking-wider mb-1.5">
             Type de produit
           </label>
           <div className="relative">
             <select
+              id="filter-type"
               value={activeType}
               onChange={(e) => setActiveType(e.target.value)}
               disabled={types.length <= 1}
@@ -147,7 +161,7 @@ export function ProcityCatalogueClient({ products }: Props) {
         <div className="text-center py-20 text-muted-foreground">
           <p className="text-lg font-medium mb-2">Aucun produit trouvé pour cette sélection.</p>
           <button
-            onClick={() => { setActiveFamily("Toutes"); setActiveType("Tous") }}
+            onClick={() => { setActiveFamily(ALL_FAMILIES); setActiveType(ALL_TYPES) }}
             className="text-accent hover:underline text-sm cursor-pointer"
           >
             Réinitialiser les filtres
