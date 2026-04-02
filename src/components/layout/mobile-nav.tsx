@@ -6,6 +6,7 @@ import { Menu, X, Phone, Mail, ChevronRight } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/catalogue", label: "Tous nos produits" },
+  { href: "/catalogue/procity", label: "Catalogue ProCity" },
   { href: "/catalogue/signalisation", label: "Signalisation" },
   { href: "/catalogue/mobilier-urbain", label: "Mobilier Urbain" },
   { href: "/catalogue/amenagement-securite", label: "Aménagement & Sécurité" },
