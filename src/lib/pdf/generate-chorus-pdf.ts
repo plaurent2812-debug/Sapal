@@ -43,10 +43,12 @@ export interface ChorusInvoiceData {
 
 // ---------- Helpers ----------
 
-/** Format a number as French currency: 1 234,56 EUR */
+/** Format a number as French currency: 1 234,56 € */
 function formatEUR(value: number): string {
   return value
     .toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    .replace(/\u202f/g, ' ')  // jsPDF ne supporte pas l'espace insécable (U+202F)
+    .replace(/\u00a0/g, ' ')  // ni le nbsp (U+00A0)
     .concat(' \u20ac')
 }
 

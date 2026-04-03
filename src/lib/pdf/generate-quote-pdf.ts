@@ -26,6 +26,8 @@ export interface QuotePDFData {
 function formatEUR(value: number): string {
   return value
     .toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    .replace(/\u202f/g, ' ')
+    .replace(/\u00a0/g, ' ')
     .concat(' €')
 }
 
