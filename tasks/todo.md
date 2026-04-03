@@ -128,6 +128,14 @@
 
 ---
 
+## Fait (03/04/2026 — Création devis admin enrichie)
+- [x] Page `/admin/devis/nouveau` — toggle "Client existant / Saisie manuelle" avec dropdown des clients fetchés depuis `/api/clients`
+- [x] Auto-remplissage entity/email/phone depuis le profil client sélectionné + stockage `user_id`
+- [x] Sélecteur "Canal d'origine" (admin/site/telephone) — sauvegardé dans `quotes.source`
+- [x] Checkbox "Envoyer directement au client" — passe le statut à `sent` via `/api/quotes/[id]/send`
+- [x] `unit_price` sauvegardé sur `quote_items` dès la création admin
+- [x] API `POST /api/quotes/[id]/send` — génère PDF, envoie email Resend avec pièce jointe, met à jour statut `sent`, notif Telegram
+
 ## À faire
 - [ ] **Déployer sur Vercel** — push git + lier au projet Vercel + configurer webhooks Supabase
 - [ ] **Assigner les fournisseurs** — renseigner les fournisseurs dans /admin/fournisseurs + assigner supplier_id aux produits

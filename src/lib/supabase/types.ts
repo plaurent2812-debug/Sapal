@@ -67,6 +67,7 @@ export interface QuoteRow {
   message: string | null
   items: QuoteItemPayload[]
   status: 'pending' | 'sent' | 'accepted' | 'rejected'
+  source: 'site' | 'admin' | 'telephone'
   user_id: string | null
   created_at: string
 }
@@ -134,6 +135,7 @@ export interface OrderRow {
   user_id: string
   order_number: string
   status: OrderStatus
+  source: 'site' | 'admin' | 'telephone'
   total_ht: number
   total_ttc: number
   pennylane_invoice_id: string | null

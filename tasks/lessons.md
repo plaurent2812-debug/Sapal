@@ -8,6 +8,8 @@
 | Webhooks inutilisables en dev local | Nécessitent URL publique | Préférer logique côté application (API routes). Webhooks = optionnel post-déploiement |
 | RLS confuses quand beaucoup de rôles | Policies empilées sans vision globale | Toujours faire un tableau rôle × table × permission AVANT d'écrire les policies |
 | user_metadata vs app_metadata pour le rôle | Supabase stocke dans app_metadata via admin API, user_metadata via signup | Vérifier les deux dans le middleware avec fallback chain |
+| Login mouline indéfiniment après déploiement Vercel | Client navigateur utilisait `createClient` de `@supabase/supabase-js` (localStorage) alors que le middleware utilise `@supabase/ssr` (cookies) → session invisible pour le middleware → boucle de redirection | **TOUJOURS** utiliser `createBrowserClient` de `@supabase/ssr` côté navigateur quand le middleware utilise `@supabase/ssr`. Ne jamais mixer les deux systèmes de stockage de session |
+| RLS policies retournent 0 résultats au lieu de données | Les policies utilisant `EXISTS (SELECT FROM auth.users WHERE raw_user_meta_data->>'role'...)` échouent silencieusement avec le client SSR | **TOUJOURS** utiliser `auth.jwt() -> 'user_metadata' ->> 'role'` dans les policies RLS, jamais de subquery sur `auth.users`. La lecture directe du JWT est plus fiable et plus performante |
 
 ## 28/03/2026
 

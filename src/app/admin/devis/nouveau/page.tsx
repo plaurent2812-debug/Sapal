@@ -19,7 +19,12 @@ import {
   Mail,
   Phone,
   FileText,
+  Users,
+  ChevronDown,
+  Radio,
+  Send,
 } from 'lucide-react'
+import type { ClientProfileRow } from '@/lib/supabase/types'
 
 interface Product {
   id: string
@@ -33,17 +38,37 @@ interface QuoteLineItem {
   quantity: number
 }
 
+interface ClientWithEmail extends ClientProfileRow {
+  email: string
+}
+
+type ClientMode = 'existing' | 'manual'
+type QuoteSource = 'site' | 'admin' | 'telephone'
+
 export default function NouveauDevisPage() {
   const router = useRouter()
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Client info
+  // Client mode toggle
+  const [clientMode, setClientMode] = useState<ClientMode>('existing')
+
+  // Existing client selector
+  const [clients, setClients] = useState<ClientWithEmail[]>([])
+  const [loadingClients, setLoadingClients] = useState(false)
+  const [selectedClientId, setSelectedClientId] = useState<string>('')
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
+
+  // Client info fields
   const [entity, setEntity] = useState('')
   const [contactName, setContactName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
+
+  // Admin options
+  const [source, setSource] = useState<QuoteSource>('admin')
+  const [sendDirectly, setSendDirectly] = useState(false)
 
   // Products
   const [lineItems, setLineItems] = useState<QuoteLineItem[]>([])
@@ -53,6 +78,41 @@ export default function NouveauDevisPage() {
   const [showDropdown, setShowDropdown] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Fetch clients on mount
+  useEffect(() => {
+    setLoadingClients(true)
+    fetch('/api/clients')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.clients) {
+          setClients(data.clients as ClientWithEmail[])
+        }
+      })
+      .catch(() => {
+        // Non-blocking — manual entry is always available
+      })
+      .finally(() => setLoadingClients(false))
+  }, [])
+
+  // Auto-fill fields when a client is selected
+  function handleClientSelect(clientId: string) {
+    setSelectedClientId(clientId)
+    if (!clientId) {
+      setSelectedUserId(null)
+      setEntity('')
+      setEmail('')
+      setPhone('')
+      return
+    }
+    const client = clients.find((c) => c.id === clientId)
+    if (client) {
+      setSelectedUserId(client.user_id)
+      setEntity(client.company_name ?? '')
+      setEmail(client.email ?? '')
+      setPhone(client.phone ?? '')
+    }
+  }
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -155,6 +215,8 @@ export default function NouveauDevisPage() {
       phone: phone.trim(),
       message: message.trim() || null,
       status: 'pending',
+      source,
+      user_id: selectedUserId ?? null,
     })
 
     if (quoteError) {
@@ -169,6 +231,7 @@ export default function NouveauDevisPage() {
         product_id: item.product.id,
         product_name: item.product.name,
         quantity: item.quantity,
+        unit_price: item.product.price,
       }))
     )
 
@@ -176,6 +239,23 @@ export default function NouveauDevisPage() {
       setError(itemsError.message)
       setSaving(false)
       return
+    }
+
+    // If "send directly" is checked, trigger the send endpoint
+    if (sendDirectly) {
+      const sendRes = await fetch(`/api/quotes/${quoteId}/send`, {
+        method: 'POST',
+      })
+      if (!sendRes.ok) {
+        const sendData = await sendRes.json().catch(() => ({}))
+        setError(
+          `Devis cree mais l'envoi par email a echoue : ${sendData.error ?? 'Erreur inconnue'}`
+        )
+        setSaving(false)
+        // Still redirect — quote is saved
+        router.push('/admin/devis')
+        return
+      }
     }
 
     router.push('/admin/devis')
@@ -209,6 +289,79 @@ export default function NouveauDevisPage() {
                 <Building2 size={18} className="text-muted-foreground" />
                 Informations client
               </h2>
+
+              {/* Client mode toggle */}
+              <div className="flex gap-2 mb-5 p-1 bg-muted/40 rounded-lg">
+                <button
+                  type="button"
+                  onClick={() => setClientMode('existing')}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
+                    clientMode === 'existing'
+                      ? 'bg-background shadow-sm text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  <Users size={14} />
+                  Client existant
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setClientMode('manual')
+                    setSelectedClientId('')
+                    setSelectedUserId(null)
+                  }}
+                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-all cursor-pointer ${
+                    clientMode === 'manual'
+                      ? 'bg-background shadow-sm text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  <User size={14} />
+                  Saisie manuelle
+                </button>
+              </div>
+
+              {/* Existing client selector */}
+              {clientMode === 'existing' && (
+                <div className="space-y-1.5 mb-5">
+                  <label className="text-sm font-semibold flex items-center gap-2">
+                    <Users size={14} />
+                    Selectionner un client
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={selectedClientId}
+                      onChange={(e) => handleClientSelect(e.target.value)}
+                      className="w-full appearance-none rounded-md border border-input bg-transparent px-3 py-2 pr-9 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-50"
+                      disabled={loadingClients}
+                    >
+                      <option value="">
+                        {loadingClients
+                          ? 'Chargement...'
+                          : '-- Choisir un client --'}
+                      </option>
+                      {clients.map((client) => (
+                        <option key={client.id} value={client.id}>
+                          {client.company_name
+                            ? `${client.company_name} — ${client.email}`
+                            : client.email}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown
+                      size={14}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
+                    />
+                  </div>
+                  {selectedClientId && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Les champs ci-dessous ont ete pre-remplis. Vous pouvez les
+                      modifier.
+                    </p>
+                  )}
+                </div>
+              )}
 
               <div className="space-y-4">
                 <div className="space-y-1.5">
@@ -282,6 +435,70 @@ export default function NouveauDevisPage() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* Admin options: canal + envoi */}
+            <div className="border border-border rounded-lg p-6 space-y-5">
+              <h2 className="font-semibold text-lg flex items-center gap-2">
+                <Radio size={18} className="text-muted-foreground" />
+                Options administrateur
+              </h2>
+
+              {/* Canal selector */}
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold">Canal d&apos;origine</label>
+                <div className="relative">
+                  <select
+                    value={source}
+                    onChange={(e) => setSource(e.target.value as QuoteSource)}
+                    className="w-full appearance-none rounded-md border border-input bg-transparent px-3 py-2 pr-9 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  >
+                    <option value="admin">Cree par l&apos;admin</option>
+                    <option value="site">Site web</option>
+                    <option value="telephone">Telephone</option>
+                  </select>
+                  <ChevronDown
+                    size={14}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
+                  />
+                </div>
+              </div>
+
+              {/* Send directly checkbox */}
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <div className="relative mt-0.5">
+                  <input
+                    type="checkbox"
+                    checked={sendDirectly}
+                    onChange={(e) => setSendDirectly(e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-4 h-4 rounded border border-input bg-transparent peer-checked:bg-primary peer-checked:border-primary transition-colors group-hover:border-primary/60 flex items-center justify-center">
+                    {sendDirectly && (
+                      <svg
+                        viewBox="0 0 10 8"
+                        fill="none"
+                        className="w-2.5 h-2.5 stroke-primary-foreground"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M1 4l2.5 2.5L9 1" />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <span className="text-sm font-medium leading-none flex items-center gap-1.5">
+                    <Send size={13} className="text-muted-foreground" />
+                    Envoyer le devis directement au client par email
+                  </span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Le PDF du devis sera envoye automatiquement apres creation.
+                    Le statut passera a &quot;envoye&quot;.
+                  </p>
+                </div>
+              </label>
             </div>
           </div>
 
@@ -491,11 +708,19 @@ export default function NouveauDevisPage() {
             {saving ? (
               <>
                 <Loader2 size={16} className="mr-2 animate-spin" />{' '}
-                Enregistrement...
+                {sendDirectly ? 'Creation et envoi...' : 'Enregistrement...'}
               </>
             ) : (
               <>
-                <Save size={16} className="mr-2" /> Creer le devis
+                {sendDirectly ? (
+                  <>
+                    <Send size={16} className="mr-2" /> Creer et envoyer le devis
+                  </>
+                ) : (
+                  <>
+                    <Save size={16} className="mr-2" /> Creer le devis
+                  </>
+                )}
               </>
             )}
           </Button>
