@@ -6,7 +6,7 @@
 - Supabase (PostgreSQL, Auth JWT, Storage)
 - Zustand (state management client)
 - PWA activée
-- Déploiement : non encore configuré (pas de remote git, pas de Vercel)
+- Déploiement : Vercel connecté au repo GitHub (auto-deploy)
 
 ## Périmètre métier
 Site e-commerce B2B/B2C pour SAPAL Signalisation (Cannes) — mobilier urbain et signalisation routière
@@ -20,6 +20,12 @@ Site e-commerce B2B/B2C pour SAPAL Signalisation (Cannes) — mobilier urbain et
 - **Telegram** : notifications
 - **jsPDF** : génération devis + conformité Chorus Pro
 - **Pennylane API v2** : stub présent — PAS encore actif (ne pas implémenter sans instruction explicite)
+
+## Workflow Git
+- Ne jamais pousser directement sur `main`
+- Toujours créer une branche dédiée pour chaque modification
+- Passer par une Pull Request pour merger vers `main`
+- Vercel est connecté au repo GitHub — chaque push déclenche un déploiement automatique (preview sur branche, production sur `main`)
 
 ## Conventions
 - Tailwind CSS 4 uniquement — pas de styles inlustand pour tout état global côté client
