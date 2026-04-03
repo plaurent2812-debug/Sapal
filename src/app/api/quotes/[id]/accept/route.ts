@@ -322,7 +322,65 @@ export async function POST(
         })()
       }
 
-      // 13. Telegram notification (non-blocking)
+      // 13. Email de confirmation de commande au client (non-blocking)
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
+      const formattedTotal = totalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })
+      const formattedTTC = (totalHT * (1 + TVA_RATE)).toLocaleString('fr-FR', { minimumFractionDigits: 2 })
+
+      const itemsHtml = quoteItems.map((item: { product_name: string; quantity: number; unit_price?: number; products?: { price?: number } | null }) => {
+        const price = (item.unit_price && item.unit_price > 0) ? item.unit_price : (item.products?.price ?? 0)
+        return `<tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #eee">${item.product_name}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:center">${item.quantity}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:right">${(price * item.quantity).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</td>
+        </tr>`
+      }).join('')
+
+      resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal-signaletique.fr>',
+        to: quote.email,
+        subject: `Confirmation de commande ${order.order_number} - SAPAL Signalisation`,
+        html: `
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+            <div style="background:#1e293b;color:white;padding:24px;border-radius:8px 8px 0 0">
+              <h1 style="margin:0;font-size:20px">SAPAL Signalisation</h1>
+              <p style="margin:4px 0 0;opacity:0.7;font-size:14px">Confirmation de commande</p>
+            </div>
+            <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
+              <p>Bonjour ${quote.contact_name},</p>
+              <p>Votre commande <strong>${order.order_number}</strong> a bien été enregistrée suite à votre acceptation du devis.</p>
+
+              <div style="background:#f8fafc;border-radius:8px;padding:16px;margin:20px 0">
+                <table style="width:100%;border-collapse:collapse;font-size:14px">
+                  <thead>
+                    <tr style="border-bottom:2px solid #e5e7eb">
+                      <th style="padding:8px 12px;text-align:left">Produit</th>
+                      <th style="padding:8px 12px;text-align:center">Qté</th>
+                      <th style="padding:8px 12px;text-align:right">Total HT</th>
+                    </tr>
+                  </thead>
+                  <tbody>${itemsHtml}</tbody>
+                </table>
+              </div>
+
+              <div style="background:#1e293b;color:white;border-radius:8px;padding:16px;margin:20px 0">
+                <p style="margin:0;font-size:14px">Total HT : <strong>${formattedTotal} €</strong></p>
+                <p style="margin:4px 0 0;font-size:14px">TVA (20%) : ${(totalHT * TVA_RATE).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</p>
+                <p style="margin:4px 0 0;font-size:16px">Total TTC : <strong>${formattedTTC} €</strong></p>
+              </div>
+
+              <p>Vous pouvez suivre l'avancement de votre commande depuis votre espace client :</p>
+              <a href="${siteUrl}/mon-compte/commandes" style="display:inline-block;background:#f97316;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;margin:8px 0">Suivre ma commande</a>
+
+              <p style="color:#6b7280;font-size:13px;margin-top:24px">Un délai de livraison estimé est indiqué sur chaque fiche produit. Vous serez notifié par email dès que votre commande sera livrée.</p>
+
+              <p>Cordialement,<br><strong>L'équipe SAPAL Signalisation</strong></p>
+            </div>
+          </div>
+        `,
+      }).catch((err) => console.error('Confirmation email error:', err))
+
+      // 14. Telegram notification (non-blocking)
       const identifier = quote.entity || quote.contact_name || quote.email
       const shortId = id.replace(/-/g, '').slice(0, 8).toUpperCase()
       sendTelegramMessage(
@@ -330,11 +388,11 @@ export async function POST(
         `📋 Devis : ${shortId}\n` +
         `🏢 Client : ${identifier}\n` +
         `📦 Commande : ${order.order_number}\n` +
-        `💰 Total HT : ${totalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €\n` +
+        `💰 Total HT : ${formattedTotal} €\n` +
         `🏭 Commande(s) fournisseur : ${supplierOrderCount}`
       ).catch(() => {})
 
-      // 14. Return success
+      // 15. Return success
       return Response.json({
         success: true,
         orderId: order.id,
