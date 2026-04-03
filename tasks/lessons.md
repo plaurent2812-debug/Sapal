@@ -10,6 +10,7 @@
 | user_metadata vs app_metadata pour le rôle | Supabase stocke dans app_metadata via admin API, user_metadata via signup | Vérifier les deux dans le middleware avec fallback chain |
 | Login mouline indéfiniment après déploiement Vercel | Client navigateur utilisait `createClient` de `@supabase/supabase-js` (localStorage) alors que le middleware utilise `@supabase/ssr` (cookies) → session invisible pour le middleware → boucle de redirection | **TOUJOURS** utiliser `createBrowserClient` de `@supabase/ssr` côté navigateur quand le middleware utilise `@supabase/ssr`. Ne jamais mixer les deux systèmes de stockage de session |
 | RLS policies retournent 0 résultats au lieu de données | Les policies utilisant `EXISTS (SELECT FROM auth.users WHERE raw_user_meta_data->>'role'...)` échouent silencieusement avec le client SSR | **TOUJOURS** utiliser `auth.jwt() -> 'user_metadata' ->> 'role'` dans les policies RLS, jamais de subquery sur `auth.users`. La lecture directe du JWT est plus fiable et plus performante |
+| Montants PDF affichent des `/` au lieu d'espaces (ex: `12 /730,90 €`) | `toLocaleString('fr-FR')` utilise U+202F (espace fine insécable) comme séparateur milliers, jsPDF ne le supporte pas | Toujours `.replace(/\u202f/g, ' ').replace(/\u00a0/g, ' ')` après `toLocaleString` dans les générateurs PDF |
 
 ## 28/03/2026
 

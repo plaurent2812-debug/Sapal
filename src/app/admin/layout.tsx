@@ -6,13 +6,14 @@ import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import {
   LayoutDashboard,
-  Package,
   FolderOpen,
   FileText,
   LogOut,
   Users,
   Truck,
   ShoppingCart,
+  Receipt,
+  BarChart3,
 } from 'lucide-react'
 
 type UserRole = 'admin' | 'gerant' | 'client'
@@ -25,21 +26,23 @@ interface NavItem {
 
 const adminNavItems: NavItem[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/produits', label: 'Produits', icon: Package },
   { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
   { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
-  { href: '/admin/devis', label: 'Devis', icon: FileText },
   { href: '/admin/clients', label: 'Clients', icon: Users },
+  { href: '/admin/devis', label: 'Devis', icon: FileText },
   { href: '/admin/commandes', label: 'Commandes', icon: ShoppingCart },
+  { href: '/admin/factures', label: 'Factures', icon: Receipt },
+  { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
 ]
 
 const gerantNavItems: NavItem[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/devis', label: 'Devis', icon: FileText },
-  { href: '/admin/produits', label: 'Produits', icon: Package },
+  { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
   { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
   { href: '/admin/clients', label: 'Clients', icon: Users },
+  { href: '/admin/devis', label: 'Devis', icon: FileText },
   { href: '/admin/commandes', label: 'Commandes', icon: ShoppingCart },
+  { href: '/admin/factures', label: 'Factures', icon: Receipt },
 ]
 
 export default function AdminLayout({
