@@ -26,7 +26,7 @@ interface SupplierOrderRow {
   id: string
   bdc_number: string | null
   bdc_pdf_url: string | null
-  amount_ht: number | null
+  total_ht: number | null
   payment_terms: string | null
   created_at: string
   suppliers: Supplier | null
@@ -66,7 +66,7 @@ export default function CommandesAPayerPage() {
         id,
         bdc_number,
         bdc_pdf_url,
-        amount_ht,
+        total_ht,
         payment_terms,
         created_at,
         suppliers(name, email),
@@ -210,7 +210,7 @@ export default function CommandesAPayerPage() {
                         )}
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell text-right font-medium">
-                        {formatCurrency(row.amount_ht)}
+                        {formatCurrency(row.total_ht)}
                       </td>
                       <td className="px-4 py-3 hidden xl:table-cell text-muted-foreground text-xs">
                         <div className="flex items-center gap-1.5">
