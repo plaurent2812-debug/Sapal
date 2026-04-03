@@ -327,8 +327,8 @@ export default function MonCompteDevisPage() {
             </h2>
             <p className="text-sm text-muted-foreground mb-6">
               {confirm.action === 'accept'
-                ? 'En acceptant ce devis, vous confirmez votre accord pour la commande. Cette action ne peut pas &ecirc;tre annul\u00e9e.'
-                : 'En refusant ce devis, vous signalez que vous ne souhaitez pas donner suite. Cette action ne peut pas &ecirc;tre annul\u00e9e.'}
+                ? 'En acceptant ce devis, vous confirmez votre accord pour la commande. Cette action ne peut pas être annulée.'
+                : 'En refusant ce devis, vous signalez que vous ne souhaitez pas donner suite. Cette action ne peut pas être annulée.'}
             </p>
             <div className="flex gap-3 justify-end">
               <button
