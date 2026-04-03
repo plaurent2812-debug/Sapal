@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import {
   LayoutDashboard,
+  Package,
   FolderOpen,
   FileText,
   LogOut,
@@ -27,6 +28,7 @@ interface NavItem {
 const adminNavItems: NavItem[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
+  { href: '/admin/produits', label: 'Produits', icon: Package },
   { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
   { href: '/admin/clients', label: 'Clients', icon: Users },
   { href: '/admin/devis', label: 'Devis', icon: FileText },
@@ -38,6 +40,7 @@ const adminNavItems: NavItem[] = [
 const gerantNavItems: NavItem[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
+  { href: '/admin/produits', label: 'Produits', icon: Package },
   { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
   { href: '/admin/clients', label: 'Clients', icon: Users },
   { href: '/admin/devis', label: 'Devis', icon: FileText },
