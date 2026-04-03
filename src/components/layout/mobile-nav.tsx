@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Phone, Mail, ChevronRight } from "lucide-react";
+import { Menu, X, Phone, Mail, ChevronRight, User, Shield } from "lucide-react";
+import { createBrowserClient } from "@/lib/supabase/client";
 
 const NAV_LINKS = [
   { href: "/catalogue", label: "Tous nos produits" },
@@ -14,8 +15,43 @@ const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
+type UserRole = "admin" | "gerant" | "client" | null;
+
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [role, setRole] = useState<UserRole>(null);
+
+  // Check auth session
+  useEffect(() => {
+    const supabase = createBrowserClient();
+
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setRole((session?.user?.user_metadata?.role as UserRole) ?? null);
+    };
+
+    checkSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setRole((session?.user?.user_metadata?.role as UserRole) ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const accountHref =
+    role === "admin" || role === "gerant"
+      ? "/admin"
+      : role === "client"
+      ? "/mon-compte"
+      : "/connexion";
+
+  const accountLabel =
+    role === "admin" || role === "gerant"
+      ? "Administration"
+      : role === "client"
+      ? "Mon compte"
+      : "Se connecter";
 
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -61,7 +97,7 @@ export function MobileNav() {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-[70] h-full w-[85vw] max-w-[360px] bg-white shadow-2xl transform transition-transform duration-300 ease-out md:hidden ${
+        className={`fixed top-0 right-0 z-[70] h-full w-[85vw] max-w-[360px] bg-[#ffffff] shadow-2xl transform transition-transform duration-300 ease-out md:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
@@ -105,6 +141,25 @@ export function MobileNav() {
               className="btn-fill block w-full text-center bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-6 py-3.5 font-bold rounded-xl shadow-lg shadow-accent/20 touch-manipulation"
             >
               Demander un devis
+            </Link>
+          </div>
+
+          {/* Account link */}
+          <div className="px-3 mt-4">
+            <Link
+              href={accountHref}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-between px-4 py-3.5 rounded-xl text-[15px] font-semibold text-foreground bg-secondary/30 hover:bg-accent/10 hover:text-accent transition-colors touch-manipulation"
+            >
+              <span className="flex items-center gap-3">
+                {role === "admin" || role === "gerant" ? (
+                  <Shield size={18} className="text-accent" />
+                ) : (
+                  <User size={18} className="text-accent" />
+                )}
+                {accountLabel}
+              </span>
+              <ChevronRight size={16} className="text-muted-foreground" />
             </Link>
           </div>
 
