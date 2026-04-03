@@ -93,42 +93,49 @@ export default function AdminDashboardPage() {
       value: stats.totalProducts,
       icon: Package,
       color: 'bg-blue-50 text-blue-600',
+      href: '/admin/produits',
     },
     {
       label: 'Total categories',
       value: stats.totalCategories,
       icon: FolderOpen,
       color: 'bg-purple-50 text-purple-600',
+      href: '/admin/categories',
     },
     {
       label: 'Devis recus',
       value: stats.totalQuotes,
       icon: FileText,
       color: 'bg-green-50 text-green-600',
+      href: '/admin/devis',
     },
     {
       label: 'Devis en attente',
       value: stats.pendingQuotes,
       icon: Clock,
       color: 'bg-yellow-50 text-yellow-600',
+      href: '/admin/devis',
     },
     {
       label: 'Clients actifs',
       value: stats.activeClients,
       icon: UserCheck,
       color: 'bg-emerald-50 text-emerald-600',
+      href: '/admin/clients',
     },
     {
       label: 'Clients en attente',
       value: stats.pendingClients,
       icon: Users,
       color: 'bg-orange-50 text-orange-600',
+      href: '/admin/clients',
     },
     {
       label: 'Commandes en cours',
       value: stats.processingOrders,
       icon: ShoppingCart,
       color: 'bg-sky-50 text-sky-600',
+      href: '/admin/commandes',
     },
   ]
 
@@ -136,15 +143,15 @@ export default function AdminDashboardPage() {
     return (
       <div className="space-y-6">
         <h1 className="font-heading text-3xl tracking-tight">Dashboard</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
           {[1, 2, 3, 4, 5, 6, 7].map((i) => (
             <div
               key={i}
-              className="bg-card rounded-xl border border-border/60 p-6 animate-pulse"
+              className="bg-card rounded-xl border border-border/60 p-5 animate-pulse"
             >
-              <div className="h-10 w-10 bg-muted rounded-xl mb-4" />
-              <div className="h-4 w-20 bg-muted rounded mb-2" />
-              <div className="h-8 w-16 bg-muted rounded" />
+              <div className="h-10 w-10 bg-muted rounded-xl mb-3" />
+              <div className="h-3 w-20 bg-muted rounded mb-2" />
+              <div className="h-7 w-12 bg-muted rounded" />
             </div>
           ))}
         </div>
@@ -157,24 +164,25 @@ export default function AdminDashboardPage() {
       <h1 className="font-heading text-3xl tracking-tight">Dashboard</h1>
 
       {/* Stats cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
         {statCards.map((card) => {
           const Icon = card.icon
           return (
-            <div
+            <Link
               key={card.label}
-              className="bg-card rounded-xl border border-border/60 p-6 shadow-sm"
+              href={card.href}
+              className="bg-card rounded-xl border border-border/60 p-5 shadow-sm hover:border-primary/40 hover:shadow-md transition-all group"
             >
               <div
-                className={`inline-flex items-center justify-center w-10 h-10 rounded-xl ${card.color} mb-4`}
+                className={`inline-flex items-center justify-center w-10 h-10 rounded-xl ${card.color} mb-3`}
               >
                 <Icon size={20} />
               </div>
-              <p className="text-sm text-muted-foreground">{card.label}</p>
-              <p className="text-3xl font-bold tracking-tight mt-1">
+              <p className="text-xs text-muted-foreground">{card.label}</p>
+              <p className="text-2xl font-bold tracking-tight mt-0.5">
                 {card.value}
               </p>
-            </div>
+            </Link>
           )
         })}
       </div>
