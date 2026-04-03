@@ -13,9 +13,11 @@ import {
   CreditCard,
   CheckCircle,
   Package,
+  FileDown,
 } from 'lucide-react'
 
 type OrderStatus = 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
+type OrderSource = 'site' | 'admin' | 'telephone'
 type FilterTab = 'all' | 'processing' | 'delivered' | 'invoiced'
 
 interface OrderItem {
@@ -49,6 +51,7 @@ interface Order {
   id: string
   order_number: string
   status: OrderStatus
+  source?: OrderSource | null
   total_ttc: number | null
   created_at: string
   quotes: Quote | null
@@ -98,6 +101,7 @@ export default function AdminCommandesPage() {
   const [activeTab, setActiveTab] = useState<FilterTab>('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [markingDeliveredId, setMarkingDeliveredId] = useState<string | null>(null)
+  const [downloadingChorusId, setDownloadingChorusId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -147,6 +151,31 @@ export default function AdminCommandesPage() {
       setError(err instanceof Error ? err.message : 'Erreur serveur')
     } finally {
       setMarkingDeliveredId(null)
+    }
+  }
+
+  async function handleDownloadChorusPDF(orderId: string, orderNumber: string) {
+    setDownloadingChorusId(orderId)
+    setError(null)
+    try {
+      const res = await fetch(`/api/orders/${orderId}/chorus-pdf`)
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error ?? 'Erreur lors du téléchargement')
+      }
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `facture-chorus-${orderNumber.replace(/^CMD-/, 'FAC-')}.pdf`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors du téléchargement de la facture')
+    } finally {
+      setDownloadingChorusId(null)
     }
   }
 
@@ -281,9 +310,21 @@ export default function AdminCommandesPage() {
                             </span>
                           </td>
                           <td className="px-4 py-3">
-                            <span className="font-mono font-medium text-xs">
-                              {order.order_number}
-                            </span>
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono font-medium text-xs">
+                                {order.order_number}
+                              </span>
+                              {order.source === 'admin' && (
+                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">
+                                  Admin
+                                </span>
+                              )}
+                              {order.source === 'telephone' && (
+                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-700">
+                                  Tél.
+                                </span>
+                              )}
+                            </div>
                           </td>
                           <td className="px-4 py-3 hidden md:table-cell">
                             <div className="flex items-center gap-2">
@@ -446,6 +487,26 @@ export default function AdminCommandesPage() {
                                           <CheckCircle size={14} />
                                         )}
                                         Marquer comme livrée
+                                      </button>
+                                    </div>
+                                  )}
+
+                                  {(order.status === 'delivered' ||
+                                    order.status === 'invoiced') && (
+                                    <div className="mt-4">
+                                      <button
+                                        disabled={downloadingChorusId === order.id}
+                                        onClick={() =>
+                                          handleDownloadChorusPDF(order.id, order.order_number)
+                                        }
+                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                                      >
+                                        {downloadingChorusId === order.id ? (
+                                          <Loader2 size={14} className="animate-spin" />
+                                        ) : (
+                                          <FileDown size={14} />
+                                        )}
+                                        Facture Chorus Pro
                                       </button>
                                     </div>
                                   )}
