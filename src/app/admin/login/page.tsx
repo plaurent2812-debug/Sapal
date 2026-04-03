@@ -19,19 +19,25 @@ export default function AdminLoginPage() {
     setError(null)
     setLoading(true)
 
-    const supabase = createBrowserClient()
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    try {
+      const supabase = createBrowserClient()
+      const { error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
 
-    if (authError) {
-      setError('Identifiants incorrects.')
+      if (authError) {
+        setError(authError.message)
+        setLoading(false)
+        return
+      }
+
+      router.push('/admin')
+      router.refresh()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur de connexion')
       setLoading(false)
-      return
     }
-
-    router.push('/admin')
   }
 
   return (
