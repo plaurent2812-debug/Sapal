@@ -369,10 +369,7 @@ export async function POST(
                 <p style="margin:4px 0 0;font-size:16px">Total TTC : <strong>${formattedTTC} €</strong></p>
               </div>
 
-              <p>Vous pouvez suivre l'avancement de votre commande depuis votre espace client :</p>
-              <a href="${siteUrl}/mon-compte/commandes" style="display:inline-block;background:#f97316;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold;margin:8px 0">Suivre ma commande</a>
-
-              <p style="color:#6b7280;font-size:13px;margin-top:24px">Un délai de livraison estimé est indiqué sur chaque fiche produit. Vous serez notifié par email dès que votre commande sera livrée.</p>
+              <p style="color:#6b7280;font-size:13px;margin-top:24px">Votre commande a été transmise à nos fournisseurs. La livraison sera effectuée directement par le fournisseur selon les délais indiqués sur les fiches produit. Vous recevrez un email avec votre facture dès réception confirmée.</p>
 
               <p>Cordialement,<br><strong>L'équipe SAPAL Signalisation</strong></p>
             </div>
