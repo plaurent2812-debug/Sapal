@@ -1,4 +1,7 @@
-import { createServerClient } from '@/lib/supabase/server'
+import { createServiceRoleClient, createServerSupabaseClient } from '@/lib/supabase/server'
+import { generateQuotePDF } from '@/lib/pdf/generate-quote-pdf'
+import { checkRateLimit } from '@/lib/rate-limit'
+import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
 
@@ -13,10 +16,16 @@ const quoteSchema = z.object({
     productName: z.string(),
     quantity: z.number().int().positive(),
     unitPrice: z.number().optional(),
+    delai: z.string().optional(),
   })).min(1),
 })
 
 export async function POST(request: Request) {
+  const ip = request.headers.get('x-forwarded-for') ?? 'unknown'
+  if (!checkRateLimit(ip, 10, 60000)) {
+    return Response.json({ error: 'Trop de requêtes, réessayez dans 1 minute' }, { status: 429 })
+  }
+
   try {
     const body = await request.json()
     const parsed = quoteSchema.safeParse(body)
@@ -31,7 +40,7 @@ export async function POST(request: Request) {
     const { entity, contactName, email, phone, message, items } = parsed.data
     const quoteId = randomUUID()
 
-    const supabase = createServerClient()
+    const supabase = createServiceRoleClient()
     const { error: quoteError } = await supabase
       .from('quotes')
       .insert({
@@ -64,8 +73,46 @@ export async function POST(request: Request) {
       return Response.json({ error: `Erreur lors de l'enregistrement des articles: ${itemsError.message}` }, { status: 500 })
     }
 
+    // Associer le devis au compte client connecté si disponible
+    try {
+      const supabaseAuth = await createServerSupabaseClient()
+      const { data: { user } } = await supabaseAuth.auth.getUser()
+      if (user && user.user_metadata?.role === 'client') {
+        await supabase.from('quotes').update({ user_id: user.id }).eq('id', quoteId)
+      }
+    } catch {
+      // Silently fail — les devis anonymes restent valides sans user_id
+    }
+
+    // Récupérer les références produits pour le PDF
+    const productIds = items.map(i => i.productId)
+    const { data: products } = await supabase
+      .from('products')
+      .select('id, reference')
+      .in('id', productIds)
+    const refMap = new Map((products ?? []).map((p: { id: string; reference: string }) => [p.id, p.reference || '']))
+
+    // Générer le PDF
+    const pdfData = {
+      quoteId,
+      date: new Date().toLocaleDateString('fr-FR'),
+      entity,
+      contactName,
+      email,
+      phone,
+      items: items.map(i => ({
+        reference: refMap.get(i.productId) || '',
+        productName: i.productName,
+        quantity: i.quantity,
+        unitPriceHT: i.unitPrice || 0,
+        delai: i.delai,
+      })),
+    }
+    const doc = generateQuotePDF(pdfData)
+    const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
+
     // Notification Telegram asynchrone (Non-Bloquant pour l'utilisateur)
-    sendTelegramNotification({ entity, contactName, email, phone, items, quoteId }).catch(e => {
+    sendTelegramNotification({ entity, contactName, email, phone, items, quoteId, pdfBuffer }).catch(e => {
       console.error('Failed to send telegram notification:', e)
     })
 
@@ -81,19 +128,19 @@ async function sendTelegramNotification(params: {
   contactName: string
   email: string
   phone: string
-  items: { productId: string; productName: string; quantity: number; unitPrice?: number }[]
+  items: { productId: string; productName: string; quantity: number; unitPrice?: number; delai?: string }[]
   quoteId: string
+  pdfBuffer: Buffer
 }) {
-  const token = process.env.TELEGRAM_BOT_TOKEN
-  const chatId = process.env.TELEGRAM_CHAT_ID
-  if (!token || !chatId) return
-
   const itemsList = params.items
     .map(i => {
-      const line = `  - ${i.productName} x${i.quantity}`
+      let line = `  - ${i.productName} x${i.quantity}`
       if (i.unitPrice && i.unitPrice > 0) {
         const subtotal = (i.unitPrice * i.quantity).toFixed(2)
-        return `${line} (${subtotal} € HT)`
+        line += ` (${subtotal} € HT)`
+      }
+      if (i.delai) {
+        line += ` — Délai: ${/^\d+$/.test(i.delai) ? `${i.delai} semaines` : i.delai}`
       }
       return line
     })
@@ -117,17 +164,14 @@ async function sendTelegramNotification(params: {
     `_Réf : ${params.quoteId}_`,
   ].filter(Boolean).join('\n')
 
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: 'Markdown',
-      }),
-    })
-  } catch (err) {
-    console.error('Telegram notification failed:', err)
-  }
+  // Envoyer le message texte
+  await sendTelegramMessage(text)
+
+  // Envoyer le PDF
+  const shortRef = params.quoteId.replace(/-/g, '').slice(0, 8).toUpperCase()
+  await sendTelegramDocument(
+    params.pdfBuffer,
+    `devis-${shortRef}.pdf`,
+    `📎 Devis ${shortRef} — ${params.entity}`
+  )
 }

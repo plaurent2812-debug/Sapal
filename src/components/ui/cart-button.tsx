@@ -22,7 +22,7 @@ export function CartButton() {
         Mon Devis
       </Button>
       {totalItems > 0 && (
-        <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white shadow-sm ring-2 ring-background animate-in zoom-in-50 duration-300" aria-hidden="true">
+        <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white shadow-sm ring-2 ring-background animate-in zoom-in-50 duration-300">
           {totalItems}
         </span>
       )}

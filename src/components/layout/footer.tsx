@@ -32,14 +32,14 @@ export function Footer() {
                 Expert en équipement et aménagement urbain pour les collectivités et entreprises depuis plus de 30 ans.
               </p>
               <div className="space-y-2.5">
-                <a href="tel:0468000000" className="flex items-center gap-3 text-sm text-white/60 hover:text-accent transition-colors">
-                  <Phone size={15} className="text-accent" /> 04 68 00 00 00
+                <a href="tel:0622902854" className="flex items-center gap-3 text-sm text-white/60 hover:text-accent transition-colors">
+                  <Phone size={15} className="text-accent" /> 06 22 90 28 54
                 </a>
                 <a href="mailto:societe@sapal.fr" className="flex items-center gap-3 text-sm text-white/60 hover:text-accent transition-colors">
                   <Mail size={15} className="text-accent" /> societe@sapal.fr
                 </a>
                 <span className="flex items-center gap-3 text-sm text-white/60">
-                  <MapPin size={15} className="text-accent" /> Perpignan, France
+                  <MapPin size={15} className="text-accent" /> 260 Av. Michel Jourdan, 06150 Cannes
                 </span>
               </div>
             </div>

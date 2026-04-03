@@ -11,9 +11,10 @@ interface Props {
   product: ClientProduct
   selectedVariant?: ClientVariant | null
   hasVariants?: boolean
+  categorySlug?: string
 }
 
-export function AddToQuoteSection({ product, selectedVariant, hasVariants }: Props) {
+export function AddToQuoteSection({ product, selectedVariant, hasVariants, categorySlug }: Props) {
   const addItem = useQuoteStore((state) => state.addItem);
   const items = useQuoteStore((state) => state.items);
   const [isAdded, setIsAdded] = useState(false);
@@ -25,7 +26,7 @@ export function AddToQuoteSection({ product, selectedVariant, hasVariants }: Pro
   );
 
   const handleAdd = () => {
-    addItem(product, quantity, selectedVariant?.id, selectedVariant?.label);
+    addItem(product, quantity, selectedVariant?.id, selectedVariant?.label, selectedVariant?.delai, categorySlug);
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 3000);
   };

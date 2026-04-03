@@ -82,7 +82,7 @@ export default function ContactPageClient() {
                     <h3 className="font-semibold mb-1">Adresse</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       SAPAL Signalisation<br />
-                      France
+                      260 Av. Michel Jourdan, 06150 Cannes
                     </p>
                   </div>
                 </div>
@@ -105,9 +105,9 @@ export default function ContactPageClient() {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">Téléphone</h3>
-                    <p className="text-muted-foreground text-sm">
-                      Sur demande
-                    </p>
+                    <a href="tel:0622902854" className="text-muted-foreground text-sm hover:text-primary transition-colors">
+                      06 22 90 28 54
+                    </a>
                   </div>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default function ContactPageClient() {
             <div className="p-6 bg-muted/30 rounded-2xl border border-border/50">
               <h3 className="font-semibold mb-2">Horaires d'ouverture</h3>
               <div className="space-y-1 text-sm text-muted-foreground">
-                <p>Lundi - Vendredi : 8h30 - 17h30</p>
+                <p>Lundi - Vendredi : 8h - 17h</p>
                 <p>Samedi - Dimanche : Fermé</p>
               </div>
             </div>

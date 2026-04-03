@@ -111,18 +111,18 @@ export function MobileNav() {
           {/* Contact info */}
           <div className="px-5 mt-8 space-y-3">
             <a
-              href="tel:0468000000"
+              href="tel:0622902854"
               className="flex items-center gap-3 text-sm text-muted-foreground hover:text-accent transition-colors touch-manipulation py-1"
             >
               <Phone size={16} className="text-accent flex-shrink-0" />
-              04 68 00 00 00
+              06 22 90 28 54
             </a>
             <a
-              href="mailto:contact@sapal-signalisation.com"
+              href="mailto:societe@sapal.fr"
               className="flex items-center gap-3 text-sm text-muted-foreground hover:text-accent transition-colors touch-manipulation py-1"
             >
               <Mail size={16} className="text-accent flex-shrink-0" />
-              contact@sapal-signalisation.com
+              societe@sapal.fr
             </a>
           </div>
         </nav>

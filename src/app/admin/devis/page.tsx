@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Loader2, ChevronDown, ChevronUp, FileText, Mail, Phone, Building2, Calendar, Plus, Download, FileCheck, Info, ExternalLink } from 'lucide-react'
+import { STATUS_CONFIG, formatDate } from '@/lib/quote-utils'
+import { useDownloadPDF } from '@/hooks/useDownloadPDF'
 
 type QuoteStatus = 'pending' | 'sent' | 'accepted' | 'rejected'
 
@@ -27,18 +29,11 @@ interface QuoteWithItems {
   quote_items: QuoteItem[]
 }
 
-const STATUS_CONFIG: Record<QuoteStatus, { label: string; className: string }> = {
-  pending: { label: 'En attente', className: 'bg-amber-100 text-amber-800 border-amber-200' },
-  sent: { label: 'Envoye', className: 'bg-blue-100 text-blue-800 border-blue-200' },
-  accepted: { label: 'Accepte', className: 'bg-green-100 text-green-800 border-green-200' },
-  rejected: { label: 'Refuse', className: 'bg-red-100 text-red-800 border-red-200' },
-}
-
 export default function AdminDevisPage() {
   const [quotes, setQuotes] = useState<QuoteWithItems[]>([])
   const [loading, setLoading] = useState(true)
   const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [downloadingId, setDownloadingId] = useState<string | null>(null)
+  const { downloadingId, handleDownloadPDF } = useDownloadPDF()
   const [chorusDownloadingId, setChorusDownloadingId] = useState<string | null>(null)
 
   useEffect(() => {
@@ -80,27 +75,6 @@ export default function AdminDevisPage() {
     setExpandedId((prev) => (prev === id ? null : id))
   }
 
-  async function handleDownloadPDF(quoteId: string) {
-    setDownloadingId(quoteId)
-    try {
-      const res = await fetch(`/api/quotes/${quoteId}/pdf`)
-      if (!res.ok) throw new Error('Erreur téléchargement')
-      const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = res.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] || 'devis.pdf'
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      URL.revokeObjectURL(url)
-    } catch {
-      alert('Erreur lors du téléchargement du PDF')
-    } finally {
-      setDownloadingId(null)
-    }
-  }
-
   async function handleDownloadChorusPDF(quoteId: string) {
     setChorusDownloadingId(quoteId)
     try {
@@ -120,16 +94,6 @@ export default function AdminDevisPage() {
     } finally {
       setChorusDownloadingId(null)
     }
-  }
-
-  function formatDate(dateStr: string): string {
-    return new Date(dateStr).toLocaleDateString('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    })
   }
 
   return (
@@ -226,7 +190,7 @@ export default function AdminDevisPage() {
                             </a>
                           </td>
                           <td className="px-4 py-3 hidden xl:table-cell text-muted-foreground text-xs">
-                            {formatDate(quote.created_at)}
+                            {formatDate(quote.created_at, { withTime: true })}
                           </td>
                           <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
                             <select
@@ -267,7 +231,7 @@ export default function AdminDevisPage() {
                                     </div>
                                     <div className="flex items-center gap-2 text-muted-foreground">
                                       <Calendar size={14} />
-                                      <span>{formatDate(quote.created_at)}</span>
+                                      <span>{formatDate(quote.created_at, { withTime: true })}</span>
                                     </div>
                                   </div>
                                   {quote.message && (

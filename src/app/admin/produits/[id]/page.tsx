@@ -4,6 +4,7 @@ import { use, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
+import { generateSlug } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ArrowLeft, Plus, Trash2, Loader2, Save } from 'lucide-react'
@@ -11,15 +12,6 @@ import { ArrowLeft, Plus, Trash2, Loader2, Save } from 'lucide-react'
 interface CategoryOption {
   id: string
   name: string
-}
-
-function generateSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
 }
 
 export default function EditProduitPage({ params }: { params: Promise<{ id: string }> }) {

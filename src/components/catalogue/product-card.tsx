@@ -25,7 +25,7 @@ export function ProductCard({ product, categorySlug, index = 0 }: { product: Cli
   return (
       <Link
         href={`/catalogue/${categorySlug}/${product.slug}`}
-        className="flex flex-col overflow-hidden bg-white border border-border/60 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5 hover:-translate-y-1.5 transition-all duration-300 group relative rounded-xl"
+        className="flex flex-col overflow-hidden bg-white border border-border/60 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5 hover:-translate-y-1.5 transition-all duration-300 group relative rounded-xl focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
       >
         {/* Badge Réf */}
         {product.reference && (
@@ -43,7 +43,6 @@ export function ProductCard({ product, categorySlug, index = 0 }: { product: Cli
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               className="object-contain p-6 group-hover:scale-105 transition-transform duration-500 ease-out"
-              unoptimized
             />
           ) : (
             <div className="text-muted-foreground/40 font-medium text-xs border border-dashed border-border/80 px-4 py-2 bg-secondary/20 rounded-lg">

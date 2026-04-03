@@ -1,4 +1,4 @@
-import { createServerClient } from '@/lib/supabase/server'
+import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { generateChorusPDF, type ChorusInvoiceItem } from '@/lib/pdf/generate-chorus-pdf'
 import type { NextRequest } from 'next/server'
 
@@ -7,11 +7,11 @@ const SUPPLIER = {
   name: 'SAPAL Signalisation',
   siret: 'XXX XXX XXX XXXXX',
   tvaIntracom: 'FRXXXXXXXXXX',
-  address: 'Zone Industrielle',
-  postalCode: '00000',
-  city: 'Ville',
-  phone: '04 XX XX XX XX',
-  email: 'contact@sapal-signalisation.fr',
+  address: '260 Av. Michel Jourdan',
+  postalCode: '06150',
+  city: 'Cannes',
+  phone: '06 22 90 28 54',
+  email: 'societe@sapal.fr',
 }
 
 export async function GET(
@@ -20,7 +20,16 @@ export async function GET(
 ) {
   try {
     const { id } = await ctx.params
-    const supabase = createServerClient()
+
+    // Auth check: verify user and role
+    const authClient = await createServerSupabaseClient()
+    const { data: { user } } = await authClient.auth.getUser()
+    if (!user) {
+      return Response.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+    const role = (user.user_metadata?.role as string) ?? 'client'
+
+    const supabase = createServiceRoleClient()
 
     // Fetch quote with items
     const { data: quote, error: quoteError } = await supabase
@@ -31,6 +40,11 @@ export async function GET(
 
     if (quoteError || !quote) {
       return Response.json({ error: 'Devis introuvable' }, { status: 404 })
+    }
+
+    // Authorization: admin/gerant can access all, clients only their own
+    if (role !== 'admin' && role !== 'gerant' && quote.email !== user.email) {
+      return Response.json({ error: 'Accès refusé' }, { status: 403 })
     }
 
     // Fetch product prices for all items

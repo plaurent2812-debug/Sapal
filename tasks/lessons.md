@@ -1,5 +1,14 @@
 # SAPAL — Lessons Learned
 
+## 03/04/2026
+
+| Problème | Cause | Règle |
+|----------|-------|-------|
+| Buffer non assignable à BlobPart (TS strict + Node 22) | SharedArrayBuffer incompatible avec ArrayBuffer | Wrapper `new Uint8Array(buffer)` avant `new Blob()` |
+| Webhooks inutilisables en dev local | Nécessitent URL publique | Préférer logique côté application (API routes). Webhooks = optionnel post-déploiement |
+| RLS confuses quand beaucoup de rôles | Policies empilées sans vision globale | Toujours faire un tableau rôle × table × permission AVANT d'écrire les policies |
+| user_metadata vs app_metadata pour le rôle | Supabase stocke dans app_metadata via admin API, user_metadata via signup | Vérifier les deux dans le middleware avec fallback chain |
+
 ## 28/03/2026
 
 | Problème | Cause | Règle |

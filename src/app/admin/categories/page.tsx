@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { createBrowserClient } from '@/lib/supabase/client'
+import { generateSlug } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Plus, Pencil, Trash2, Loader2, Save, X, FolderOpen } from 'lucide-react'
@@ -14,15 +15,6 @@ interface CategoryWithCount {
   description: string
   image_url: string
   products: { count: number }[]
-}
-
-function generateSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
 }
 
 function generateId(): string {
@@ -291,7 +283,7 @@ export default function AdminCategoriesPage() {
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-lg bg-secondary/30 overflow-hidden flex-shrink-0 flex items-center justify-center relative">
                               {cat.image_url ? (
-                                <Image src={cat.image_url} alt="" fill sizes="40px" className="object-cover" unoptimized />
+                                <Image src={cat.image_url} alt="" fill sizes="40px" className="object-cover" />
                               ) : (
                                 <FolderOpen size={16} className="text-muted-foreground/40" />
                               )}

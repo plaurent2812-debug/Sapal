@@ -6,8 +6,6 @@ import { getCategories, getFeaturedProducts, getProductsCount } from "@/lib/data
 import { ProductCard } from "@/components/catalogue/product-card";
 import { AnimatedSection, AnimatedItem, AnimatedCounter } from "@/components/ui/motion";
 
-export const dynamic = 'force-dynamic';
-
 export const metadata: Metadata = {
   title: "SAPAL Signalisation | Mobilier Urbain & Signalétique pour Collectivités",
   description:
@@ -176,7 +174,7 @@ export default async function Home() {
                 >
                   <div className="w-16 h-16 bg-secondary/30 rounded-full mb-3 flex items-center justify-center overflow-hidden border border-border/50 p-2 group-hover:border-accent/30 transition-colors relative">
                     {category.imageUrl ? (
-                      <Image src={category.imageUrl} alt={category.name} fill sizes="64px" className="object-contain p-2 group-hover:scale-110 transition-transform duration-500" unoptimized />
+                      <Image src={category.imageUrl} alt={category.name} fill sizes="64px" className="object-contain p-2 group-hover:scale-110 transition-transform duration-500" />
                     ) : (
                       <div className="w-8 h-8 bg-border rounded-full" />
                     )}

@@ -7,6 +7,7 @@ import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
 import { ArrowLeft, ChevronRight, Package } from "lucide-react";
 import { ProductPageClient } from "@/components/catalogue/product-page-client";
 import { ProductCard } from "@/components/catalogue/product-card";
+import { AdminEditButton } from "@/components/catalogue/admin-edit-button";
 
 export async function generateMetadata({
   params,
@@ -96,6 +97,7 @@ export default async function ProductPage({
 
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20">
+      <AdminEditButton productId={product.id} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -139,8 +141,7 @@ export default async function ProductPage({
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-contain p-8 group-hover:scale-105 transition-transform duration-500"
-                    preload
-                    unoptimized
+                    priority
                   />
                 ) : (
                   <div className="h-full w-full flex items-center justify-center text-muted-foreground">

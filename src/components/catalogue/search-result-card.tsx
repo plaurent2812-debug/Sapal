@@ -33,7 +33,6 @@ export function SearchResultCard({ product, categorySlug }: { product: ClientPro
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-contain p-2 transition-transform duration-500 group-hover:scale-105"
-            unoptimized
           />
         ) : (
           <div className="h-full w-full flex items-center justify-center text-muted-foreground/40 text-sm">

@@ -7,6 +7,7 @@ export interface QuotePDFItem {
   productName: string
   quantity: number
   unitPriceHT: number
+  delai?: string
 }
 
 export interface QuotePDFData {
@@ -69,8 +70,8 @@ export function generateQuotePDF(data: QuotePDFData): jsPDF {
   doc.setFontSize(9)
   doc.setTextColor(200, 210, 230)
   doc.text('Mobilier urbain & signalisation', MARGIN_LEFT, 25)
-  doc.text('contact@sapal-signalisation.fr  |  04 XX XX XX XX', MARGIN_LEFT, 31)
-  doc.text('Zone Industrielle, 00000 Ville, France', MARGIN_LEFT, 37)
+  doc.text('societe@sapal.fr  |  06 22 90 28 54', MARGIN_LEFT, 31)
+  doc.text('260 Av. Michel Jourdan, 06150 Cannes', MARGIN_LEFT, 37)
 
   y = 52
 
@@ -179,6 +180,18 @@ export function generateQuotePDF(data: QuotePDFData): jsPDF {
     doc.setFont('helvetica', 'normal')
 
     y += ROW_HEIGHT
+
+    // Délai de livraison sous le nom du produit
+    if (item.delai) {
+      doc.setFontSize(7)
+      doc.setFont('helvetica', 'italic')
+      doc.setTextColor(...COLORS.secondary)
+      const delaiText = /^\d+$/.test(item.delai) ? `${item.delai} semaines` : item.delai
+      doc.text(`Délai : ${delaiText}`, TABLE_X + cols.name.x + 3, y + 3)
+      doc.setFontSize(8)
+      doc.setFont('helvetica', 'normal')
+      y += 5
+    }
   })
 
   // Bottom border of table
@@ -228,6 +241,18 @@ export function generateQuotePDF(data: QuotePDFData): jsPDF {
   doc.text(formatEUR(totalTTC), valueX, y + 7, { align: 'right' })
 
   y += 20
+
+  // ===== DELIVERY TIME =====
+  const delais = data.items.filter(i => i.delai).map(i => i.delai!)
+  if (delais.length > 0) {
+    if (y > 265) { doc.addPage(); y = 20 }
+    doc.setFontSize(9)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(...COLORS.primary)
+    const formatDelai = (d: string) => /^\d+$/.test(d) ? `${d} semaines` : d
+    doc.text(`Délai de livraison : ${[...new Set(delais)].map(formatDelai).join(', ')}`, MARGIN_LEFT, y)
+    y += 8
+  }
 
   // ===== VALIDITY =====
   if (y > 265) { doc.addPage(); y = 20 }

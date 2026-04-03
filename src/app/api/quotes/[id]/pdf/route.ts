@@ -1,4 +1,4 @@
-import { createServerClient } from '@/lib/supabase/server'
+import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { generateQuotePDF, type QuotePDFItem } from '@/lib/pdf/generate-quote-pdf'
 import type { NextRequest } from 'next/server'
 
@@ -8,7 +8,16 @@ export async function GET(
 ) {
   try {
     const { id } = await ctx.params
-    const supabase = createServerClient()
+
+    // Auth check: verify user and role
+    const authClient = await createServerSupabaseClient()
+    const { data: { user } } = await authClient.auth.getUser()
+    if (!user) {
+      return Response.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+    const role = (user.user_metadata?.role as string) ?? 'client'
+
+    const supabase = createServiceRoleClient()
 
     // Fetch quote with items
     const { data: quote, error: quoteError } = await supabase
@@ -19,6 +28,11 @@ export async function GET(
 
     if (quoteError || !quote) {
       return Response.json({ error: 'Devis introuvable' }, { status: 404 })
+    }
+
+    // Authorization: admin/gerant can access all, clients only their own
+    if (role !== 'admin' && role !== 'gerant' && quote.email !== user.email) {
+      return Response.json({ error: 'Accès refusé' }, { status: 403 })
     }
 
     // Fetch product prices for all items

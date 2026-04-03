@@ -2,11 +2,18 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "SAPAL Dev",
+      "name": "Site internet (Next.js)",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "SAPAL Worktree ProCity",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "-p", "3001"],
+      "cwd": ".worktrees/feature/catalogue-procity",
+      "port": 3001
     }
   ]
 }

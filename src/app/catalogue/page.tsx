@@ -4,8 +4,6 @@ import { getCategories } from "@/lib/data";
 import { ChevronRight, ArrowRight, ShieldCheck, Truck, Clock } from "lucide-react";
 import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = {
   title: "Catalogue | SAPAL Signalisation",
   description: "Découvrez notre gamme complète d'équipements urbains.",
@@ -84,7 +82,6 @@ export default async function CataloguePage() {
                       fill
                       sizes="80px"
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      unoptimized
                     />
                   ) : (
                     <div className="w-8 h-8 rounded bg-border text-muted-foreground" />

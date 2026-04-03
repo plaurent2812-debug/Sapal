@@ -136,7 +136,7 @@ export default function AdminProduitsPage() {
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-lg bg-secondary/30 overflow-hidden flex-shrink-0 flex items-center justify-center relative">
                               {product.image_url ? (
-                                <Image src={product.image_url} alt="" fill sizes="40px" className="object-contain p-1" unoptimized />
+                                <Image src={product.image_url} alt="" fill sizes="40px" className="object-contain p-1" />
                               ) : (
                                 <Package size={16} className="text-muted-foreground/40" />
                               )}

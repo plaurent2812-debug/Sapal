@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Serif_Display, Outfit } from "next/font/google";
+import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -7,13 +7,12 @@ import { ServiceWorkerRegister } from "@/components/pwa/sw-register";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const dmSerif = DM_Serif_Display({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: "400",
 });
 
-const outfit = Outfit({
+const dmSans = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
 });
@@ -56,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${dmSerif.variable} ${outfit.variable} antialiased`}>
+    <html lang="fr" className={`${spaceGrotesk.variable} ${dmSans.variable} antialiased`}>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <Header />
         <main id="main-content" className="flex-1 w-full">

@@ -3,7 +3,8 @@ import Image from 'next/image'
 import { CartButton } from '@/components/ui/cart-button'
 import { SearchButton } from '@/components/layout/search-button'
 import { MobileNav } from '@/components/layout/mobile-nav'
-import { Phone, Mail, FileText, User, ChevronDown } from 'lucide-react'
+import { AccountLink } from '@/components/layout/account-link'
+import { Phone, Mail, FileText, ChevronDown } from 'lucide-react'
 
 export function Header() {
   return (
@@ -16,10 +17,10 @@ export function Header() {
         <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
-              <Phone size={13} className="text-accent" /> 04 68 XX XX XX
+              <Phone size={13} className="text-accent" /> 06 22 90 28 54
             </span>
             <span className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
-              <Mail size={13} className="text-accent" /> contact@sapal-signalisation.com
+              <Mail size={13} className="text-accent" /> societe@sapal.fr
             </span>
           </div>
           <Link href="/contact" className="hover:text-accent transition-colors flex items-center gap-1.5 cursor-pointer font-medium">
@@ -33,7 +34,7 @@ export function Header() {
         {/* Mobile: logo + cart + hamburger on one line */}
         <div className="flex items-center justify-between gap-3 md:hidden">
           <Link href="/" className="flex-shrink-0 transition-all hover:opacity-80 duration-300">
-            <Image src="/logo.png" alt="SAPAL Signalisation" width={200} height={64} className="h-10 w-auto object-contain" preload />
+            <Image src="/logo.png" alt="SAPAL Signalisation" width={200} height={64} className="h-10 w-auto object-contain" priority />
           </Link>
           <div className="flex items-center gap-2">
             <CartButton />
@@ -49,7 +50,7 @@ export function Header() {
         {/* Desktop: original layout */}
         <div className="hidden md:flex items-center gap-8 justify-between">
           <Link href="/" className="flex-shrink-0 transition-all hover:opacity-80 hover:scale-[0.98] duration-300">
-            <Image src="/logo.png" alt="SAPAL Signalisation" width={200} height={64} className="h-16 w-auto object-contain" preload />
+            <Image src="/logo.png" alt="SAPAL Signalisation" width={200} height={64} className="h-16 w-auto object-contain" priority />
           </Link>
 
           {/* Search Bar */}
@@ -61,15 +62,10 @@ export function Header() {
           <div className="flex items-center gap-4 flex-shrink-0">
             <div className="hidden lg:flex flex-col items-end mr-4">
               <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Besoin d&apos;aide ?</span>
-              <span className="text-sm font-bold text-foreground">04 68 00 00 00</span>
+              <span className="text-sm font-bold text-foreground">06 22 90 28 54</span>
             </div>
             <CartButton />
-            <button aria-label="Mon compte" className="hidden sm:flex flex-col items-center justify-center text-muted-foreground hover:text-accent transition-colors cursor-pointer ml-2 group">
-              <div className="w-10 h-10 rounded-xl bg-secondary/50 flex items-center justify-center group-hover:bg-accent/10 transition-colors duration-300">
-                <User size={20} />
-              </div>
-              <span className="text-[9px] uppercase font-bold tracking-wider mt-1">Compte</span>
-            </button>
+            <AccountLink />
           </div>
         </div>
       </div>

@@ -59,14 +59,81 @@
 - [x] `page.tsx` fiche produit — fetch variants en parallèle, colonne droite déléguée à `ProductPageClient`
 - [x] `npm run build` — 0 erreur TypeScript
 
+## Fait (03/04/2026 — Espace Client & Automatisation Commandes)
+
+### Phase 1 : Fondations DB
+- [x] Nouvelles tables : `suppliers`, `orders`, `order_items`, `supplier_orders`, `supplier_order_items`
+- [x] Modifications : `products.supplier_id`, `client_profiles.account_status`, `quote_items.unit_price/variant_id`, `quotes.user_id`
+- [x] Séquences : `generate_order_number()`, `generate_bdc_number()`
+- [x] RLS complètes sur toutes les nouvelles tables
+- [x] Types TypeScript : SupplierRow, OrderRow, OrderItemRow, SupplierOrderRow, SupplierOrderItemRow
+- [x] Utilitaire Telegram partagé (`src/lib/telegram.ts`) — extraction du code inline des routes existantes
+- [x] Pennylane : ajout `createInvoice()` et `getInvoicePDF()`
+
+### Phase 2 : Auth & Inscription
+- [x] Page `/inscription` — formulaire client complet (email, mdp, entreprise, SIRET, TVA, type)
+- [x] Page `/connexion` — login unifié avec redirection par rôle
+- [x] Page `/compte-en-attente` — info post-inscription
+- [x] API `POST /api/auth/register` — inscription + profil pending + notif Telegram
+- [x] Middleware étendu : `/mon-compte/*` protégé avec vérification account_status
+
+### Phase 3 : Validation comptes
+- [x] Page `/admin/clients` — liste clients avec onglets (en attente/actifs/tous) + bouton valider
+- [x] API `GET /api/clients` — liste avec emails
+- [x] API `POST /api/clients/[id]/activate` — activation + email bienvenue Resend + notif Telegram
+
+### Phase 4 : Espace client
+- [x] Layout `/mon-compte/` — sidebar dédiée client (dashboard, devis, commandes, factures, profil)
+- [x] Dashboard client — stats devis/commandes/factures + actions rapides
+- [x] Page devis client — liste + boutons Accepter/Refuser
+- [x] Page profil client — édition infos entreprise
+- [x] Pages placeholder commandes + factures
+
+### Phase 5 : Accept/Reject devis
+- [x] API `POST /api/quotes/[id]/accept` — workflow complet : accepte devis → crée order → crée supplier_orders groupés par fournisseur
+- [x] API `POST /api/quotes/[id]/reject` — refuse devis + notif Telegram
+
+### Phase 6 : Fournisseurs
+- [x] CRUD API `/api/suppliers` — liste, création, édition, suppression (protégée si produits liés)
+- [x] Pages admin : `/admin/fournisseurs`, `/nouveau`, `/[id]`
+- [x] Validation Zod complète (SIRET, payment_terms enum)
+
+### Phase 7 : BDC PDF + envoi fournisseur
+- [x] Générateur BDC PDF (`src/lib/pdf/generate-bdc-pdf.ts`) — même style que devis/chorus
+- [x] Intégration dans route accept : BDC auto-envoyé aux fournisseurs 30j, mis en attente pour prépaiement
+- [x] Envoi email fournisseur via Resend avec BDC en PJ
+- [x] Envoi BDC via Telegram à SAPAL
+
+### Phase 8 : Admin commandes
+- [x] Page `/admin/commandes` — vue globale avec onglets + lignes expansibles (items + supplier_orders)
+- [x] Page `/admin/commandes/a-payer` — BDC en attente de paiement avec bouton "Payé"
+- [x] API `POST /api/supplier-orders/[id]/mark-paid` — confirme paiement + envoie BDC
+- [x] API `POST /api/supplier-orders/[id]/mark-delivered` — marque livraison fournisseur
+- [x] API `POST /api/orders/[id]/mark-delivered` — livraison complète + facturation Pennylane
+
+### Phase 9 : Client commandes + factures
+- [x] Page `/mon-compte/commandes` — commandes client avec statuts + détails expansibles
+- [x] Page `/mon-compte/factures` — factures téléchargeables (Pennylane ou PDF local)
+- [x] API `GET /api/invoices/[id]/pdf` — génération facture PDF à la demande
+
+### Phase 10 : Pennylane
+- [x] Intégration complète dans mark-delivered : get/create customer → create invoice → get PDF URL
+- [x] Fallback local si Pennylane non configuré
+
+### Phase 11 : Nettoyage
+- [x] Dashboard admin étendu : stats clients actifs/en attente + commandes en cours + quick links
+- [x] Header : lien dynamique Se connecter / Mon compte / Administration
+- [x] Quotes : user_id automatique pour les clients connectés
+- [x] Navigation admin : ajout Clients, Commandes, Fournisseurs
+
+---
+
 ## À faire
-- [ ] **Activer Vercel Analytics** — dans le dashboard Vercel → projet → Analytics → Enable
-- [ ] **Intégration Pennylane** — créer les devis dans Pennylane, récupérer le PDF, l'envoyer au client. Nécessite l'API key Pennylane
-- [ ] **Stats traffic dans le panel admin** — afficher les stats Vercel Analytics dans le dashboard client (via API Vercel)
-- [ ] **Déployer sur Vercel** — push git + lier au projet Vercel
+- [ ] **Déployer sur Vercel** — push git + lier au projet Vercel + configurer webhooks Supabase
+- [ ] **Assigner les fournisseurs** — renseigner les fournisseurs dans /admin/fournisseurs + assigner supplier_id aux produits
+- [ ] **Clé API Pennylane** — renseigner PENNYLANE_API_KEY dans .env.local
 - [ ] **Images produits** — beaucoup de produits n'ont pas d'image (champ image_url vide)
 - [ ] **Mobile admin** — le panel admin n'est pas optimisé mobile (sidebar fixe w-64)
-- [ ] **Email de confirmation devis** — envoyer un email au client quand un devis est créé/envoyé
-- [ ] **SEO** — meta descriptions par page, sitemap.xml, robots.txt
 - [ ] **Mentions légales** — page mentions légales complète (RGPD, cookies)
 - [ ] **Changer les mots de passe** — remplacer Sapal2026! par des mots de passe sécurisés en production
+- [ ] **Tests E2E** — tester le workflow complet inscription → devis → commande → facturation

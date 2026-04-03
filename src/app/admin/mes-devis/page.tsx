@@ -15,6 +15,8 @@ import {
   Download,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { STATUS_CONFIG, formatDate } from '@/lib/quote-utils'
+import { useDownloadPDF } from '@/hooks/useDownloadPDF'
 
 type QuoteStatus = 'pending' | 'sent' | 'accepted' | 'rejected'
 
@@ -37,26 +39,11 @@ interface QuoteWithItems {
   quote_items: QuoteItem[]
 }
 
-const STATUS_CONFIG: Record<QuoteStatus, { label: string; className: string }> = {
-  pending: { label: 'En attente', className: 'bg-amber-100 text-amber-800 border-amber-200' },
-  sent: { label: 'En cours', className: 'bg-blue-100 text-blue-800 border-blue-200' },
-  accepted: { label: 'Accept\u00e9', className: 'bg-green-100 text-green-800 border-green-200' },
-  rejected: { label: 'Refus\u00e9', className: 'bg-red-100 text-red-800 border-red-200' },
-}
-
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('fr-FR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  })
-}
-
 export default function MesDevisPage() {
   const [quotes, setQuotes] = useState<QuoteWithItems[]>([])
   const [loading, setLoading] = useState(true)
   const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [downloadingId, setDownloadingId] = useState<string | null>(null)
+  const { downloadingId, handleDownloadPDF } = useDownloadPDF()
 
   useEffect(() => {
     async function fetchMyQuotes() {
@@ -83,27 +70,6 @@ export default function MesDevisPage() {
 
     fetchMyQuotes()
   }, [])
-
-  async function handleDownloadPDF(quoteId: string) {
-    setDownloadingId(quoteId)
-    try {
-      const res = await fetch(`/api/quotes/${quoteId}/pdf`)
-      if (!res.ok) throw new Error('Erreur téléchargement')
-      const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = res.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] || 'devis.pdf'
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      URL.revokeObjectURL(url)
-    } catch {
-      alert('Erreur lors du téléchargement du PDF')
-    } finally {
-      setDownloadingId(null)
-    }
-  }
 
   function toggleExpand(id: string) {
     setExpandedId((prev) => (prev === id ? null : id))

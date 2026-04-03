@@ -4,8 +4,6 @@ import { getProcityProducts } from "@/lib/data"
 import { ProcityCatalogueClient } from "@/components/catalogue/procity-catalogue-client"
 import { ArrowLeft, Tag } from "lucide-react"
 
-export const dynamic = 'force-dynamic'
-
 export const metadata: Metadata = {
   title: "Catalogue ProCity | SAPAL Signalisation",
   description: "Découvrez notre gamme complète de produits ProCity : mobilier urbain, aires de jeux, équipements sportifs et miroirs de sécurité. Devis sur mesure en 24h.",

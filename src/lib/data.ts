@@ -1,4 +1,5 @@
 import { createBrowserClient } from '@/lib/supabase/client'
+import { unstable_cache } from 'next/cache'
 import type { Category, Product, ProductVariantRow, ProductOptionRow } from '@/lib/supabase/types'
 
 export type { Category, Product }
@@ -101,98 +102,126 @@ export function toClientCategory(c: Category): ClientCategory {
 
 // ---------- Fonctions de fetch ----------
 
-export async function getCategories(): Promise<ClientCategory[]> {
-  const supabase = createBrowserClient()
-  const { data, error } = await supabase
-    .from('categories')
-    .select('*')
-    .order('name')
+export const getCategories = unstable_cache(
+  async (): Promise<ClientCategory[]> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name')
 
-  if (error) throw error
-  return (data ?? []).map(toClientCategory)
-}
+    if (error) throw error
+    return (data ?? []).map(toClientCategory)
+  },
+  ['categories'],
+  { revalidate: 3600, tags: ['categories'] }
+)
 
-export async function getCategoryBySlug(slug: string): Promise<ClientCategory | null> {
-  const supabase = createBrowserClient()
-  const { data, error } = await supabase
-    .from('categories')
-    .select('*')
-    .eq('slug', slug)
-    .single()
+export const getCategoryBySlug = unstable_cache(
+  async (slug: string): Promise<ClientCategory | null> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('slug', slug)
+      .single()
 
-  if (error) return null
-  return toClientCategory(data)
-}
+    if (error) return null
+    return toClientCategory(data)
+  },
+  ['category-by-slug'],
+  { revalidate: 3600, tags: ['categories'] }
+)
 
-export async function getProductsByCategory(categoryId: string): Promise<ClientProduct[]> {
-  const supabase = createBrowserClient()
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .eq('category_id', categoryId)
-    .order('name')
+export const getProductsByCategory = unstable_cache(
+  async (categoryId: string): Promise<ClientProduct[]> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, categories(slug)')
+      .eq('category_id', categoryId)
+      .order('name')
 
-  if (error) throw error
-  return (data ?? []).map(p => toClientProduct(p))
-}
+    if (error) throw error
+    return (data ?? []).map((p: Product & { categories?: { slug: string } }) => toClientProduct(p, p.categories?.slug))
+  },
+  ['products-by-category'],
+  { revalidate: 3600, tags: ['products'] }
+)
 
-export async function getAllProducts(): Promise<ClientProduct[]> {
-  const supabase = createBrowserClient()
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .order('name')
+export const getAllProducts = unstable_cache(
+  async (): Promise<ClientProduct[]> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, categories(slug)')
+      .order('name')
 
-  if (error) throw error
-  return (data ?? []).map(p => toClientProduct(p))
-}
+    if (error) throw error
+    return (data ?? []).map((p: Product & { categories?: { slug: string } }) => toClientProduct(p, p.categories?.slug))
+  },
+  ['all-products'],
+  { revalidate: 3600, tags: ['products'] }
+)
 
-export async function getProductsCount(): Promise<number> {
-  const supabase = createBrowserClient()
-  const { count, error } = await supabase
-    .from('products')
-    .select('*', { count: 'exact', head: true })
+export const getProductsCount = unstable_cache(
+  async (): Promise<number> => {
+    const supabase = createBrowserClient()
+    const { count, error } = await supabase
+      .from('products')
+      .select('*', { count: 'exact', head: true })
 
-  if (error) return 0
-  return count || 0
-}
+    if (error) return 0
+    return count || 0
+  },
+  ['products-count'],
+  { revalidate: 3600, tags: ['products'] }
+)
 
 
-export async function getFeaturedProducts(limit: number = 4): Promise<ClientProduct[]> {
-  const supabase = createBrowserClient()
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .order('price', { ascending: false }) // On prend des produits un peu onéreux pour l'exemple
-    .limit(limit)
+export const getFeaturedProducts = unstable_cache(
+  async (limit: number = 4): Promise<ClientProduct[]> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, categories(slug)')
+      .order('price', { ascending: false })
+      .limit(limit)
 
-  if (error) throw error
-  return (data ?? []).map(p => toClientProduct(p))
-}
+    if (error) throw error
+    return (data ?? []).map((p: Product & { categories?: { slug: string } }) => toClientProduct(p, p.categories?.slug))
+  },
+  ['featured-products'],
+  { revalidate: 3600, tags: ['products'] }
+)
 
-export async function getProductBySlug(slug: string): Promise<ClientProduct | null> {
-  const supabase = createBrowserClient()
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .eq('slug', slug)
-    .single()
+export const getProductBySlug = unstable_cache(
+  async (slug: string): Promise<ClientProduct | null> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, categories(slug)')
+      .eq('slug', slug)
+      .single()
 
-  if (error) return null
-  return toClientProduct(data)
-}
+    if (error) return null
+    return toClientProduct(data, (data as Product & { categories?: { slug: string } }).categories?.slug)
+  },
+  ['product-by-slug'],
+  { revalidate: 3600, tags: ['products'] }
+)
 
 export async function getRelatedProducts(categoryId: string, excludeId: string, limit: number = 4): Promise<ClientProduct[]> {
   const supabase = createBrowserClient()
   const { data, error } = await supabase
     .from('products')
-    .select('*')
+    .select('*, categories(slug)')
     .eq('category_id', categoryId)
     .neq('id', excludeId)
     .limit(limit)
 
   if (error) throw error
-  return (data ?? []).map(p => toClientProduct(p))
+  return (data ?? []).map((p: Product & { categories?: { slug: string } }) => toClientProduct(p, p.categories?.slug))
 }
 
 export interface SearchFilters {
@@ -207,7 +236,7 @@ export async function searchProducts(query: string, filters?: SearchFilters): Pr
 
   let q = supabase
     .from('products')
-    .select('*')
+    .select('*, categories(slug)')
 
   // Text search fuzzy (pg_trgm) — si pas de filtres, utiliser la RPC
   if (query && !filters?.category && !filters?.minPrice && !filters?.maxPrice) {
@@ -273,7 +302,7 @@ export async function searchProducts(query: string, filters?: SearchFilters): Pr
   const { data, error } = await q
 
   if (error) throw error
-  return (data ?? []).map(p => toClientProduct(p))
+  return (data ?? []).map((p: Product & { categories?: { slug: string } }) => toClientProduct(p, p.categories?.slug))
 }
 
 // ---------- Recherche fuzzy (autocomplete) ----------
@@ -353,16 +382,20 @@ export async function getOptionsByProduct(productId: string): Promise<ProductOpt
   }))
 }
 
-export async function getProcityProducts(): Promise<ClientProduct[]> {
-  const supabase = createBrowserClient()
-  const { data, error } = await supabase
-    .from('products')
-    .select('*, categories(slug)')
-    .eq('supplier', 'procity')
-    .order('name')
+export const getProcityProducts = unstable_cache(
+  async (): Promise<ClientProduct[]> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('products')
+      .select('*, categories(slug)')
+      .eq('supplier', 'procity')
+      .order('name')
 
-  if (error) throw error
-  return (data ?? []).map((p: Product & { categories?: { slug: string } }) =>
-    toClientProduct(p, p.categories?.slug)
-  )
-}
+    if (error) throw error
+    return (data ?? []).map((p: Product & { categories?: { slug: string } }) =>
+      toClientProduct(p, p.categories?.slug)
+    )
+  },
+  ['procity-products'],
+  { revalidate: 3600, tags: ['products'] }
+)

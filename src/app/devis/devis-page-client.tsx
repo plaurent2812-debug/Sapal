@@ -5,7 +5,7 @@ import { useQuoteStore } from '@/store/useQuoteStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AnimatedSection } from '@/components/ui/motion';
-import { Trash2, Send, CheckCircle2, ArrowLeft, Building2, User, Mail, Phone, FileText, ShoppingCart, Minus, Plus, ArrowRight } from 'lucide-react';
+import { Trash2, Send, CheckCircle2, ArrowLeft, Building2, User, Mail, Phone, FileText, ShoppingCart, Minus, Plus, ArrowRight, Clock } from 'lucide-react';
 import { useState } from 'react';
 
 export default function DevisPageClient() {
@@ -37,6 +37,7 @@ export default function DevisPageClient() {
             productName: item.product.name,
             quantity: item.quantity,
             unitPrice: item.product.price,
+            delai: item.variantDelai || undefined,
           })),
         }),
       });
@@ -129,19 +130,19 @@ export default function DevisPageClient() {
                   <div key={item.product.id} className="bg-card rounded-xl border border-border/40 p-4 md:p-5 hover:border-border transition-colors">
                     <div className="flex gap-4">
                       {/* Image */}
-                      <div className="h-20 w-20 md:h-24 md:w-24 bg-secondary/20 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center relative">
+                      <Link href={item.product.categorySlug ? `/catalogue/${item.product.categorySlug}/${item.product.slug}` : `/catalogue`} className="h-20 w-20 md:h-24 md:w-24 bg-secondary/20 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center relative hover:ring-2 hover:ring-accent/30 transition-all">
                         {item.product.imageUrl ? (
-                          <Image src={item.product.imageUrl} alt={item.product.name} fill sizes="96px" className="object-contain p-2" unoptimized />
+                          <Image src={item.product.imageUrl} alt={item.product.name} fill sizes="96px" className="object-contain p-2" />
                         ) : (
                           <FileText size={24} className="text-muted-foreground/30" />
                         )}
-                      </div>
+                      </Link>
 
                       {/* Infos */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
-                            <h3 className="font-bold text-foreground leading-tight truncate">{item.product.name}</h3>
+                            <Link href={item.product.categorySlug ? `/catalogue/${item.product.categorySlug}/${item.product.slug}` : `/catalogue`} className="font-bold text-foreground leading-tight truncate block hover:text-accent transition-colors">{item.product.name}</Link>
                             <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{item.product.description}</p>
                             {item.product.reference && (
                               <p className="text-[10px] font-mono text-muted-foreground mt-1">Réf. {item.product.reference}</p>
@@ -164,16 +165,23 @@ export default function DevisPageClient() {
                             </button>
                           </div>
 
-                          {item.product.price > 0 && (
-                            <div className="text-right">
-                              <p className="text-lg font-extrabold text-foreground">
-                                {(item.product.price * item.quantity).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
-                              </p>
-                              <p className="text-[10px] text-muted-foreground">
-                                {item.product.price.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € HT / unité
-                              </p>
-                            </div>
-                          )}
+                          <div className="flex items-center gap-4">
+                            {item.variantDelai && (
+                              <span className="flex items-center gap-1 text-xs text-muted-foreground bg-secondary/30 px-2.5 py-1 rounded-lg">
+                                <Clock size={12} className="text-accent" /> {/^\d+$/.test(item.variantDelai) ? `${item.variantDelai} semaines` : item.variantDelai}
+                              </span>
+                            )}
+                            {item.product.price > 0 && (
+                              <div className="text-right">
+                                <p className="text-lg font-extrabold text-foreground">
+                                  {(item.product.price * item.quantity).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
+                                </p>
+                                <p className="text-[10px] text-muted-foreground">
+                                  {item.product.price.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € HT / unité
+                                </p>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -265,6 +273,16 @@ export default function DevisPageClient() {
                           <span>{totalPrice.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</span>
                         </div>
                       )}
+                      {items.some(item => item.variantDelai) && (() => {
+                        const delais = [...new Set(items.filter(i => i.variantDelai).map(i => i.variantDelai!))]
+                        const formatDelai = (d: string) => /^\d+$/.test(d) ? `${d} semaines` : d
+                        return (
+                          <div className="flex items-center gap-2 mt-3 pt-3 border-t border-primary/10 text-sm text-muted-foreground">
+                            <Clock size={14} className="text-accent flex-shrink-0" />
+                            <span>Délai de livraison : <strong className="text-foreground">{delais.map(formatDelai).join(', ')}</strong></span>
+                          </div>
+                        )
+                      })()}
                     </div>
 
                     <Button

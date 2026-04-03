@@ -105,6 +105,7 @@ export function ProductPageClient({ product, variants, options, category, catego
         product={product}
         selectedVariant={selectedVariant}
         hasVariants={variants.length > 0}
+        categorySlug={categorySlug}
       />
 
       <ProductOptionsSection options={options} />

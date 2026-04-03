@@ -10,12 +10,12 @@ import {
   FolderOpen,
   FileText,
   LogOut,
-  PlusCircle,
-  User,
-  ClipboardList,
+  Users,
+  Truck,
+  ShoppingCart,
 } from 'lucide-react'
 
-type UserRole = 'admin' | 'client'
+type UserRole = 'admin' | 'gerant' | 'client'
 
 interface NavItem {
   href: string
@@ -27,14 +27,19 @@ const adminNavItems: NavItem[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/produits', label: 'Produits', icon: Package },
   { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
+  { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
   { href: '/admin/devis', label: 'Devis', icon: FileText },
+  { href: '/admin/clients', label: 'Clients', icon: Users },
+  { href: '/admin/commandes', label: 'Commandes', icon: ShoppingCart },
 ]
 
-const clientNavItems: NavItem[] = [
+const gerantNavItems: NavItem[] = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/profil', label: 'Mon Profil', icon: User },
-  { href: '/admin/mes-devis', label: 'Mes Devis', icon: ClipboardList },
-  { href: '/admin/devis/nouveau', label: 'Nouveau Devis', icon: PlusCircle },
+  { href: '/admin/devis', label: 'Devis', icon: FileText },
+  { href: '/admin/produits', label: 'Produits', icon: Package },
+  { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
+  { href: '/admin/clients', label: 'Clients', icon: Users },
+  { href: '/admin/commandes', label: 'Commandes', icon: ShoppingCart },
 ]
 
 export default function AdminLayout({
@@ -94,8 +99,8 @@ export default function AdminLayout({
     return null
   }
 
-  const navItems = role === 'admin' ? adminNavItems : clientNavItems
-  const roleBadge = role === 'admin' ? 'Administrateur' : 'SAPAL'
+  const navItems = role === 'admin' ? adminNavItems : gerantNavItems
+  const roleBadge = role === 'admin' ? 'Administrateur' : role === 'gerant' ? 'Gérant' : 'Gérant'
 
   return (
     <div className="fixed inset-0 flex bg-background z-[100]">

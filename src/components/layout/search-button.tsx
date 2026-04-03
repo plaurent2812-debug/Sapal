@@ -91,10 +91,11 @@ export function SearchButton() {
 
       {/* Dropdown suggestions */}
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-border/50 rounded-xl shadow-xl z-50 overflow-hidden">
+        <div role="listbox" className="absolute top-full left-0 right-0 mt-1 bg-white border border-border/50 rounded-xl shadow-xl z-50 overflow-hidden">
           {suggestions.map((s) => (
             <Link
               key={s.id}
+              role="option"
               href={`/catalogue/${s.categorySlug}/${s.slug}`}
               onClick={() => setShowSuggestions(false)}
               className="flex items-center gap-3 px-4 py-3 hover:bg-secondary/30 transition-colors border-b border-border/20 last:border-b-0"

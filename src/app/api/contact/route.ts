@@ -1,5 +1,19 @@
-import { createServerClient } from '@/lib/supabase/server'
+import { createServiceRoleClient } from '@/lib/supabase/server'
+import { checkRateLimit } from '@/lib/rate-limit'
+import { sendTelegramMessage } from '@/lib/telegram'
+import { Resend } from 'resend'
 import { z } from 'zod'
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
   name: z.string().min(1),
@@ -10,11 +24,17 @@ const contactSchema = z.object({
 })
 
 export async function POST(request: Request) {
+  const ip = request.headers.get('x-forwarded-for') ?? 'unknown'
+  if (!checkRateLimit(ip, 10, 60000)) {
+    return Response.json({ error: 'Trop de requêtes, réessayez dans 1 minute' }, { status: 429 })
+  }
+
   try {
     const body = await request.json()
     const parsed = contactSchema.safeParse(body)
 
     if (!parsed.success) {
+      console.error('Validation error:', parsed.error.flatten())
       return Response.json(
         { error: 'Données invalides', details: parsed.error.flatten() },
         { status: 400 }
@@ -23,7 +43,7 @@ export async function POST(request: Request) {
 
     const { name, email, phone, subject, message } = parsed.data
 
-    const supabase = createServerClient()
+    const supabase = createServiceRoleClient()
     const { error } = await supabase
       .from('contacts')
       .insert({
@@ -39,36 +59,48 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Erreur lors de l\'enregistrement' }, { status: 500 })
     }
 
-    // Notification Telegram
-    const token = process.env.TELEGRAM_BOT_TOKEN
-    const chatId = process.env.TELEGRAM_CHAT_ID
-    if (token && chatId) {
-      const text = [
-        `📩 *Nouveau message de contact*`,
-        ``,
-        `*Nom :* ${name}`,
-        `*Email :* ${email}`,
-        phone ? `*Tél :* ${phone}` : '',
-        `*Sujet :* ${subject}`,
-        ``,
-        `*Message :*`,
-        message,
-      ].filter(Boolean).join('\n')
-
+    // Envoi email via Resend
+    if (process.env.RESEND_API_KEY) {
       try {
-        await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text,
-            parse_mode: 'Markdown',
-          }),
+        const emailResult = await resend.emails.send({
+          from: 'noreply@opti-pro.fr',
+          to: 'p.laurent@opti-pro.fr',
+          subject: `Nouveau message de contact: ${escapeHtml(subject)}`,
+          html: `
+            <h2>Nouveau message de contact</h2>
+            <p><strong>Nom :</strong> ${escapeHtml(name)}</p>
+            <p><strong>Email :</strong> ${escapeHtml(email)}</p>
+            ${phone ? `<p><strong>Téléphone :</strong> ${escapeHtml(phone)}</p>` : ''}
+            <p><strong>Sujet :</strong> ${escapeHtml(subject)}</p>
+            <h3>Message :</h3>
+            <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
+          `,
+          replyTo: email,
         })
+        console.log('Email sent successfully:', emailResult)
       } catch (err) {
-        console.error('Telegram notification failed:', err)
+        console.error('Email sending failed:', err)
       }
+    } else {
+      console.warn('RESEND_API_KEY not configured')
     }
+
+    // Notification Telegram
+    const telegramText = [
+      `📩 *Nouveau message de contact*`,
+      ``,
+      `*Nom :* ${name}`,
+      `*Email :* ${email}`,
+      phone ? `*Tél :* ${phone}` : '',
+      `*Sujet :* ${subject}`,
+      ``,
+      `*Message :*`,
+      message,
+    ].filter(Boolean).join('\n')
+
+    sendTelegramMessage(telegramText).catch(e => {
+      console.error('Failed to send telegram notification:', e)
+    })
 
     return Response.json({ success: true })
   } catch {
