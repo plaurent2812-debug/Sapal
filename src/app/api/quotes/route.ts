@@ -53,6 +53,7 @@ export async function POST(request: Request) {
         email,
         phone,
         message: message || null,
+        status: 'sent',
       })
 
     if (quoteError) {
@@ -176,8 +177,43 @@ async function sendNotifications(params: {
     `📎 Devis ${shortRef} — ${params.entity}`
   )
 
-  // 2. Email au gérant SAPAL
+  // 2. Email au client avec le devis PDF
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
+  const fromAddress = process.env.RESEND_FROM_QUOTES_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <devis@sapal-signaletique.fr>'
+
+  try {
+    await resend.emails.send({
+      from: fromAddress,
+      to: params.email,
+      subject: `Votre devis SAPAL — Réf. ${shortRef}`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1a1a1a">
+          <div style="background:#1e293b;color:white;padding:24px;border-radius:8px 8px 0 0">
+            <h1 style="margin:0;font-size:20px">SAPAL Signalisation</h1>
+            <p style="margin:4px 0 0;opacity:0.7;font-size:14px">Votre devis</p>
+          </div>
+          <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
+            <p>Bonjour ${params.contactName},</p>
+            <p>Veuillez trouver ci-joint votre devis <strong>Réf. ${shortRef}</strong> établi par SAPAL Signalisation.</p>
+            <p>Pour accepter ce devis et passer commande, connectez-vous à votre espace client :</p>
+            <div style="text-align:center;margin:24px 0">
+              <a href="${siteUrl}/mon-compte/devis" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Accéder à mon espace client</a>
+            </div>
+            <p style="color:#6b7280;font-size:13px">Pour toute question, contactez-nous à <a href="mailto:societe@sapal.fr">societe@sapal.fr</a> ou au 06 22 90 28 54.</p>
+            <p>Cordialement,<br><strong>L'équipe SAPAL Signalisation</strong></p>
+          </div>
+        </div>
+      `,
+      attachments: [{
+        filename: `devis-${shortRef}.pdf`,
+        content: params.pdfBuffer.toString('base64'),
+      }],
+    })
+  } catch (emailErr) {
+    console.error('Failed to send client quote email:', emailErr)
+  }
+
+  // 3. Email au gérant SAPAL
   const gerantEmail = process.env.SAPAL_GERANT_EMAIL || 'societe@sapal.fr'
 
   const itemsHtml = params.items.map(i => {
