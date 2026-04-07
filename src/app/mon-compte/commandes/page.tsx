@@ -11,10 +11,13 @@ import {
   Calendar,
   Package,
   FileText,
+  Upload,
+  MapPin,
+  CheckCircle2,
 } from 'lucide-react'
 import { formatDate } from '@/lib/quote-utils'
 
-type OrderStatus = 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
+type OrderStatus = 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled' | 'awaiting_bc'
 
 interface OrderItem {
   id: string
@@ -31,10 +34,18 @@ interface Order {
   total_ttc: number | null
   created_at: string
   estimated_delivery: string | null
+  bc_file_url: string | null
+  delivery_address: string | null
+  delivery_postal_code: string | null
+  delivery_city: string | null
   order_items: OrderItem[]
 }
 
 const ORDER_STATUS_CONFIG: Record<OrderStatus, { label: string; className: string }> = {
+  awaiting_bc: {
+    label: 'En attente de votre BC',
+    className: 'bg-amber-100 text-amber-800 border-amber-200',
+  },
   processing: {
     label: 'En cours de traitement',
     className: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -67,9 +78,43 @@ export default function MonCompteCommandesPage() {
   const [loading, setLoading] = useState(true)
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
+  // BC upload state
+  const [bcFile, setBcFile] = useState<File | null>(null)
+  const [deliveryAddress, setDeliveryAddress] = useState('')
+  const [deliveryPostalCode, setDeliveryPostalCode] = useState('')
+  const [deliveryCity, setDeliveryCity] = useState('')
+  const [uploadingBcOrderId, setUploadingBcOrderId] = useState<string | null>(null)
+  const [profileLoaded, setProfileLoaded] = useState(false)
+  const [bcUploadError, setBcUploadError] = useState<string | null>(null)
+  const [bcUploadSuccess, setBcUploadSuccess] = useState<string | null>(null)
+
   useEffect(() => {
     fetchMyOrders()
+    loadDeliveryProfile()
   }, [])
+
+  async function loadDeliveryProfile() {
+    try {
+      const supabase = createBrowserClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.user) {
+        const { data: profile } = await supabase
+          .from('client_profiles')
+          .select('address, postal_code, city')
+          .eq('user_id', session.user.id)
+          .single()
+        if (profile) {
+          if (profile.address) setDeliveryAddress(profile.address)
+          if (profile.postal_code) setDeliveryPostalCode(profile.postal_code)
+          if (profile.city) setDeliveryCity(profile.city)
+        }
+      }
+    } catch {
+      // non-blocking — silently ignore
+    } finally {
+      setProfileLoaded(true)
+    }
+  }
 
   async function fetchMyOrders() {
     const supabase = createBrowserClient()
@@ -82,7 +127,7 @@ export default function MonCompteCommandesPage() {
 
     const { data, error } = await supabase
       .from('orders')
-      .select('id, order_number, status, total_ttc, created_at, estimated_delivery, order_items(id, product_name, variant_label, quantity, unit_price)')
+      .select('id, order_number, status, total_ttc, created_at, estimated_delivery, bc_file_url, delivery_address, delivery_postal_code, delivery_city, order_items(id, product_name, variant_label, quantity, unit_price)')
       .eq('user_id', session.user.id)
       .order('created_at', { ascending: false })
 
@@ -93,8 +138,61 @@ export default function MonCompteCommandesPage() {
     setLoading(false)
   }
 
+  async function handleUploadBC(orderId: string) {
+    setBcUploadError(null)
+    setBcUploadSuccess(null)
+
+    if (!bcFile) {
+      setBcUploadError('Veuillez sélectionner un fichier BC.')
+      return
+    }
+    if (!deliveryAddress.trim()) {
+      setBcUploadError("Veuillez renseigner l'adresse de livraison.")
+      return
+    }
+    if (!deliveryPostalCode.trim()) {
+      setBcUploadError('Veuillez renseigner le code postal.')
+      return
+    }
+    if (!deliveryCity.trim()) {
+      setBcUploadError('Veuillez renseigner la ville.')
+      return
+    }
+
+    setUploadingBcOrderId(orderId)
+
+    try {
+      const formData = new FormData()
+      formData.append('bc_file', bcFile)
+      formData.append('delivery_address', deliveryAddress.trim())
+      formData.append('delivery_postal_code', deliveryPostalCode.trim())
+      formData.append('delivery_city', deliveryCity.trim())
+
+      const response = await fetch(`/api/orders/${orderId}/upload-bc`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => ({}))
+        throw new Error(payload?.error ?? 'Une erreur est survenue lors de l\'envoi.')
+      }
+
+      setBcUploadSuccess('Votre bon de commande a bien été envoyé.')
+      setBcFile(null)
+      await fetchMyOrders()
+    } catch (err) {
+      setBcUploadError(err instanceof Error ? err.message : 'Une erreur est survenue.')
+    } finally {
+      setUploadingBcOrderId(null)
+    }
+  }
+
   function toggleExpand(id: string) {
     setExpandedId((prev) => (prev === id ? null : id))
+    // Reset upload feedback when switching rows
+    setBcUploadError(null)
+    setBcUploadSuccess(null)
   }
 
   return (
@@ -149,6 +247,8 @@ export default function MonCompteCommandesPage() {
                       className: 'bg-muted text-muted-foreground border-border',
                     }
                     const itemCount = order.order_items?.length ?? 0
+                    const isAwaitingBC = order.status === 'awaiting_bc'
+                    const isUploadingThisOrder = uploadingBcOrderId === order.id
 
                     return (
                       <Fragment key={order.id}>
@@ -275,6 +375,113 @@ export default function MonCompteCommandesPage() {
                                   </div>
                                 </div>
                               </div>
+
+                              {/* BC upload form — only shown when status is awaiting_bc */}
+                              {isAwaitingBC && (
+                                <div className="mt-6 border-t border-amber-200 pt-6">
+                                  <div className="rounded-lg border border-amber-200 bg-amber-50 p-5">
+                                    <h3 className="font-semibold text-sm text-amber-900 mb-1 flex items-center gap-2">
+                                      <Upload size={15} className="text-amber-700" />
+                                      Transmettre votre bon de commande
+                                    </h3>
+                                    <p className="text-xs text-amber-800 mb-4">
+                                      Pour finaliser cette commande, veuillez joindre votre bon de commande (BC) et confirmer l&apos;adresse de livraison.
+                                    </p>
+
+                                    <div className="space-y-4" key={profileLoaded ? 'loaded' : 'loading'}>
+                                      {/* File input */}
+                                      <div className="space-y-1.5">
+                                        <label className="text-xs font-semibold text-amber-900 flex items-center gap-1.5">
+                                          <FileText size={13} />
+                                          Bon de commande <span className="text-red-600">*</span>
+                                        </label>
+                                        <input
+                                          type="file"
+                                          accept=".pdf,.jpg,.jpeg,.png"
+                                          onChange={(e) => setBcFile(e.target.files?.[0] ?? null)}
+                                          className="w-full text-sm text-amber-900 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200 cursor-pointer bg-white border border-amber-200 rounded-lg px-3 py-2 transition-colors"
+                                        />
+                                        <p className="text-xs text-amber-700">Formats acceptés : PDF, JPEG, PNG</p>
+                                      </div>
+
+                                      {/* Delivery address */}
+                                      <div className="space-y-1.5">
+                                        <label className="text-xs font-semibold text-amber-900 flex items-center gap-1.5">
+                                          <MapPin size={13} />
+                                          Adresse de livraison <span className="text-red-600">*</span>
+                                        </label>
+                                        <input
+                                          type="text"
+                                          placeholder="Adresse"
+                                          value={deliveryAddress}
+                                          onChange={(e) => setDeliveryAddress(e.target.value)}
+                                          className="w-full text-sm bg-white border border-amber-200 rounded-lg px-3 py-2 placeholder:text-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-colors"
+                                        />
+                                      </div>
+
+                                      <div className="grid grid-cols-2 gap-3">
+                                        <div className="space-y-1.5">
+                                          <label className="text-xs font-semibold text-amber-900">
+                                            Code postal <span className="text-red-600">*</span>
+                                          </label>
+                                          <input
+                                            type="text"
+                                            placeholder="Ex: 06400"
+                                            value={deliveryPostalCode}
+                                            onChange={(e) => setDeliveryPostalCode(e.target.value)}
+                                            className="w-full text-sm bg-white border border-amber-200 rounded-lg px-3 py-2 placeholder:text-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-colors"
+                                          />
+                                        </div>
+                                        <div className="space-y-1.5">
+                                          <label className="text-xs font-semibold text-amber-900">
+                                            Ville <span className="text-red-600">*</span>
+                                          </label>
+                                          <input
+                                            type="text"
+                                            placeholder="Ex: Cannes"
+                                            value={deliveryCity}
+                                            onChange={(e) => setDeliveryCity(e.target.value)}
+                                            className="w-full text-sm bg-white border border-amber-200 rounded-lg px-3 py-2 placeholder:text-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-colors"
+                                          />
+                                        </div>
+                                      </div>
+
+                                      {/* Feedback messages */}
+                                      {bcUploadError && expandedId === order.id && (
+                                        <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                                          {bcUploadError}
+                                        </p>
+                                      )}
+                                      {bcUploadSuccess && expandedId === order.id && (
+                                        <p className="text-xs text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2 flex items-center gap-2">
+                                          <CheckCircle2 size={13} />
+                                          {bcUploadSuccess}
+                                        </p>
+                                      )}
+
+                                      {/* Submit button */}
+                                      <button
+                                        type="button"
+                                        onClick={() => handleUploadBC(order.id)}
+                                        disabled={isUploadingThisOrder}
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-600 text-white text-sm font-semibold hover:bg-amber-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+                                      >
+                                        {isUploadingThisOrder ? (
+                                          <>
+                                            <Loader2 size={15} className="animate-spin" />
+                                            Envoi en cours...
+                                          </>
+                                        ) : (
+                                          <>
+                                            <Upload size={15} />
+                                            Valider et envoyer ma commande
+                                          </>
+                                        )}
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </td>
                           </tr>
                         )}

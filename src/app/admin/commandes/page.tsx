@@ -16,7 +16,7 @@ import {
   FileDown,
 } from 'lucide-react'
 
-type OrderStatus = 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
+type OrderStatus = 'processing' | 'awaiting_bc' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
 type OrderSource = 'site' | 'admin' | 'telephone'
 type FilterTab = 'all' | 'processing' | 'delivered' | 'invoiced'
 
@@ -54,6 +54,10 @@ interface Order {
   source?: OrderSource | null
   total_ttc: number | null
   created_at: string
+  bc_file_url?: string | null
+  delivery_address?: string | null
+  delivery_postal_code?: string | null
+  delivery_city?: string | null
   quotes: Quote | null
   order_items: OrderItem[]
   supplier_orders: SupplierOrder[]
@@ -63,6 +67,10 @@ const STATUS_CONFIG: Record<OrderStatus, { label: string; className: string }> =
   processing: {
     label: 'En cours',
     className: 'bg-blue-100 text-blue-700',
+  },
+  awaiting_bc: {
+    label: 'En attente BC',
+    className: 'bg-amber-100 text-amber-700',
   },
   partially_delivered: {
     label: 'Partiellement livrée',
@@ -115,7 +123,8 @@ export default function AdminCommandesPage() {
     const { data, error: fetchError } = await supabase
       .from('orders')
       .select(`
-        *,
+        id, order_number, status, source, total_ttc, created_at,
+        bc_file_url, delivery_address, delivery_postal_code, delivery_city,
         order_items(*),
         quotes(entity, contact_name, email),
         supplier_orders(id, supplier_id, bdc_number, status, payment_terms, suppliers(name))
@@ -184,14 +193,14 @@ export default function AdminCommandesPage() {
   }
 
   const filteredOrders = orders.filter((o) => {
-    if (activeTab === 'processing') return o.status === 'processing' || o.status === 'partially_delivered'
+    if (activeTab === 'processing') return o.status === 'processing' || o.status === 'awaiting_bc' || o.status === 'partially_delivered'
     if (activeTab === 'delivered') return o.status === 'delivered'
     if (activeTab === 'invoiced') return o.status === 'invoiced'
     return true
   })
 
   const processingCount = orders.filter(
-    (o) => o.status === 'processing' || o.status === 'partially_delivered'
+    (o) => o.status === 'processing' || o.status === 'awaiting_bc' || o.status === 'partially_delivered'
   ).length
   const deliveredCount = orders.filter((o) => o.status === 'delivered').length
   const invoicedCount = orders.filter((o) => o.status === 'invoiced').length
@@ -296,7 +305,9 @@ export default function AdminCommandesPage() {
                       className: 'bg-muted text-muted-foreground',
                     }
                     const canMarkDelivered =
-                      order.status === 'processing' || order.status === 'partially_delivered'
+                      order.status === 'processing' ||
+                      order.status === 'awaiting_bc' ||
+                      order.status === 'partially_delivered'
 
                     return (
                       <Fragment key={order.id}>
@@ -473,7 +484,40 @@ export default function AdminCommandesPage() {
                                     </p>
                                   )}
 
+                                  {order.bc_file_url && (
+                                    <div className="mt-4">
+                                      <a
+                                        href={order.bc_file_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition-colors"
+                                      >
+                                        <FileDown size={14} />
+                                        Bon de commande client
+                                      </a>
+                                    </div>
+                                  )}
+
+                                  {(order.delivery_address || order.delivery_city) && (
+                                    <div className="mt-4 rounded-lg border border-border/50 bg-background px-3 py-2.5 text-sm space-y-0.5">
+                                      <p className="font-semibold text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                                        Adresse de livraison
+                                      </p>
+                                      {order.delivery_address && (
+                                        <p>{order.delivery_address}</p>
+                                      )}
+                                      {(order.delivery_postal_code || order.delivery_city) && (
+                                        <p>
+                                          {[order.delivery_postal_code, order.delivery_city]
+                                            .filter(Boolean)
+                                            .join(' ')}
+                                        </p>
+                                      )}
+                                    </div>
+                                  )}
+
                                   {(order.status === 'processing' ||
+                                    order.status === 'awaiting_bc' ||
                                     order.status === 'partially_delivered') && (
                                     <div className="mt-4">
                                       <button
