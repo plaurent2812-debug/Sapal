@@ -1,6 +1,5 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
-import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
-import { generateBdcPDF } from '@/lib/pdf/generate-bdc-pdf'
+import { sendTelegramMessage } from '@/lib/telegram'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -100,7 +99,7 @@ export async function POST(
           quote_id: id,
           user_id: user.id,
           order_number: orderNumber,
-          status: 'processing',
+          status: 'awaiting_bc',
           total_ht: totalHT,
           total_ttc: totalTTC,
         })
@@ -137,192 +136,16 @@ export async function POST(
         }
       })
 
-      const { data: insertedOrderItems, error: orderItemsError } = await serviceClient
+      const { error: orderItemsError } = await serviceClient
         .from('order_items')
         .insert(orderItemsPayload)
-        .select('id, supplier_id, product_id, product_name, variant_label, quantity, unit_price')
 
-      if (orderItemsError || !insertedOrderItems) {
+      if (orderItemsError) {
         console.error('Order items insert error:', orderItemsError)
         return Response.json({ error: 'Erreur lors de l\'enregistrement des articles' }, { status: 500 })
       }
 
-      // 10. Group order items by supplier_id (null supplier_id = auto-handled, skip)
-      const supplierGroups = new Map<string, typeof insertedOrderItems>()
-      for (const item of insertedOrderItems) {
-        if (!item.supplier_id) continue
-        const group = supplierGroups.get(item.supplier_id) ?? []
-        group.push(item)
-        supplierGroups.set(item.supplier_id, group)
-      }
-
-      let supplierOrderCount = 0
-
-      // 11. For each supplier group, create a supplier_order
-      for (const [supplierId, items] of supplierGroups) {
-        // a. Fetch supplier data
-        const { data: supplier, error: supplierError } = await serviceClient
-          .from('suppliers')
-          .select('id, name, email, payment_terms')
-          .eq('id', supplierId)
-          .single()
-
-        if (supplierError || !supplier) {
-          console.error(`Supplier fetch error for ${supplierId}:`, supplierError)
-          continue // Skip this supplier, log and move on
-        }
-
-        // b. Generate BDC number
-        const { data: bdcNumber, error: bdcNumberError } = await serviceClient
-          .rpc('generate_bdc_number')
-
-        if (bdcNumberError || !bdcNumber) {
-          console.error('generate_bdc_number RPC error:', bdcNumberError)
-          continue
-        }
-
-        // c. Calculate group total
-        const groupTotalHT = items.reduce(
-          (sum: number, item: { unit_price: number; quantity: number }) =>
-            sum + item.unit_price * item.quantity,
-          0
-        )
-
-        // d. Determine status based on payment_terms
-        const isPrePayment = supplier.payment_terms === 'prepayment'
-        const supplierOrderStatus = isPrePayment ? 'awaiting_payment' : 'sent'
-        const sentAt = isPrePayment ? null : new Date().toISOString()
-
-        // Insert supplier_order
-        const { data: supplierOrder, error: supplierOrderError } = await serviceClient
-          .from('supplier_orders')
-          .insert({
-            order_id: order.id,
-            supplier_id: supplierId,
-            bdc_number: bdcNumber,
-            status: supplierOrderStatus,
-            total_ht: groupTotalHT,
-            payment_terms: supplier.payment_terms,
-            sent_at: sentAt,
-          })
-          .select('id')
-          .single()
-
-        if (supplierOrderError || !supplierOrder) {
-          console.error(`Supplier order insert error for ${supplierId}:`, supplierOrderError)
-          continue
-        }
-
-        // e. Insert supplier_order_items
-        const supplierOrderItemsPayload = items.map((item: {
-          id: string
-          product_id: string
-          product_name: string
-          variant_label?: string | null
-          quantity: number
-          unit_price: number
-        }) => ({
-          supplier_order_id: supplierOrder.id,
-          order_item_id: item.id,
-          product_id: item.product_id,
-          product_name: item.product_name,
-          variant_label: item.variant_label ?? null,
-          quantity: item.quantity,
-          unit_price: item.unit_price,
-        }))
-
-        const { error: supplierOrderItemsError } = await serviceClient
-          .from('supplier_order_items')
-          .insert(supplierOrderItemsPayload)
-
-        if (supplierOrderItemsError) {
-          console.error(`Supplier order items insert error for ${supplierId}:`, supplierOrderItemsError)
-          // Continue — supplier_order exists, items missing is recoverable manually
-        }
-
-        supplierOrderCount++
-
-        // ===== BDC PDF generation + dispatch (non-blocking) =====
-        void (async () => {
-          try {
-            const bdcItems = items.map((item: {
-              product_id: string
-              product_name: string
-              variant_label?: string | null
-              quantity: number
-              unit_price: number
-            }) => ({
-              reference: item.product_id,
-              name: item.product_name,
-              variantLabel: item.variant_label ?? undefined,
-              quantity: item.quantity,
-              unitPrice: item.unit_price,
-            }))
-
-            const pdfBuffer = generateBdcPDF({
-              bdcNumber,
-              date: new Date().toLocaleDateString('fr-FR'),
-              supplier: {
-                name: supplier.name,
-                email: supplier.email ?? undefined,
-              },
-              items: bdcItems,
-              totalHT: groupTotalHT,
-            })
-
-            if (isPrePayment) {
-              // Do not send to supplier yet — notify SAPAL via Telegram only
-              sendTelegramMessage(
-                `\u23f3 *BDC en attente de paiement*\n\n` +
-                `N\u00b0 : ${bdcNumber}\n` +
-                `Fournisseur : ${supplier.name}\n` +
-                `Total HT : ${groupTotalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} \u20ac\n` +
-                `\u27a1\ufe0f Le BDC sera envoy\u00e9 au fournisseur apr\u00e8s r\u00e9glement.`
-              ).catch(() => {})
-            } else {
-              // payment_terms === '30j' (or other non-prepayment) — send to supplier
-              const emailSent = supplier.email
-                ? await (async () => {
-                    try {
-                      const fromAddress = process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal-signaletique.fr>'
-                      const emailHtml = `
-                        <p>Bonjour,</p>
-                        <p>Veuillez trouver ci-joint notre bon de commande <strong>${bdcNumber}</strong>.</p>
-                        <p>Cordialement,<br>SAPAL Signalisation</p>
-                      `
-                      await resend.emails.send({
-                        from: fromAddress,
-                        to: supplier.email!,
-                        subject: `Bon de commande ${bdcNumber} - SAPAL Signalisation`,
-                        html: emailHtml,
-                        attachments: [{
-                          filename: `${bdcNumber}.pdf`,
-                          content: pdfBuffer.toString('base64'),
-                        }],
-                      })
-                      return true
-                    } catch (emailErr) {
-                      console.error(`BDC email send error for ${bdcNumber}:`, emailErr)
-                      return false
-                    }
-                  })()
-                : false
-
-              // Send BDC PDF to SAPAL via Telegram
-              sendTelegramDocument(
-                pdfBuffer,
-                `${bdcNumber}.pdf`,
-                `\ud83d\udce6 BDC ${bdcNumber} \u2014 ${supplier.name}` +
-                (emailSent ? ' (email envoy\u00e9 au fournisseur)' : supplier.email ? ' (\u26a0\ufe0f \u00e9chec email fournisseur)' : ' (pas d\u2019email fournisseur)')
-              ).catch(() => {})
-            }
-          } catch (bdcErr) {
-            console.error(`BDC generation/dispatch error for ${bdcNumber}:`, bdcErr)
-          }
-        })()
-      }
-
-      // 13. Email de confirmation de commande au client (non-blocking)
+      // 10. Email de confirmation au client — demande de dépôt du bon de commande (non-blocking)
       const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
       const formattedTotal = totalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })
       const formattedTTC = (totalHT * (1 + TVA_RATE)).toLocaleString('fr-FR', { minimumFractionDigits: 2 })
@@ -339,7 +162,7 @@ export async function POST(
       resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal-signaletique.fr>',
         to: quote.email,
-        subject: `Confirmation de commande ${order.order_number} - SAPAL Signalisation`,
+        subject: `Commande ${order.order_number} — Bon de commande requis`,
         html: `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
             <div style="background:#1e293b;color:white;padding:24px;border-radius:8px 8px 0 0">
@@ -369,7 +192,20 @@ export async function POST(
                 <p style="margin:4px 0 0;font-size:16px">Total TTC : <strong>${formattedTTC} €</strong></p>
               </div>
 
-              <p style="color:#6b7280;font-size:13px;margin-top:24px">Votre commande a été transmise à nos fournisseurs. La livraison sera effectuée directement par le fournisseur selon les délais indiqués sur les fiches produit. Vous recevrez un email avec votre facture dès réception confirmée.</p>
+              <div style="background:#fefce8;border:1px solid #fde047;border-radius:8px;padding:16px;margin:20px 0">
+                <p style="margin:0;font-size:14px;color:#713f12"><strong>Action requise</strong></p>
+                <p style="margin:8px 0 0;font-size:14px;color:#713f12">Pour finaliser votre commande, merci de :</p>
+                <ol style="margin:8px 0 0;padding-left:20px;font-size:14px;color:#713f12">
+                  <li>Déposer votre <strong>bon de commande</strong> dans votre espace client</li>
+                  <li>Confirmer votre <strong>adresse de livraison</strong></li>
+                </ol>
+              </div>
+
+              <div style="text-align:center;margin:28px 0">
+                <a href="${siteUrl}/mon-compte/commandes" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Accéder à mes commandes</a>
+              </div>
+
+              <p style="color:#6b7280;font-size:13px;margin-top:24px">Votre commande sera traitée dès réception de votre bon de commande. Pour toute question, n'hésitez pas à nous contacter.</p>
 
               <p>Cordialement,<br><strong>L'équipe SAPAL Signalisation</strong></p>
             </div>
@@ -377,19 +213,19 @@ export async function POST(
         `,
       }).catch((err) => console.error('Confirmation email error:', err))
 
-      // 14. Telegram notification (non-blocking)
+      // 11. Telegram notification (non-blocking)
       const identifier = quote.entity || quote.contact_name || quote.email
       const shortId = id.replace(/-/g, '').slice(0, 8).toUpperCase()
       sendTelegramMessage(
-        `✅ *Devis accepté — Commande créée*\n\n` +
+        `✅ *Devis accepté — Commande en attente de BC*\n\n` +
         `📋 Devis : ${shortId}\n` +
         `🏢 Client : ${identifier}\n` +
         `📦 Commande : ${order.order_number}\n` +
         `💰 Total HT : ${formattedTotal} €\n` +
-        `🏭 Commande(s) fournisseur : ${supplierOrderCount}`
+        `⏳ En attente du bon de commande client`
       ).catch(() => {})
 
-      // 15. Return success
+      // 12. Return success
       return Response.json({
         success: true,
         orderId: order.id,

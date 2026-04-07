@@ -71,7 +71,25 @@ export async function POST(
       return Response.json({ success: true })
     }
 
-    // 6. Fetch supplier_order_items for BDC PDF
+    // 6. Fetch parent order delivery address
+    const { data: parentOrder } = await serviceClient
+      .from('orders')
+      .select('delivery_address, delivery_postal_code, delivery_city, user_id')
+      .eq('id', supplierOrder.order_id)
+      .single()
+
+    // Fetch client profile for delivery contact name
+    let clientCompanyName: string | undefined
+    if (parentOrder?.user_id) {
+      const { data: clientProfile } = await serviceClient
+        .from('client_profiles')
+        .select('company_name')
+        .eq('user_id', parentOrder.user_id)
+        .single()
+      clientCompanyName = clientProfile?.company_name ?? undefined
+    }
+
+    // 7. Fetch supplier_order_items for BDC PDF
     const { data: orderItems, error: itemsError } = await serviceClient
       .from('supplier_order_items')
       .select('product_name, variant_label, quantity, unit_price')
@@ -118,6 +136,12 @@ export async function POST(
         unitPrice: item.unit_price,
       })),
       totalHT,
+      delivery: parentOrder?.delivery_address ? {
+        address: parentOrder.delivery_address,
+        postalCode: parentOrder.delivery_postal_code ?? '',
+        city: parentOrder.delivery_city ?? '',
+        contactName: clientCompanyName,
+      } : undefined,
     }
 
     // 8. Generate BDC PDF
@@ -147,6 +171,11 @@ export async function POST(
             <p>
               Le paiement a été effectué. Merci de traiter cette commande dans les meilleurs délais.
             </p>
+            ${parentOrder?.delivery_address ? `
+            <p><strong>Adresse de livraison :</strong><br>
+              ${parentOrder.delivery_address}<br>
+              ${parentOrder.delivery_postal_code ?? ''} ${parentOrder.delivery_city ?? ''}
+            </p>` : ''}
             <p style="color: #666; font-size: 14px;">
               Pour toute question : <a href="mailto:societe@sapal.fr">societe@sapal.fr</a>
             </p>

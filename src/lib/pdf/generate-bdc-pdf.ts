@@ -62,6 +62,12 @@ export interface BdcData {
     email?: string
     contactName?: string
   }
+  delivery?: {
+    address: string
+    postalCode: string
+    city: string
+    contactName?: string
+  }
   items: BdcItem[]
   totalHT: number
 }
@@ -183,6 +189,33 @@ export function generateBdcPDF(data: BdcData): Buffer {
   }
 
   y = blockStartY + 42 + 10
+
+  // ===== DELIVERY ADDRESS BLOCK (optional) =====
+  if (data.delivery) {
+    const deliveryBlockHeight = 28
+    doc.setFillColor(...COLORS.lightBg)
+    doc.roundedRect(MARGIN_LEFT, y, CONTENT_WIDTH, deliveryBlockHeight, 2, 2, 'F')
+
+    doc.setFontSize(8)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(...COLORS.primary)
+    doc.text('ADRESSE DE LIVRAISON', MARGIN_LEFT + 5, y + 6)
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.setTextColor(...COLORS.secondary)
+
+    let deliveryLineY = y + 13
+    if (data.delivery.contactName) {
+      doc.text(data.delivery.contactName, MARGIN_LEFT + 5, deliveryLineY)
+      deliveryLineY += 5
+    }
+    doc.text(data.delivery.address, MARGIN_LEFT + 5, deliveryLineY)
+    deliveryLineY += 5
+    doc.text(`${data.delivery.postalCode} ${data.delivery.city}`, MARGIN_LEFT + 5, deliveryLineY)
+
+    y += deliveryBlockHeight + 10
+  }
 
   // ===== PRODUCTS TABLE =====
   const cols = {

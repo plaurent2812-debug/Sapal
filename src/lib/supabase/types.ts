@@ -50,6 +50,7 @@ export interface ProductRow {
   price: number
   reference: string
   supplier_url: string
+  purchase_price: number | null
   supplier: string | null
   supplier_id: string | null
   procity_sheet: string | null
@@ -127,7 +128,7 @@ export type Supplier = SupplierRow
 
 // --- Commandes ---
 
-export type OrderStatus = 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
+export type OrderStatus = 'awaiting_bc' | 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
 
 export interface OrderRow {
   id: string
@@ -138,6 +139,10 @@ export interface OrderRow {
   source: 'site' | 'admin' | 'telephone'
   total_ht: number
   total_ttc: number
+  bc_file_url: string | null
+  delivery_address: string | null
+  delivery_postal_code: string | null
+  delivery_city: string | null
   pennylane_invoice_id: string | null
   invoice_url: string | null
   delivered_at: string | null
