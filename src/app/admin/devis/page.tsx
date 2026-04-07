@@ -4,7 +4,7 @@ import { useState, useEffect, Fragment } from 'react'
 import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
-import { Loader2, ChevronDown, ChevronUp, FileText, Mail, Phone, Building2, Calendar, Plus, Download, FileCheck, Info, ExternalLink } from 'lucide-react'
+import { Loader2, ChevronDown, ChevronUp, FileText, Mail, Phone, Building2, Calendar, Plus, Download, FileCheck, Info, ExternalLink, Send } from 'lucide-react'
 import { STATUS_CONFIG, formatDate } from '@/lib/quote-utils'
 import { useDownloadPDF } from '@/hooks/useDownloadPDF'
 
@@ -35,6 +35,8 @@ export default function AdminDevisPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const { downloadingId, handleDownloadPDF } = useDownloadPDF()
   const [chorusDownloadingId, setChorusDownloadingId] = useState<string | null>(null)
+  const [sendingId, setSendingId] = useState<string | null>(null)
+  const [sentSuccessId, setSentSuccessId] = useState<string | null>(null)
 
   useEffect(() => {
     fetchQuotes()
@@ -54,21 +56,22 @@ export default function AdminDevisPage() {
     setLoading(false)
   }
 
-  async function handleStatusChange(quoteId: string, newStatus: QuoteStatus) {
-    const supabase = createBrowserClient()
-    const { error } = await supabase
-      .from('quotes')
-      .update({ status: newStatus })
-      .eq('id', quoteId)
-
-    if (error) {
-      alert('Erreur : ' + error.message)
-      return
+  async function handleSendQuote(quoteId: string) {
+    setSendingId(quoteId)
+    try {
+      const res = await fetch(`/api/quotes/${quoteId}/send`, { method: 'POST' })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body?.error ?? 'Erreur lors de l\'envoi du devis')
+      }
+      await fetchQuotes()
+      setSentSuccessId(quoteId)
+      setTimeout(() => setSentSuccessId(null), 3000)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Erreur lors de l\'envoi du devis')
+    } finally {
+      setSendingId(null)
     }
-
-    setQuotes((prev) =>
-      prev.map((q) => (q.id === quoteId ? { ...q, status: newStatus } : q))
-    )
   }
 
   function toggleExpand(id: string) {
@@ -192,17 +195,10 @@ export default function AdminDevisPage() {
                           <td className="px-4 py-3 hidden xl:table-cell text-muted-foreground text-xs">
                             {formatDate(quote.created_at, { withTime: true })}
                           </td>
-                          <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
-                            <select
-                              value={quote.status}
-                              onChange={(e) => handleStatusChange(quote.id, e.target.value as QuoteStatus)}
-                              className={`text-xs font-semibold rounded-full px-3 py-1 border cursor-pointer appearance-none text-center ${config.className}`}
-                            >
-                              <option value="pending">En attente</option>
-                              <option value="sent">Envoye</option>
-                              <option value="accepted">Accepte</option>
-                              <option value="rejected">Refuse</option>
-                            </select>
+                          <td className="px-4 py-3 text-center">
+                            <span className={`inline-block text-xs font-semibold rounded-full px-3 py-1 border ${config.className}`}>
+                              {config.label}
+                            </span>
                           </td>
                         </tr>
 
@@ -301,6 +297,35 @@ export default function AdminDevisPage() {
                                       </Button>
                                     )}
                                   </div>
+
+                                  {quote.status === 'pending' && (
+                                    <div className="mt-4">
+                                      {sentSuccessId === quote.id ? (
+                                        <p className="text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-2 inline-block">
+                                          Devis envoyé avec succès.
+                                        </p>
+                                      ) : (
+                                        <Button
+                                          size="sm"
+                                          disabled={sendingId === quote.id}
+                                          onClick={() => handleSendQuote(quote.id)}
+                                        >
+                                          {sendingId === quote.id ? (
+                                            <Loader2 size={14} className="animate-spin mr-2" />
+                                          ) : (
+                                            <Send size={14} className="mr-2" />
+                                          )}
+                                          Envoyer le devis au client
+                                        </Button>
+                                      )}
+                                    </div>
+                                  )}
+
+                                  {quote.status === 'sent' && (
+                                    <p className="mt-4 text-sm text-blue-700 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 inline-block">
+                                      Envoyé — en attente de réponse client
+                                    </p>
+                                  )}
                                 </div>
                               </div>
                             </td>
