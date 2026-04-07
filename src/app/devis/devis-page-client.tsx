@@ -6,13 +6,49 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AnimatedSection } from '@/components/ui/motion';
 import { Trash2, Send, CheckCircle2, ArrowLeft, Building2, User, Mail, Phone, FileText, ShoppingCart, Minus, Plus, ArrowRight, Clock } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createBrowserClient } from '@/lib/supabase/client';
 
 export default function DevisPageClient() {
   const { items, removeItem, updateQuantity, clearCart } = useQuoteStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [profileData, setProfileData] = useState<{
+    entity: string;
+    contactName: string;
+    email: string;
+    phone: string;
+  } | null>(null);
+  const [profileLoaded, setProfileLoaded] = useState(false);
+
+  useEffect(() => {
+    async function loadProfile() {
+      try {
+        const supabase = createBrowserClient();
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          const { data: profile } = await supabase
+            .from('client_profiles')
+            .select('company_name, phone')
+            .eq('user_id', session.user.id)
+            .single();
+
+          setProfileData({
+            entity: profile?.company_name || '',
+            contactName: '',
+            email: session.user.email || '',
+            phone: profile?.phone || '',
+          });
+        }
+      } catch {
+        // Pas connecté ou erreur — formulaire vide
+      } finally {
+        setProfileLoaded(true);
+      }
+    }
+    loadProfile();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -223,25 +259,25 @@ export default function DevisPageClient() {
                     </div>
                   )}
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4" key={profileLoaded ? 'loaded' : 'loading'}>
                     <div className="space-y-1.5">
                       <label htmlFor="devis-entity" className="text-sm font-semibold flex items-center gap-2"><Building2 size={15} /> Collectivité / Entreprise <span className="text-destructive">*</span></label>
-                      <Input id="devis-entity" name="entity" required aria-required="true" placeholder="Ex: Mairie de Perpignan" className="bg-muted/20 border-border/80 h-11 rounded-xl" />
+                      <Input id="devis-entity" name="entity" required aria-required="true" placeholder="Ex: Mairie de Perpignan" defaultValue={profileData?.entity} className="bg-muted/20 border-border/80 h-11 rounded-xl" />
                     </div>
 
                     <div className="space-y-1.5">
                       <label htmlFor="devis-contactName" className="text-sm font-semibold flex items-center gap-2"><User size={15} /> Nom du contact <span className="text-destructive">*</span></label>
-                      <Input id="devis-contactName" name="contactName" required aria-required="true" placeholder="Jean Dupont" className="bg-muted/20 border-border/80 h-11 rounded-xl" />
+                      <Input id="devis-contactName" name="contactName" required aria-required="true" placeholder="Jean Dupont" defaultValue={profileData?.contactName} className="bg-muted/20 border-border/80 h-11 rounded-xl" />
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="space-y-1.5">
                         <label htmlFor="devis-email" className="text-sm font-semibold flex items-center gap-2"><Mail size={15} /> Email <span className="text-destructive">*</span></label>
-                        <Input id="devis-email" name="email" type="email" required aria-required="true" placeholder="contact@mairie.fr" className="bg-muted/20 border-border/80 h-11 rounded-xl" />
+                        <Input id="devis-email" name="email" type="email" required aria-required="true" placeholder="contact@mairie.fr" defaultValue={profileData?.email} className="bg-muted/20 border-border/80 h-11 rounded-xl" />
                       </div>
                       <div className="space-y-1.5">
                         <label htmlFor="devis-phone" className="text-sm font-semibold flex items-center gap-2"><Phone size={15} /> Téléphone <span className="text-destructive">*</span></label>
-                        <Input id="devis-phone" name="phone" type="tel" required aria-required="true" placeholder="04 68 00 00 00" className="bg-muted/20 border-border/80 h-11 rounded-xl" />
+                        <Input id="devis-phone" name="phone" type="tel" required aria-required="true" placeholder="04 68 00 00 00" defaultValue={profileData?.phone} className="bg-muted/20 border-border/80 h-11 rounded-xl" />
                       </div>
                     </div>
 
