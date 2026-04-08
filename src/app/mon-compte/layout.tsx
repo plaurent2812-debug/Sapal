@@ -11,6 +11,7 @@ import {
   Receipt,
   User,
   LogOut,
+  ArrowLeft,
 } from 'lucide-react'
 
 interface NavItem {
@@ -134,6 +135,13 @@ export default function MonCompteLayout({
               </p>
             </div>
           )}
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-colors w-full"
+          >
+            <ArrowLeft size={20} />
+            Retour au site
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-colors w-full cursor-pointer"

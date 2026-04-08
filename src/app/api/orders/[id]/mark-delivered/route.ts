@@ -197,7 +197,7 @@ export async function POST(
         const clientEmail = authUserData?.user?.email
 
         if (clientEmail) {
-          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal-signaletique.fr'
+          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal.fr'
 
           resend.emails.send({
             from: 'noreply@opti-pro.fr',

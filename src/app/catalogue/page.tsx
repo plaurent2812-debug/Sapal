@@ -81,7 +81,7 @@ export default async function CataloguePage() {
                       alt={category.name}
                       fill
                       sizes="80px"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-contain p-1 group-hover:scale-110 transition-transform duration-500"
                     />
                   ) : (
                     <div className="w-8 h-8 rounded bg-border text-muted-foreground" />

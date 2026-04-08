@@ -74,7 +74,7 @@ export async function POST(request: Request) {
     }
 
     // 5. Telegram notification (non-blocking)
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal-signaletique.fr'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal.fr'
     sendTelegramMessage(
       `🆕 *Nouveau client à valider*\n\n` +
       `📧 ${data.email}\n` +

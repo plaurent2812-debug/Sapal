@@ -263,7 +263,7 @@ export async function POST(
             const emailSent = supplier.email
               ? await (async () => {
                   try {
-                    const fromAddress = process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal-signaletique.fr>'
+                    const fromAddress = process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>'
                     const emailHtml = `
                       <p>Bonjour,</p>
                       <p>Veuillez trouver ci-joint notre bon de commande <strong>${bdcNumber}</strong>.</p>

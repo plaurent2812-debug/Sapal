@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.sapal-signaletique.fr";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.sapal.fr";
 
 export default function robots(): MetadataRoute.Robots {
   return {

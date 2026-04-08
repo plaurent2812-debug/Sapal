@@ -15,6 +15,7 @@ import {
   ShoppingCart,
   Receipt,
   BarChart3,
+  ArrowLeft,
 } from 'lucide-react'
 
 type UserRole = 'admin' | 'gerant' | 'client'
@@ -160,6 +161,13 @@ export default function AdminLayout({
               </p>
             </div>
           )}
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-colors w-full"
+          >
+            <ArrowLeft size={20} />
+            Retour au site
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-colors w-full cursor-pointer"

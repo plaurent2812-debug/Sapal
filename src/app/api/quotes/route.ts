@@ -179,7 +179,7 @@ async function sendNotifications(params: {
 
   // 2. Email au client avec le devis PDF
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
-  const fromAddress = process.env.RESEND_FROM_QUOTES_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <devis@sapal-signaletique.fr>'
+  const fromAddress = process.env.RESEND_FROM_QUOTES_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <devis@sapal.fr>'
 
   try {
     await resend.emails.send({
@@ -227,7 +227,7 @@ async function sendNotifications(params: {
 
   try {
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal-signaletique.fr>',
+      from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
       to: gerantEmail,
       subject: `Nouvelle demande de devis — ${params.entity} (Réf. ${shortRef})`,
       html: `

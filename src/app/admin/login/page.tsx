@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { LogIn } from 'lucide-react'
+import { LogIn, ArrowLeft } from 'lucide-react'
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -42,7 +43,15 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary/30 px-4">
-      <div className="w-full max-w-md bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 p-8">
+      <div className="w-full max-w-md">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
+        >
+          <ArrowLeft size={16} />
+          Retour au site
+        </Link>
+      <div className="bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary mb-4">
             <LogIn size={24} className="text-primary-foreground" />
@@ -105,6 +114,7 @@ export default function AdminLoginPage() {
             )}
           </Button>
         </form>
+      </div>
       </div>
     </div>
   )

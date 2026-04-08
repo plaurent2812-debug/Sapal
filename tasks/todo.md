@@ -136,12 +136,65 @@
 - [x] `unit_price` sauvegardé sur `quote_items` dès la création admin
 - [x] API `POST /api/quotes/[id]/send` — génère PDF, envoie email Resend avec pièce jointe, met à jour statut `sent`, notif Telegram
 
-## À faire
-- [ ] **Déployer sur Vercel** — push git + lier au projet Vercel + configurer webhooks Supabase
-- [ ] **Assigner les fournisseurs** — renseigner les fournisseurs dans /admin/fournisseurs + assigner supplier_id aux produits
-- [ ] **Clé API Pennylane** — renseigner PENNYLANE_API_KEY dans .env.local
-- [ ] **Images produits** — beaucoup de produits n'ont pas d'image (champ image_url vide)
-- [ ] **Mobile admin** — le panel admin n'est pas optimisé mobile (sidebar fixe w-64)
-- [ ] **Mentions légales** — page mentions légales complète (RGPD, cookies)
-- [ ] **Changer les mots de passe** — remplacer Sapal2026! par des mots de passe sécurisés en production
-- [ ] **Tests E2E** — tester le workflow complet inscription → devis → commande → facturation
+## Fait (07/04/2026 — Flux commandes v2)
+- [x] Pré-remplissage formulaire devis depuis le profil client connecté
+- [x] Migration 011 : tables orders, order_items, supplier_orders, supplier_order_items, suppliers + RPC + storage bucket
+- [x] Refactoring accept quote : crée commande en `awaiting_bc` → client uploade BC → commandes fournisseur créées
+- [x] Endpoint `POST /api/orders/[id]/upload-bc` : upload BC + adresse livraison → crée supplier orders + envoie BDC
+- [x] BDC PDF : ajout bloc adresse de livraison
+- [x] UI client commandes : formulaire upload BC avec adresse pré-remplie
+- [x] UI admin commandes : statut awaiting_bc, affichage BC et adresse livraison
+- [x] Envoi automatique du devis au client dès la création (statut `sent` direct)
+- [x] Email notification au gérant quand un devis est créé (récap + PDF en PJ)
+- [x] Bouton "Envoyer le devis" dans admin (remplace le dropdown statut)
+
+---
+
+## 🔴 PRIORITÉ : Tester le flux complet (reprendre ici)
+
+### Pré-requis
+- [ ] Vérifier domaine `sapal-signaletique.fr` vérifié dans Resend (sinon emails ne partent pas)
+- [ ] Ajouter variables d'env dans **Vercel** si test en prod : `RESEND_FROM_EMAIL`, `RESEND_FROM_QUOTES_EMAIL`, `SAPAL_GERANT_EMAIL`
+- [ ] Vérifier qu'au moins 1 produit Procity a un `supplier_id` assigné
+
+### Test 1 — Création devis (client)
+- [ ] Se connecter en tant que client test
+- [ ] Ajouter un produit Procity au devis, soumettre
+- [ ] ✉️ Email reçu par le **client** avec PDF devis en PJ ?
+- [ ] ✉️ Email reçu par le **gérant** (p.laurent@opti-pro.fr) avec récap + PDF ?
+- [ ] 📱 Telegram reçu ?
+- [ ] Devis visible en statut **"Envoyé"** dans l'espace client ET dans l'admin ?
+
+### Test 2 — Acceptation devis (client)
+- [ ] Depuis l'espace client > Mes Devis, accepter le devis
+- [ ] Commande créée en statut **"En attente de votre BC"** dans Mes Commandes ?
+- [ ] ✉️ Email client demandant d'uploader son BC ?
+- [ ] 📱 Telegram "Devis accepté — Commande en attente de BC" ?
+
+### Test 3 — Upload BC + adresse livraison (client)
+- [ ] Depuis Mes Commandes, sur la commande "En attente de votre BC"
+- [ ] Uploader un PDF bidon comme BC
+- [ ] Adresse de livraison pré-remplie depuis le profil ?
+- [ ] Valider → statut passe à **"En cours"** ?
+- [ ] ✉️ Email BDC reçu sur le mail test Procity (avec PDF BDC en PJ) ?
+- [ ] Le PDF BDC contient l'adresse de livraison ?
+- [ ] 📱 Telegram "BC client reçu — Commandes fournisseur créées" ?
+
+### Test 4 — Vue admin
+- [ ] Commande visible dans Admin > Commandes avec bon statut ?
+- [ ] Lien téléchargement BC client visible ?
+- [ ] Adresse de livraison affichée ?
+
+---
+
+## À faire (après validation flux)
+- [ ] **Telegram 4 channels** — Devis, Paiements, Commandes, Contact (1 bot, 4 groupes)
+- [ ] **Tester flux pré-paiement** — fournisseur avec `payment_terms = 'prepayment'`
+- [ ] **`purchase_price` sur produits** — renseigner les prix d'achat fournisseur
+- [ ] **Configurer vrais emails fournisseurs** — remplacer emails test
+- [ ] **Pennylane** — intégrer quand clé API disponible
+- [ ] **Déployer sur Vercel** — configurer variables d'env production
+- [ ] **Images produits** — beaucoup de produits sans image
+- [ ] **Mobile admin** — sidebar non optimisée mobile
+- [ ] **Mentions légales** — page complète (RGPD, cookies)
+- [ ] **Changer mots de passe** — remplacer Sapal2026! en production
