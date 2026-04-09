@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { formatDate } from '@/lib/quote-utils'
 
-type OrderStatus = 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled' | 'awaiting_bc'
+type OrderStatus = 'awaiting_bc' | 'processing' | 'ordered' | 'shipped' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
 
 interface OrderItem {
   id: string
@@ -49,6 +49,14 @@ const ORDER_STATUS_CONFIG: Record<OrderStatus, { label: string; className: strin
   processing: {
     label: 'En cours de traitement',
     className: 'bg-blue-100 text-blue-800 border-blue-200',
+  },
+  ordered: {
+    label: 'Commandée',
+    className: 'bg-indigo-100 text-indigo-800 border-indigo-200',
+  },
+  shipped: {
+    label: 'Expédiée',
+    className: 'bg-cyan-100 text-cyan-800 border-cyan-200',
   },
   partially_delivered: {
     label: 'Livraison partielle',

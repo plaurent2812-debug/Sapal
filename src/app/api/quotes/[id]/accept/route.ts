@@ -160,7 +160,7 @@ export async function POST(
       }).join('')
 
       resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal-signaletique.fr>',
+        from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
         to: quote.email,
         subject: `Commande ${order.order_number} — Bon de commande requis`,
         html: `

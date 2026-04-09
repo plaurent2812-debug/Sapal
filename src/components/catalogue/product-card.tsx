@@ -1,26 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useQuoteStore } from "@/store/useQuoteStore";
 import { Button } from "@/components/ui/button";
-import { Check, ShoppingCart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { ClientProduct } from "@/lib/data";
 
 export function ProductCard({ product, categorySlug, index = 0 }: { product: ClientProduct; categorySlug: string; index?: number }) {
-  const addItem = useQuoteStore((state) => state.addItem);
-  const [isAdded, setIsAdded] = useState(false);
-
   const specifications = Object.entries(product.specifications).slice(0, 2);
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addItem(product);
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
-  };
 
   return (
       <Link
@@ -84,20 +71,11 @@ export function ProductCard({ product, categorySlug, index = 0 }: { product: Cli
             )}
 
             <Button
-              onClick={handleAddToCart}
-              variant={isAdded ? "secondary" : "default"}
-              className={`w-full font-bold text-[13px] rounded-lg transition-all duration-300 ${isAdded ? 'bg-green-600/10 text-green-700 hover:bg-green-600/10 cursor-default' : 'btn-fill bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm hover:shadow-md hover:shadow-accent/10'}`}
-              disabled={isAdded}
+              variant="default"
+              className="w-full font-bold text-[13px] rounded-lg transition-all duration-300 btn-fill bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm hover:shadow-md hover:shadow-accent/10"
+              tabIndex={-1}
             >
-              {isAdded ? (
-                <>
-                  <Check size={16} className="mr-2" /> Ajouté au devis
-                </>
-              ) : (
-                <>
-                  <ShoppingCart size={16} className="mr-2" /> Ajouter au devis
-                </>
-              )}
+              <ArrowRight size={16} className="mr-2" /> Voir le produit
             </Button>
           </div>
         </div>

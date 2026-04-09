@@ -22,7 +22,7 @@ export default async function Home() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "SAPAL Signalisation",
-    url: "https://www.sapal-signaletique.fr",
+    url: "https://www.sapal.fr",
     email: "societe@sapal.fr",
     description:
       "Fournisseur B2B de mobilier urbain, signalétique et équipements d'espaces publics pour les collectivités françaises.",

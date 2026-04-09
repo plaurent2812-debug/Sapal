@@ -204,7 +204,7 @@ export default function DevisPageClient() {
                           <div className="flex items-center gap-4">
                             {item.variantDelai && (
                               <span className="flex items-center gap-1 text-xs text-muted-foreground bg-secondary/30 px-2.5 py-1 rounded-lg">
-                                <Clock size={12} className="text-accent" /> {/^\d+$/.test(item.variantDelai) ? `${item.variantDelai} semaines` : item.variantDelai}
+                                <Clock size={12} className="text-accent" /> {/^\d+(\.\d+)?$/.test(item.variantDelai) ? (Number(item.variantDelai) >= 14 ? `${Math.ceil(Number(item.variantDelai) / 7)} semaines` : `${item.variantDelai} jours`) : item.variantDelai}
                               </span>
                             )}
                             {item.product.price > 0 && (
@@ -311,7 +311,7 @@ export default function DevisPageClient() {
                       )}
                       {items.some(item => item.variantDelai) && (() => {
                         const delais = [...new Set(items.filter(i => i.variantDelai).map(i => i.variantDelai!))]
-                        const formatDelai = (d: string) => /^\d+$/.test(d) ? `${d} semaines` : d
+                        const formatDelai = (d: string) => /^\d+(\.\d+)?$/.test(d) ? (Number(d) >= 14 ? `${Math.ceil(Number(d) / 7)} semaines` : `${d} jours`) : d
                         return (
                           <div className="flex items-center gap-2 mt-3 pt-3 border-t border-primary/10 text-sm text-muted-foreground">
                             <Clock size={14} className="text-accent flex-shrink-0" />

@@ -17,7 +17,7 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.sapal-signaletique.fr";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.sapal.fr";
 
 export const viewport: Viewport = {
   themeColor: "#1e3a5f",

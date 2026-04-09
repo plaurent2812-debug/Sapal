@@ -24,6 +24,7 @@ interface Order {
 
 interface SupplierOrderRow {
   id: string
+  status: 'awaiting_payment' | 'proforma_sent'
   bdc_number: string | null
   bdc_pdf_url: string | null
   total_ht: number | null
@@ -64,6 +65,7 @@ export default function CommandesAPayerPage() {
       .from('supplier_orders')
       .select(`
         id,
+        status,
         bdc_number,
         bdc_pdf_url,
         total_ht,
@@ -72,7 +74,7 @@ export default function CommandesAPayerPage() {
         suppliers(name, email),
         orders(order_number)
       `)
-      .eq('status', 'awaiting_payment')
+      .in('status', ['awaiting_payment', 'proforma_sent'])
       .order('created_at', { ascending: false })
 
     if (fetchError) {
@@ -162,6 +164,7 @@ export default function CommandesAPayerPage() {
                 <thead>
                   <tr className="bg-muted/30 border-b border-border">
                     <th className="text-left px-4 py-3 font-semibold">N° BDC</th>
+                    <th className="text-left px-4 py-3 font-semibold">Statut</th>
                     <th className="text-left px-4 py-3 font-semibold hidden md:table-cell">Fournisseur</th>
                     <th className="text-left px-4 py-3 font-semibold hidden lg:table-cell">N° Commande</th>
                     <th className="text-right px-4 py-3 font-semibold hidden md:table-cell">Montant HT</th>
@@ -179,6 +182,17 @@ export default function CommandesAPayerPage() {
                         <span className="font-mono font-medium text-xs">
                           {row.bdc_number ?? <span className="text-muted-foreground italic">—</span>}
                         </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        {row.status === 'proforma_sent' ? (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700 border border-orange-200">
+                            Proforma envoyée
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 border border-amber-200">
+                            En attente paiement
+                          </span>
+                        )}
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell">
                         <div className="flex items-center gap-2">

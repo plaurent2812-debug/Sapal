@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { LogIn, AlertCircle } from 'lucide-react'
+import { LogIn, AlertCircle, ArrowLeft } from 'lucide-react'
 import { createBrowserClient } from '@/lib/supabase/client'
 
 export default function ConnexionPage() {
@@ -32,8 +32,10 @@ export default function ConnexionPage() {
 
     const role = data.session.user.user_metadata?.role as string | undefined
 
-    if (role === 'admin' || role === 'gerant') {
+    if (role === 'admin') {
       router.push('/admin')
+    } else if (role === 'gerant') {
+      router.push('/gerant/dashboard')
     } else {
       router.push('/mon-compte')
     }
@@ -44,7 +46,12 @@ export default function ConnexionPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary/30 px-4 py-12">
-      <div className="w-full max-w-md bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 p-8">
+      <div className="w-full max-w-md">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
+          <ArrowLeft size={16} />
+          Retour au site
+        </Link>
+      <div className="bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 p-8">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary mb-4">
             <LogIn size={24} className="text-primary-foreground" />
@@ -131,6 +138,7 @@ export default function ConnexionPage() {
             S&apos;inscrire
           </Link>
         </p>
+      </div>
       </div>
     </div>
   )

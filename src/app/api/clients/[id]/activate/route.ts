@@ -50,7 +50,7 @@ export async function POST(
 
     const clientEmail = authUser.user.email ?? ''
     const companyName = profile?.company_name ?? 'Votre entreprise'
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal-signaletique.fr'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal.fr'
 
     // Send welcome email via Resend (non-blocking on failure)
     if (process.env.RESEND_API_KEY && clientEmail) {

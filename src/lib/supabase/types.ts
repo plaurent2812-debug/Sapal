@@ -128,7 +128,7 @@ export type Supplier = SupplierRow
 
 // --- Commandes ---
 
-export type OrderStatus = 'awaiting_bc' | 'processing' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
+export type OrderStatus = 'awaiting_bc' | 'processing' | 'ordered' | 'shipped' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
 
 export interface OrderRow {
   id: string
@@ -145,6 +145,7 @@ export interface OrderRow {
   delivery_city: string | null
   pennylane_invoice_id: string | null
   invoice_url: string | null
+  shipped_at: string | null
   delivered_at: string | null
   invoiced_at: string | null
   created_at: string
@@ -170,7 +171,7 @@ export type OrderItem = OrderItemRow
 
 // --- Commandes Fournisseur ---
 
-export type SupplierOrderStatus = 'pending' | 'awaiting_payment' | 'paid' | 'sent' | 'delivered' | 'cancelled'
+export type SupplierOrderStatus = 'pending' | 'proforma_sent' | 'awaiting_payment' | 'paid' | 'sent' | 'shipped' | 'delivered' | 'cancelled'
 
 export interface SupplierOrderRow {
   id: string
@@ -183,6 +184,8 @@ export interface SupplierOrderRow {
   payment_terms: '30j' | 'prepayment'
   paid_at: string | null
   sent_at: string | null
+  shipped_at: string | null
+  proforma_sent_at: string | null
   delivered_at: string | null
   created_at: string
   updated_at: string

@@ -15,9 +15,8 @@ import {
   ShoppingCart,
   Receipt,
   BarChart3,
+  ArrowLeft,
 } from 'lucide-react'
-
-type UserRole = 'admin' | 'gerant' | 'client'
 
 interface NavItem {
   href: string
@@ -37,17 +36,6 @@ const adminNavItems: NavItem[] = [
   { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
 ]
 
-const gerantNavItems: NavItem[] = [
-  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
-  { href: '/admin/produits', label: 'Produits', icon: Package },
-  { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
-  { href: '/admin/clients', label: 'Clients', icon: Users },
-  { href: '/admin/devis', label: 'Devis', icon: FileText },
-  { href: '/admin/commandes', label: 'Commandes', icon: ShoppingCart },
-  { href: '/admin/factures', label: 'Factures', icon: Receipt },
-]
-
 export default function AdminLayout({
   children,
 }: {
@@ -57,7 +45,6 @@ export default function AdminLayout({
   const pathname = usePathname()
   const [authenticated, setAuthenticated] = useState(false)
   const [checking, setChecking] = useState(true)
-  const [role, setRole] = useState<UserRole>('client')
   const [userEmail, setUserEmail] = useState<string>('')
 
   useEffect(() => {
@@ -68,8 +55,6 @@ export default function AdminLayout({
       } else {
         setAuthenticated(!!session)
         if (session) {
-          const userRole = (session.user.user_metadata?.role as UserRole) || 'client'
-          setRole(userRole)
           setUserEmail(session.user.email ?? '')
         }
       }
@@ -105,8 +90,7 @@ export default function AdminLayout({
     return null
   }
 
-  const navItems = role === 'admin' ? adminNavItems : gerantNavItems
-  const roleBadge = role === 'admin' ? 'Administrateur' : role === 'gerant' ? 'Gérant' : 'Gérant'
+  const navItems = adminNavItems
 
   return (
     <div className="fixed inset-0 flex bg-background z-[100]">
@@ -119,7 +103,7 @@ export default function AdminLayout({
               SAPAL
             </h2>
             <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/15 text-white/80 text-xs font-medium">
-              {roleBadge}
+              Administrateur
             </span>
           </div>
           <p className="text-white/40 text-xs mt-1">Panneau d&apos;administration</p>
@@ -160,6 +144,13 @@ export default function AdminLayout({
               </p>
             </div>
           )}
+          <Link
+            href="/"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-colors w-full"
+          >
+            <ArrowLeft size={20} />
+            Retour au site
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-colors w-full cursor-pointer"

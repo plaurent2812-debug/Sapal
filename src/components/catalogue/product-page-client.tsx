@@ -31,7 +31,7 @@ export function ProductPageClient({ product, variants, options, category, catego
       if (selectedVariant.dimensions) specs['Dimensions'] = selectedVariant.dimensions
       if (selectedVariant.poids) specs['Poids'] = selectedVariant.poids
       if (selectedVariant.finition) specs['Finition'] = selectedVariant.finition
-      if (selectedVariant.delai) specs['Délai'] = selectedVariant.delai
+      if (selectedVariant.delai) specs['Délai'] = /^\d+(\.\d+)?$/.test(selectedVariant.delai) ? (Number(selectedVariant.delai) >= 14 ? `${Math.ceil(Number(selectedVariant.delai) / 7)} semaines` : `${selectedVariant.delai} jours`) : selectedVariant.delai
       // Fusionne les specs supplémentaires du variant (si renseignées)
       if (selectedVariant.specifications && Object.keys(selectedVariant.specifications).length > 0) {
         Object.assign(specs, selectedVariant.specifications)

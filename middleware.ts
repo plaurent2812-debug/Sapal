@@ -28,11 +28,38 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const pathname = request.nextUrl.pathname
 
+  // Get role from JWT (user_metadata with app_metadata fallback)
+  const { data: { session } } = await supabase.auth.getSession()
+  const role = session?.user?.user_metadata?.role ?? session?.user?.app_metadata?.role
+
   // Protected admin pages (except login)
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     if (!user) {
       const url = request.nextUrl.clone()
       url.pathname = '/admin/login'
+      return NextResponse.redirect(url)
+    }
+
+    // Block gerant from accessing /admin — redirect to /gerant
+    if (role === 'gerant') {
+      const url = request.nextUrl.clone()
+      url.pathname = '/gerant'
+      return NextResponse.redirect(url)
+    }
+  }
+
+  // Protected gerant pages
+  if (pathname.startsWith('/gerant')) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/connexion'
+      return NextResponse.redirect(url)
+    }
+
+    // Only gerant role can access /gerant/*
+    if (role !== 'gerant') {
+      const url = request.nextUrl.clone()
+      url.pathname = role === 'admin' ? '/admin' : '/connexion'
       return NextResponse.redirect(url)
     }
   }
@@ -45,12 +72,9 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(url)
     }
 
-    const { data: { session } } = await supabase.auth.getSession()
-    const role = session?.user?.user_metadata?.role ?? session?.user?.app_metadata?.role
-
     if (role !== 'client') {
       const url = request.nextUrl.clone()
-      url.pathname = '/admin'
+      url.pathname = role === 'gerant' ? '/gerant' : '/admin'
       return NextResponse.redirect(url)
     }
 
@@ -70,7 +94,7 @@ export async function middleware(request: NextRequest) {
   // Protected API routes (PDF endpoints)
   if (pathname.match(/^\/api\/quotes\/[^/]+\/(pdf|chorus-pdf)$/)) {
     if (!user) {
-      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+      return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
     }
   }
 
@@ -82,7 +106,7 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/api/clients/')
   ) {
     if (!user) {
-      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+      return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
     }
   }
 
@@ -92,6 +116,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/admin/:path*',
+    '/gerant/:path*',
     '/mon-compte/:path*',
     '/api/quotes/:id/pdf',
     '/api/quotes/:id/chorus-pdf',

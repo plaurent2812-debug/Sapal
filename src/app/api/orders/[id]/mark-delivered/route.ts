@@ -44,8 +44,9 @@ export async function POST(
       return Response.json({ error: 'Commande introuvable' }, { status: 404 })
     }
 
-    // 3. Verify order status is 'processing' or 'partially_delivered'
-    if (order.status !== 'processing' && order.status !== 'partially_delivered') {
+    // 3. Verify order status allows marking as delivered
+    const allowedStatuses = ['processing', 'ordered', 'shipped', 'partially_delivered']
+    if (!allowedStatuses.includes(order.status)) {
       return Response.json(
         { error: 'La commande ne peut pas être marquée comme livrée dans son état actuel' },
         { status: 400 }
@@ -197,7 +198,7 @@ export async function POST(
         const clientEmail = authUserData?.user?.email
 
         if (clientEmail) {
-          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal-signaletique.fr'
+          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal.fr'
 
           resend.emails.send({
             from: 'noreply@opti-pro.fr',

@@ -14,9 +14,10 @@ import {
   CheckCircle,
   Package,
   FileDown,
+  Truck,
 } from 'lucide-react'
 
-type OrderStatus = 'processing' | 'awaiting_bc' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
+type OrderStatus = 'processing' | 'ordered' | 'shipped' | 'awaiting_bc' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
 type OrderSource = 'site' | 'admin' | 'telephone'
 type FilterTab = 'all' | 'processing' | 'delivered' | 'invoiced'
 
@@ -67,6 +68,14 @@ const STATUS_CONFIG: Record<OrderStatus, { label: string; className: string }> =
   processing: {
     label: 'En cours',
     className: 'bg-blue-100 text-blue-700',
+  },
+  ordered: {
+    label: 'Commandée',
+    className: 'bg-indigo-100 text-indigo-700',
+  },
+  shipped: {
+    label: 'Expédiée',
+    className: 'bg-cyan-100 text-cyan-700',
   },
   awaiting_bc: {
     label: 'En attente BC',
@@ -188,20 +197,32 @@ export default function AdminCommandesPage() {
     }
   }
 
+  async function markSupplierShipped(supplierOrderId: string) {
+    const res = await fetch(`/api/supplier-orders/${supplierOrderId}/mark-shipped`, { method: 'POST' })
+    if (res.ok) {
+      fetchOrders()
+    }
+  }
+
   function toggleExpand(id: string) {
     setExpandedId((prev) => (prev === id ? null : id))
   }
 
+  const isInProgress = (status: OrderStatus) =>
+    status === 'processing' ||
+    status === 'ordered' ||
+    status === 'shipped' ||
+    status === 'awaiting_bc' ||
+    status === 'partially_delivered'
+
   const filteredOrders = orders.filter((o) => {
-    if (activeTab === 'processing') return o.status === 'processing' || o.status === 'awaiting_bc' || o.status === 'partially_delivered'
+    if (activeTab === 'processing') return isInProgress(o.status)
     if (activeTab === 'delivered') return o.status === 'delivered'
     if (activeTab === 'invoiced') return o.status === 'invoiced'
     return true
   })
 
-  const processingCount = orders.filter(
-    (o) => o.status === 'processing' || o.status === 'awaiting_bc' || o.status === 'partially_delivered'
-  ).length
+  const processingCount = orders.filter((o) => isInProgress(o.status)).length
   const deliveredCount = orders.filter((o) => o.status === 'delivered').length
   const invoicedCount = orders.filter((o) => o.status === 'invoiced').length
 
@@ -304,10 +325,7 @@ export default function AdminCommandesPage() {
                       label: order.status,
                       className: 'bg-muted text-muted-foreground',
                     }
-                    const canMarkDelivered =
-                      order.status === 'processing' ||
-                      order.status === 'awaiting_bc' ||
-                      order.status === 'partially_delivered'
+                    const canMarkDelivered = isInProgress(order.status)
 
                     return (
                       <Fragment key={order.id}>
@@ -456,25 +474,48 @@ export default function AdminCommandesPage() {
                                               </p>
                                             )}
                                           </div>
-                                          <span
-                                            className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                                              so.status === 'awaiting_payment'
-                                                ? 'bg-amber-100 text-amber-700'
+                                          <div className="flex items-center gap-2">
+                                            <span
+                                              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                                                so.status === 'awaiting_payment'
+                                                  ? 'bg-amber-100 text-amber-700'
+                                                  : so.status === 'paid'
+                                                  ? 'bg-green-100 text-green-700'
+                                                  : so.status === 'delivered'
+                                                  ? 'bg-blue-100 text-blue-700'
+                                                  : so.status === 'sent'
+                                                  ? 'bg-blue-100 text-blue-700'
+                                                  : so.status === 'proforma_sent'
+                                                  ? 'bg-orange-100 text-orange-700'
+                                                  : so.status === 'shipped'
+                                                  ? 'bg-cyan-100 text-cyan-700'
+                                                  : 'bg-muted text-muted-foreground'
+                                              }`}
+                                            >
+                                              {so.status === 'awaiting_payment'
+                                                ? 'À payer'
                                                 : so.status === 'paid'
-                                                ? 'bg-green-100 text-green-700'
+                                                ? 'Payé'
                                                 : so.status === 'delivered'
-                                                ? 'bg-blue-100 text-blue-700'
-                                                : 'bg-muted text-muted-foreground'
-                                            }`}
-                                          >
-                                            {so.status === 'awaiting_payment'
-                                              ? 'À payer'
-                                              : so.status === 'paid'
-                                              ? 'Payé'
-                                              : so.status === 'delivered'
-                                              ? 'Livré'
-                                              : so.status}
-                                          </span>
+                                                ? 'Livré'
+                                                : so.status === 'sent'
+                                                ? 'Commandé'
+                                                : so.status === 'proforma_sent'
+                                                ? 'Proforma envoyée'
+                                                : so.status === 'shipped'
+                                                ? 'Expédié'
+                                                : so.status}
+                                            </span>
+                                            {so.status === 'sent' && (
+                                              <button
+                                                onClick={() => markSupplierShipped(so.id)}
+                                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-cyan-600 hover:bg-cyan-700 text-white transition-colors cursor-pointer"
+                                              >
+                                                <Truck size={10} />
+                                                Expédié
+                                              </button>
+                                            )}
+                                          </div>
                                         </div>
                                       ))}
                                     </div>
@@ -516,9 +557,7 @@ export default function AdminCommandesPage() {
                                     </div>
                                   )}
 
-                                  {(order.status === 'processing' ||
-                                    order.status === 'awaiting_bc' ||
-                                    order.status === 'partially_delivered') && (
+                                  {isInProgress(order.status) && (
                                     <div className="mt-4">
                                       <button
                                         disabled={markingDeliveredId === order.id}

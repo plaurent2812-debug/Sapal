@@ -34,10 +34,10 @@ export async function POST(
       return Response.json({ error: 'Commande fournisseur introuvable' }, { status: 404 })
     }
 
-    // 3. Verify status is 'sent'
-    if (supplierOrder.status !== 'sent') {
+    // 3. Verify status is 'sent' or 'shipped'
+    if (supplierOrder.status !== 'sent' && supplierOrder.status !== 'shipped') {
       return Response.json(
-        { error: 'La commande fournisseur n\'est pas dans l\'état "envoyée"' },
+        { error: 'La commande fournisseur doit être en statut "envoyée" ou "expédiée"' },
         { status: 400 }
       )
     }

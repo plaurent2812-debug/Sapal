@@ -83,23 +83,7 @@ export function Header() {
               Catalogue ProCity
               <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
-            <Link href="/catalogue/signalisation" className="relative py-3.5 px-5 text-muted-foreground hover:text-foreground transition-colors group">
-              Signalisation
-              <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </Link>
-            <Link href="/catalogue/mobilier-urbain" className="relative py-3.5 px-5 text-muted-foreground hover:text-foreground transition-colors group">
-              Mobilier Urbain
-              <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </Link>
-            <Link href="/catalogue/amenagement-securite" className="relative py-3.5 px-5 text-muted-foreground hover:text-foreground transition-colors group">
-              Aménagement & Sécurité
-              <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </Link>
             <div className="flex-1"></div>
-            <Link href="/realisations" className="relative py-3.5 px-5 text-muted-foreground hover:text-foreground transition-colors group">
-              Réalisations
-              <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </Link>
           </nav>
         </div>
       </div>

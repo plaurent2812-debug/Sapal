@@ -1,24 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useQuoteStore } from "@/store/useQuoteStore";
 import { Button } from "@/components/ui/button";
-import { Check, Plus } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { ClientProduct } from "@/lib/data";
 
 export function SearchResultCard({ product, categorySlug }: { product: ClientProduct; categorySlug: string }) {
-  const addItem = useQuoteStore((state) => state.addItem);
-  const [isAdded, setIsAdded] = useState(false);
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addItem(product);
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
-  };
 
   return (
     <Link
@@ -51,17 +39,12 @@ export function SearchResultCard({ product, categorySlug }: { product: ClientPro
           </p>
         )}
         <Button
-          onClick={handleAddToCart}
           size="sm"
-          variant={isAdded ? "secondary" : "default"}
-          className={`w-full mt-auto font-semibold transition-all duration-300 ${isAdded ? "bg-green-100/50 text-green-700 hover:bg-green-100/50 cursor-default" : "cursor-pointer"}`}
-          disabled={isAdded}
+          variant="default"
+          className="w-full mt-auto font-semibold cursor-pointer"
+          tabIndex={-1}
         >
-          {isAdded ? (
-            <><Check size={16} className="mr-1.5" /> Ajouté</>
-          ) : (
-            <><Plus size={16} className="mr-1.5" /> Devis</>
-          )}
+          <ArrowRight size={16} className="mr-1.5" /> Voir le produit
         </Button>
       </div>
     </Link>

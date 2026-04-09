@@ -147,7 +147,7 @@ async function sendNotifications(params: {
         line += ` (${subtotal} € HT)`
       }
       if (i.delai) {
-        line += ` — Délai: ${/^\d+$/.test(i.delai) ? `${i.delai} semaines` : i.delai}`
+        line += ` — Délai: ${/^\d+(\.\d+)?$/.test(i.delai) ? (Number(i.delai) >= 14 ? `${Math.ceil(Number(i.delai) / 7)} semaines` : `${i.delai} jours`) : i.delai}`
       }
       return line
     })
@@ -179,7 +179,7 @@ async function sendNotifications(params: {
 
   // 2. Email au client avec le devis PDF
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
-  const fromAddress = process.env.RESEND_FROM_QUOTES_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <devis@sapal-signaletique.fr>'
+  const fromAddress = process.env.RESEND_FROM_QUOTES_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <devis@sapal.fr>'
 
   try {
     await resend.emails.send({
@@ -227,7 +227,7 @@ async function sendNotifications(params: {
 
   try {
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal-signaletique.fr>',
+      from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
       to: gerantEmail,
       subject: `Nouvelle demande de devis — ${params.entity} (Réf. ${shortRef})`,
       html: `
@@ -266,7 +266,7 @@ async function sendNotifications(params: {
             ` : ''}
 
             <div style="text-align:center;margin:24px 0">
-              <a href="${siteUrl}/admin/devis" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis dans l'admin</a>
+              <a href="${siteUrl}/admin/devis" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis dans mon espace Gérant</a>
             </div>
           </div>
         </div>

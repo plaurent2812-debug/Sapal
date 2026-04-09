@@ -101,11 +101,11 @@ export async function POST(
     const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
     const shortRef = (quote.id as string).replace(/-/g, '').slice(0, 8).toUpperCase()
     const clientEmail = quote.email as string
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal-signaletique.fr'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal.fr'
     const fromAddress =
       process.env.RESEND_FROM_QUOTES_EMAIL ??
       process.env.RESEND_FROM_EMAIL ??
-      'SAPAL Signalisation <devis@sapal-signaletique.fr>'
+      'SAPAL Signalisation <devis@sapal.fr>'
 
     // Send email with PDF attachment
     const { error: emailError } = await resend.emails.send({

@@ -97,9 +97,10 @@ export function MobileNav() {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 z-[70] h-full w-[85vw] max-w-[360px] bg-[#ffffff] shadow-2xl transform transition-transform duration-300 ease-out md:hidden ${
+        className={`fixed top-0 right-0 z-[70] h-screen w-[85vw] max-w-[360px] shadow-2xl transform transition-transform duration-300 ease-out md:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{ backgroundColor: '#ffffff' }}
         role="dialog"
         aria-modal="true"
         aria-label="Menu de navigation"
