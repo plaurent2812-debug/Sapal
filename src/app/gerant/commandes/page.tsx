@@ -21,7 +21,6 @@ interface OrderItem {
   product_name: string
   quantity: number
   unit_price: number
-  total: number
 }
 
 interface Supplier {
@@ -61,7 +60,7 @@ interface Order {
 
 const STATUS_CONFIG: Record<OrderStatus, { label: string; className: string }> = {
   processing: { label: 'En cours', className: 'bg-blue-100 text-blue-700' },
-  ordered: { label: 'Commandee', className: 'bg-indigo-100 text-indigo-700' },
+  ordered: { label: 'Commande validée', className: 'bg-indigo-100 text-indigo-700' },
   shipped: { label: 'Expediee', className: 'bg-cyan-100 text-cyan-700' },
   awaiting_bc: { label: 'En attente BC', className: 'bg-amber-100 text-amber-700' },
   partially_delivered: { label: 'Partiellement livree', className: 'bg-yellow-100 text-yellow-700' },
@@ -305,10 +304,10 @@ export default function GerantCommandesPage() {
                                               <td className="px-3 py-2 text-sm">{item.product_name}</td>
                                               <td className="px-3 py-2 text-right font-semibold">{item.quantity}</td>
                                               <td className="px-3 py-2 text-right text-muted-foreground">
-                                                {formatCurrency(item.unit_price)}
+                                                {formatCurrency(Number(item.unit_price))}
                                               </td>
                                               <td className="px-3 py-2 text-right font-medium">
-                                                {formatCurrency(item.total)}
+                                                {formatCurrency(Number(item.unit_price) * item.quantity)}
                                               </td>
                                             </tr>
                                           ))}

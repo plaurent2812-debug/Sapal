@@ -72,7 +72,7 @@ export default function DevisPageClient() {
             productId: item.product.id,
             productName: item.product.name,
             quantity: item.quantity,
-            unitPrice: item.product.price,
+            unitPrice: item.variantPrice || item.product.price,
             delai: item.variantDelai || undefined,
           })),
         }),

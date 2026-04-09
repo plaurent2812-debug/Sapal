@@ -71,7 +71,9 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
       activeAxes.every(({ key }) => !newSelections[key] || v[key] === newSelections[key])
     )
 
-    if (compatible.length === 1) {
+    // Sélectionner dès que tous les axes actifs sont choisis, ou qu'il ne reste qu'un seul variant
+    const allAxesSelected = activeAxes.every(({ key }) => newSelections[key])
+    if (compatible.length === 1 || (compatible.length > 0 && allAxesSelected)) {
       onSelect(compatible[0])
     }
   }

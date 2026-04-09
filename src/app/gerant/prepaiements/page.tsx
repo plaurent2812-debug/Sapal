@@ -49,7 +49,9 @@ export default function GerantPrepaymentsPage() {
   const [rows, setRows] = useState<SupplierOrderRow[]>([])
   const [loading, setLoading] = useState(true)
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null)
+  const [requestingProformaId, setRequestingProformaId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [successMsg, setSuccessMsg] = useState<string | null>(null)
 
   useEffect(() => {
     fetchAwaitingPayment()
@@ -83,23 +85,40 @@ export default function GerantPrepaymentsPage() {
     setLoading(false)
   }
 
-  async function handleMarkPaid(supplierOrderId: string) {
-    const confirmed = window.confirm(
-      'Confirmez-vous avoir effectue le paiement pour ce BDC ?'
-    )
-    if (!confirmed) return
-
-    setMarkingPaidId(supplierOrderId)
+  async function handleRequestProforma(supplierOrderId: string) {
+    if (!confirm('Envoyer la demande de proforma au fournisseur avec le BDC ?')) return
+    setRequestingProformaId(supplierOrderId)
     setError(null)
+    setSuccessMsg(null)
     try {
-      const res = await fetch(`/api/supplier-orders/${supplierOrderId}/mark-paid`, {
-        method: 'POST',
-      })
+      const res = await fetch(`/api/supplier-orders/${supplierOrderId}/request-proforma`, { method: 'POST' })
       if (!res.ok) {
         const data = await res.json()
-        throw new Error(data.error ?? 'Erreur lors de la mise a jour')
+        throw new Error(data.error ?? 'Erreur')
       }
-      // Optimistic: remove from list
+      setSuccessMsg('Demande de proforma envoyée au fournisseur')
+      setTimeout(() => setSuccessMsg(null), 4000)
+      await fetchAwaitingPayment()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur serveur')
+    } finally {
+      setRequestingProformaId(null)
+    }
+  }
+
+  async function handleMarkPaid(supplierOrderId: string) {
+    if (!confirm('Confirmez-vous avoir effectué le paiement ? Un email de confirmation sera envoyé au fournisseur.')) return
+    setMarkingPaidId(supplierOrderId)
+    setError(null)
+    setSuccessMsg(null)
+    try {
+      const res = await fetch(`/api/supplier-orders/${supplierOrderId}/mark-paid`, { method: 'POST' })
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error ?? 'Erreur')
+      }
+      setSuccessMsg('Paiement confirmé — BDC envoyé au fournisseur')
+      setTimeout(() => setSuccessMsg(null), 4000)
       setRows((prev) => prev.filter((r) => r.id !== supplierOrderId))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur serveur')
@@ -108,15 +127,16 @@ export default function GerantPrepaymentsPage() {
     }
   }
 
-  function handleDownloadBDC(row: SupplierOrderRow) {
-    if (!row.bdc_pdf_url) return
-    const a = document.createElement('a')
-    a.href = row.bdc_pdf_url
-    a.download = `BDC-${row.bdc_number ?? row.id}.pdf`
-    a.target = '_blank'
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
+  async function handleDownloadBDC(row: SupplierOrderRow) {
+    try {
+      const res = await fetch(`/api/supplier-orders/${row.id}/bdc-pdf`)
+      if (!res.ok) throw new Error('Erreur téléchargement')
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      window.open(url, '_blank')
+    } catch {
+      setError('Erreur lors du téléchargement du BDC')
+    }
   }
 
   const totalToPay = rows.reduce((sum, r) => sum + (r.total_ht ?? 0), 0)
@@ -139,6 +159,12 @@ export default function GerantPrepaymentsPage() {
           </div>
         )}
       </div>
+
+      {successMsg && (
+        <div className="mb-4 px-4 py-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm font-medium">
+          {successMsg}
+        </div>
+      )}
 
       {error && (
         <div className="mb-4 flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
@@ -191,11 +217,11 @@ export default function GerantPrepaymentsPage() {
                       <td className="px-4 py-3">
                         {row.status === 'proforma_sent' ? (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700 border border-orange-200">
-                            Proforma envoyee
+                            Proforma à demander
                           </span>
                         ) : (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 border border-amber-200">
-                            En attente paiement
+                            Paiement à effectuer
                           </span>
                         )}
                       </td>
@@ -238,28 +264,45 @@ export default function GerantPrepaymentsPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex items-center justify-center gap-2">
+                        <div className="flex items-center justify-center gap-2 flex-wrap">
                           <button
-                            disabled={!row.bdc_pdf_url}
                             onClick={() => handleDownloadBDC(row)}
-                            title={row.bdc_pdf_url ? 'Telecharger le BDC' : 'Aucun PDF disponible'}
-                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border hover:bg-muted/30 text-xs font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                            title="Voir le BDC"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border hover:bg-muted/30 text-xs font-medium transition-colors cursor-pointer"
                           >
                             <Download size={12} />
                             BDC
                           </button>
-                          <button
-                            disabled={markingPaidId === row.id}
-                            onClick={() => handleMarkPaid(row.id)}
-                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                          >
-                            {markingPaidId === row.id ? (
-                              <Loader2 size={12} className="animate-spin" />
-                            ) : (
-                              <CheckCircle size={12} />
-                            )}
-                            Paye
-                          </button>
+
+                          {row.status === 'proforma_sent' && (
+                            <button
+                              disabled={requestingProformaId === row.id}
+                              onClick={() => handleRequestProforma(row.id)}
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                            >
+                              {requestingProformaId === row.id ? (
+                                <Loader2 size={12} className="animate-spin" />
+                              ) : (
+                                <CreditCard size={12} />
+                              )}
+                              Demander proforma
+                            </button>
+                          )}
+
+                          {row.status === 'awaiting_payment' && (
+                            <button
+                              disabled={markingPaidId === row.id}
+                              onClick={() => handleMarkPaid(row.id)}
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                            >
+                              {markingPaidId === row.id ? (
+                                <Loader2 size={12} className="animate-spin" />
+                              ) : (
+                                <CheckCircle size={12} />
+                              )}
+                              Commande payée
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>

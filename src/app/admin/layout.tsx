@@ -52,6 +52,10 @@ export default function AdminLayout({
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session && pathname !== '/admin/login') {
         router.push('/admin/login')
+      } else if (session && session.user.user_metadata?.role !== 'admin') {
+        // Non-admin logged in — redirect to appropriate space
+        const role = session.user.user_metadata?.role
+        router.push(role === 'gerant' ? '/gerant' : role === 'client' ? '/mon-compte' : '/connexion')
       } else {
         setAuthenticated(!!session)
         if (session) {

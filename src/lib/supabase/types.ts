@@ -67,9 +67,10 @@ export interface QuoteRow {
   phone: string
   message: string | null
   items: QuoteItemPayload[]
-  status: 'pending' | 'sent' | 'accepted' | 'rejected'
+  status: 'pending' | 'sent' | 'accepted' | 'rejected' | 'cancelled'
   source: 'site' | 'admin' | 'telephone'
   user_id: string | null
+  pennylane_quote_id: string | null
   created_at: string
 }
 

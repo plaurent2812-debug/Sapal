@@ -26,6 +26,7 @@ interface QuoteItem {
   product_id: string
   product_name: string
   quantity: number
+  delai: string | null
 }
 
 interface QuoteWithItems {
@@ -273,15 +274,22 @@ export default function MonCompteDevisPage() {
                                           <tr className="bg-muted/20 border-b border-border/50">
                                             <th className="text-left px-3 py-2 font-medium text-xs">Produit</th>
                                             <th className="text-right px-3 py-2 font-medium text-xs w-20">Quantit&eacute;</th>
+                                            <th className="text-right px-3 py-2 font-medium text-xs w-36">D&eacute;lai de livraison</th>
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          {quote.quote_items.map((item) => (
+                                          {quote.quote_items.map((item) => {
+                                            const delaiDisplay = item.delai
+                                              ? (/^\d+(\.\d+)?$/.test(item.delai) ? (Number(item.delai) >= 14 ? `${Math.ceil(Number(item.delai) / 7)} sem.` : `${item.delai} j`) : item.delai)
+                                              : '—'
+                                            return (
                                             <tr key={item.id} className="border-b border-border/30 last:border-0">
                                               <td className="px-3 py-2 text-sm">{item.product_name}</td>
                                               <td className="px-3 py-2 text-right font-semibold">{item.quantity}</td>
+                                              <td className="px-3 py-2 text-right text-xs text-muted-foreground">{delaiDisplay}</td>
                                             </tr>
-                                          ))}
+                                            )
+                                          })}
                                         </tbody>
                                       </table>
                                     </div>

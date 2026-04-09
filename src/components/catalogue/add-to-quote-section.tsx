@@ -26,7 +26,7 @@ export function AddToQuoteSection({ product, selectedVariant, hasVariants, categ
   );
 
   const handleAdd = () => {
-    addItem(product, quantity, selectedVariant?.id, selectedVariant?.label, selectedVariant?.delai, categorySlug);
+    addItem(product, quantity, selectedVariant?.id, selectedVariant?.label, selectedVariant?.delai, selectedVariant?.price, categorySlug);
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 3000);
   };

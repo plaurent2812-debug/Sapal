@@ -51,7 +51,7 @@ const ORDER_STATUS_CONFIG: Record<OrderStatus, { label: string; className: strin
     className: 'bg-blue-100 text-blue-800 border-blue-200',
   },
   ordered: {
-    label: 'Commandée',
+    label: 'Commande validée',
     className: 'bg-indigo-100 text-indigo-800 border-indigo-200',
   },
   shipped: {

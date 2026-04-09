@@ -110,15 +110,16 @@ export default function CommandesAPayerPage() {
     }
   }
 
-  function handleDownloadBDC(row: SupplierOrderRow) {
-    if (!row.bdc_pdf_url) return
-    const a = document.createElement('a')
-    a.href = row.bdc_pdf_url
-    a.download = `BDC-${row.bdc_number ?? row.id}.pdf`
-    a.target = '_blank'
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
+  async function handleDownloadBDC(row: SupplierOrderRow) {
+    try {
+      const res = await fetch(`/api/supplier-orders/${row.id}/bdc-pdf`)
+      if (!res.ok) throw new Error('Erreur lors du téléchargement')
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      window.open(url, '_blank')
+    } catch {
+      setError('Erreur lors du téléchargement du BDC')
+    }
   }
 
   return (

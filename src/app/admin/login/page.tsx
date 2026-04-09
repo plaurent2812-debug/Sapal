@@ -22,13 +22,22 @@ export default function AdminLoginPage() {
 
     try {
       const supabase = createBrowserClient()
-      const { error: authError } = await supabase.auth.signInWithPassword({
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (authError) {
         setError(authError.message)
+        setLoading(false)
+        return
+      }
+
+      // Vérifier le rôle — seul admin peut accéder
+      const role = data.user?.user_metadata?.role
+      if (role !== 'admin') {
+        await supabase.auth.signOut()
+        setError('Accès réservé aux administrateurs.')
         setLoading(false)
         return
       }

@@ -40,10 +40,10 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(url)
     }
 
-    // Block gerant from accessing /admin — redirect to /gerant
-    if (role === 'gerant') {
+    // Only admin can access /admin — redirect others
+    if (role !== 'admin') {
       const url = request.nextUrl.clone()
-      url.pathname = '/gerant'
+      url.pathname = role === 'gerant' ? '/gerant' : role === 'client' ? '/mon-compte' : '/connexion'
       return NextResponse.redirect(url)
     }
   }
