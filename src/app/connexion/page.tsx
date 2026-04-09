@@ -32,8 +32,10 @@ export default function ConnexionPage() {
 
     const role = data.session.user.user_metadata?.role as string | undefined
 
-    if (role === 'admin' || role === 'gerant') {
+    if (role === 'admin') {
       router.push('/admin')
+    } else if (role === 'gerant') {
+      router.push('/gerant/dashboard')
     } else {
       router.push('/mon-compte')
     }

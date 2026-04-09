@@ -38,10 +38,10 @@ export async function POST(
       return Response.json({ error: 'Commande fournisseur introuvable' }, { status: 404 })
     }
 
-    // 3. Verify status is 'awaiting_payment'
-    if (supplierOrder.status !== 'awaiting_payment') {
+    // 3. Verify status is 'awaiting_payment' or 'proforma_sent'
+    if (supplierOrder.status !== 'awaiting_payment' && supplierOrder.status !== 'proforma_sent') {
       return Response.json(
-        { error: 'La commande fournisseur n\'est pas en attente de paiement' },
+        { error: 'La commande fournisseur n\'est pas en attente de paiement ou de proforma' },
         { status: 400 }
       )
     }
@@ -206,6 +206,22 @@ export async function POST(
     sendTelegramMessage(
       `✅ Paiement confirmé! BDC ${supplierOrder.bdc_number} envoyé à ${supplier.name}`
     ).catch(() => {})
+
+    // Check if all supplier_orders for parent order are now 'sent' → upgrade to 'ordered'
+    const { data: allSupplierOrders } = await serviceClient
+      .from('supplier_orders')
+      .select('status')
+      .eq('order_id', supplierOrder.order_id)
+
+    const allSent = allSupplierOrders && allSupplierOrders.length > 0 &&
+      allSupplierOrders.every((so: { status: string }) => so.status === 'sent')
+
+    if (allSent) {
+      await serviceClient
+        .from('orders')
+        .update({ status: 'ordered', updated_at: new Date().toISOString() })
+        .eq('id', supplierOrder.order_id)
+    }
 
     return Response.json({ success: true })
   } catch (error) {

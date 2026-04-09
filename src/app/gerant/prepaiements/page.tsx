@@ -1,14 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import {
   Loader2,
   CreditCard,
   Download,
   CheckCircle,
-  ArrowLeft,
   Calendar,
   Building2,
 } from 'lucide-react'
@@ -43,11 +41,11 @@ function formatDate(dateStr: string): string {
 }
 
 function formatCurrency(amount: number | null): string {
-  if (amount === null) return '—'
+  if (amount === null) return '--'
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount)
 }
 
-export default function CommandesAPayerPage() {
+export default function GerantPrepaymentsPage() {
   const [rows, setRows] = useState<SupplierOrderRow[]>([])
   const [loading, setLoading] = useState(true)
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null)
@@ -87,7 +85,7 @@ export default function CommandesAPayerPage() {
 
   async function handleMarkPaid(supplierOrderId: string) {
     const confirmed = window.confirm(
-      'Confirmez-vous avoir effectué le paiement pour ce BDC ?'
+      'Confirmez-vous avoir effectue le paiement pour ce BDC ?'
     )
     if (!confirmed) return
 
@@ -99,7 +97,7 @@ export default function CommandesAPayerPage() {
       })
       if (!res.ok) {
         const data = await res.json()
-        throw new Error(data.error ?? 'Erreur lors de la mise à jour')
+        throw new Error(data.error ?? 'Erreur lors de la mise a jour')
       }
       // Optimistic: remove from list
       setRows((prev) => prev.filter((r) => r.id !== supplierOrderId))
@@ -121,18 +119,25 @@ export default function CommandesAPayerPage() {
     a.remove()
   }
 
+  const totalToPay = rows.reduce((sum, r) => sum + (r.total_ht ?? 0), 0)
+
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/admin/commandes"
-            className="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-border hover:bg-muted/30 transition-colors text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft size={16} />
-          </Link>
-          <h1 className="font-heading text-3xl tracking-tight">Commandes à payer</h1>
+        <div>
+          <h1 className="font-heading text-3xl tracking-tight">Prepaiements</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Commandes fournisseur en attente de paiement
+          </p>
         </div>
+        {rows.length > 0 && (
+          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-50 border border-amber-200">
+            <CreditCard size={16} className="text-amber-600" />
+            <span className="text-sm font-medium text-amber-800">
+              Total a regler : {formatCurrency(totalToPay)}
+            </span>
+          </div>
+        )}
       </div>
 
       {error && (
@@ -150,7 +155,7 @@ export default function CommandesAPayerPage() {
         <div className="text-center py-20 text-muted-foreground">
           <CheckCircle size={32} className="mx-auto mb-2 opacity-40" />
           <p className="font-medium">Aucun BDC en attente de paiement.</p>
-          <p className="text-sm mt-1">Toutes les commandes fournisseurs ont été réglées.</p>
+          <p className="text-sm mt-1">Toutes les commandes fournisseurs ont ete reglees.</p>
         </div>
       ) : (
         <>
@@ -163,12 +168,12 @@ export default function CommandesAPayerPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-muted/30 border-b border-border">
-                    <th className="text-left px-4 py-3 font-semibold">N° BDC</th>
+                    <th className="text-left px-4 py-3 font-semibold">N. BDC</th>
                     <th className="text-left px-4 py-3 font-semibold">Statut</th>
                     <th className="text-left px-4 py-3 font-semibold hidden md:table-cell">Fournisseur</th>
-                    <th className="text-left px-4 py-3 font-semibold hidden lg:table-cell">N° Commande</th>
+                    <th className="text-left px-4 py-3 font-semibold hidden lg:table-cell">N. Commande</th>
                     <th className="text-right px-4 py-3 font-semibold hidden md:table-cell">Montant HT</th>
-                    <th className="text-left px-4 py-3 font-semibold hidden xl:table-cell">Créé le</th>
+                    <th className="text-left px-4 py-3 font-semibold hidden xl:table-cell">Cree le</th>
                     <th className="text-center px-4 py-3 font-semibold w-48">Actions</th>
                   </tr>
                 </thead>
@@ -180,13 +185,13 @@ export default function CommandesAPayerPage() {
                     >
                       <td className="px-4 py-3">
                         <span className="font-mono font-medium text-xs">
-                          {row.bdc_number ?? <span className="text-muted-foreground italic">—</span>}
+                          {row.bdc_number ?? <span className="text-muted-foreground italic">--</span>}
                         </span>
                       </td>
                       <td className="px-4 py-3">
                         {row.status === 'proforma_sent' ? (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700 border border-orange-200">
-                            Proforma envoyée
+                            Proforma envoyee
                           </span>
                         ) : (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 border border-amber-200">
@@ -220,7 +225,7 @@ export default function CommandesAPayerPage() {
                             {row.orders.order_number}
                           </span>
                         ) : (
-                          <span className="text-muted-foreground">—</span>
+                          <span className="text-muted-foreground">--</span>
                         )}
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell text-right font-medium">
@@ -237,7 +242,7 @@ export default function CommandesAPayerPage() {
                           <button
                             disabled={!row.bdc_pdf_url}
                             onClick={() => handleDownloadBDC(row)}
-                            title={row.bdc_pdf_url ? 'Télécharger le BDC' : 'Aucun PDF disponible'}
+                            title={row.bdc_pdf_url ? 'Telecharger le BDC' : 'Aucun PDF disponible'}
                             className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border hover:bg-muted/30 text-xs font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                           >
                             <Download size={12} />
@@ -253,7 +258,7 @@ export default function CommandesAPayerPage() {
                             ) : (
                               <CheckCircle size={12} />
                             )}
-                            Payé
+                            Paye
                           </button>
                         </div>
                       </td>

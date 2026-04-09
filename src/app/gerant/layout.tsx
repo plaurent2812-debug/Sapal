@@ -6,15 +6,11 @@ import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import {
   LayoutDashboard,
-  Package,
-  FolderOpen,
   FileText,
   LogOut,
-  Users,
-  Truck,
   ShoppingCart,
   Receipt,
-  BarChart3,
+  CreditCard,
   ArrowLeft,
 } from 'lucide-react'
 
@@ -24,19 +20,15 @@ interface NavItem {
   icon: typeof LayoutDashboard
 }
 
-const adminNavItems: NavItem[] = [
-  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/categories', label: 'Categories', icon: FolderOpen },
-  { href: '/admin/produits', label: 'Produits', icon: Package },
-  { href: '/admin/fournisseurs', label: 'Fournisseurs', icon: Truck },
-  { href: '/admin/clients', label: 'Clients', icon: Users },
-  { href: '/admin/devis', label: 'Devis', icon: FileText },
-  { href: '/admin/commandes', label: 'Commandes', icon: ShoppingCart },
-  { href: '/admin/factures', label: 'Factures', icon: Receipt },
-  { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
+const gerantNavItems: NavItem[] = [
+  { href: '/gerant/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/gerant/devis', label: 'Devis', icon: FileText },
+  { href: '/gerant/commandes', label: 'Commandes', icon: ShoppingCart },
+  { href: '/gerant/factures', label: 'Factures', icon: Receipt },
+  { href: '/gerant/prepaiements', label: 'Prepaiements', icon: CreditCard },
 ]
 
-export default function AdminLayout({
+export default function GerantLayout({
   children,
 }: {
   children: React.ReactNode
@@ -50,30 +42,27 @@ export default function AdminLayout({
   useEffect(() => {
     const supabase = createBrowserClient()
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session && pathname !== '/admin/login') {
-        router.push('/admin/login')
+      if (!session) {
+        router.push('/connexion')
       } else {
-        setAuthenticated(!!session)
-        if (session) {
+        const role = session.user.user_metadata?.role
+        if (role !== 'gerant') {
+          router.push(role === 'admin' ? '/admin' : '/connexion')
+        } else {
+          setAuthenticated(true)
           setUserEmail(session.user.email ?? '')
         }
       }
       setChecking(false)
     })
-  }, [pathname, router])
+  }, [router])
 
   const handleLogout = async () => {
     const supabase = createBrowserClient()
     await supabase.auth.signOut()
-    router.push('/admin/login')
+    router.push('/connexion')
   }
 
-  // Login page renders without the admin shell but still covers site UI
-  if (pathname === '/admin/login') {
-    return <div className="fixed inset-0 z-[100] bg-background overflow-auto">{children}</div>
-  }
-
-  // Loading state while checking auth
   if (checking) {
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background">
@@ -85,12 +74,9 @@ export default function AdminLayout({
     )
   }
 
-  // Not authenticated (redirect in progress)
   if (!authenticated) {
     return null
   }
-
-  const navItems = adminNavItems
 
   return (
     <div className="fixed inset-0 flex bg-background z-[100]">
@@ -103,19 +89,19 @@ export default function AdminLayout({
               SAPAL
             </h2>
             <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/15 text-white/80 text-xs font-medium">
-              Administrateur
+              Gerant
             </span>
           </div>
-          <p className="text-white/40 text-xs mt-1">Panneau d&apos;administration</p>
+          <p className="text-white/40 text-xs mt-1">Espace gerant</p>
         </div>
 
         {/* Navigation */}
         <nav className="flex-1 px-3 py-4 space-y-1">
-          {navItems.map((item) => {
+          {gerantNavItems.map((item) => {
             const isActive =
-              item.href === '/admin'
-                ? pathname === '/admin'
-                : pathname.startsWith(item.href) && item.href !== '/admin'
+              item.href === '/gerant/dashboard'
+                ? pathname === '/gerant' || pathname === '/gerant/dashboard'
+                : pathname.startsWith(item.href)
             const Icon = item.icon
 
             return (

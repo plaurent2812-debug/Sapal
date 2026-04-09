@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, Fragment } from 'react'
-import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import {
   Loader2,
@@ -10,15 +9,11 @@ import {
   ChevronUp,
   Building2,
   Calendar,
-  CreditCard,
-  CheckCircle,
   Package,
   FileDown,
-  Truck,
 } from 'lucide-react'
 
 type OrderStatus = 'processing' | 'ordered' | 'shipped' | 'awaiting_bc' | 'partially_delivered' | 'delivered' | 'invoiced' | 'cancelled'
-type OrderSource = 'site' | 'admin' | 'telephone'
 type FilterTab = 'all' | 'processing' | 'delivered' | 'invoiced'
 
 interface OrderItem {
@@ -52,7 +47,7 @@ interface Order {
   id: string
   order_number: string
   status: OrderStatus
-  source?: OrderSource | null
+  source?: string | null
   total_ttc: number | null
   created_at: string
   bc_file_url?: string | null
@@ -65,38 +60,14 @@ interface Order {
 }
 
 const STATUS_CONFIG: Record<OrderStatus, { label: string; className: string }> = {
-  processing: {
-    label: 'En cours',
-    className: 'bg-blue-100 text-blue-700',
-  },
-  ordered: {
-    label: 'Commandée',
-    className: 'bg-indigo-100 text-indigo-700',
-  },
-  shipped: {
-    label: 'Expédiée',
-    className: 'bg-cyan-100 text-cyan-700',
-  },
-  awaiting_bc: {
-    label: 'En attente BC',
-    className: 'bg-amber-100 text-amber-700',
-  },
-  partially_delivered: {
-    label: 'Partiellement livrée',
-    className: 'bg-yellow-100 text-yellow-700',
-  },
-  delivered: {
-    label: 'Livrée',
-    className: 'bg-green-100 text-green-700',
-  },
-  invoiced: {
-    label: 'Facturée',
-    className: 'bg-purple-100 text-purple-700',
-  },
-  cancelled: {
-    label: 'Annulée',
-    className: 'bg-red-100 text-red-700',
-  },
+  processing: { label: 'En cours', className: 'bg-blue-100 text-blue-700' },
+  ordered: { label: 'Commandee', className: 'bg-indigo-100 text-indigo-700' },
+  shipped: { label: 'Expediee', className: 'bg-cyan-100 text-cyan-700' },
+  awaiting_bc: { label: 'En attente BC', className: 'bg-amber-100 text-amber-700' },
+  partially_delivered: { label: 'Partiellement livree', className: 'bg-yellow-100 text-yellow-700' },
+  delivered: { label: 'Livree', className: 'bg-green-100 text-green-700' },
+  invoiced: { label: 'Facturee', className: 'bg-purple-100 text-purple-700' },
+  cancelled: { label: 'Annulee', className: 'bg-red-100 text-red-700' },
 }
 
 function formatDate(dateStr: string): string {
@@ -108,17 +79,15 @@ function formatDate(dateStr: string): string {
 }
 
 function formatCurrency(amount: number | null): string {
-  if (amount === null) return '—'
+  if (amount === null) return '--'
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount)
 }
 
-export default function AdminCommandesPage() {
+export default function GerantCommandesPage() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<FilterTab>('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [markingDeliveredId, setMarkingDeliveredId] = useState<string | null>(null)
-  const [downloadingChorusId, setDownloadingChorusId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -148,62 +117,6 @@ export default function AdminCommandesPage() {
     setLoading(false)
   }
 
-  async function handleMarkDelivered(orderId: string) {
-    const confirmed = window.confirm(
-      'Confirmer la livraison de cette commande ? Cette action mettra le statut à "Livrée".'
-    )
-    if (!confirmed) return
-
-    setMarkingDeliveredId(orderId)
-    setError(null)
-    try {
-      const res = await fetch(`/api/orders/${orderId}/mark-delivered`, { method: 'POST' })
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error ?? 'Erreur lors de la mise à jour')
-      }
-      setOrders((prev) =>
-        prev.map((o) => (o.id === orderId ? { ...o, status: 'delivered' } : o))
-      )
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur serveur')
-    } finally {
-      setMarkingDeliveredId(null)
-    }
-  }
-
-  async function handleDownloadChorusPDF(orderId: string, orderNumber: string) {
-    setDownloadingChorusId(orderId)
-    setError(null)
-    try {
-      const res = await fetch(`/api/orders/${orderId}/chorus-pdf`)
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error ?? 'Erreur lors du téléchargement')
-      }
-      const blob = await res.blob()
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `facture-chorus-${orderNumber.replace(/^CMD-/, 'FAC-')}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors du téléchargement de la facture')
-    } finally {
-      setDownloadingChorusId(null)
-    }
-  }
-
-  async function markSupplierShipped(supplierOrderId: string) {
-    const res = await fetch(`/api/supplier-orders/${supplierOrderId}/mark-shipped`, { method: 'POST' })
-    if (res.ok) {
-      fetchOrders()
-    }
-  }
-
   function toggleExpand(id: string) {
     setExpandedId((prev) => (prev === id ? null : id))
   }
@@ -229,21 +142,17 @@ export default function AdminCommandesPage() {
   const tabs: { key: FilterTab; label: string; count: number }[] = [
     { key: 'all', label: 'Toutes', count: orders.length },
     { key: 'processing', label: 'En cours', count: processingCount },
-    { key: 'delivered', label: 'Livrées', count: deliveredCount },
-    { key: 'invoiced', label: 'Facturées', count: invoicedCount },
+    { key: 'delivered', label: 'Livrees', count: deliveredCount },
+    { key: 'invoiced', label: 'Facturees', count: invoicedCount },
   ]
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <h1 className="font-heading text-3xl tracking-tight">Gestion des commandes</h1>
-        <Link
-          href="/admin/commandes/a-payer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium transition-colors"
-        >
-          <CreditCard size={16} />
-          Commandes à payer
-        </Link>
+      <div className="mb-8">
+        <h1 className="font-heading text-3xl tracking-tight">Commandes</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Suivi des commandes (lecture seule)
+        </p>
       </div>
 
       {error && (
@@ -293,10 +202,10 @@ export default function AdminCommandesPage() {
           {activeTab === 'processing'
             ? 'Aucune commande en cours.'
             : activeTab === 'delivered'
-            ? 'Aucune commande livrée.'
+            ? 'Aucune commande livree.'
             : activeTab === 'invoiced'
-            ? 'Aucune commande facturée.'
-            : 'Aucune commande enregistrée.'}
+            ? 'Aucune commande facturee.'
+            : 'Aucune commande enregistree.'}
         </div>
       ) : (
         <>
@@ -310,12 +219,11 @@ export default function AdminCommandesPage() {
                 <thead>
                   <tr className="bg-muted/30 border-b border-border">
                     <th className="text-left px-4 py-3 font-semibold w-8"></th>
-                    <th className="text-left px-4 py-3 font-semibold">N° Commande</th>
+                    <th className="text-left px-4 py-3 font-semibold">N. Commande</th>
                     <th className="text-left px-4 py-3 font-semibold hidden md:table-cell">Client</th>
                     <th className="text-left px-4 py-3 font-semibold hidden xl:table-cell">Date</th>
                     <th className="text-center px-4 py-3 font-semibold">Statut</th>
                     <th className="text-right px-4 py-3 font-semibold hidden lg:table-cell">Total TTC</th>
-                    <th className="text-center px-4 py-3 font-semibold w-32">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -325,7 +233,6 @@ export default function AdminCommandesPage() {
                       label: order.status,
                       className: 'bg-muted text-muted-foreground',
                     }
-                    const canMarkDelivered = isInProgress(order.status)
 
                     return (
                       <Fragment key={order.id}>
@@ -339,21 +246,9 @@ export default function AdminCommandesPage() {
                             </span>
                           </td>
                           <td className="px-4 py-3">
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono font-medium text-xs">
-                                {order.order_number}
-                              </span>
-                              {order.source === 'admin' && (
-                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">
-                                  Admin
-                                </span>
-                              )}
-                              {order.source === 'telephone' && (
-                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-700">
-                                  Tél.
-                                </span>
-                              )}
-                            </div>
+                            <span className="font-mono font-medium text-xs">
+                              {order.order_number}
+                            </span>
                           </td>
                           <td className="px-4 py-3 hidden md:table-cell">
                             <div className="flex items-center gap-2">
@@ -371,7 +266,7 @@ export default function AdminCommandesPage() {
                               {formatDate(order.created_at)}
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
+                          <td className="px-4 py-3 text-center">
                             <span
                               className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${statusConfig.className}`}
                             >
@@ -381,33 +276,17 @@ export default function AdminCommandesPage() {
                           <td className="px-4 py-3 hidden lg:table-cell text-right font-medium">
                             {formatCurrency(order.total_ttc)}
                           </td>
-                          <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
-                            {canMarkDelivered && (
-                              <button
-                                disabled={markingDeliveredId === order.id}
-                                onClick={() => handleMarkDelivered(order.id)}
-                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                              >
-                                {markingDeliveredId === order.id ? (
-                                  <Loader2 size={12} className="animate-spin" />
-                                ) : (
-                                  <CheckCircle size={12} />
-                                )}
-                                Livrée
-                              </button>
-                            )}
-                          </td>
                         </tr>
 
                         {isExpanded && (
                           <tr className="border-b border-border/50 bg-muted/5">
-                            <td colSpan={7} className="px-4 py-5">
+                            <td colSpan={6} className="px-4 py-5">
                               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 {/* Order items */}
                                 <div>
                                   <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
                                     <Package size={14} className="text-muted-foreground" />
-                                    Articles commandés ({order.order_items?.length ?? 0})
+                                    Articles commandes ({order.order_items?.length ?? 0})
                                   </h3>
                                   {order.order_items && order.order_items.length > 0 ? (
                                     <div className="border border-border/50 rounded-lg overflow-hidden">
@@ -415,21 +294,16 @@ export default function AdminCommandesPage() {
                                         <thead>
                                           <tr className="bg-muted/20 border-b border-border/50">
                                             <th className="text-left px-3 py-2 font-medium text-xs">Produit</th>
-                                            <th className="text-right px-3 py-2 font-medium text-xs w-16">Qté</th>
+                                            <th className="text-right px-3 py-2 font-medium text-xs w-16">Qte</th>
                                             <th className="text-right px-3 py-2 font-medium text-xs w-24">P.U. HT</th>
                                             <th className="text-right px-3 py-2 font-medium text-xs w-24">Total</th>
                                           </tr>
                                         </thead>
                                         <tbody>
                                           {order.order_items.map((item) => (
-                                            <tr
-                                              key={item.id}
-                                              className="border-b border-border/30 last:border-0"
-                                            >
+                                            <tr key={item.id} className="border-b border-border/30 last:border-0">
                                               <td className="px-3 py-2 text-sm">{item.product_name}</td>
-                                              <td className="px-3 py-2 text-right font-semibold">
-                                                {item.quantity}
-                                              </td>
+                                              <td className="px-3 py-2 text-right font-semibold">{item.quantity}</td>
                                               <td className="px-3 py-2 text-right text-muted-foreground">
                                                 {formatCurrency(item.unit_price)}
                                               </td>
@@ -446,7 +320,7 @@ export default function AdminCommandesPage() {
                                   )}
                                 </div>
 
-                                {/* Supplier orders */}
+                                {/* Supplier orders + delivery info */}
                                 <div>
                                   <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
                                     <ShoppingCart size={14} className="text-muted-foreground" />
@@ -468,54 +342,38 @@ export default function AdminCommandesPage() {
                                                 BDC {so.bdc_number}
                                               </p>
                                             )}
-                                            {so.payment_terms && (
-                                              <p className="text-xs text-muted-foreground">
-                                                Paiement : {so.payment_terms}
-                                              </p>
-                                            )}
                                           </div>
-                                          <div className="flex items-center gap-2">
-                                            <span
-                                              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                                                so.status === 'awaiting_payment'
-                                                  ? 'bg-amber-100 text-amber-700'
-                                                  : so.status === 'paid'
-                                                  ? 'bg-green-100 text-green-700'
-                                                  : so.status === 'delivered'
-                                                  ? 'bg-blue-100 text-blue-700'
-                                                  : so.status === 'sent'
-                                                  ? 'bg-blue-100 text-blue-700'
-                                                  : so.status === 'proforma_sent'
-                                                  ? 'bg-orange-100 text-orange-700'
-                                                  : so.status === 'shipped'
-                                                  ? 'bg-cyan-100 text-cyan-700'
-                                                  : 'bg-muted text-muted-foreground'
-                                              }`}
-                                            >
-                                              {so.status === 'awaiting_payment'
-                                                ? 'À payer'
+                                          <span
+                                            className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                                              so.status === 'awaiting_payment'
+                                                ? 'bg-amber-100 text-amber-700'
                                                 : so.status === 'paid'
-                                                ? 'Payé'
+                                                ? 'bg-green-100 text-green-700'
                                                 : so.status === 'delivered'
-                                                ? 'Livré'
+                                                ? 'bg-blue-100 text-blue-700'
                                                 : so.status === 'sent'
-                                                ? 'Commandé'
+                                                ? 'bg-blue-100 text-blue-700'
                                                 : so.status === 'proforma_sent'
-                                                ? 'Proforma envoyée'
+                                                ? 'bg-orange-100 text-orange-700'
                                                 : so.status === 'shipped'
-                                                ? 'Expédié'
-                                                : so.status}
-                                            </span>
-                                            {so.status === 'sent' && (
-                                              <button
-                                                onClick={() => markSupplierShipped(so.id)}
-                                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-cyan-600 hover:bg-cyan-700 text-white transition-colors cursor-pointer"
-                                              >
-                                                <Truck size={10} />
-                                                Expédié
-                                              </button>
-                                            )}
-                                          </div>
+                                                ? 'bg-cyan-100 text-cyan-700'
+                                                : 'bg-muted text-muted-foreground'
+                                            }`}
+                                          >
+                                            {so.status === 'awaiting_payment'
+                                              ? 'A payer'
+                                              : so.status === 'paid'
+                                              ? 'Paye'
+                                              : so.status === 'delivered'
+                                              ? 'Livre'
+                                              : so.status === 'sent'
+                                              ? 'Commande'
+                                              : so.status === 'proforma_sent'
+                                              ? 'Proforma envoyee'
+                                              : so.status === 'shipped'
+                                              ? 'Expedie'
+                                              : so.status}
+                                          </span>
                                         </div>
                                       ))}
                                     </div>
@@ -544,9 +402,7 @@ export default function AdminCommandesPage() {
                                       <p className="font-semibold text-xs text-muted-foreground uppercase tracking-wide mb-1">
                                         Adresse de livraison
                                       </p>
-                                      {order.delivery_address && (
-                                        <p>{order.delivery_address}</p>
-                                      )}
+                                      {order.delivery_address && <p>{order.delivery_address}</p>}
                                       {(order.delivery_postal_code || order.delivery_city) && (
                                         <p>
                                           {[order.delivery_postal_code, order.delivery_city]
@@ -554,43 +410,6 @@ export default function AdminCommandesPage() {
                                             .join(' ')}
                                         </p>
                                       )}
-                                    </div>
-                                  )}
-
-                                  {isInProgress(order.status) && (
-                                    <div className="mt-4">
-                                      <button
-                                        disabled={markingDeliveredId === order.id}
-                                        onClick={() => handleMarkDelivered(order.id)}
-                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                                      >
-                                        {markingDeliveredId === order.id ? (
-                                          <Loader2 size={14} className="animate-spin" />
-                                        ) : (
-                                          <CheckCircle size={14} />
-                                        )}
-                                        Marquer comme livrée
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {(order.status === 'delivered' ||
-                                    order.status === 'invoiced') && (
-                                    <div className="mt-4">
-                                      <button
-                                        disabled={downloadingChorusId === order.id}
-                                        onClick={() =>
-                                          handleDownloadChorusPDF(order.id, order.order_number)
-                                        }
-                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                                      >
-                                        {downloadingChorusId === order.id ? (
-                                          <Loader2 size={14} className="animate-spin" />
-                                        ) : (
-                                          <FileDown size={14} />
-                                        )}
-                                        Facture Chorus Pro
-                                      </button>
                                     </div>
                                   )}
                                 </div>

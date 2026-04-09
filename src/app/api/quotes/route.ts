@@ -147,7 +147,7 @@ async function sendNotifications(params: {
         line += ` (${subtotal} € HT)`
       }
       if (i.delai) {
-        line += ` — Délai: ${/^\d+$/.test(i.delai) ? `${i.delai} semaines` : i.delai}`
+        line += ` — Délai: ${/^\d+(\.\d+)?$/.test(i.delai) ? (Number(i.delai) >= 14 ? `${Math.ceil(Number(i.delai) / 7)} semaines` : `${i.delai} jours`) : i.delai}`
       }
       return line
     })
@@ -266,7 +266,7 @@ async function sendNotifications(params: {
             ` : ''}
 
             <div style="text-align:center;margin:24px 0">
-              <a href="${siteUrl}/admin/devis" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis dans l'admin</a>
+              <a href="${siteUrl}/admin/devis" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis dans mon espace Gérant</a>
             </div>
           </div>
         </div>
