@@ -1,7 +1,6 @@
 import { createServiceRoleClient, createServerSupabaseClient } from '@/lib/supabase/server'
 import { generateQuotePDF } from '@/lib/pdf/generate-quote-pdf'
 import { checkRateLimit } from '@/lib/rate-limit'
-import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
 import { Resend } from 'resend'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
@@ -69,6 +68,8 @@ export async function POST(request: Request) {
           product_id: i.productId,
           product_name: i.productName,
           quantity: i.quantity,
+          unit_price: i.unitPrice || 0,
+          delai: i.delai || null,
         }))
       )
 
@@ -153,31 +154,7 @@ async function sendNotifications(params: {
     })
     .join('\n')
 
-  // 1. Telegram
-  const text = [
-    `📋 *Nouvelle demande de devis*`,
-    ``,
-    `*Entité :* ${params.entity}`,
-    `*Contact :* ${params.contactName}`,
-    `*Email :* ${params.email}`,
-    `*Tél :* ${params.phone}`,
-    ``,
-    `*Produits :*`,
-    itemsList,
-    ``,
-    totalHT > 0 ? `💰 *Total estimé HT :* ${totalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €` : '',
-    ``,
-    `_Réf : ${params.quoteId}_`,
-  ].filter(Boolean).join('\n')
-
-  await sendTelegramMessage(text)
-  await sendTelegramDocument(
-    params.pdfBuffer,
-    `devis-${shortRef}.pdf`,
-    `📎 Devis ${shortRef} — ${params.entity}`
-  )
-
-  // 2. Email au client avec le devis PDF
+  // 1. Email au client avec le devis PDF
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
   const fromAddress = process.env.RESEND_FROM_QUOTES_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <devis@sapal.fr>'
 
@@ -213,70 +190,4 @@ async function sendNotifications(params: {
     console.error('Failed to send client quote email:', emailErr)
   }
 
-  // 3. Email au gérant SAPAL
-  const gerantEmail = process.env.SAPAL_GERANT_EMAIL || 'societe@sapal.fr'
-
-  const itemsHtml = params.items.map(i => {
-    const price = i.unitPrice && i.unitPrice > 0 ? i.unitPrice : 0
-    return `<tr>
-      <td style="padding:8px 12px;border-bottom:1px solid #eee">${i.productName}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:center">${i.quantity}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #eee;text-align:right">${price > 0 ? `${(price * i.quantity).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €` : '-'}</td>
-    </tr>`
-  }).join('')
-
-  try {
-    await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
-      to: gerantEmail,
-      subject: `Nouvelle demande de devis — ${params.entity} (Réf. ${shortRef})`,
-      html: `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-          <div style="background:#1e293b;color:white;padding:24px;border-radius:8px 8px 0 0">
-            <h1 style="margin:0;font-size:20px">Nouvelle demande de devis</h1>
-            <p style="margin:4px 0 0;opacity:0.7;font-size:14px">Réf. ${shortRef}</p>
-          </div>
-          <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
-            <h3 style="margin:0 0 16px;font-size:16px">Coordonnées client</h3>
-            <table style="width:100%;font-size:14px;margin-bottom:20px">
-              <tr><td style="padding:4px 0;color:#6b7280;width:120px">Entreprise</td><td style="padding:4px 0;font-weight:bold">${params.entity}</td></tr>
-              <tr><td style="padding:4px 0;color:#6b7280">Contact</td><td style="padding:4px 0">${params.contactName}</td></tr>
-              <tr><td style="padding:4px 0;color:#6b7280">Email</td><td style="padding:4px 0"><a href="mailto:${params.email}">${params.email}</a></td></tr>
-              <tr><td style="padding:4px 0;color:#6b7280">Téléphone</td><td style="padding:4px 0"><a href="tel:${params.phone}">${params.phone}</a></td></tr>
-            </table>
-
-            <h3 style="margin:0 0 12px;font-size:16px">Produits demandés</h3>
-            <div style="background:#f8fafc;border-radius:8px;padding:12px;margin-bottom:20px">
-              <table style="width:100%;border-collapse:collapse;font-size:14px">
-                <thead>
-                  <tr style="border-bottom:2px solid #e5e7eb">
-                    <th style="padding:8px 12px;text-align:left">Produit</th>
-                    <th style="padding:8px 12px;text-align:center">Qté</th>
-                    <th style="padding:8px 12px;text-align:right">Total HT</th>
-                  </tr>
-                </thead>
-                <tbody>${itemsHtml}</tbody>
-              </table>
-            </div>
-
-            ${totalHT > 0 ? `
-            <div style="background:#1e293b;color:white;border-radius:8px;padding:16px;margin-bottom:20px">
-              <p style="margin:0;font-size:16px">Total estimé HT : <strong>${totalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</strong></p>
-            </div>
-            ` : ''}
-
-            <div style="text-align:center;margin:24px 0">
-              <a href="${siteUrl}/admin/devis" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis dans mon espace Gérant</a>
-            </div>
-          </div>
-        </div>
-      `,
-      attachments: [{
-        filename: `devis-${shortRef}.pdf`,
-        content: params.pdfBuffer.toString('base64'),
-      }],
-    })
-  } catch (emailErr) {
-    console.error('Failed to send gerant email notification:', emailErr)
-  }
 }

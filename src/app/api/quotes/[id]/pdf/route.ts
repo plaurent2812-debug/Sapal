@@ -58,6 +58,8 @@ export async function GET(
         product_id: string
         product_name: string
         quantity: number
+        unit_price?: number
+        delai?: string
       }[]
     ).map((item) => {
       const product = productMap.get(item.product_id)
@@ -65,7 +67,8 @@ export async function GET(
         reference: product?.reference ?? '',
         productName: item.product_name,
         quantity: item.quantity,
-        unitPriceHT: product?.price ?? 0,
+        unitPriceHT: (item.unit_price && item.unit_price > 0) ? item.unit_price : (product?.price ?? 0),
+        delai: item.delai || undefined,
       }
     })
 
@@ -90,7 +93,7 @@ export async function GET(
     return new Response(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="devis-${shortRef}.pdf"`,
+        'Content-Disposition': `inline; filename="devis-${shortRef}.pdf"`,
       },
     })
   } catch (error) {

@@ -3,6 +3,7 @@ export const STATUS_CONFIG: Record<string, { label: string; className: string }>
   sent: { label: 'Envoye', className: 'bg-blue-100 text-blue-800 border-blue-200' },
   accepted: { label: 'Accepte', className: 'bg-green-100 text-green-800 border-green-200' },
   rejected: { label: 'Refuse', className: 'bg-red-100 text-red-800 border-red-200' },
+  cancelled: { label: 'Annulé', className: 'bg-gray-100 text-gray-600 border-gray-200' },
 }
 
 export function formatDate(dateStr: string, options?: { withTime?: boolean }): string {

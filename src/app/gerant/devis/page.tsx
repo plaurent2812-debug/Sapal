@@ -12,11 +12,12 @@ import {
   Building2,
   Calendar,
   Download,
+  Trash2,
 } from 'lucide-react'
 import { STATUS_CONFIG, formatDate } from '@/lib/quote-utils'
 import { useDownloadPDF } from '@/hooks/useDownloadPDF'
 
-type QuoteStatus = 'pending' | 'sent' | 'accepted' | 'rejected'
+type QuoteStatus = 'pending' | 'sent' | 'accepted' | 'rejected' | 'cancelled'
 
 interface QuoteItem {
   id: string
@@ -42,10 +43,32 @@ export default function GerantDevisPage() {
   const [loading, setLoading] = useState(true)
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const { downloadingId, handleDownloadPDF } = useDownloadPDF()
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [deleteSuccessMsg, setDeleteSuccessMsg] = useState<string | null>(null)
 
   useEffect(() => {
     fetchQuotes()
   }, [])
+
+  async function handleDeleteQuote(quoteId: string) {
+    if (!confirm('Supprimer ce devis ? Cette action est irréversible.')) return
+    setDeletingId(quoteId)
+    try {
+      const res = await fetch(`/api/quotes/${quoteId}/delete`, { method: 'DELETE' })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body?.error ?? 'Erreur lors de la suppression')
+      }
+      const body = await res.json()
+      await fetchQuotes()
+      setDeleteSuccessMsg(body.action === 'cancelled' ? 'Devis annulé' : 'Devis supprimé')
+      setTimeout(() => setDeleteSuccessMsg(null), 3000)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Erreur lors de la suppression')
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   async function fetchQuotes() {
     setLoading(true)
@@ -73,6 +96,12 @@ export default function GerantDevisPage() {
           Consultation des devis (lecture seule)
         </p>
       </div>
+
+      {deleteSuccessMsg && (
+        <div className="mb-4 px-4 py-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm font-medium">
+          {deleteSuccessMsg}
+        </div>
+      )}
 
       {loading ? (
         <div className="flex items-center justify-center py-20 text-muted-foreground">
@@ -207,7 +236,7 @@ export default function GerantDevisPage() {
                                     <p className="text-sm text-muted-foreground">Aucun produit.</p>
                                   )}
 
-                                  <div className="mt-4">
+                                  <div className="mt-4 flex items-center gap-2">
                                     <button
                                       disabled={downloadingId === quote.id}
                                       onClick={() => handleDownloadPDF(quote.id)}
@@ -220,6 +249,21 @@ export default function GerantDevisPage() {
                                       )}
                                       Telecharger PDF
                                     </button>
+
+                                    {quote.status !== 'cancelled' && (
+                                      <button
+                                        disabled={deletingId === quote.id}
+                                        onClick={() => handleDeleteQuote(quote.id)}
+                                        className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                                      >
+                                        {deletingId === quote.id ? (
+                                          <Loader2 size={14} className="animate-spin" />
+                                        ) : (
+                                          <Trash2 size={14} />
+                                        )}
+                                        Supprimer
+                                      </button>
+                                    )}
                                   </div>
                                 </div>
                               </div>

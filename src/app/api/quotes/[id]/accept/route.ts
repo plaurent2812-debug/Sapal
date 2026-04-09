@@ -213,7 +213,7 @@ export async function POST(
         `,
       }).catch((err) => console.error('Confirmation email error:', err))
 
-      // 11. Telegram notification (non-blocking)
+      // 11. Telegram notification gérant (non-blocking)
       const identifier = quote.entity || quote.contact_name || quote.email
       const shortId = id.replace(/-/g, '').slice(0, 8).toUpperCase()
       sendTelegramMessage(
@@ -224,6 +224,47 @@ export async function POST(
         `💰 Total HT : ${formattedTotal} €\n` +
         `⏳ En attente du bon de commande client`
       ).catch(() => {})
+
+      // 12. Email au gérant — devis accepté (non-blocking)
+      const gerantEmail = process.env.SAPAL_GERANT_EMAIL
+      if (gerantEmail) {
+        resend.emails.send({
+          from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
+          to: gerantEmail,
+          subject: `Devis accepté — ${identifier} (${order.order_number})`,
+          html: `
+            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+              <div style="background:#16a34a;color:white;padding:24px;border-radius:8px 8px 0 0">
+                <h1 style="margin:0;font-size:20px">Devis accepté</h1>
+                <p style="margin:4px 0 0;opacity:0.8;font-size:14px">Réf. ${shortId}</p>
+              </div>
+              <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
+                <p>Le client <strong>${identifier}</strong> a accepté son devis.</p>
+                <div style="background:#f8fafc;border-radius:8px;padding:16px;margin:16px 0;font-size:14px">
+                  <p style="margin:0"><strong>Commande :</strong> ${order.order_number}</p>
+                  <p style="margin:8px 0 0"><strong>Total HT :</strong> ${formattedTotal} €</p>
+                  <p style="margin:8px 0 0"><strong>Total TTC :</strong> ${formattedTTC} €</p>
+                  <p style="margin:8px 0 0"><strong>Statut :</strong> En attente du bon de commande client</p>
+                </div>
+                ${itemsHtml ? `
+                <div style="background:#f8fafc;border-radius:8px;padding:12px;margin-bottom:16px">
+                  <table style="width:100%;border-collapse:collapse;font-size:14px">
+                    <thead><tr style="border-bottom:2px solid #e5e7eb">
+                      <th style="padding:8px 12px;text-align:left">Produit</th>
+                      <th style="padding:8px 12px;text-align:center">Qté</th>
+                      <th style="padding:8px 12px;text-align:right">Total HT</th>
+                    </tr></thead>
+                    <tbody>${itemsHtml}</tbody>
+                  </table>
+                </div>` : ''}
+                <div style="text-align:center;margin:24px 0">
+                  <a href="${siteUrl}/gerant/commandes" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir dans mon espace Gérant</a>
+                </div>
+              </div>
+            </div>
+          `,
+        }).catch((err) => console.error('Gérant accept email error:', err))
+      }
 
       // 12. Return success
       return Response.json({

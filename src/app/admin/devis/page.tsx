@@ -4,11 +4,11 @@ import { useState, useEffect, Fragment } from 'react'
 import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
-import { Loader2, ChevronDown, ChevronUp, FileText, Mail, Phone, Building2, Calendar, Plus, Download, FileCheck, Info, ExternalLink, Send } from 'lucide-react'
+import { Loader2, ChevronDown, ChevronUp, FileText, Mail, Phone, Building2, Calendar, Plus, Download, FileCheck, Info, ExternalLink, Send, Trash2 } from 'lucide-react'
 import { STATUS_CONFIG, formatDate } from '@/lib/quote-utils'
 import { useDownloadPDF } from '@/hooks/useDownloadPDF'
 
-type QuoteStatus = 'pending' | 'sent' | 'accepted' | 'rejected'
+type QuoteStatus = 'pending' | 'sent' | 'accepted' | 'rejected' | 'cancelled'
 
 interface QuoteItem {
   id: string
@@ -37,6 +37,8 @@ export default function AdminDevisPage() {
   const [chorusDownloadingId, setChorusDownloadingId] = useState<string | null>(null)
   const [sendingId, setSendingId] = useState<string | null>(null)
   const [sentSuccessId, setSentSuccessId] = useState<string | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [deleteSuccessMsg, setDeleteSuccessMsg] = useState<string | null>(null)
 
   useEffect(() => {
     fetchQuotes()
@@ -74,6 +76,26 @@ export default function AdminDevisPage() {
     }
   }
 
+  async function handleDeleteQuote(quoteId: string) {
+    if (!confirm('Supprimer ce devis ? Cette action est irréversible.')) return
+    setDeletingId(quoteId)
+    try {
+      const res = await fetch(`/api/quotes/${quoteId}/delete`, { method: 'DELETE' })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body?.error ?? 'Erreur lors de la suppression')
+      }
+      const body = await res.json()
+      await fetchQuotes()
+      setDeleteSuccessMsg(body.action === 'cancelled' ? 'Devis annulé' : 'Devis supprimé')
+      setTimeout(() => setDeleteSuccessMsg(null), 3000)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Erreur lors de la suppression')
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
   function toggleExpand(id: string) {
     setExpandedId((prev) => (prev === id ? null : id))
   }
@@ -85,13 +107,7 @@ export default function AdminDevisPage() {
       if (!res.ok) throw new Error('Erreur téléchargement')
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = res.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] || 'facture-chorus.pdf'
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      URL.revokeObjectURL(url)
+      window.open(url, '_blank')
     } catch {
       alert('Erreur lors du téléchargement de la facture Chorus')
     } finally {
@@ -110,6 +126,12 @@ export default function AdminDevisPage() {
           </Button>
         </Link>
       </div>
+
+      {deleteSuccessMsg && (
+        <div className="mb-4 px-4 py-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm font-medium animate-in fade-in">
+          {deleteSuccessMsg}
+        </div>
+      )}
 
       {loading ? (
         <div className="flex items-center justify-center py-20 text-muted-foreground">
@@ -325,6 +347,31 @@ export default function AdminDevisPage() {
                                     <p className="mt-4 text-sm text-blue-700 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 inline-block">
                                       Envoyé — en attente de réponse client
                                     </p>
+                                  )}
+
+                                  {quote.status === 'cancelled' && (
+                                    <p className="mt-4 text-sm text-gray-500 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 inline-block">
+                                      Devis annulé
+                                    </p>
+                                  )}
+
+                                  {quote.status !== 'cancelled' && (
+                                    <div className="mt-4 pt-4 border-t border-border/50">
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        disabled={deletingId === quote.id}
+                                        onClick={() => handleDeleteQuote(quote.id)}
+                                        className="border-red-200 text-red-600 hover:bg-red-50"
+                                      >
+                                        {deletingId === quote.id ? (
+                                          <Loader2 size={14} className="animate-spin mr-2" />
+                                        ) : (
+                                          <Trash2 size={14} className="mr-2" />
+                                        )}
+                                        Supprimer le devis
+                                      </Button>
+                                    </div>
                                   )}
                                 </div>
                               </div>

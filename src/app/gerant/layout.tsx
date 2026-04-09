@@ -38,6 +38,7 @@ export default function GerantLayout({
   const [authenticated, setAuthenticated] = useState(false)
   const [checking, setChecking] = useState(true)
   const [userEmail, setUserEmail] = useState<string>('')
+  const [prepaymentCount, setPrepaymentCount] = useState(0)
 
   useEffect(() => {
     const supabase = createBrowserClient()
@@ -51,6 +52,12 @@ export default function GerantLayout({
         } else {
           setAuthenticated(true)
           setUserEmail(session.user.email ?? '')
+          // Fetch prepayment count
+          supabase
+            .from('supplier_orders')
+            .select('id', { count: 'exact', head: true })
+            .in('status', ['proforma_sent', 'awaiting_payment'])
+            .then(({ count }) => setPrepaymentCount(count ?? 0))
         }
       }
       setChecking(false)
@@ -116,6 +123,11 @@ export default function GerantLayout({
               >
                 <Icon size={20} />
                 {item.label}
+                {item.href === '/gerant/prepaiements' && prepaymentCount > 0 && (
+                  <span className="ml-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-orange-500 text-white text-xs font-bold">
+                    {prepaymentCount}
+                  </span>
+                )}
               </Link>
             )
           })}

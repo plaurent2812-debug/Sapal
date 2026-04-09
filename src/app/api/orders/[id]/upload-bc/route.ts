@@ -119,6 +119,7 @@ export async function POST(
     }
 
     let supplierOrderCount = 0
+    const prepaymentPdfs: { supplierName: string; bdcNumber: string; pdfBuffer: Buffer }[] = []
 
     // 8. For each supplier group, create supplier_order + send BDC
     for (const [supplierId, items] of supplierGroups) {
@@ -204,10 +205,9 @@ export async function POST(
 
       supplierOrderCount++
 
-      // g. BDC PDF generation + dispatch (non-blocking)
+      // g. BDC PDF generation + dispatch
       void (async () => {
         try {
-          // Fetch client profile for delivery contact name
           const { data: clientProfile } = await serviceClient
             .from('client_profiles')
             .select('company_name')
@@ -251,118 +251,27 @@ export async function POST(
           })
 
           if (isPrePayment) {
-            // Notify gerant about prepayment required
-            const gerantEmailAddr = process.env.SAPAL_GERANT_EMAIL
-            if (gerantEmailAddr) {
-              const fromAddress = process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <noreply@opti-pro.fr>'
-              const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
-              resend.emails.send({
-                from: fromAddress,
-                to: gerantEmailAddr,
-                subject: `Prepaiement requis — BDC ${bdcNumber} — ${supplier.name}`,
-                html: `
-                  <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-                    <div style="background:#ea580c;color:white;padding:24px;border-radius:8px 8px 0 0">
-                      <h1 style="margin:0;font-size:20px">SAPAL Signalisation</h1>
-                      <p style="margin:4px 0 0;opacity:0.8;font-size:14px">Prepaiement fournisseur requis</p>
-                    </div>
-                    <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
-                      <p>Un prepaiement est requis pour la commande fournisseur ci-dessous.</p>
-                      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:16px;margin:16px 0;font-size:14px">
-                        <p style="margin:0"><strong>BDC :</strong> ${bdcNumber}</p>
-                        <p style="margin:8px 0 0"><strong>Fournisseur :</strong> ${supplier.name}</p>
-                        <p style="margin:8px 0 0"><strong>Montant HT :</strong> ${groupTotalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} EUR</p>
-                        <p style="margin:8px 0 0"><strong>Commande :</strong> ${order.order_number}</p>
-                      </div>
-                      <p>Une proforma a ete demandee au fournisseur. Des reception, merci d'effectuer le virement.</p>
-                      <div style="text-align:center;margin:24px 0">
-                        <a href="${siteUrl}/gerant/prepaiements" style="background:#ea580c;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir les prepaiements</a>
-                      </div>
-                    </div>
-                  </div>
-                `,
-              }).catch((err) => console.error('Gerant prepayment email error:', err))
-            }
+            // PRÉPAIEMENT : BDC généré mais PAS envoyé au fournisseur
+            // Le BDC sera envoyé quand le gérant confirmera le paiement (mark-paid)
+            // Stocker le PDF pour l'envoyer dans le résumé Telegram
+            prepaymentPdfs.push({ supplierName: supplier.name, bdcNumber, pdfBuffer })
 
-            // Telegram notification for prepayment
-            sendTelegramMessage(
-              `*Prepaiement requis*\n\n` +
-              `BDC : ${bdcNumber}\n` +
-              `Fournisseur : ${supplier.name}\n` +
-              `Montant HT : ${groupTotalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} EUR\n` +
-              `Commande : ${order.order_number}`
-            ).catch(() => {})
-
-            // Send proforma request email to supplier
-            const proformaEmailSent = supplier.email
-              ? await (async () => {
-                  try {
-                    const fromAddress = process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>'
-                    const itemsTableRows = bdcItems.map((item: { reference: string; name: string; variantLabel?: string; quantity: number; unitPrice: number }) =>
-                      `<tr>
-                        <td style="padding:6px;border:1px solid #ddd;">${item.name}${item.variantLabel ? ` — ${item.variantLabel}` : ''}</td>
-                        <td style="padding:6px;border:1px solid #ddd;text-align:center;">${item.quantity}</td>
-                        <td style="padding:6px;border:1px solid #ddd;text-align:right;">${item.unitPrice.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</td>
-                      </tr>`
-                    ).join('')
-                    const emailHtml = `
-                      <p>Bonjour,</p>
-                      <p>Nous souhaitons passer commande des articles ci-dessous. Pourriez-vous nous faire parvenir votre proforma / facture anticipée afin que nous puissions procéder au règlement ?</p>
-                      <table style="border-collapse:collapse;width:100%;margin:16px 0;">
-                        <thead>
-                          <tr style="background:#f5f5f5;">
-                            <th style="padding:6px;border:1px solid #ddd;text-align:left;">Désignation</th>
-                            <th style="padding:6px;border:1px solid #ddd;text-align:center;">Qté</th>
-                            <th style="padding:6px;border:1px solid #ddd;text-align:right;">Prix unit. HT</th>
-                          </tr>
-                        </thead>
-                        <tbody>${itemsTableRows}</tbody>
-                      </table>
-                      <p><strong>Total HT : ${groupTotalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</strong></p>
-                      <p>Adresse de livraison :</p>
-                      <p><strong>${deliveryAddress}<br>${deliveryPostalCode} ${deliveryCity}</strong></p>
-                      <p>Merci par avance pour votre retour rapide.</p>
-                      <p>Cordialement,<br>SAPAL Signalisation</p>
-                    `
-                    await resend.emails.send({
-                      from: fromAddress,
-                      to: supplier.email!,
-                      subject: `Demande de proforma — SAPAL Signalisation`,
-                      html: emailHtml,
-                    })
-                    return true
-                  } catch (emailErr) {
-                    console.error(`Proforma email send error for ${bdcNumber}:`, emailErr)
-                    return false
-                  }
-                })()
-              : false
-
-            // Send BDC PDF to SAPAL via Telegram with proforma mention
-            sendTelegramDocument(
-              pdfBuffer,
-              `${bdcNumber}.pdf`,
-              `⏳ Proforma demandée — BDC ${bdcNumber} — ${supplier.name}` +
-              (proformaEmailSent ? ' (email proforma envoyé au fournisseur)' : supplier.email ? ' (⚠️ échec email proforma)' : ' (pas d\'email fournisseur)')
-            ).catch(() => {})
           } else {
-            // payment_terms === '30j' — send BDC to supplier
+            // 30j : envoyer le BDC directement au fournisseur
             const emailSent = supplier.email
               ? await (async () => {
                   try {
-                    const fromAddress = process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>'
-                    const emailHtml = `
-                      <p>Bonjour,</p>
-                      <p>Veuillez trouver ci-joint notre bon de commande <strong>${bdcNumber}</strong>.</p>
-                      <p>Merci de livrer directement à l'adresse suivante :</p>
-                      <p><strong>${deliveryAddress}<br>${deliveryPostalCode} ${deliveryCity}</strong></p>
-                      <p>Cordialement,<br>SAPAL Signalisation</p>
-                    `
                     await resend.emails.send({
-                      from: fromAddress,
+                      from: process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>',
                       to: supplier.email!,
                       subject: `Bon de commande ${bdcNumber} - SAPAL Signalisation`,
-                      html: emailHtml,
+                      html: `
+                        <p>Bonjour,</p>
+                        <p>Veuillez trouver ci-joint notre bon de commande <strong>${bdcNumber}</strong>.</p>
+                        <p>Merci de livrer directement à l'adresse suivante :</p>
+                        <p><strong>${deliveryAddress}<br>${deliveryPostalCode} ${deliveryCity}</strong></p>
+                        <p>Cordialement,<br>SAPAL Signalisation</p>
+                      `,
                       attachments: [{
                         filename: `${bdcNumber}.pdf`,
                         content: pdfBuffer.toString('base64'),
@@ -376,12 +285,12 @@ export async function POST(
                 })()
               : false
 
-            // Send BDC PDF to SAPAL via Telegram
+            // Telegram avec le BDC
             sendTelegramDocument(
               pdfBuffer,
               `${bdcNumber}.pdf`,
-              `📦 BDC ${bdcNumber} — ${supplier.name}` +
-              (emailSent ? ' (email envoyé au fournisseur)' : supplier.email ? ' (⚠️ échec email fournisseur)' : ' (pas d\'email fournisseur)')
+              `📦 BDC ${bdcNumber} envoyé à ${supplier.name}` +
+              (emailSent ? ' ✅' : supplier.email ? ' (⚠️ échec email)' : ' (pas d\'email fournisseur)')
             ).catch(() => {})
           }
         } catch (bdcErr) {
@@ -390,7 +299,7 @@ export async function POST(
       })()
     }
 
-    // 9. Check if all supplier_orders are 'sent' — if so, upgrade order to 'ordered'
+    // 9. Check if all supplier_orders are 'sent' → upgrade order to 'ordered'
     const { data: allSupplierOrders } = await serviceClient
       .from('supplier_orders')
       .select('status')
@@ -406,42 +315,95 @@ export async function POST(
         .eq('id', orderId)
     }
 
-    // 10. Email au gérant — BC reçu
+    // 10. Notifications gérant — différenciées selon les fournisseurs
     const gerantEmail = process.env.SAPAL_GERANT_EMAIL
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
+    const fromAddress = process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>'
+
+    // Collecter les infos pour le résumé
+    const sentSuppliers: string[] = []
+    const prepaymentSuppliers: { name: string; amount: number; bdcNumber: string }[] = []
+
+    for (const [sid, sitems] of supplierGroups) {
+      const { data: sup } = await serviceClient.from('suppliers').select('name, payment_terms').eq('id', sid).single()
+      if (!sup) continue
+      const total = sitems.reduce((s: number, i: { unit_price: number; quantity: number }) => s + i.unit_price * i.quantity, 0)
+      const { data: so } = await serviceClient.from('supplier_orders').select('bdc_number').eq('order_id', orderId).eq('supplier_id', sid).single()
+      if (sup.payment_terms === 'prepayment') {
+        prepaymentSuppliers.push({ name: sup.name, amount: total, bdcNumber: so?.bdc_number ?? '' })
+      } else {
+        sentSuppliers.push(sup.name)
+      }
+    }
+
+    // Email gérant
     if (gerantEmail) {
+      const sentHtml = sentSuppliers.length > 0
+        ? `<p style="margin:8px 0 0">✅ <strong>BDC envoyé${sentSuppliers.length > 1 ? 's' : ''} au fournisseur :</strong> ${sentSuppliers.join(', ')}</p>`
+        : ''
+      const prepayHtml = prepaymentSuppliers.length > 0
+        ? prepaymentSuppliers.map(p =>
+            `<p style="margin:8px 0 0">💳 <strong>Prépaiement requis :</strong> ${p.name} — ${p.amount.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € HT (BDC ${p.bdcNumber})</p>`
+          ).join('')
+        : ''
+
       resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
+        from: fromAddress,
         to: gerantEmail,
-        subject: `BC reçu — Commande ${order.order_number}`,
+        subject: prepaymentSuppliers.length > 0
+          ? `BC reçu + prépaiement requis — ${order.order_number}`
+          : `BC reçu — BDC envoyé — ${order.order_number}`,
         html: `
           <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-            <div style="background:#1e293b;color:white;padding:24px;border-radius:8px 8px 0 0">
+            <div style="background:${prepaymentSuppliers.length > 0 ? '#ea580c' : '#16a34a'};color:white;padding:24px;border-radius:8px 8px 0 0">
               <h1 style="margin:0;font-size:20px">SAPAL Signalisation</h1>
-              <p style="margin:4px 0 0;opacity:0.7;font-size:14px">Bon de commande client reçu</p>
+              <p style="margin:4px 0 0;opacity:0.8;font-size:14px">${prepaymentSuppliers.length > 0 ? 'Action requise — Prépaiement fournisseur' : 'BC client reçu — BDC envoyé'}</p>
             </div>
             <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
-              <p>Un bon de commande a été déposé par le client.</p>
+              <p>Le bon de commande client a été déposé pour la commande <strong>${order.order_number}</strong>.</p>
               <div style="background:#f8fafc;border-radius:8px;padding:16px;margin:16px 0;font-size:14px">
                 <p style="margin:0"><strong>Commande :</strong> ${order.order_number}</p>
-                <p style="margin:8px 0 0"><strong>Adresse de livraison :</strong><br>${deliveryAddress}, ${deliveryPostalCode} ${deliveryCity}</p>
-                <p style="margin:8px 0 0"><strong>Commandes fournisseur créées :</strong> ${supplierOrderCount}</p>
+                <p style="margin:8px 0 0"><strong>Livraison :</strong> ${deliveryAddress}, ${deliveryPostalCode} ${deliveryCity}</p>
+                ${sentHtml}
+                ${prepayHtml}
               </div>
+              ${prepaymentSuppliers.length > 0 ? `
+              <p>Merci d'effectuer le virement au fournisseur puis de confirmer le paiement.</p>
               <div style="text-align:center;margin:24px 0">
-                <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'}/gerant/commandes" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir dans mon espace Gerant</a>
+                <a href="${siteUrl}/gerant/prepaiements" style="background:#ea580c;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir les prépaiements</a>
               </div>
+              ` : `
+              <div style="text-align:center;margin:24px 0">
+                <a href="${siteUrl}/gerant/commandes" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir dans mon espace Gérant</a>
+              </div>
+              `}
             </div>
           </div>
         `,
       }).catch((err) => console.error('Gérant BC email error:', err))
     }
 
-    // 11. Telegram summary notification (non-blocking)
-    sendTelegramMessage(
-      `📋 *BC client reçu — Commandes fournisseur créées*\n\n` +
-      `📦 Commande : ${order.order_number}\n` +
-      `🏭 Commande(s) fournisseur : ${supplierOrderCount}\n` +
-      `📍 Livraison : ${deliveryAddress}, ${deliveryPostalCode} ${deliveryCity}`
-    ).catch(() => {})
+    // 11. Telegram résumé
+    const telegramLines = [
+      `📋 *BC client reçu — ${order.order_number}*`,
+      `📍 Livraison : ${deliveryAddress}, ${deliveryPostalCode} ${deliveryCity}`,
+    ]
+    if (sentSuppliers.length > 0) {
+      telegramLines.push(`✅ BDC envoyé : ${sentSuppliers.join(', ')}`)
+    }
+    for (const p of prepaymentSuppliers) {
+      telegramLines.push(`💳 Prépaiement requis : ${p.name} — ${p.amount.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € HT`)
+    }
+    sendTelegramMessage(telegramLines.join('\n')).catch(() => {})
+
+    // Envoyer les PDF des prépaiements via Telegram pour que le gérant puisse payer
+    for (const pp of prepaymentPdfs) {
+      sendTelegramDocument(
+        pp.pdfBuffer,
+        `${pp.bdcNumber}.pdf`,
+        `📎 BDC ${pp.bdcNumber} — ${pp.supplierName} (à payer)`
+      ).catch(() => {})
+    }
 
     return Response.json({
       success: true,

@@ -143,7 +143,7 @@ export async function GET(
     return new Response(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="facture-chorus-${shortRef}.pdf"`,
+        'Content-Disposition': `inline; filename="facture-chorus-${shortRef}.pdf"`,
       },
     })
   } catch (error) {

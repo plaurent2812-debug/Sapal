@@ -71,11 +71,7 @@ export default function MonCompteFacturesPage() {
       }
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `facture-${invoice.order_number}.pdf`
-      a.click()
-      URL.revokeObjectURL(url)
+      window.open(url, '_blank')
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Une erreur est survenue')
     } finally {

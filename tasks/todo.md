@@ -85,5 +85,11 @@ _Lancé en sous-agent le 09/04/2026_
 ### Divers
 - [ ] Telegram : 4 channels distincts (Devis, Paiements, Commandes, Contact)
 - [ ] Pennylane : intégrer quand clé API disponible
+  - [ ] Champ `chorus_pro` (boolean) dans `client_profiles` — indique si le client est une collectivité Chorus
+  - [ ] À l'upload du BC → Pennylane génère la facture automatiquement
+  - [ ] Facture envoyée par email au client + visible dans `/mon-compte/factures`
+  - [ ] Si `chorus_pro = true` → dépôt automatique sur Chorus Pro (ou notif gérant si API ne le permet pas)
+  - [ ] Si client classique → email + espace client uniquement
+- [ ] BDC SAPAL : aligner le template jsPDF sur le style des documents Pennylane (cohérence visuelle)
 - [ ] Mentions légales RGPD
 - [ ] Mobile admin : sidebar non optimisée

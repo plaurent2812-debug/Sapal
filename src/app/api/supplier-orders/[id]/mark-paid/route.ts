@@ -154,58 +154,32 @@ export async function POST(
 
     const filename = `BDC-${supplierOrder.bdc_number}.pdf`
 
-    // 9. Send BDC by email to supplier (non-blocking)
-    if (pdfBuffer && supplier.email && process.env.RESEND_API_KEY) {
+    // 9. Send payment confirmation email to supplier (sans BDC — déjà envoyé avec la demande de proforma)
+    if (supplier.email && process.env.RESEND_API_KEY) {
       resend.emails.send({
-        from: 'noreply@opti-pro.fr',
+        from: process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>',
         to: supplier.email,
-        subject: `Bon de commande SAPAL — ${supplierOrder.bdc_number}`,
+        subject: `Commande ${supplierOrder.bdc_number} réglée — SAPAL Signalisation`,
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #1a365d;">Bon de commande SAPAL Signalisation</h2>
+          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
             <p>Bonjour,</p>
-            <p>
-              Veuillez trouver en pièce jointe le bon de commande
-              <strong>${supplierOrder.bdc_number}</strong> de SAPAL Signalisation.
-            </p>
-            <p>
-              Le paiement a été effectué. Merci de traiter cette commande dans les meilleurs délais.
-            </p>
+            <p>Nous vous informons que la commande <strong>${supplierOrder.bdc_number}</strong> a été <strong>réglée</strong>.</p>
+            <p>Merci de bien vouloir traiter cette commande dans les meilleurs délais et de nous envoyer un <strong>accusé de réception</strong>.</p>
             ${parentOrder?.delivery_address ? `
             <p><strong>Adresse de livraison :</strong><br>
               ${parentOrder.delivery_address}<br>
               ${parentOrder.delivery_postal_code ?? ''} ${parentOrder.delivery_city ?? ''}
             </p>` : ''}
-            <p style="color: #666; font-size: 14px;">
+            <p>Cordialement,<br>SAPAL Signalisation</p>
+            <p style="color:#666;font-size:14px;">
               Pour toute question : <a href="mailto:societe@sapal.fr">societe@sapal.fr</a>
             </p>
-            <p style="color: #666; font-size: 14px;">L'équipe SAPAL Signalisation</p>
           </div>
         `,
-        attachments: [
-          {
-            filename,
-            content: pdfBuffer,
-          },
-        ],
       }).catch((err) => {
-        console.error('Failed to send BDC email to supplier:', err)
+        console.error('Failed to send payment confirmation email:', err)
       })
     }
-
-    // 10. Send BDC via Telegram to SAPAL (non-blocking)
-    if (pdfBuffer) {
-      sendTelegramDocument(
-        pdfBuffer,
-        filename,
-        `BDC ${supplierOrder.bdc_number} — ${supplier.name}`
-      ).catch(() => {})
-    }
-
-    // 11. Send Telegram text confirmation
-    sendTelegramMessage(
-      `✅ Paiement confirmé! BDC ${supplierOrder.bdc_number} envoyé à ${supplier.name}`
-    ).catch(() => {})
 
     // Check if all supplier_orders for parent order are now 'sent' → upgrade to 'ordered'
     const { data: allSupplierOrders } = await serviceClient

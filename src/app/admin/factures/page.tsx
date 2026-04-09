@@ -82,13 +82,7 @@ export default function AdminFacturesPage() {
       }
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `facture-${orderNumber}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
+      window.open(url, '_blank')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors du téléchargement de la facture')
     } finally {
@@ -107,13 +101,7 @@ export default function AdminFacturesPage() {
       }
       const blob = await res.blob()
       const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `facture-chorus-${orderNumber.replace(/^CMD-/, 'FAC-')}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
+      window.open(url, '_blank')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors du téléchargement Chorus Pro')
     } finally {
