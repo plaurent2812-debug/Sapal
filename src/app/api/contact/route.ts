@@ -1,5 +1,5 @@
 import { createServiceRoleClient } from '@/lib/supabase/server'
-import { checkRateLimit } from '@/lib/rate-limit'
+import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { sendTelegramMessage } from '@/lib/telegram'
 import { Resend } from 'resend'
 import { z } from 'zod'
@@ -24,9 +24,20 @@ const contactSchema = z.object({
 })
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('x-forwarded-for') ?? 'unknown'
-  if (!checkRateLimit(ip, 10, 60000)) {
-    return Response.json({ error: 'Trop de requêtes, réessayez dans 1 minute' }, { status: 429 })
+  const ip = getClientIP(request)
+  const rateLimitResult = await limitByIP(ip, 'CONTACT')
+  if (!rateLimitResult.success) {
+    return Response.json(
+      { error: 'Trop de requêtes, réessayez dans une heure' },
+      {
+        status: 429,
+        headers: {
+          'X-RateLimit-Limit': '5',
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': String(rateLimitResult.reset),
+        },
+      }
+    )
   }
 
   try {

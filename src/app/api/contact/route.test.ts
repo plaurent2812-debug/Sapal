@@ -17,8 +17,6 @@ const hoisted = vi.hoisted(() => {
 
   const sendTelegramMessageMock = vi.fn(() => Promise.resolve(true))
 
-  const checkRateLimitMock = vi.fn(() => true)
-
   return {
     insertMock,
     fromMock,
@@ -26,7 +24,6 @@ const hoisted = vi.hoisted(() => {
     resendSendMock,
     ResendCtor,
     sendTelegramMessageMock,
-    checkRateLimitMock,
   }
 })
 
@@ -42,12 +39,14 @@ vi.mock('@/lib/telegram', () => ({
   sendTelegramMessage: hoisted.sendTelegramMessageMock,
 }))
 
-vi.mock('@/lib/rate-limit', () => ({
-  checkRateLimit: hoisted.checkRateLimitMock,
+vi.mock('@/lib/rate-limit-upstash', () => ({
+  getClientIP: vi.fn().mockReturnValue('127.0.0.1'),
+  limitByIP: vi.fn().mockResolvedValue({ success: true, remaining: 4, reset: 9999 }),
 }))
 
 // Import apres la declaration des mocks.
 import { POST } from './route'
+import { limitByIP } from '@/lib/rate-limit-upstash'
 
 function makeRequest(body: unknown) {
   return new Request('http://localhost/api/contact', {
@@ -64,7 +63,7 @@ describe('POST /api/contact', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     // Default: rate limiter autorise.
-    hoisted.checkRateLimitMock.mockReturnValue(true)
+    vi.mocked(limitByIP).mockResolvedValue({ success: true, remaining: 4, reset: 9999 })
     hoisted.insertMock.mockResolvedValue({ data: null, error: null })
   })
 
@@ -150,5 +149,22 @@ describe('POST /api/contact', () => {
         message: 'Avez-vous ce produit en stock ?',
       })
     )
+  })
+
+  it('returns 429 when rate limit exceeded', async () => {
+    vi.mocked(limitByIP).mockResolvedValueOnce({ success: false, remaining: 0, reset: 9999 })
+    const request = new Request('http://localhost/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Test',
+        email: 'test@example.com',
+        subject: 'Test',
+        message: 'Hello',
+      }),
+    })
+    const response = await POST(request)
+    expect(response.status).toBe(429)
+    expect(response.headers.get('X-RateLimit-Remaining')).toBe('0')
   })
 })
