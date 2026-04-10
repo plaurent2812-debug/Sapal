@@ -3,8 +3,12 @@ import { Redis } from '@upstash/redis'
 
 export function getClientIP(request: Request): string {
   const forwarded = request.headers.get('x-forwarded-for')
-  if (!forwarded) return 'unknown'
-  return forwarded.split(',')[0].trim()
+  if (forwarded) return forwarded.split(',')[0].trim()
+
+  const realIP = request.headers.get('x-real-ip')
+  if (realIP) return realIP.trim()
+
+  return 'unknown'
 }
 
 export const RATE_LIMITS = {
@@ -15,17 +19,25 @@ export const RATE_LIMITS = {
 
 type RateLimitKey = keyof typeof RATE_LIMITS
 
-function createLimiter(key: RateLimitKey): Ratelimit {
-  const redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL!,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-  })
-  const { requests, window } = RATE_LIMITS[key]
-  return new Ratelimit({
-    redis,
-    limiter: Ratelimit.slidingWindow(requests, window),
-    prefix: `sapal:ratelimit:${key.toLowerCase()}`,
-  })
+const _limiterCache = new Map<RateLimitKey, Ratelimit>()
+
+function getLimiter(key: RateLimitKey): Ratelimit {
+  if (!_limiterCache.has(key)) {
+    const redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    })
+    const { requests, window: windowSize } = RATE_LIMITS[key]
+    _limiterCache.set(
+      key,
+      new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(requests, windowSize),
+        prefix: `sapal:ratelimit:${key.toLowerCase()}`,
+      })
+    )
+  }
+  return _limiterCache.get(key)!
 }
 
 export async function limitByIP(
@@ -33,15 +45,15 @@ export async function limitByIP(
   key: RateLimitKey
 ): Promise<{ success: boolean; remaining: number; reset: number }> {
   try {
-    const limiter = createLimiter(key)
+    const limiter = getLimiter(key)
     const result = await limiter.limit(ip)
     return {
       success: result.success,
       remaining: result.remaining,
       reset: result.reset,
     }
-  } catch {
-    // Fail-open: if Redis is unavailable, allow the request rather than blocking users
+  } catch (err) {
+    console.error('[rate-limit] Upstash unavailable, failing open:', err)
     return { success: true, remaining: -1, reset: 0 }
   }
 }
