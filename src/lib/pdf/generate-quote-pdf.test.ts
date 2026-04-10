@@ -33,6 +33,8 @@ describe('generateQuotePDF', () => {
     // generateQuotePDF returns a jsPDF instance; serialise it to bytes.
     const bytes = doc.output('arraybuffer')
     expect(bytes).toBeInstanceOf(ArrayBuffer)
-    expect(bytes.byteLength).toBeGreaterThan(500)
+    expect(bytes.byteLength).toBeGreaterThan(6000)
+    const magic = String.fromCharCode(...new Uint8Array(bytes).slice(0, 5))
+    expect(magic).toBe('%PDF-')
   })
 })
