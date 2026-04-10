@@ -47,27 +47,34 @@ describe('limitByIP', () => {
   beforeEach(() => vi.clearAllMocks())
 
   it('returns success:true when under the limit', async () => {
-    mockLimit.mockResolvedValue({ success: true, remaining: 4, reset: 9999 })
+    mockLimit.mockResolvedValueOnce({ success: true, remaining: 4, reset: 9999 })
     const result = await limitByIP('1.2.3.4', 'CONTACT')
     expect(result.success).toBe(true)
     expect(result.remaining).toBe(4)
   })
 
   it('returns success:false when limit exceeded', async () => {
-    mockLimit.mockResolvedValue({ success: false, remaining: 0, reset: 9999 })
+    mockLimit.mockResolvedValueOnce({ success: false, remaining: 0, reset: 9999 })
     const result = await limitByIP('1.2.3.4', 'CONTACT')
     expect(result.success).toBe(false)
   })
 
   it('calls limit() with the provided IP', async () => {
-    mockLimit.mockResolvedValue({ success: true, remaining: 9, reset: 9999 })
+    mockLimit.mockResolvedValueOnce({ success: true, remaining: 9, reset: 9999 })
     await limitByIP('5.6.7.8', 'QUOTES')
     expect(mockLimit).toHaveBeenCalledWith('5.6.7.8')
   })
 
   it('exposes reset timestamp from Upstash response', async () => {
-    mockLimit.mockResolvedValue({ success: true, remaining: 3, reset: 12345 })
+    mockLimit.mockResolvedValueOnce({ success: true, remaining: 3, reset: 12345 })
     const result = await limitByIP('1.2.3.4', 'CONTACT')
     expect(result.reset).toBe(12345)
+  })
+
+  it('fails open (success:true) when Redis throws', async () => {
+    mockLimit.mockRejectedValueOnce(new Error('Redis connection timeout'))
+    const result = await limitByIP('1.2.3.4', 'CONTACT')
+    expect(result.success).toBe(true)
+    expect(result.remaining).toBe(-1)
   })
 })
