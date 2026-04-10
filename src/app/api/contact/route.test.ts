@@ -74,6 +74,9 @@ describe('POST /api/contact', () => {
     expect(res.status).toBe(400)
     // Supabase ne doit pas etre sollicite si la validation echoue
     expect(hoisted.fromMock).not.toHaveBeenCalled()
+    // Corps de reponse bien forme : champ error present
+    const body = await res.json()
+    expect(body).toHaveProperty('error')
   })
 
   it('returns 400 on invalid email', async () => {
@@ -88,6 +91,9 @@ describe('POST /api/contact', () => {
     )
     expect(res.status).toBe(400)
     expect(hoisted.fromMock).not.toHaveBeenCalled()
+    // Corps de reponse bien forme : champ error present
+    const body = await res.json()
+    expect(body).toHaveProperty('error')
   })
 
   it('inserts a contact in Supabase on valid submission', async () => {
@@ -113,6 +119,35 @@ describe('POST /api/contact', () => {
         phone: '0123456789',
         subject: 'Demande devis',
         message: 'Je souhaite un devis pour du mobilier urbain',
+      })
+    )
+
+    // Corps de reponse du happy path : { success: true }
+    const body = await res.json()
+    expect(body).toEqual({ success: true })
+  })
+
+  it('coerces empty phone to null in Supabase insert', async () => {
+    // phone: '' (chaine vide) -> doit etre coerce en null via `phone || null` (route.ts L52)
+    const res = await POST(
+      makeRequest({
+        name: 'Marie Martin',
+        email: 'marie@example.fr',
+        phone: '',
+        subject: 'Question produit',
+        message: 'Avez-vous ce produit en stock ?',
+      })
+    )
+
+    expect(res.status).toBeLessThan(400)
+    expect(hoisted.fromMock).toHaveBeenCalledWith('contacts')
+    expect(hoisted.insertMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: 'Marie Martin',
+        email: 'marie@example.fr',
+        phone: null,
+        subject: 'Question produit',
+        message: 'Avez-vous ce produit en stock ?',
       })
     )
   })
