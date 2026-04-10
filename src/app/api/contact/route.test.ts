@@ -153,17 +153,7 @@ describe('POST /api/contact', () => {
 
   it('returns 429 when rate limit exceeded', async () => {
     vi.mocked(limitByIP).mockResolvedValueOnce({ success: false, remaining: 0, reset: 9999 })
-    const request = new Request('http://localhost/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: 'Test',
-        email: 'test@example.com',
-        subject: 'Test',
-        message: 'Hello',
-      }),
-    })
-    const response = await POST(request)
+    const response = await POST(makeRequest({ name: 'Test', email: 'test@example.com', subject: 'Test', message: 'Hello' }))
     expect(response.status).toBe(429)
     expect(response.headers.get('X-RateLimit-Remaining')).toBe('0')
   })
