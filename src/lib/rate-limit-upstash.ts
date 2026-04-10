@@ -60,10 +60,15 @@ export async function trackAbuse(ip: string, key: RateLimitKey): Promise<void> {
     await redis.expire(abuseKey, 3600)
   }
   if (count >= ABUSE_THRESHOLD) {
-    await sendTelegramMessage(
-      `🚨 *Alerte abus SAPAL*\n\nIP: \`${ip}\`\nRoute: ${key}\nBlocages: ${count} en 1h\n⚠️ Vérifiez les logs Vercel`
-    )
-    await redis.del(abuseKey)
+    try {
+      await sendTelegramMessage(
+        `🚨 *Alerte abus SAPAL*\n\nIP: \`${ip}\`\nRoute: ${key}\nBlocages: ${count} en 1h\n⚠️ Vérifiez les logs Vercel`
+      )
+    } catch (err) {
+      console.error('[rate-limit] telegram alert failed:', err)
+    } finally {
+      await redis.del(abuseKey)
+    }
   }
 }
 
