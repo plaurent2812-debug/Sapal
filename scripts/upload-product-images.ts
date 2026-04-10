@@ -88,7 +88,7 @@ interface ProductRow {
   slug: string
   reference: string | null
   image_url: string | null
-  categories: { slug: string } | null
+  categories: { slug: string }[] | null
 }
 
 type UploadResult =
@@ -201,7 +201,7 @@ async function main(): Promise<void> {
     }
 
     const matchedRef = product.reference ?? product.slug
-    const categorySlug = product.categories?.slug ?? 'uncategorized'
+    const categorySlug = product.categories?.[0]?.slug ?? 'uncategorized'
     const storagePath = `${categorySlug}/${product.slug}.webp`
 
     try {
