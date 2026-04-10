@@ -1,5 +1,5 @@
 import { createServiceRoleClient } from '@/lib/supabase/server'
-import { checkRateLimit } from '@/lib/rate-limit'
+import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { sendTelegramMessage } from '@/lib/telegram'
 import { z } from 'zod'
 
@@ -17,10 +17,21 @@ const registerSchema = z.object({
 })
 
 export async function POST(request: Request) {
-  // 1. Rate limit (5 per minute — stricter than quotes)
-  const ip = request.headers.get('x-forwarded-for') ?? 'unknown'
-  if (!checkRateLimit(ip, 5, 60000)) {
-    return Response.json({ error: 'Trop de tentatives' }, { status: 429 })
+  // 1. Rate limit (5 per hour — persistent Upstash sliding window)
+  const ip = getClientIP(request)
+  const rateLimitResult = await limitByIP(ip, 'AUTH')
+  if (!rateLimitResult.success) {
+    return Response.json(
+      { error: 'Trop de tentatives, réessayez dans une heure' },
+      {
+        status: 429,
+        headers: {
+          'X-RateLimit-Limit': '5',
+          'X-RateLimit-Remaining': String(rateLimitResult.remaining),
+          'X-RateLimit-Reset': String(rateLimitResult.reset),
+        },
+      }
+    )
   }
 
   try {

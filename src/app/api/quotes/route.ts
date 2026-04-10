@@ -1,6 +1,6 @@
 import { createServiceRoleClient, createServerSupabaseClient } from '@/lib/supabase/server'
 import { generateQuotePDF } from '@/lib/pdf/generate-quote-pdf'
-import { checkRateLimit } from '@/lib/rate-limit'
+import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { Resend } from 'resend'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
@@ -23,9 +23,20 @@ const quoteSchema = z.object({
 })
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('x-forwarded-for') ?? 'unknown'
-  if (!checkRateLimit(ip, 10, 60000)) {
-    return Response.json({ error: 'Trop de requêtes, réessayez dans 1 minute' }, { status: 429 })
+  const ip = getClientIP(request)
+  const rateLimitResult = await limitByIP(ip, 'QUOTES')
+  if (!rateLimitResult.success) {
+    return Response.json(
+      { error: 'Trop de requêtes, réessayez dans une heure' },
+      {
+        status: 429,
+        headers: {
+          'X-RateLimit-Limit': '10',
+          'X-RateLimit-Remaining': String(rateLimitResult.remaining),
+          'X-RateLimit-Reset': String(rateLimitResult.reset),
+        },
+      }
+    )
   }
 
   try {

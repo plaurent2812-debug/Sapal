@@ -15,6 +15,7 @@ export const RATE_LIMITS = {
   CONTACT: { requests: 5, window: '1 h' },
   QUOTES: { requests: 10, window: '1 h' },
   ADMIN: { requests: 60, window: '1 m' },
+  AUTH: { requests: 5, window: '1 h' },
 } as const
 
 type RateLimitKey = keyof typeof RATE_LIMITS
