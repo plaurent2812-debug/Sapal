@@ -70,8 +70,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           <p className="text-center text-muted-foreground py-16">Aucun produit disponible dans cette catégorie.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} categorySlug={slug} />
+            {products.map((product, index) => (
+              <ProductCard key={product.id} product={product} categorySlug={slug} index={index} />
             ))}
           </div>
         )}

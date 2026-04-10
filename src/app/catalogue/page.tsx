@@ -81,6 +81,7 @@ export default async function CataloguePage() {
                       alt={category.name}
                       fill
                       sizes="80px"
+                      priority={i === 0}
                       className="object-contain p-1 group-hover:scale-110 transition-transform duration-500"
                     />
                   ) : (
