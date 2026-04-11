@@ -22,15 +22,15 @@ export function ProductCard({ product, categorySlug, index = 0 }: { product: Cli
         )}
 
         {/* Image Container */}
-        <div className="aspect-square w-full overflow-hidden flex items-center justify-center p-6 bg-gradient-to-br from-secondary/20 to-secondary/5 border-b border-border/30 relative">
+        <div className="aspect-square w-full overflow-hidden flex items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-secondary/20 to-secondary/5 border-b border-border/30 relative">
           {product.imageUrl ? (
             <Image
               src={product.imageUrl}
               alt={product.name}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
               priority={index < 4}
-              className="object-contain p-6 group-hover:scale-105 transition-transform duration-500 ease-out"
+              className="object-contain p-4 sm:p-6 group-hover:scale-105 transition-transform duration-500 ease-out"
             />
           ) : (
             <div className="text-muted-foreground/40 font-medium text-xs border border-dashed border-border/80 px-4 py-2 bg-secondary/20 rounded-lg">
@@ -39,8 +39,8 @@ export function ProductCard({ product, categorySlug, index = 0 }: { product: Cli
           )}
         </div>
 
-        <div className="flex flex-1 flex-col p-5">
-          <h3 className="font-heading text-lg text-foreground group-hover:text-accent transition-colors leading-snug mb-1.5">
+        <div className="flex flex-1 flex-col p-4 sm:p-5">
+          <h3 className="font-heading text-base sm:text-lg text-foreground group-hover:text-accent transition-colors leading-snug mb-1.5">
             {product.name}
           </h3>
 
@@ -61,9 +61,9 @@ export function ProductCard({ product, categorySlug, index = 0 }: { product: Cli
 
           <div className="flex flex-col mt-auto pt-2">
             {product.price > 0 ? (
-              <div className="flex justify-between items-end mb-3">
+              <div className="flex justify-between items-end mb-3 gap-2">
                 <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Prix unit.</span>
-                <span className="text-xl font-extrabold text-foreground">
+                <span className="text-lg sm:text-xl font-extrabold text-foreground whitespace-nowrap">
                   {product.price.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € <span className="text-xs font-normal text-muted-foreground">HT</span>
                 </span>
               </div>

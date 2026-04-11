@@ -26,15 +26,15 @@ export default async function CatalogueProcityPage() {
           </Link>
         </div>
 
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
             <Tag size={22} className="text-accent" />
           </div>
-          <div>
-            <h1 className="font-heading text-3xl md:text-4xl tracking-tight text-foreground mb-2">
+          <div className="min-w-0">
+            <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground mb-2">
               Catalogue ProCity
             </h1>
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl">
               Gamme complète de mobilier urbain, aires de jeux, équipements sportifs et miroirs de sécurité du fabricant ProCity®.
             </p>
             <p className="text-sm text-muted-foreground mt-1">

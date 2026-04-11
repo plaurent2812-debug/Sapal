@@ -7,24 +7,24 @@ export function Footer() {
     <footer className="relative overflow-hidden">
       {/* CTA Band */}
       <div className="bg-accent py-5">
-        <div className="container mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="container mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-accent-foreground font-bold text-sm sm:text-base">
             Besoin d&apos;un devis personnalisé ? Réponse garantie en 24h.
           </p>
-          <Link href="/contact" className="bg-white text-foreground hover:bg-white/90 transition-colors px-6 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 shadow-sm">
+          <Link href="/contact" className="bg-white text-foreground hover:bg-white/90 transition-colors px-5 sm:px-6 py-2.5 rounded-lg font-bold text-sm inline-flex items-center gap-2 shadow-sm">
             Nous contacter <ArrowRight size={16} />
           </Link>
         </div>
       </div>
 
       {/* Main Footer */}
-      <div className="bg-primary text-white pt-16 pb-8 relative">
+      <div className="bg-primary text-white pt-10 sm:pt-16 pb-8 relative">
         <div className="absolute inset-0 bg-grid opacity-[0.03]"></div>
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-12 gap-8 md:gap-8">
             {/* Brand */}
-            <div className="md:col-span-4">
+            <div className="col-span-2 md:col-span-4">
               <Link href="/" className="inline-block mb-5">
                 <Image src="/logo.png" alt="SAPAL Signalisation" width={225} height={72} className="h-[72px] w-auto object-contain brightness-0 invert" />
               </Link>
@@ -45,7 +45,7 @@ export function Footer() {
             </div>
 
             {/* Catalogue */}
-            <nav aria-label="Catalogue" className="md:col-span-2">
+            <nav aria-label="Catalogue" className="col-span-1 md:col-span-2">
               <h3 className="font-heading text-lg text-white mb-5">Catalogue</h3>
               <ul className="space-y-2.5 text-sm">
                 <li><Link href="/catalogue/mobilier-urbain" className="text-white/50 hover:text-accent transition-colors">Mobilier Urbain</Link></li>
@@ -56,7 +56,7 @@ export function Footer() {
             </nav>
 
             {/* Entreprise */}
-            <nav aria-label="Entreprise" className="md:col-span-2">
+            <nav aria-label="Entreprise" className="col-span-1 md:col-span-2">
               <h3 className="font-heading text-lg text-white mb-5">Entreprise</h3>
               <ul className="space-y-2.5 text-sm">
                 <li><Link href="/qui-sommes-nous" className="text-white/50 hover:text-accent transition-colors">Qui sommes-nous</Link></li>
@@ -67,7 +67,7 @@ export function Footer() {
             </nav>
 
             {/* Réassurance */}
-            <div className="md:col-span-4">
+            <div className="col-span-2 md:col-span-4">
               <h3 className="font-heading text-lg text-white mb-5">Pourquoi SAPAL ?</h3>
               <div className="space-y-3">
                 {[
@@ -86,7 +86,7 @@ export function Footer() {
           </div>
 
           {/* Bottom bar */}
-          <div className="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="mt-10 sm:mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-white/30">
               © {new Date().getFullYear()} SAPAL Signalisation. Tous droits réservés.
             </p>

@@ -165,8 +165,8 @@ export default function MonCompteProfilPage() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="font-heading text-3xl tracking-tight">Mon Profil</h1>
-        <div className="bg-card rounded-xl border border-border/60 p-8 animate-pulse">
+        <h1 className="font-heading text-2xl sm:text-3xl tracking-tight">Mon Profil</h1>
+        <div className="bg-card rounded-xl border border-border/60 p-5 sm:p-8 animate-pulse">
           <div className="space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="h-10 bg-muted rounded" />
@@ -179,7 +179,7 @@ export default function MonCompteProfilPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-3xl tracking-tight">Mon Profil</h1>
+      <h1 className="font-heading text-2xl sm:text-3xl tracking-tight">Mon Profil</h1>
 
       {success && (
         <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm">
@@ -196,7 +196,7 @@ export default function MonCompteProfilPage() {
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="bg-card rounded-xl border border-border/60 shadow-sm p-6 space-y-6">
+        <div className="bg-card rounded-xl border border-border/60 shadow-sm p-5 sm:p-6 space-y-6">
           {/* Email (read-only) */}
           <div className="space-y-1.5">
             <label className="text-sm font-semibold flex items-center gap-2">

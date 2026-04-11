@@ -49,16 +49,16 @@ export default function ContactPageClient() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Hero */}
-      <section className="relative w-full py-16 lg:py-24 bg-primary overflow-hidden">
+      <section className="relative w-full py-10 md:py-16 lg:py-24 bg-primary overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-[0.04]"></div>
         <div className="absolute -right-20 -top-20 w-80 h-80 border-[3px] border-accent/15 rounded-full pointer-events-none"></div>
         <div className="container px-4 md:px-6 mx-auto relative z-10">
           <AnimatedSection direction="up">
-            <div className="max-w-3xl space-y-4">
-              <h1 className="font-heading text-4xl tracking-tight md:text-6xl text-white">
+            <div className="max-w-3xl space-y-3 sm:space-y-4">
+              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight text-white">
                 Contactez-nous
               </h1>
-              <p className="text-lg text-white/60 leading-relaxed">
+              <p className="text-base md:text-lg text-white/60 leading-relaxed">
                 Une question, un projet d&apos;aménagement ? Notre équipe est à votre écoute pour vous accompagner dans vos démarches.
               </p>
             </div>
@@ -66,13 +66,13 @@ export default function ContactPageClient() {
         </div>
       </section>
 
-      <section className="container px-4 md:px-6 mx-auto py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <section className="container px-4 md:px-6 mx-auto py-10 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-16">
           {/* Coordonnées */}
-          <div className="lg:col-span-5 space-y-8">
+          <div className="lg:col-span-5 space-y-6 md:space-y-8">
           <AnimatedSection direction="up" delay={0.1}>
             <div>
-              <h2 className="font-heading text-2xl font-bold mb-6">Nos coordonnées</h2>
+              <h2 className="font-heading text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Nos coordonnées</h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-accent/10 rounded-xl text-accent flex-shrink-0">
@@ -140,9 +140,9 @@ export default function ContactPageClient() {
                 </Button>
               </div>
             ) : (
-              <div className="bg-card p-6 md:p-8 rounded-3xl border border-border/80 shadow-sm">
-                <h2 className="font-heading text-2xl font-bold mb-2">Envoyez-nous un message</h2>
-                <p className="text-muted-foreground text-sm mb-8">
+              <div className="bg-card p-5 sm:p-6 md:p-8 rounded-3xl border border-border/80 shadow-sm">
+                <h2 className="font-heading text-xl sm:text-2xl font-bold mb-2">Envoyez-nous un message</h2>
+                <p className="text-muted-foreground text-sm mb-6 md:mb-8">
                   Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.
                 </p>
 
@@ -153,7 +153,7 @@ export default function ContactPageClient() {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label htmlFor="contact-name" className="text-sm font-semibold flex items-center gap-2">
                         <User size={16} /> Nom complet <span className="text-destructive">*</span>
@@ -168,7 +168,7 @@ export default function ContactPageClient() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label htmlFor="contact-phone" className="text-sm font-semibold flex items-center gap-2">
                         <Phone size={16} /> Téléphone
@@ -198,7 +198,7 @@ export default function ContactPageClient() {
 
                   <Button
                     type="submit"
-                    className="btn-fill w-full h-14 rounded-2xl font-bold text-lg cursor-pointer hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98]"
+                    className="btn-fill w-full h-12 sm:h-14 rounded-2xl font-bold text-base sm:text-lg cursor-pointer hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98]"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
