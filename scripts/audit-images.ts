@@ -99,12 +99,20 @@ async function main() {
     process.exit(0)
   }
 
-  const rows: ProductAuditRow[] = products.map((p: any) => {
+  type ProductRow = {
+    id?: string
+    reference?: string
+    name?: string
+    image_url?: string | null
+    categories?: { name?: string } | Array<{ name?: string }> | null
+  }
+
+  const rows: ProductAuditRow[] = (products as ProductRow[]).map((p) => {
     const categoryName =
       p.categories && typeof p.categories === 'object' && !Array.isArray(p.categories)
-        ? (p.categories as { name: string }).name ?? ''
+        ? p.categories.name ?? ''
         : Array.isArray(p.categories) && p.categories.length > 0
-          ? (p.categories[0] as { name: string }).name ?? ''
+          ? p.categories[0].name ?? ''
           : ''
 
     return {
