@@ -55,6 +55,8 @@ export async function POST(
     // 5. Notifications gérant (await pour garantir l'envoi sur Vercel)
     const identifier = quote.entity || quote.contact_name || quote.email
     const shortId = id.replace(/-/g, '').slice(0, 8).toUpperCase()
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
+    const pdfUrl = `${siteUrl}/api/quotes/${id}/pdf`
 
     // Telegram + Email en parallèle
     const notifPromises: Promise<unknown>[] = [
@@ -62,13 +64,13 @@ export async function POST(
         `❌ *Devis refusé*\n\n` +
         `📋 Devis : ${shortId}\n` +
         `🏢 Client : ${identifier}\n` +
-        `📧 Email : ${quote.email}`
+        `📧 Email : ${quote.email}\n\n` +
+        `📎 [Voir le devis PDF](${pdfUrl})`
       ).catch((err) => console.error('Telegram reject error:', err)),
     ]
 
     const gerantEmail = process.env.SAPAL_GERANT_EMAIL
     if (gerantEmail) {
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
       notifPromises.push(
         resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
@@ -87,7 +89,10 @@ export async function POST(
                   <p style="margin:8px 0 0"><strong>Email :</strong> ${quote.email}</p>
                 </div>
                 <div style="text-align:center;margin:24px 0">
-                  <a href="${siteUrl}/admin/devis" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir les devis</a>
+                  <a href="${pdfUrl}" style="background:#dc2626;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis PDF</a>
+                </div>
+                <div style="text-align:center;margin:8px 0">
+                  <a href="${siteUrl}/admin/devis" style="color:#6b7280;font-size:13px">Voir tous les devis</a>
                 </div>
               </div>
             </div>
