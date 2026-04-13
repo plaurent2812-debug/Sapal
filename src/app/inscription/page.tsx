@@ -112,15 +112,15 @@ export default function InscriptionPage() {
   const labelClass = 'block text-sm font-semibold mb-1.5'
 
   return (
-    <div className="min-h-screen flex items-start justify-center bg-secondary/30 px-4 py-12">
+    <div className="min-h-screen flex items-start justify-center bg-secondary/30 px-4 py-8 sm:py-12">
       <div className="w-full max-w-lg">
         {/* Header card */}
-        <div className="bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 p-8">
-          <div className="text-center mb-8">
+        <div className="bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 px-5 py-6 sm:p-8">
+          <div className="text-center mb-6 sm:mb-8">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary mb-4">
               <UserPlus size={24} className="text-primary-foreground" />
             </div>
-            <h1 className="font-heading text-3xl tracking-tight">Créer un compte</h1>
+            <h1 className="font-heading text-2xl sm:text-3xl tracking-tight">Créer un compte</h1>
             <p className="text-muted-foreground text-sm mt-2">
               Accédez au catalogue professionnel SAPAL Signalisation.
             </p>
@@ -159,7 +159,7 @@ export default function InscriptionPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="password" className={labelClass}>
                       Mot de passe <span className="text-destructive">*</span>
@@ -217,7 +217,7 @@ export default function InscriptionPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="siret" className={labelClass}>
                       Numéro SIRET <span className="text-destructive">*</span>
@@ -289,8 +289,8 @@ export default function InscriptionPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-5 gap-4">
-                  <div className="col-span-2">
+                <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
+                  <div className="sm:col-span-2">
                     <label htmlFor="postal_code" className={labelClass}>
                       Code postal
                     </label>
@@ -306,7 +306,7 @@ export default function InscriptionPage() {
                       className={inputClass}
                     />
                   </div>
-                  <div className="col-span-3">
+                  <div className="sm:col-span-3">
                     <label htmlFor="city" className={labelClass}>
                       Ville
                     </label>

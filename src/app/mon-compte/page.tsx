@@ -122,17 +122,17 @@ export default function MonCompteDashboard() {
   }
 
   return (
-    <div className="space-y-8">
-      <h1 className="font-heading text-3xl tracking-tight">Tableau de bord</h1>
+    <div className="space-y-6 sm:space-y-8">
+      <h1 className="font-heading text-2xl sm:text-3xl tracking-tight">Tableau de bord</h1>
 
       {/* Stats cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         {statCards.map((card) => {
           const Icon = card.icon
           return (
             <div
               key={card.label}
-              className="bg-card rounded-xl border border-border/60 p-6 shadow-sm"
+              className="bg-card rounded-xl border border-border/60 p-5 sm:p-6 shadow-sm"
             >
               <div
                 className={`inline-flex items-center justify-center w-10 h-10 rounded-xl ${card.color} mb-4`}
@@ -149,7 +149,7 @@ export default function MonCompteDashboard() {
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <Link
           href="/mon-compte/devis"
           className="flex items-center gap-4 bg-card rounded-xl border border-border/60 p-6 shadow-sm hover:border-primary/40 transition-colors group"
@@ -197,42 +197,68 @@ export default function MonCompteDashboard() {
             <p className="text-sm">Aucune activit&eacute; pour le moment.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border/60 text-left text-muted-foreground">
-                  <th className="px-6 py-3 font-medium">Entit&eacute;</th>
-                  <th className="px-6 py-3 font-medium">Contact</th>
-                  <th className="px-6 py-3 font-medium">Statut</th>
-                  <th className="px-6 py-3 font-medium">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentQuotes.map((quote) => {
-                  const status = STATUS_CONFIG[quote.status] ?? STATUS_CONFIG.pending
-                  return (
-                    <tr
-                      key={quote.id}
-                      className="border-b border-border/40 last:border-0 hover:bg-muted/30 transition-colors"
-                    >
-                      <td className="px-6 py-4 font-medium">{quote.entity}</td>
-                      <td className="px-6 py-4">{quote.contact_name}</td>
-                      <td className="px-6 py-4">
-                        <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${status.className}`}
-                        >
-                          {status.label}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-muted-foreground">
-                        {formatDate(quote.created_at)}
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+          <>
+            {/* Desktop table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border/60 text-left text-muted-foreground">
+                    <th className="px-6 py-3 font-medium">Entit&eacute;</th>
+                    <th className="px-6 py-3 font-medium">Contact</th>
+                    <th className="px-6 py-3 font-medium">Statut</th>
+                    <th className="px-6 py-3 font-medium">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentQuotes.map((quote) => {
+                    const status = STATUS_CONFIG[quote.status] ?? STATUS_CONFIG.pending
+                    return (
+                      <tr
+                        key={quote.id}
+                        className="border-b border-border/40 last:border-0 hover:bg-muted/30 transition-colors"
+                      >
+                        <td className="px-6 py-4 font-medium">{quote.entity}</td>
+                        <td className="px-6 py-4">{quote.contact_name}</td>
+                        <td className="px-6 py-4">
+                          <span
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${status.className}`}
+                          >
+                            {status.label}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-muted-foreground">
+                          {formatDate(quote.created_at)}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile cards */}
+            <ul className="md:hidden divide-y divide-border/60">
+              {recentQuotes.map((quote) => {
+                const status = STATUS_CONFIG[quote.status] ?? STATUS_CONFIG.pending
+                return (
+                  <li key={quote.id} className="px-5 py-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-sm truncate">{quote.entity}</p>
+                        <p className="text-xs text-muted-foreground truncate mt-0.5">{quote.contact_name}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{formatDate(quote.created_at)}</p>
+                      </div>
+                      <span
+                        className={`flex-shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${status.className}`}
+                      >
+                        {status.label}
+                      </span>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+          </>
         )}
       </div>
     </div>

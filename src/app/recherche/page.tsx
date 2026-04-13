@@ -48,17 +48,17 @@ export default async function RecherchePage({
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20">
       {/* Hero */}
-      <section className="relative w-full py-12 lg:py-16 bg-secondary/20 border-b border-border/50">
+      <section className="relative w-full py-8 md:py-12 lg:py-16 bg-secondary/20 border-b border-border/50">
         <div className="container px-4 md:px-6 mx-auto">
           <Link
             href="/catalogue"
-            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6 transition-colors"
+            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-4 md:mb-6 transition-colors"
           >
             <ArrowLeft size={16} className="mr-2" /> Retour au catalogue
           </Link>
-          <div className="flex items-center gap-3 mb-2">
-            <Search size={28} className="text-muted-foreground" />
-            <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">
+          <div className="flex items-start gap-3 mb-2">
+            <Search size={24} className="text-muted-foreground mt-1 flex-shrink-0" />
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight break-words">
               {query ? `Résultats pour « ${query} »` : "Recherche"}
             </h1>
           </div>
@@ -70,7 +70,7 @@ export default async function RecherchePage({
         </div>
       </section>
 
-      <section className="container px-4 md:px-6 mx-auto mt-8">
+      <section className="container px-4 md:px-6 mx-auto mt-6 md:mt-8">
         {/* Filters bar — always visible when there's a query or active filters */}
         {(query || hasFilters) && (
           <SearchFiltersBar categories={categories} />
@@ -96,7 +96,7 @@ export default async function RecherchePage({
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {results.map((product) => (
               <SearchResultCard
                 key={product.id}

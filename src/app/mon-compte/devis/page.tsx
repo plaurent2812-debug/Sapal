@@ -117,8 +117,8 @@ export default function MonCompteDevisPage() {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <h1 className="font-heading text-3xl tracking-tight">Mes Devis</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+        <h1 className="font-heading text-2xl sm:text-3xl tracking-tight">Mes Devis</h1>
         <Link
           href="/devis"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium shadow-sm hover:opacity-90 transition-opacity"
@@ -152,7 +152,7 @@ export default function MonCompteDevisPage() {
           </p>
 
           <div className="border border-border rounded-lg overflow-hidden">
-            <div className="overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-muted/30 border-b border-border">
@@ -322,14 +322,138 @@ export default function MonCompteDevisPage() {
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile card layout */}
+            <div className="md:hidden divide-y divide-border">
+              {quotes.map((quote) => {
+                const isExpanded = expandedId === quote.id
+                const config = STATUS_CONFIG[quote.status]
+                const itemCount = quote.quote_items?.length ?? 0
+
+                return (
+                  <div key={quote.id} className="p-4">
+                    <button
+                      onClick={() => toggleExpand(quote.id)}
+                      className="flex items-start justify-between gap-3 w-full text-left touch-manipulation"
+                      aria-expanded={isExpanded}
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <Building2 size={14} className="text-muted-foreground flex-shrink-0" />
+                          <span className="font-semibold text-sm truncate">{quote.entity}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Calendar size={12} />
+                            {formatDate(quote.created_at)}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Package size={12} />
+                            {itemCount} produit{itemCount > 1 ? 's' : ''}
+                          </span>
+                        </div>
+                        <div className="mt-2">
+                          <span
+                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${config.className}`}
+                          >
+                            {config.label}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex-shrink-0 h-8 w-8 flex items-center justify-center rounded-md bg-muted/40">
+                        {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                      </div>
+                    </button>
+
+                    {quote.status === 'sent' && (
+                      <div className="flex items-center gap-2 mt-3">
+                        <button
+                          onClick={() => openConfirm(quote.id, 'accept')}
+                          className="flex-1 inline-flex items-center justify-center gap-1 px-3 py-2 rounded-md bg-green-600 text-white text-xs font-medium hover:bg-green-700 transition-colors touch-manipulation"
+                        >
+                          <CheckCircle size={13} />
+                          Accepter
+                        </button>
+                        <button
+                          onClick={() => openConfirm(quote.id, 'reject')}
+                          className="flex-1 inline-flex items-center justify-center gap-1 px-3 py-2 rounded-md bg-red-600 text-white text-xs font-medium hover:bg-red-700 transition-colors touch-manipulation"
+                        >
+                          <XCircle size={13} />
+                          Refuser
+                        </button>
+                      </div>
+                    )}
+
+                    {isExpanded && (
+                      <div className="mt-4 pt-4 border-t border-border/50 space-y-4">
+                        <div>
+                          <h3 className="font-semibold text-xs uppercase tracking-wide text-muted-foreground mb-2">Informations</h3>
+                          <div className="space-y-1.5 text-sm">
+                            <p className="text-foreground font-medium">{quote.contact_name}</p>
+                            <p className="text-muted-foreground break-words">{quote.email}</p>
+                          </div>
+                          {quote.message && (
+                            <div className="mt-3">
+                              <p className="text-xs font-semibold text-muted-foreground mb-1">Message :</p>
+                              <p className="text-sm bg-background rounded-lg p-3 border border-border/50 break-words">
+                                {quote.message}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+
+                        <div>
+                          <h3 className="font-semibold text-xs uppercase tracking-wide text-muted-foreground mb-2">
+                            Produits ({itemCount})
+                          </h3>
+                          {itemCount > 0 ? (
+                            <ul className="space-y-2">
+                              {quote.quote_items.map((item) => {
+                                const delaiDisplay = item.delai
+                                  ? (/^\d+(\.\d+)?$/.test(item.delai) ? (Number(item.delai) >= 14 ? `${Math.ceil(Number(item.delai) / 7)} sem.` : `${item.delai} j`) : item.delai)
+                                  : '—'
+                                return (
+                                  <li key={item.id} className="flex items-start justify-between gap-3 text-sm bg-background border border-border/50 rounded-md px-3 py-2">
+                                    <span className="flex-1 min-w-0 break-words">{item.product_name}</span>
+                                    <div className="flex-shrink-0 text-right">
+                                      <div className="font-semibold">× {item.quantity}</div>
+                                      <div className="text-[11px] text-muted-foreground">{delaiDisplay}</div>
+                                    </div>
+                                  </li>
+                                )
+                              })}
+                            </ul>
+                          ) : (
+                            <p className="text-sm text-muted-foreground">Aucun produit.</p>
+                          )}
+                        </div>
+
+                        <button
+                          disabled={downloadingId === quote.id}
+                          onClick={() => handleDownloadPDF(quote.id)}
+                          className="w-full inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-md border border-border text-sm font-medium hover:bg-muted/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                        >
+                          {downloadingId === quote.id ? (
+                            <Loader2 size={14} className="animate-spin" />
+                          ) : (
+                            <Download size={14} />
+                          )}
+                          T&eacute;l&eacute;charger PDF
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </>
       )}
 
       {/* Confirmation dialog */}
       {confirm.open && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50">
-          <div className="bg-background rounded-xl border border-border shadow-xl p-6 w-full max-w-md mx-4">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-background rounded-xl border border-border shadow-xl p-5 sm:p-6 w-full max-w-md">
             <h2 className="font-heading text-lg tracking-tight mb-2">
               {confirm.action === 'accept' ? 'Accepter ce devis ?' : 'Refuser ce devis ?'}
             </h2>
@@ -338,18 +462,18 @@ export default function MonCompteDevisPage() {
                 ? 'En acceptant ce devis, vous confirmez votre accord pour la commande. Cette action ne peut pas être annulée.'
                 : 'En refusant ce devis, vous signalez que vous ne souhaitez pas donner suite. Cette action ne peut pas être annulée.'}
             </p>
-            <div className="flex gap-3 justify-end">
+            <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
               <button
                 onClick={closeConfirm}
                 disabled={actionLoading}
-                className="px-4 py-2 rounded-md border border-border text-sm font-medium hover:bg-muted/30 transition-colors disabled:opacity-50"
+                className="px-4 py-2.5 rounded-md border border-border text-sm font-medium hover:bg-muted/30 transition-colors disabled:opacity-50 touch-manipulation"
               >
                 Annuler
               </button>
               <button
                 onClick={handleAction}
                 disabled={actionLoading}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation ${
                   confirm.action === 'accept'
                     ? 'bg-green-600 hover:bg-green-700'
                     : 'bg-red-600 hover:bg-red-700'

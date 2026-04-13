@@ -47,29 +47,29 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20">
       {/* Hero */}
-      <section className="relative w-full py-14 lg:py-20 bg-secondary/20 border-b border-border/50">
+      <section className="relative w-full py-10 md:py-14 lg:py-20 bg-secondary/20 border-b border-border/50">
         <div className="container px-4 md:px-6 mx-auto">
-          <Link href="/catalogue" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6 transition-colors group">
+          <Link href="/catalogue" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-4 md:mb-6 transition-colors group">
             <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" /> Retour au catalogue
           </Link>
           <AnimatedSection direction="up">
-            <h1 className="font-heading text-4xl tracking-tight md:text-5xl text-foreground">
+            <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight text-foreground">
               {category.name}
             </h1>
             {category.description && (
-              <p className="text-lg text-muted-foreground mt-3 max-w-2xl">{category.description}</p>
+              <p className="text-base md:text-lg text-muted-foreground mt-3 max-w-2xl">{category.description}</p>
             )}
-            <p className="text-sm text-muted-foreground mt-4">{products.length} produit{products.length > 1 ? 's' : ''}</p>
+            <p className="text-sm text-muted-foreground mt-3 md:mt-4">{products.length} produit{products.length > 1 ? 's' : ''}</p>
           </AnimatedSection>
         </div>
       </section>
 
       {/* Grille produits */}
-      <section className="container px-4 md:px-6 mx-auto mt-10">
+      <section className="container px-4 md:px-6 mx-auto mt-8 md:mt-10">
         {products.length === 0 ? (
           <p className="text-center text-muted-foreground py-16">Aucun produit disponible dans cette catégorie.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {products.map((product, index) => (
               <ProductCard key={product.id} product={product} categorySlug={slug} index={index} />
             ))}

@@ -15,7 +15,7 @@ export default async function CataloguePage() {
   return (
     <div className="flex flex-col min-h-screen pb-20">
       {/* 1. BANNIÈRE PROMOTIONNELLE */}
-      <section className="container px-4 md:px-6 mx-auto mt-6 mb-14">
+      <section className="container px-4 md:px-6 mx-auto mt-6 mb-10 md:mb-14">
         <AnimatedSection direction="up">
           <div className="w-full bg-gradient-to-br from-primary via-primary to-[#1a2b4b] rounded-2xl overflow-hidden shadow-lg relative">
             <div className="absolute inset-0 bg-grid opacity-[0.04]"></div>
@@ -23,17 +23,17 @@ export default async function CataloguePage() {
             <div className="absolute -right-10 -bottom-10 w-60 h-60 border-[3px] border-accent/10 rounded-full pointer-events-none"></div>
 
             <div className="flex flex-col md:flex-row items-center relative">
-              <div className="p-8 md:p-12 lg:p-16 flex-1 z-10 w-full text-white">
-                <div className="inline-block bg-accent/15 text-accent text-xs font-bold uppercase tracking-widest px-4 py-1.5 mb-5 rounded-full border border-accent/30">
+              <div className="p-6 sm:p-8 md:p-12 lg:p-16 flex-1 z-10 w-full text-white">
+                <div className="inline-block bg-accent/15 text-accent text-[11px] sm:text-xs font-bold uppercase tracking-widest px-3 sm:px-4 py-1.5 mb-4 sm:mb-5 rounded-full border border-accent/30">
                   Nouveautés 2026
                 </div>
-                <h1 className="font-heading text-3xl md:text-5xl tracking-tight mb-4 leading-tight">
+                <h1 className="font-heading text-2xl sm:text-3xl md:text-5xl tracking-tight mb-4 leading-tight">
                   Spécial Collectivités &<br />Aménagement Public
                 </h1>
-                <p className="text-white/70 text-lg md:text-xl mb-8 max-w-xl leading-relaxed">
+                <p className="text-white/70 text-base md:text-xl mb-6 md:mb-8 max-w-xl leading-relaxed">
                   Découvrez nos nouvelles gammes de mobilier urbain et de signalisation aux normes. Sur devis en 24h.
                 </p>
-                <Link href="/catalogue/mobilier-urbain" className="btn-fill inline-flex items-center gap-2 bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-8 py-3.5 font-bold rounded-lg shadow-lg shadow-accent/20 hover:-translate-y-0.5 duration-300">
+                <Link href="/catalogue/mobilier-urbain" className="btn-fill inline-flex items-center gap-2 bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-6 sm:px-8 py-3 sm:py-3.5 font-bold rounded-lg shadow-lg shadow-accent/20 hover:-translate-y-0.5 duration-300">
                   Explorer la gamme <ArrowRight size={18} />
                 </Link>
               </div>
@@ -60,8 +60,8 @@ export default async function CataloguePage() {
       {/* 2. CATÉGORIES */}
       <section className="container px-4 md:px-6 mx-auto">
         <AnimatedSection direction="up">
-          <div className="flex items-center gap-3 mb-10">
-            <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-foreground accent-line">
+          <div className="flex items-center gap-3 mb-6 md:mb-10">
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground accent-line">
               Nos catégories de produits
             </h2>
           </div>

@@ -49,12 +49,12 @@ export default async function Home() {
         <div className="absolute -right-20 -bottom-20 w-80 h-80 border-[3px] border-accent/20 rounded-full pointer-events-none"></div>
         <div className="absolute -right-10 -bottom-10 w-60 h-60 border-[3px] border-accent/10 rounded-full pointer-events-none"></div>
 
-        <div className="container px-4 md:px-6 mx-auto relative z-10 py-20 md:py-28 lg:py-32">
+        <div className="container px-4 md:px-6 mx-auto relative z-10 py-14 sm:py-20 md:py-28 lg:py-32">
           <div className="max-w-4xl">
 
 
             <AnimatedSection delay={0.1} direction="up">
-              <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl tracking-tight text-white mb-6 leading-[0.95]">
+              <h1 className="font-heading text-[2rem] sm:text-5xl md:text-7xl lg:text-8xl tracking-tight text-white mb-5 sm:mb-6 leading-[1.05] sm:leading-[0.95]">
                 L&apos;excellence au service
                 <br />
                 <span className="relative inline-block mt-2">
@@ -65,18 +65,18 @@ export default async function Home() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.25} direction="up">
-              <p className="max-w-xl text-white/70 text-lg md:text-xl mb-10 leading-relaxed">
+              <p className="max-w-xl text-white/70 text-base sm:text-lg md:text-xl mb-8 sm:mb-10 leading-relaxed">
                 Plus de {productsCount} références conformes aux normes routières.
                 Mobilier urbain, signalisation et sécurité au meilleur prix.
               </p>
             </AnimatedSection>
 
             <AnimatedSection delay={0.35} direction="up">
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-4">
-                <Link href="/catalogue" className="btn-fill bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-8 py-4 font-bold rounded-lg flex items-center justify-center gap-3 shadow-xl shadow-accent/20 hover:-translate-y-0.5 duration-300">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 sm:gap-4">
+                <Link href="/catalogue" className="btn-fill bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-6 sm:px-8 py-3.5 sm:py-4 font-bold rounded-lg flex items-center justify-center gap-3 shadow-xl shadow-accent/20 hover:-translate-y-0.5 duration-300">
                   Explorer le catalogue <ArrowRight size={20} />
                 </Link>
-                <Link href="/contact" className="bg-white/5 text-white hover:bg-white/10 backdrop-blur-sm border border-white/15 transition-all px-8 py-4 font-bold rounded-lg flex items-center justify-center hover:-translate-y-0.5 duration-300">
+                <Link href="/contact" className="bg-white/5 text-white hover:bg-white/10 backdrop-blur-sm border border-white/15 transition-all px-6 sm:px-8 py-3.5 sm:py-4 font-bold rounded-lg flex items-center justify-center hover:-translate-y-0.5 duration-300">
                   Devis sur mesure
                 </Link>
               </div>
@@ -152,11 +152,11 @@ export default async function Home() {
       </section>
 
       {/* 3. ACCÈS RAPIDE AUX CATÉGORIES */}
-      <section aria-labelledby="section-categories" className="w-full py-20 bg-secondary/10">
+      <section aria-labelledby="section-categories" className="w-full py-12 md:py-20 bg-secondary/10">
         <div className="container px-4 md:px-6 mx-auto">
           <AnimatedSection direction="up">
-            <div className="flex items-center justify-between mb-10">
-              <h2 id="section-categories" className="font-heading text-3xl md:text-4xl tracking-tight text-foreground accent-line">
+            <div className="flex items-center justify-between mb-6 md:mb-10">
+              <h2 id="section-categories" className="font-heading text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground accent-line">
                 Nos Catégories
               </h2>
               <Link href="/catalogue" className="hidden sm:flex items-center gap-1 text-sm font-bold text-primary hover:text-accent transition-colors group">
@@ -194,24 +194,24 @@ export default async function Home() {
       </section>
 
       {/* 4. PRODUITS PHARES */}
-      <section aria-labelledby="section-featured" className="w-full py-20 bg-white relative overflow-hidden">
+      <section aria-labelledby="section-featured" className="w-full py-12 md:py-20 bg-white relative overflow-hidden">
         {/* Déco subtile */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
         <div className="container px-4 md:px-6 mx-auto relative z-10">
           <AnimatedSection direction="up">
-            <div className="flex items-center justify-between mb-12">
+            <div className="flex items-center justify-between mb-8 md:mb-12">
               <div>
-                <h2 id="section-featured" className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">
+                <h2 id="section-featured" className="font-heading text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground">
                   Notre sélection du moment
                 </h2>
-                <p className="text-muted-foreground mt-2">Les produits les plus demandés par nos clients</p>
+                <p className="text-muted-foreground text-sm md:text-base mt-2">Les produits les plus demandés par nos clients</p>
               </div>
             </div>
           </AnimatedSection>
 
           {featuredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {featuredProducts.map((product, i) => {
                 const category = categories.find(c => c.id === product.categoryId);
                 return (
@@ -233,20 +233,20 @@ export default async function Home() {
       </section>
 
       {/* 5. CTA FINAL */}
-      <section aria-labelledby="section-cta" className="w-full py-20 bg-primary relative overflow-hidden">
+      <section aria-labelledby="section-cta" className="w-full py-12 md:py-20 bg-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-[0.04]"></div>
         <div className="absolute left-0 top-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
         <div className="container px-4 md:px-6 mx-auto relative z-10 text-center">
           <AnimatedSection direction="up">
-            <h2 id="section-cta" className="font-heading text-3xl md:text-5xl text-white mb-6">
+            <h2 id="section-cta" className="font-heading text-2xl sm:text-3xl md:text-5xl text-white mb-4 md:mb-6">
               Un projet d&apos;aménagement ?
             </h2>
-            <p className="text-white/60 text-lg max-w-2xl mx-auto mb-10">
+            <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto mb-8 md:mb-10">
               Nos experts vous accompagnent de la conception à la livraison. Obtenez votre devis personnalisé sous 3h.
             </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 max-w-md sm:max-w-none mx-auto">
-              <Link href="/contact" className="btn-fill bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-10 py-4 font-bold rounded-lg shadow-xl shadow-accent/20 hover:-translate-y-0.5 duration-300 text-center">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto">
+              <Link href="/contact" className="btn-fill bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-8 sm:px-10 py-3.5 sm:py-4 font-bold rounded-lg shadow-xl shadow-accent/20 hover:-translate-y-0.5 duration-300 text-center">
                 Demander un devis gratuit
               </Link>
               <Link href="/catalogue" className="text-white/80 hover:text-white transition-colors font-bold flex items-center justify-center gap-2 py-3">

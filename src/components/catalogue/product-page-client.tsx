@@ -52,20 +52,20 @@ export function ProductPageClient({ product, variants, options, category, catego
         </Link>
       </div>
 
-      <h1 className="font-heading text-3xl md:text-4xl tracking-tight mb-4">
+      <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl tracking-tight mb-3 sm:mb-4">
         {product.name}
       </h1>
 
       {displayPrice > 0 && (
-        <div className="mb-6 flex items-baseline gap-2">
-          <span className="text-3xl font-extrabold text-foreground">
+        <div className="mb-5 sm:mb-6 flex items-baseline gap-2 flex-wrap">
+          <span className="text-2xl sm:text-3xl font-extrabold text-foreground">
             {displayPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
           </span>
           <span className="text-sm text-muted-foreground font-medium">HT / unité</span>
         </div>
       )}
 
-      <p className="text-muted-foreground leading-relaxed mb-8">
+      <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
         {product.description}
       </p>
 
@@ -83,18 +83,18 @@ export function ProductPageClient({ product, variants, options, category, catego
       )}
 
       {specifications.length > 0 && (
-        <div className="mb-8">
-          <h2 className="font-heading text-xl mb-4">Caractéristiques</h2>
+        <div className="mb-6 sm:mb-8">
+          <h2 className="font-heading text-lg sm:text-xl mb-3 sm:mb-4">Caractéristiques</h2>
           <div className="rounded-xl border border-border/50 overflow-hidden">
             {specifications.map(([key, value], i) => (
               <div
                 key={key}
-                className={`flex justify-between px-5 py-3.5 text-sm ${
+                className={`flex justify-between gap-3 px-4 sm:px-5 py-3 sm:py-3.5 text-sm ${
                   i % 2 === 0 ? "bg-muted/20" : "bg-background"
                 }`}
               >
-                <span className="text-muted-foreground font-medium">{key}</span>
-                <span className="font-semibold text-right ml-4">{value}</span>
+                <span className="text-muted-foreground font-medium flex-shrink-0">{key}</span>
+                <span className="font-semibold text-right break-words min-w-0">{value}</span>
               </div>
             ))}
           </div>
@@ -110,8 +110,8 @@ export function ProductPageClient({ product, variants, options, category, catego
 
       <ProductOptionsSection options={options} />
 
-      <div className="mt-8 pt-6 border-t border-border/50">
-        <div className="grid grid-cols-2 gap-4">
+      <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-border/50">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div className="flex items-center gap-3 text-sm">
             <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
               <Truck size={18} className="text-accent" />

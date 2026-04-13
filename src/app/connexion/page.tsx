@@ -51,12 +51,12 @@ export default function ConnexionPage() {
           <ArrowLeft size={16} />
           Retour au site
         </Link>
-      <div className="bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 p-8">
-        <div className="text-center mb-8">
+      <div className="bg-card rounded-xl border border-border/60 shadow-xl shadow-black/5 px-5 py-6 sm:px-8 sm:py-8">
+        <div className="text-center mb-6 sm:mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary mb-4">
             <LogIn size={24} className="text-primary-foreground" />
           </div>
-          <h1 className="font-heading text-3xl tracking-tight">Connexion</h1>
+          <h1 className="font-heading text-2xl sm:text-3xl tracking-tight">Connexion</h1>
           <p className="text-muted-foreground text-sm mt-2">
             Accédez à votre espace client SAPAL Signalisation.
           </p>

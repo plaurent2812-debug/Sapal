@@ -65,7 +65,7 @@ export function AddToQuoteSection({ product, selectedVariant, hasVariants, categ
         onClick={handleAdd}
         size="lg"
         variant={isAdded ? "secondary" : "default"}
-        className={`btn-fill w-full h-14 rounded-2xl font-bold text-lg transition-all duration-300 ${
+        className={`btn-fill w-full h-12 sm:h-14 rounded-2xl font-bold text-base sm:text-lg transition-all duration-300 ${
           isDisabled
             ? "opacity-50 cursor-not-allowed bg-secondary text-muted-foreground hover:bg-secondary"
             : isAdded

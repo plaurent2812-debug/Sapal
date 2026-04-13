@@ -58,14 +58,14 @@ export default function RealisationsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20">
       {/* Hero */}
-      <section className="relative w-full py-16 lg:py-24 bg-secondary/20 border-b border-border/50">
+      <section className="relative w-full py-10 md:py-16 lg:py-24 bg-secondary/20 border-b border-border/50">
         <div className="container px-4 md:px-6 mx-auto">
           <AnimatedSection direction="up">
-            <div className="max-w-3xl space-y-4">
-              <h1 className="font-heading text-4xl font-extrabold tracking-tight md:text-5xl">
+            <div className="max-w-3xl space-y-3 sm:space-y-4">
+              <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">
                 Nos Réalisations
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                 Découvrez une sélection de projets réalisés pour des collectivités, entreprises et établissements publics à travers la France.
               </p>
             </div>
@@ -74,8 +74,8 @@ export default function RealisationsPage() {
       </section>
 
       {/* Grid */}
-      <section className="container px-4 md:px-6 mx-auto mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="container px-4 md:px-6 mx-auto mt-10 md:mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {REALISATIONS.map((projet, i) => (
             <AnimatedItem key={i} delay={i * 0.05}>
             <div
@@ -86,17 +86,17 @@ export default function RealisationsPage() {
                   src={projet.imageUrl}
                   alt={projet.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-background/90 backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded-full border border-border/50">
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                  <span className="bg-background/90 backdrop-blur-sm text-[11px] sm:text-xs font-semibold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full border border-border/50">
                     {projet.category}
                   </span>
                 </div>
               </div>
-              <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-xl font-bold mb-1">{projet.title}</h3>
+              <div className="flex flex-1 flex-col p-5 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold mb-1">{projet.title}</h3>
                 <p className="text-sm text-primary/70 font-medium mb-3">{projet.location}</p>
                 <p className="text-muted-foreground text-sm flex-1 leading-relaxed">
                   {projet.description}
@@ -109,24 +109,24 @@ export default function RealisationsPage() {
       </section>
 
       {/* CTA */}
-      <section className="container px-4 md:px-6 mx-auto mt-20">
+      <section className="container px-4 md:px-6 mx-auto mt-12 md:mt-20">
         <AnimatedSection direction="up">
-        <div className="bg-muted/30 border border-border/50 rounded-3xl p-8 md:p-12 text-center">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">
+        <div className="bg-muted/30 border border-border/50 rounded-3xl p-6 sm:p-8 md:p-12 text-center">
+          <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">
             Un projet d'aménagement ?
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto mb-6 sm:mb-8">
             Contactez notre équipe pour bénéficier d'un accompagnement personnalisé et d'un devis sur-mesure pour votre collectivité ou entreprise.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <Link href="/catalogue">
-              <Button size="lg" className="cursor-pointer group">
+              <Button size="lg" className="w-full sm:w-auto cursor-pointer group">
                 Voir le catalogue
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link href="/contact">
-              <Button size="lg" variant="outline" className="cursor-pointer">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto cursor-pointer">
                 Nous contacter
               </Button>
             </Link>

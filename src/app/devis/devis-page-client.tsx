@@ -103,10 +103,10 @@ export default function DevisPageClient() {
             <div className="bg-green-50/50 border border-green-200 rounded-full p-6 mb-8 inline-block">
               <CheckCircle2 size={80} className="text-green-600" />
             </div>
-            <h1 className="font-heading text-4xl md:text-5xl mb-6 tracking-tight">
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6 tracking-tight">
               Demande envoyée avec succès
             </h1>
-            <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
               Merci pour votre confiance. Nos équipes vont étudier votre demande et vous recontacter dans les plus brefs délais avec une proposition détaillée.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -126,13 +126,13 @@ export default function DevisPageClient() {
   return (
     <div className="flex flex-col min-h-screen pb-20">
       {/* Header de page */}
-      <div className="bg-primary py-10 relative overflow-hidden">
+      <div className="bg-primary py-8 md:py-10 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-[0.04]"></div>
         <div className="container px-4 md:px-6 mx-auto relative z-10">
           <AnimatedSection direction="up">
-            <div className="flex flex-col md:flex-row items-baseline gap-4">
-              <h1 className="font-heading text-3xl md:text-5xl text-white tracking-tight">Mon Devis</h1>
-              <p className="text-white/50 text-lg">
+            <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4">
+              <h1 className="font-heading text-2xl sm:text-3xl md:text-5xl text-white tracking-tight">Mon Devis</h1>
+              <p className="text-white/50 text-base md:text-lg">
                 {totalItems > 0 ? `${totalItems} produit${totalItems > 1 ? 's' : ''} sélectionné${totalItems > 1 ? 's' : ''}` : "Votre sélection est vide"}
               </p>
             </div>
@@ -140,7 +140,7 @@ export default function DevisPageClient() {
         </div>
       </div>
 
-      <div className="container py-10 px-4 md:px-6 mx-auto">
+      <div className="container py-8 md:py-10 px-4 md:px-6 mx-auto">
         {items.length === 0 ? (
           <AnimatedSection direction="up" delay={0.1}>
             <div className="flex flex-col items-center justify-center py-20 px-4 mt-4 border-2 border-dashed border-border/60 rounded-2xl bg-card">
@@ -190,18 +190,18 @@ export default function DevisPageClient() {
                         </div>
 
                         {/* Prix + Quantité */}
-                        <div className="flex items-center justify-between mt-3">
-                          <div className="flex items-center gap-0 bg-secondary/30 rounded-lg ring-1 ring-border/50">
-                            <button onClick={() => updateQuantity(item.product.id, Math.max(1, item.quantity - 1))} className="w-8 h-8 rounded-l-lg flex items-center justify-center text-foreground hover:bg-background transition-colors disabled:opacity-40 cursor-pointer" disabled={item.quantity <= 1} aria-label={`Réduire la quantité de ${item.product.name}`}>
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-3">
+                          <div className="flex items-center gap-0 bg-secondary/30 rounded-lg ring-1 ring-border/50 self-start">
+                            <button onClick={() => updateQuantity(item.product.id, Math.max(1, item.quantity - 1))} className="w-9 h-9 sm:w-8 sm:h-8 rounded-l-lg flex items-center justify-center text-foreground hover:bg-background transition-colors disabled:opacity-40 cursor-pointer touch-manipulation" disabled={item.quantity <= 1} aria-label={`Réduire la quantité de ${item.product.name}`}>
                               <Minus size={14} />
                             </button>
-                            <span className="w-10 h-8 text-center font-bold text-sm flex items-center justify-center border-x border-border/50" aria-label={`Quantité : ${item.quantity}`}>{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)} className="w-8 h-8 rounded-r-lg flex items-center justify-center text-foreground hover:bg-background transition-colors cursor-pointer" aria-label={`Augmenter la quantité de ${item.product.name}`}>
+                            <span className="w-10 h-9 sm:h-8 text-center font-bold text-sm flex items-center justify-center border-x border-border/50" aria-label={`Quantité : ${item.quantity}`}>{item.quantity}</span>
+                            <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)} className="w-9 h-9 sm:w-8 sm:h-8 rounded-r-lg flex items-center justify-center text-foreground hover:bg-background transition-colors cursor-pointer touch-manipulation" aria-label={`Augmenter la quantité de ${item.product.name}`}>
                               <Plus size={14} />
                             </button>
                           </div>
 
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4 flex-wrap">
                             {item.variantDelai && (
                               <span className="flex items-center gap-1 text-xs text-muted-foreground bg-secondary/30 px-2.5 py-1 rounded-lg">
                                 <Clock size={12} className="text-accent" /> {/^\d+(\.\d+)?$/.test(item.variantDelai) ? (Number(item.variantDelai) >= 14 ? `${Math.ceil(Number(item.variantDelai) / 7)} semaines` : `${item.variantDelai} jours`) : item.variantDelai}
@@ -209,7 +209,7 @@ export default function DevisPageClient() {
                             )}
                             {item.product.price > 0 && (
                               <div className="text-right">
-                                <p className="text-lg font-extrabold text-foreground">
+                                <p className="text-base sm:text-lg font-extrabold text-foreground">
                                   {(item.product.price * item.quantity).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
                                 </p>
                                 <p className="text-[10px] text-muted-foreground">
@@ -225,15 +225,15 @@ export default function DevisPageClient() {
                 ))}
 
                 {/* Résumé panier */}
-                <div className="bg-card rounded-xl border border-border/40 p-5">
-                  <div className="flex items-center justify-between">
-                    <Button variant="ghost" onClick={clearCart} className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 text-sm font-medium cursor-pointer">
+                <div className="bg-card rounded-xl border border-border/40 p-4 sm:p-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <Button variant="ghost" onClick={clearCart} className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 text-sm font-medium cursor-pointer self-start">
                       <Trash2 size={14} className="mr-2" /> Vider la sélection
                     </Button>
-                    <div className="text-right">
+                    <div className="text-left sm:text-right">
                       <p className="text-sm text-muted-foreground">{totalItems} article{totalItems > 1 ? 's' : ''}</p>
                       {totalPrice > 0 && (
-                        <p className="text-xl font-extrabold text-foreground">
+                        <p className="text-lg sm:text-xl font-extrabold text-foreground">
                           Total estimé : {totalPrice.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € <span className="text-sm font-normal text-muted-foreground">HT</span>
                         </p>
                       )}
@@ -249,8 +249,8 @@ export default function DevisPageClient() {
 
               {/* Formulaire B2B */}
               <div className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24">
-                <div className="bg-card p-6 md:p-8 rounded-2xl border border-border/80 shadow-xl shadow-black/5">
-                  <h2 className="font-heading text-2xl mb-2">Vos coordonnées</h2>
+                <div className="bg-card p-5 sm:p-6 md:p-8 rounded-2xl border border-border/80 shadow-xl shadow-black/5">
+                  <h2 className="font-heading text-xl sm:text-2xl mb-2">Vos coordonnées</h2>
                   <p className="text-muted-foreground text-sm mb-6">Pour recevoir votre devis personnalisé.</p>
 
                   {error && (

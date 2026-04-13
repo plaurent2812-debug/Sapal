@@ -104,33 +104,33 @@ export default async function ProductPage({
       />
       {/* Breadcrumb */}
       <div className="border-b border-border/50 bg-secondary/10">
-        <div className="container px-4 md:px-6 mx-auto py-4">
-          <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
+        <div className="container px-4 md:px-6 mx-auto py-3 md:py-4">
+          <nav className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground overflow-x-auto whitespace-nowrap scrollbar-hide">
             <Link href="/catalogue" className="hover:text-foreground transition-colors">
               Catalogue
             </Link>
-            <ChevronRight size={14} />
+            <ChevronRight size={14} className="flex-shrink-0" />
             <Link href={`/catalogue/${slug}`} className="hover:text-foreground transition-colors">
               {category.name}
             </Link>
-            <ChevronRight size={14} />
-            <span className="text-foreground font-medium truncate max-w-[200px]">
+            <ChevronRight size={14} className="flex-shrink-0" />
+            <span className="text-foreground font-medium truncate max-w-[150px] sm:max-w-[200px]">
               {product.name}
             </span>
           </nav>
         </div>
       </div>
 
-      <div className="container px-4 md:px-6 mx-auto py-8 lg:py-12">
+      <div className="container px-4 md:px-6 mx-auto py-6 md:py-8 lg:py-12">
         <Link
           href={`/catalogue/${slug}`}
-          className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-8 transition-colors group"
+          className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-6 md:mb-8 transition-colors group"
         >
           <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" /> Retour à {category.name}
         </Link>
 
         <AnimatedSection direction="up">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16">
             {/* Photo */}
             <div className="space-y-4">
               <div className="aspect-square w-full overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/30 to-secondary/5 border border-border/50 relative group">
@@ -140,7 +140,7 @@ export default async function ProductPage({
                     alt={product.name}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-contain p-8 group-hover:scale-105 transition-transform duration-500"
+                    className="object-contain p-6 md:p-8 group-hover:scale-105 transition-transform duration-500"
                     priority
                   />
                 ) : (
@@ -152,7 +152,7 @@ export default async function ProductPage({
                   </div>
                 )}
                 {product.reference && (
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-xs font-mono font-medium px-3 py-1.5 rounded-lg text-muted-foreground border border-border/50 shadow-sm">
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/90 backdrop-blur text-[11px] sm:text-xs font-mono font-medium px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-muted-foreground border border-border/50 shadow-sm">
                     Réf. {product.reference}
                   </div>
                 )}
@@ -173,14 +173,14 @@ export default async function ProductPage({
 
       {/* Produits similaires */}
       {relatedProducts.length > 0 && (
-        <section className="w-full py-16 bg-secondary/10 border-t border-border/50">
+        <section className="w-full py-10 md:py-16 bg-secondary/10 border-t border-border/50">
           <div className="container px-4 md:px-6 mx-auto">
             <AnimatedSection direction="up">
-              <h2 className="font-heading text-2xl md:text-3xl tracking-tight mb-8 accent-line">
+              <h2 className="font-heading text-xl sm:text-2xl md:text-3xl tracking-tight mb-6 md:mb-8 accent-line">
                 Produits similaires
               </h2>
             </AnimatedSection>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {relatedProducts.map((p, i) => (
                 <AnimatedItem key={p.id} delay={i * 0.08}>
                   <ProductCard product={p} categorySlug={slug} />
