@@ -127,8 +127,8 @@ export async function POST(request: Request) {
     const doc = generateQuotePDF(pdfData)
     const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
 
-    // Notifications asynchrones (Non-Bloquant pour l'utilisateur)
-    sendNotifications({ entity, contactName, email, phone, items, quoteId, pdfBuffer }).catch(e => {
+    // Notifications (await pour garantir l'envoi sur Vercel serverless)
+    await sendNotifications({ entity, contactName, email, phone, items, quoteId, pdfBuffer }).catch(e => {
       console.error('Failed to send notifications:', e)
     })
 

@@ -159,7 +159,7 @@ export async function POST(
         </tr>`
       }).join('')
 
-      resend.emails.send({
+      await resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
         to: quote.email,
         subject: `Commande ${order.order_number} — Bon de commande requis`,
@@ -213,10 +213,10 @@ export async function POST(
         `,
       }).catch((err) => console.error('Confirmation email error:', err))
 
-      // 11. Telegram notification gérant (non-blocking)
+      // 11. Telegram + Email gérant (await pour Vercel serverless)
       const identifier = quote.entity || quote.contact_name || quote.email
       const shortId = id.replace(/-/g, '').slice(0, 8).toUpperCase()
-      sendTelegramMessage(
+      await sendTelegramMessage(
         `✅ *Devis accepté — Commande en attente de BC*\n\n` +
         `📋 Devis : ${shortId}\n` +
         `🏢 Client : ${identifier}\n` +
@@ -225,10 +225,10 @@ export async function POST(
         `⏳ En attente du bon de commande client`
       ).catch(() => {})
 
-      // 12. Email au gérant — devis accepté (non-blocking)
+      // 12. Email au gérant — devis accepté
       const gerantEmail = process.env.SAPAL_GERANT_EMAIL
       if (gerantEmail) {
-        resend.emails.send({
+        await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
           to: gerantEmail,
           subject: `Devis accepté — ${identifier} (${order.order_number})`,
