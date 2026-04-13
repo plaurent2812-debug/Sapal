@@ -14,10 +14,16 @@ interface CategoryOption {
   name: string
 }
 
+interface SupplierOption {
+  id: string
+  name: string
+}
+
 export default function EditProduitPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const router = useRouter()
   const [categories, setCategories] = useState<CategoryOption[]>([])
+  const [suppliers, setSuppliers] = useState<SupplierOption[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -28,21 +34,25 @@ export default function EditProduitPage({ params }: { params: Promise<{ id: stri
   const [description, setDescription] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [price, setPrice] = useState('')
+  const [purchasePrice, setPurchasePrice] = useState('')
   const [reference, setReference] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [supplierUrl, setSupplierUrl] = useState('')
+  const [supplierId, setSupplierId] = useState('')
   const [specs, setSpecs] = useState<{ key: string; value: string }[]>([])
 
   useEffect(() => {
     async function load() {
       const supabase = createBrowserClient()
 
-      const [productRes, categoriesRes] = await Promise.all([
+      const [productRes, categoriesRes, suppliersRes] = await Promise.all([
         supabase.from('products').select('*').eq('id', id).single(),
         supabase.from('categories').select('id, name').order('name'),
+        supabase.from('suppliers').select('id, name').order('name'),
       ])
 
       if (categoriesRes.data) setCategories(categoriesRes.data)
+      if (suppliersRes.data) setSuppliers(suppliersRes.data)
 
       if (productRes.error || !productRes.data) {
         setNotFound(true)
@@ -56,9 +66,11 @@ export default function EditProduitPage({ params }: { params: Promise<{ id: stri
       setDescription(p.description || '')
       setCategoryId(p.category_id || '')
       setPrice(p.price ? String(p.price) : '')
+      setPurchasePrice(p.purchase_price ? String(p.purchase_price) : '')
       setReference(p.reference || '')
       setImageUrl(p.image_url || '')
       setSupplierUrl(p.supplier_url || '')
+      setSupplierId(p.supplier_id || '')
 
       if (p.specifications && typeof p.specifications === 'object') {
         const entries = Object.entries(p.specifications as Record<string, string>)
@@ -108,6 +120,8 @@ export default function EditProduitPage({ params }: { params: Promise<{ id: stri
         description: description.trim(),
         category_id: categoryId || null,
         price: price ? parseFloat(price) : 0,
+        purchase_price: purchasePrice ? parseFloat(purchasePrice) : null,
+        supplier_id: supplierId || null,
         reference: reference.trim(),
         image_url: imageUrl.trim(),
         supplier_url: supplierUrl.trim(),
@@ -215,16 +229,27 @@ export default function EditProduitPage({ params }: { params: Promise<{ id: stri
           />
         </div>
 
-        {/* Price + Reference */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Price + Purchase Price + Reference */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="space-y-1.5">
-            <label className="text-sm font-semibold">Prix HT (EUR)</label>
+            <label className="text-sm font-semibold">Prix de vente HT</label>
             <Input
               type="number"
               step="0.01"
               min="0"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              placeholder="0.00"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-semibold">Prix d&apos;achat HT</label>
+            <Input
+              type="number"
+              step="0.01"
+              min="0"
+              value={purchasePrice}
+              onChange={(e) => setPurchasePrice(e.target.value)}
               placeholder="0.00"
             />
           </div>
@@ -236,6 +261,23 @@ export default function EditProduitPage({ params }: { params: Promise<{ id: stri
               placeholder="REF-001"
             />
           </div>
+        </div>
+
+        {/* Fournisseur */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-semibold">Fournisseur</label>
+          <select
+            value={supplierId}
+            onChange={(e) => setSupplierId(e.target.value)}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            <option value="">-- Aucun fournisseur --</option>
+            {suppliers.map((sup) => (
+              <option key={sup.id} value={sup.id}>
+                {sup.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Image URL */}

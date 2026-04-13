@@ -159,7 +159,7 @@ export async function POST(
         </tr>`
       }).join('')
 
-      resend.emails.send({
+      await resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
         to: quote.email,
         subject: `Commande ${order.order_number} — Bon de commande requis`,
@@ -213,22 +213,25 @@ export async function POST(
         `,
       }).catch((err) => console.error('Confirmation email error:', err))
 
-      // 11. Telegram notification gérant (non-blocking)
+      // 11. Telegram + Email gérant (await pour Vercel serverless)
       const identifier = quote.entity || quote.contact_name || quote.email
       const shortId = id.replace(/-/g, '').slice(0, 8).toUpperCase()
-      sendTelegramMessage(
+      const pdfUrl = `${siteUrl}/api/quotes/${id}/pdf`
+
+      await sendTelegramMessage(
         `✅ *Devis accepté — Commande en attente de BC*\n\n` +
         `📋 Devis : ${shortId}\n` +
         `🏢 Client : ${identifier}\n` +
         `📦 Commande : ${order.order_number}\n` +
         `💰 Total HT : ${formattedTotal} €\n` +
-        `⏳ En attente du bon de commande client`
+        `⏳ En attente du bon de commande client\n\n` +
+        `📎 [Voir le devis PDF](${pdfUrl})`
       ).catch(() => {})
 
-      // 12. Email au gérant — devis accepté (non-blocking)
+      // 12. Email au gérant — devis accepté
       const gerantEmail = process.env.SAPAL_GERANT_EMAIL
       if (gerantEmail) {
-        resend.emails.send({
+        await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
           to: gerantEmail,
           subject: `Devis accepté — ${identifier} (${order.order_number})`,
@@ -258,7 +261,10 @@ export async function POST(
                   </table>
                 </div>` : ''}
                 <div style="text-align:center;margin:24px 0">
-                  <a href="${siteUrl}/gerant/commandes" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir dans mon espace Gérant</a>
+                  <a href="${pdfUrl}" style="background:#16a34a;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis PDF</a>
+                </div>
+                <div style="text-align:center;margin:8px 0">
+                  <a href="${siteUrl}/gerant/commandes" style="color:#6b7280;font-size:13px">Voir dans l'espace Gérant</a>
                 </div>
               </div>
             </div>

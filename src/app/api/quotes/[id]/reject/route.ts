@@ -1,5 +1,8 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { sendTelegramMessage } from '@/lib/telegram'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(
   _request: Request,
@@ -49,15 +52,56 @@ export async function POST(
       return Response.json({ error: 'Erreur lors du refus du devis' }, { status: 500 })
     }
 
-    // 5. Telegram notification (non-blocking)
+    // 5. Notifications gérant (await pour garantir l'envoi sur Vercel)
     const identifier = quote.entity || quote.contact_name || quote.email
     const shortId = id.replace(/-/g, '').slice(0, 8).toUpperCase()
-    sendTelegramMessage(
-      `❌ *Devis refusé*\n\n` +
-      `📋 Devis : ${shortId}\n` +
-      `🏢 Client : ${identifier}\n` +
-      `📧 Email : ${quote.email}`
-    ).catch(() => {})
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
+    const pdfUrl = `${siteUrl}/api/quotes/${id}/pdf`
+
+    // Telegram + Email en parallèle
+    const notifPromises: Promise<unknown>[] = [
+      sendTelegramMessage(
+        `❌ *Devis refusé*\n\n` +
+        `📋 Devis : ${shortId}\n` +
+        `🏢 Client : ${identifier}\n` +
+        `📧 Email : ${quote.email}\n\n` +
+        `📎 [Voir le devis PDF](${pdfUrl})`
+      ).catch((err) => console.error('Telegram reject error:', err)),
+    ]
+
+    const gerantEmail = process.env.SAPAL_GERANT_EMAIL
+    if (gerantEmail) {
+      notifPromises.push(
+        resend.emails.send({
+          from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
+          to: gerantEmail,
+          subject: `Devis refusé — ${identifier} (Réf. ${shortId})`,
+          html: `
+            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+              <div style="background:#dc2626;color:white;padding:24px;border-radius:8px 8px 0 0">
+                <h1 style="margin:0;font-size:20px">Devis refusé</h1>
+                <p style="margin:4px 0 0;opacity:0.8;font-size:14px">Réf. ${shortId}</p>
+              </div>
+              <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
+                <p>Le client <strong>${identifier}</strong> a refusé son devis.</p>
+                <div style="background:#f8fafc;border-radius:8px;padding:16px;margin:16px 0;font-size:14px">
+                  <p style="margin:0"><strong>Client :</strong> ${identifier}</p>
+                  <p style="margin:8px 0 0"><strong>Email :</strong> ${quote.email}</p>
+                </div>
+                <div style="text-align:center;margin:24px 0">
+                  <a href="${pdfUrl}" style="background:#dc2626;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Voir le devis PDF</a>
+                </div>
+                <div style="text-align:center;margin:8px 0">
+                  <a href="${siteUrl}/admin/devis" style="color:#6b7280;font-size:13px">Voir tous les devis</a>
+                </div>
+              </div>
+            </div>
+          `,
+        }).catch((err) => console.error('Gérant reject email error:', err))
+      )
+    }
+
+    await Promise.all(notifPromises)
 
     // 6. Return success
     return Response.json({ success: true })

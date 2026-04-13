@@ -77,8 +77,31 @@ _Lancé en sous-agent le 09/04/2026_
 ### Images produits
 - [ ] Remplacer images placeholder par vraies photos (en cours côté client SAPAL)
 
-### Mise en production
-- [ ] Variables d'env Vercel : `SAPAL_GERANT_EMAIL`, `RESEND_FROM_EMAIL`, domaine sapal.fr
+### 🚨 GO-LIVE — Bascule notifications test → prod
+
+**Règle en vigueur pendant les tests :** TOUTES les notifications (emails Resend + Telegram) arrivent sur Pierre Laurent / OptiPro (`p.laurent@opti-pro.fr` / chat Telegram `5721158019`). C'est volontaire pour valider les contenus.
+
+**Le jour où Pierre dit « on passe en prod » / « on lance officiellement » / « on met en ligne »**, appliquer CETTE CHECKLIST DANS L'ORDRE :
+
+- [ ] **1. Récupérer auprès du gérant SAPAL** :
+  - [ ] Son email de réception des notifs
+  - [ ] Son chat ID Telegram (lui faire ouvrir le bot `@…`, envoyer `/start`, puis récupérer le chat ID via `https://api.telegram.org/bot<TOKEN>/getUpdates`)
+- [ ] **2. Refactor du `to:` hardcodé dans `src/app/api/contact/route.ts:78`** — remplacer `'p.laurent@opti-pro.fr'` par `process.env.SAPAL_GERANT_EMAIL` (ou créer `SAPAL_CONTACT_EMAIL` si on veut séparer)
+- [ ] **3. Basculer les variables Vercel** (Production + Preview) :
+  - [ ] `SAPAL_GERANT_EMAIL` → email du gérant SAPAL
+  - [ ] `TELEGRAM_CHAT_ID` → chat ID du gérant SAPAL
+  - [ ] `RESEND_FROM_EMAIL` → vérifier que le domaine `@sapal.fr` est validé dans Resend (sinon garder `@opti-pro.fr` le temps de valider le DNS)
+  - [ ] `NEXT_PUBLIC_SITE_URL` → `https://www.sapal.fr` (ou le domaine final)
+- [ ] **4. Redéployer** (un simple changement de var ne suffit pas — relancer le build)
+- [ ] **5. Test de non-régression immédiat** :
+  - [ ] Envoyer un message via le formulaire `/contact` → vérifier qu'il arrive chez le gérant SAPAL (pas chez Pierre)
+  - [ ] Créer un devis depuis un compte client test + l'accepter → vérifier email + Telegram chez le gérant
+  - [ ] Uploader un BC test → vérifier email + Telegram chez le gérant
+- [ ] **6. Confirmer avec Pierre** que rien ne lui arrive plus (c'est le signal que la bascule est propre)
+
+⚠️ **L'admin (OptiPro / Pierre) ne reçoit RIEN en prod** — c'est un rôle de gestion, pas un destinataire. Ne jamais ajouter de `SAPAL_ADMIN_EMAIL` ou de logique de notification admin.
+
+### Mise en production (autres tâches)
 - [ ] Tests sur déploiement preview Vercel
 - [ ] PR → merge main → production
 

@@ -168,12 +168,12 @@ export async function POST(
       // Email was already sent — log but don't fail
     }
 
-    // Telegram notification (non-blocking)
+    // Telegram notification (await pour Vercel serverless)
     const totalHT = pdfItems.reduce(
       (sum, item) => sum + item.unitPriceHT * item.quantity,
       0
     )
-    sendTelegramMessage(
+    await sendTelegramMessage(
       `📨 *Devis envoyé au client*\n\n` +
       `📋 Réf : ${shortRef}\n` +
       `🏢 ${quote.entity ?? ''}\n` +
@@ -184,7 +184,7 @@ export async function POST(
       `👤 Envoyé par : ${user.email}`
     ).catch(() => {})
 
-    sendTelegramDocument(
+    await sendTelegramDocument(
       pdfBuffer,
       `devis-${shortRef}.pdf`,
       `📎 Devis ${shortRef} envoyé à ${clientEmail}`
