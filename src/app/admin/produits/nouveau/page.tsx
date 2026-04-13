@@ -14,6 +14,11 @@ interface CategoryOption {
   name: string
 }
 
+interface SupplierOption {
+  id: string
+  name: string
+}
+
 function generateId(): string {
   return crypto.randomUUID()
 }
@@ -21,6 +26,7 @@ function generateId(): string {
 export default function NouveauProduitPage() {
   const router = useRouter()
   const [categories, setCategories] = useState<CategoryOption[]>([])
+  const [suppliers, setSuppliers] = useState<SupplierOption[]>([])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -29,18 +35,24 @@ export default function NouveauProduitPage() {
   const [description, setDescription] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [price, setPrice] = useState('')
+  const [purchasePrice, setPurchasePrice] = useState('')
   const [reference, setReference] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [supplierUrl, setSupplierUrl] = useState('')
+  const [supplierId, setSupplierId] = useState('')
   const [specs, setSpecs] = useState<{ key: string; value: string }[]>([])
 
   useEffect(() => {
-    async function loadCategories() {
+    async function loadData() {
       const supabase = createBrowserClient()
-      const { data } = await supabase.from('categories').select('id, name').order('name')
-      if (data) setCategories(data)
+      const [catRes, supRes] = await Promise.all([
+        supabase.from('categories').select('id, name').order('name'),
+        supabase.from('suppliers').select('id, name').order('name'),
+      ])
+      if (catRes.data) setCategories(catRes.data)
+      if (supRes.data) setSuppliers(supRes.data)
     }
-    loadCategories()
+    loadData()
   }, [])
 
   // Auto-generate slug from name
@@ -80,6 +92,8 @@ export default function NouveauProduitPage() {
       description: description.trim(),
       category_id: categoryId || null,
       price: price ? parseFloat(price) : 0,
+      purchase_price: purchasePrice ? parseFloat(purchasePrice) : null,
+      supplier_id: supplierId || null,
       reference: reference.trim(),
       image_url: imageUrl.trim(),
       supplier_url: supplierUrl.trim(),
@@ -166,16 +180,27 @@ export default function NouveauProduitPage() {
           />
         </div>
 
-        {/* Price + Reference */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Price + Purchase Price + Reference */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="space-y-1.5">
-            <label className="text-sm font-semibold">Prix HT (EUR)</label>
+            <label className="text-sm font-semibold">Prix de vente HT</label>
             <Input
               type="number"
               step="0.01"
               min="0"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
+              placeholder="0.00"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-semibold">Prix d&apos;achat HT</label>
+            <Input
+              type="number"
+              step="0.01"
+              min="0"
+              value={purchasePrice}
+              onChange={(e) => setPurchasePrice(e.target.value)}
               placeholder="0.00"
             />
           </div>
@@ -187,6 +212,23 @@ export default function NouveauProduitPage() {
               placeholder="REF-001"
             />
           </div>
+        </div>
+
+        {/* Fournisseur */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-semibold">Fournisseur</label>
+          <select
+            value={supplierId}
+            onChange={(e) => setSupplierId(e.target.value)}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            <option value="">-- Aucun fournisseur --</option>
+            {suppliers.map((sup) => (
+              <option key={sup.id} value={sup.id}>
+                {sup.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Image URL */}
