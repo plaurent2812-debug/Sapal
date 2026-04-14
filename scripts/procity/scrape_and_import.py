@@ -16,8 +16,7 @@ Options:
   --product-id  Traite seulement ce product_id Procity (ex: "206200")
 """
 
-import sys
-import json
+import os
 import time
 import hashlib
 import argparse
@@ -34,13 +33,8 @@ EXCEL_PATH = Path(
     "/Users/pierrelaurent/Desktop/OptiPro/Clients/SAPAL/Fournisseurs"
     "/Procity/tarifprocityvialux2026-fr.v1.7-699.xlsx"
 )
-SUPABASE_URL = "https://dpycswobcixsowvxnvdc.supabase.co"
-SERVICE_KEY = (
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
-    "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRweWNzd29iY2l4c293dnhudmRjIiwi"
-    "cm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDY0NjM1MywiZXhwIjoyMDkw"
-    "MjIyMzUzfQ.FlZw1NjSDVR5dKE4fubr9iFzYIkvv_MqYQ6xHumX27g"
-)
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://dpycswobcixsowvxnvdc.supabase.co")
+SERVICE_KEY  = os.environ.get("SUPABASE_SERVICE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRweWNzd29iY2l4c293dnhudmRjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDY0NjM1MywiZXhwIjoyMDkwMjIyMzUzfQ.FlZw1NjSDVR5dKE4fubr9iFzYIkvv_MqYQ6xHumX27g")
 STORAGE_BUCKET = "product-images"
 API_HEADERS = {
     "apikey": SERVICE_KEY,
@@ -237,19 +231,19 @@ def upload_image_to_storage(
         return None
 
 
-def delete_variants_for_product(product_id: str):
-    """Supprime les variantes existantes d'un produit (pour reimport propre)."""
-    url = (
-        f"{SUPABASE_URL}/rest/v1/product_variants"
-        f"?product_id=eq.{product_id}"
-    )
-    headers = {
-        "apikey": SERVICE_KEY,
-        "Authorization": f"Bearer {SERVICE_KEY}",
-    }
-    r = requests.delete(url, headers=headers, timeout=10)
-    if r.status_code not in (200, 204):
-        print(f"    [!] Delete error {r.status_code}: {r.text[:100]}")
+def delete_variants_for_product(product_id: str) -> bool:
+    """Supprime les variantes existantes. Retourne True si succès."""
+    try:
+        r = requests.delete(
+            f"{SUPABASE_URL}/rest/v1/product_variants",
+            params={"product_id": f"eq.{product_id}"},
+            headers=API_HEADERS,
+            timeout=10,
+        )
+        return r.status_code in (200, 204)
+    except Exception as e:
+        print(f"    ⚠ Delete error: {e}")
+        return False
 
 
 def upsert_variants(rows: list[dict]) -> bool:
@@ -401,6 +395,9 @@ def main():
             stored_image_urls = scraped["images"]
 
         # 4) Construire les variantes depuis l'Excel
+        # Note : toutes les variantes d'un même produit partagent les mêmes images pour l'instant.
+        # Le site Procity ne permet pas de corréler automatiquement les images à une combinaison
+        # coloris/dimension spécifique. Amélioration future possible si Procity expose cette info.
         variant_rows = []
         for excel_row in rows:
             parts = [
@@ -449,7 +446,10 @@ def main():
             if len(variant_rows) > 3:
                 print(f"      ... et {len(variant_rows) - 3} autres")
         else:
-            delete_variants_for_product(supabase_product_id)
+            if not delete_variants_for_product(supabase_product_id):
+                print("   [!] Delete échoué — skipping pour éviter les doublons")
+                skipped += 1
+                continue
             for i in range(0, len(variant_rows), 25):
                 batch = variant_rows[i : i + 25]
                 ok = upsert_variants(batch)
