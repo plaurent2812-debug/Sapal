@@ -51,3 +51,4 @@ supabase/.temp/
 # scripts — local assets and generated output (not committed)
 scripts/images/
 scripts/output/
+scripts/procity/.venv/
