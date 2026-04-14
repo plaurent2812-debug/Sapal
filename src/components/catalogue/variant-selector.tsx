@@ -15,7 +15,7 @@ type AxisKey = 'dimensions' | 'finition' | 'coloris'
 const AXES: Array<{ key: AxisKey; label: string }> = [
   { key: 'coloris',    label: 'Couleur' },
   { key: 'dimensions', label: 'Longueur' },
-  { key: 'finition',   label: 'Finition' },
+  { key: 'finition',   label: 'Structure' },
 ]
 
 // Mapping RAL / nom → couleur hex pour les swatches
@@ -156,47 +156,33 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
 
         return (
           <div>
-            <div className="flex items-center gap-2 mb-2.5">
-              <p className="text-sm font-semibold text-muted-foreground">Couleur</p>
-              {selections.coloris && (
-                <span className="text-sm font-medium text-foreground">
-                  {selections.coloris === 'Standard' ? 'Gris Standard' : `RAL ${selections.coloris}`}
-                </span>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
+            <p className="text-sm font-semibold text-muted-foreground mb-2.5">Couleur</p>
+            <div className="grid grid-cols-2 gap-1.5">
               {values.map(value => {
                 const hex = getColorHex(value)
                 const isSelected = selections.coloris === value
-                const light = hex ? isLight(hex) : false
+                const label = value === 'Standard' ? 'Gris Standard'
+                  : value.toLowerCase().includes('corten') ? 'Aspect Corten'
+                  : value.toLowerCase().includes('gris procity') ? 'Gris Procity'
+                  : `RAL ${value}`
 
                 return (
                   <button
                     key={value}
                     onClick={() => handleSelect('coloris', value)}
-                    title={value === 'Standard' ? 'Gris Standard' : `RAL ${value}`}
-                    className={`
-                      relative transition-all cursor-pointer flex-shrink-0
-                      ${hasAnyColor && hex
-                        ? `w-9 h-9 rounded-lg ring-2 ring-offset-2 ${isSelected ? 'ring-accent scale-110' : 'ring-transparent hover:ring-accent/50'}`
-                        : `px-3 py-1.5 rounded-lg text-sm font-medium ring-1 ${isSelected ? 'ring-accent bg-accent/10 text-accent' : 'ring-border/50 bg-secondary/30 text-foreground hover:ring-accent/50'}`
-                      }
-                    `}
-                    style={hasAnyColor && hex ? { backgroundColor: hex } : undefined}
+                    title={label}
                     aria-pressed={isSelected}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-left transition-all cursor-pointer ring-1 ${
+                      isSelected
+                        ? 'ring-accent bg-accent/5 font-medium text-foreground'
+                        : 'ring-border/40 bg-secondary/10 text-foreground hover:ring-accent/40 hover:bg-secondary/20'
+                    }`}
                   >
-                    {hasAnyColor && hex ? (
-                      isSelected && (
-                        <span
-                          className={`absolute inset-0 flex items-center justify-center text-base font-bold ${light ? 'text-black/60' : 'text-white/80'}`}
-                          aria-hidden
-                        >
-                          ✓
-                        </span>
-                      )
-                    ) : (
-                      value
-                    )}
+                    <span
+                      className={`w-8 h-8 rounded flex-shrink-0 ring-1 ring-inset ring-black/10 ${!hex ? 'bg-secondary/40' : ''}`}
+                      style={hex ? { backgroundColor: hex } : undefined}
+                    />
+                    <span className="truncate">{label}</span>
                   </button>
                 )
               })}
