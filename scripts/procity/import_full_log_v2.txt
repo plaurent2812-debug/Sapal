@@ -1,0 +1,4596 @@
+Lecture Excel...
+   1559 references Procity trouvees dans l'Excel
+   578 URL(s) uniques Procity (produits logiques)
+
+--- ['206200', '206201', '206232', '206233', '206220', '206221'] BARRIÈRE MAIN COURANTE LISBONNE
+   15 ligne(s) Excel | URL: https://procity.eu/fr/barrière-main-courante-lisbonne.html
+   OK product_id Supabase: 1072 (via ref 206200)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 15 variante(s) a inserer
+   OK Lot 1: 15 variantes
+
+--- ['206130', '206140', '206150', '206131', '206141', '206151', '206132', '206142', '206152', '206133', '206143', '206153'] BARRIÈRE MAIN COURANTE HÉRITAGE
+   12 ligne(s) Excel | URL: https://procity.eu/fr/barriere-main-courante-heritage.html
+   OK product_id Supabase: 1071 (via ref 206130)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 12 variante(s) a inserer
+   OK Lot 1: 12 variantes
+
+--- ['206825', '206826', '206820', '206821', '206827', '206828'] BARRIÈRE MAIN COURANTE VENISE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/barriere-venise.html
+   OK product_id Supabase: 1073 (via ref 206825)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['206061', '206161', '206067', '206167', '206079', '206179'] BARRIÈRE PROVINCE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/barriere-province-city.html
+   OK product_id Supabase: 1074 (via ref 206061)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['206057', '206157', '206058', '206158', '206059', '206159'] BARRIÈRE PROVINCE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/barriere-province-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206066', '206166', '206068', '206168', '206070', '206170'] BARRIÈRE PROVINCE
+   10 ligne(s) Excel | URL: https://procity.eu/fr/barriere-province-boule-2.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206056', '206155', '206047', '206147', '206078', '206178'] BARRIÈRE PROVINCE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/barriere-province-inox.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206180'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-trio-city.html
+   OK product_id Supabase: 1083 (via ref 206180)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206183'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-trio-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206181'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-trio-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206176'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-trio-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206800'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-ville-linea-city.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206801'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-ville-linea-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206802'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-ville-linea-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206806'] BARRIÈRES TRIO & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-linea-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206080', '206081'] BARRIÈRES CARREFOUR & LOSANGE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barriere-carrefour.html
+   OK product_id Supabase: 1079 (via ref 206080)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['206203'] BARRIÈRES CARREFOUR & LOSANGE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-ville-losange.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206216', '206217'] BARRIÈRES ORLÉANS & PAGODE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/barriere-orleans.html
+   OK product_id Supabase: 1080 (via ref 206216)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['206210', '206211'] BARRIÈRES ORLÉANS & PAGODE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barriere-ville-pagode.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206293'] BARRIÈRES "SPÉCIALE ÉCOLE" CONVIVIALE® & LINEA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-conviviale-grillagee.html
+   OK product_id Supabase: 1078 (via ref 206293)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206960', '206961', '206965'] BARRIÈRES "SPÉCIALE ÉCOLE" CONVIVIALE® & LINEA
+   3 ligne(s) Excel | URL: https://procity.eu/fr/barriere-speciale-ecole-conviviale.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206808', '206815', '206816', '206817'] BARRIÈRES "SPÉCIALE ÉCOLE" CONVIVIALE® & LINEA
+   4 ligne(s) Excel | URL: https://procity.eu/fr/barrière-spéciale-école-linéa.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204675'] POTELET "SPÉCIAL ÉCOLE" CARREFOUR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-carrefour-spéciale-école.html
+   OK product_id Supabase: 1251 (via ref 204675)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['203400', '203405', '203404', '203403', '203401', '203402'] KIT D’AMOVIBILITÉ SERRUBLOC® POUR BARRIÈRES DE VILLE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/kit-d-amovibilité-pour-barrières-serrubloc.html
+   OK product_id Supabase: 1173 (via ref 203400)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['204006', '204007', '204008', '294006', '294007', '294008'] ARCEAUX SIMPLES ET RENFORCÉS Ø 60 mm
+   9 ligne(s) Excel | URL: https://procity.eu/fr/arceau-simple-galva-ø60mm.html
+   OK product_id Supabase: 1035 (via ref 204006)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 9 variante(s) a inserer
+   OK Lot 1: 9 variantes
+
+--- ['204036', '204056', '204037', '204057', '204038', '204058', '294020', '294056', '294021', '294057', '294022', '294058'] ARCEAUX SIMPLES ET RENFORCÉS Ø 60 mm
+   15 ligne(s) Excel | URL: https://procity.eu/fr/arceau-simple-peint-ø-60-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204206', '204207', '204208', '294206', '294207', '294208'] ARCEAUX SIMPLES ET RENFORCÉS Ø 60 mm
+   9 ligne(s) Excel | URL: https://procity.eu/fr/arceau-renforcé-galva-ø60mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204236', '204256', '204237', '204257', '204238', '204258', '294220', '294256', '294221', '294257', '294222', '294258'] ARCEAUX SIMPLES ET RENFORCÉS Ø 60 mm
+   15 ligne(s) Excel | URL: https://procity.eu/fr/arceaux-renforces-peints-ø60mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204401', '204451'] BARRIÈRE À BARREAUX
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barrière-à-barreaux.html
+   OK product_id Supabase: 1076 (via ref 204401)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['206320'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   4 ligne(s) Excel | URL: https://procity.eu/fr/potelet-city-ligne-province-ø76mm.html
+   OK product_id Supabase: 1259 (via ref 206320)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['206304'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-agora-ligne-province-ø76mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206402'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   6 ligne(s) Excel | URL: https://procity.eu/fr/potelet-boule-ligne-province-ø76mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206390'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-brossé-ligne-province-ø76mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206356'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-brosse-haut-ligne-province-ø76mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206493'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-city-ligne-province-ø114mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206497'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-province-agora-ø114mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206496'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-boule-ligne-province-ø114mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206391'] POTELETS FIXES PROVINCE Ø 76 ET 114 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-brossé-ligne-province-ø114mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204320', '204360', '204350', '204391', '204680'] POTELETS FIXES CARREFOUR
+   5 ligne(s) Excel | URL: https://procity.eu/fr/potelet-carrefour-galva.html
+   OK product_id Supabase: 1258 (via ref 204320)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 5 variante(s) a inserer
+   OK Lot 1: 5 variantes
+
+--- ['204330', '204660', '204364', '204661', '204351', '204662', '204395', '204663', '204681', '204682'] POTELETS FIXES CARREFOUR
+   12 ligne(s) Excel | URL: https://procity.eu/fr/potelet-carrefour.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206731'] POTELET AGGLO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-fixe-agglo-ø-76-mm.html
+   OK product_id Supabase: 1253 (via ref 206731)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206734'] POTELET AGGLO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-agglo-ø-102-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206321', '206323', '206410', '206392', '206322', '206325', '206411', '206393', '206494', '206522', '206523', '206394', '206495', '206525', '206526', '206395'] POTELETS À CHAÎNE
+   16 ligne(s) Excel | URL: https://procity.eu/fr/potelet-province-à-chaînes.html
+   OK product_id Supabase: 1262 (via ref 206321)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 16 variante(s) a inserer
+   OK Lot 1: 16 variantes
+
+--- ['204321', '204322', '204361', '204362'] POTELETS À CHAÎNE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/potelet-carrefour-galva-à-chaînes.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204331', '204665', '204332', '204666', '204365', '204668', '204366', '204669'] POTELETS À CHAÎNE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/potelet-carrefour-à-chaînes.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206751', '206752', '206755', '206756'] POTELETS À CHAÎNE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/potelet-agglo-à-chaînes.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204371', '204381', '204370', '204380'] CHAÎNES & MAILLONS
+   4 ligne(s) Excel | URL: https://procity.eu/fr/kit-chaine-de-2-5m-2-maillons.html
+   OK product_id Supabase: 1104 (via ref 204371)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['204376', '204386', '204375', '204385'] CHAÎNES & MAILLONS
+   4 ligne(s) Excel | URL: https://procity.eu/fr/maillon-pour-potelets-agrave-chaîne.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206761'] POTELET INOX
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-fixe-ø76mm.html
+   OK product_id Supabase: 1256 (via ref 206761)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206762'] POTELET INOX
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-fixe-ø90mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206763'] POTELET INOX
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-fixe-ø114mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204521'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-ø76-mm.html
+   OK product_id Supabase: 1263 (via ref 204521)
+    [!] HTTP 404 pour https://procity.eu/fr/potelet-à-mémoire-de-forme-ø76-mm.html
+   0 image(s) trouvee(s) sur procity.eu
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['204520'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   3 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-boule-ø76-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204522'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-agglo-ø76-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204523'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-carrefour-ø76-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204531'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-haute-visibilité-agglo-ø76-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204530'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   3 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-haute-visibilité-boule-ø76-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204532'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-haute-visibilité-agglo-ø76-mm-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204533'] POTELETS À MÉMOIRE DE FORME STANDARDS ET HAUTE VISIBILITÉ
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-à-mémoire-de-forme-haute-visibilité-carrefour-ø76-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206327', '206477'] POTELETS HAUTE VISIBILITÉ (tube RAL standard et pommeau blanc sauf pommeau inox brossé)
+   5 ligne(s) Excel | URL: https://procity.eu/fr/potelet-city-haute-visibilite.html
+   OK product_id Supabase: 1260 (via ref 206327)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 5 variante(s) a inserer
+   OK Lot 1: 5 variantes
+
+--- ['206407', '206487'] POTELETS HAUTE VISIBILITÉ (tube RAL standard et pommeau blanc sauf pommeau inox brossé)
+   6 ligne(s) Excel | URL: https://procity.eu/fr/potelet-boule-haute-visibilite.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206396'] POTELETS HAUTE VISIBILITÉ (tube RAL standard et pommeau blanc sauf pommeau inox brossé)
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-haute-visibilite.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206482', '206479', '206680'] POTELETS HAUTE VISIBILITÉ (tube RAL standard et pommeau blanc sauf pommeau inox brossé)
+   4 ligne(s) Excel | URL: https://procity.eu/fr/potelet-carrefour-haute-visibilité-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206732', '206735'] POTELETS HAUTE VISIBILITÉ (tube RAL standard et pommeau blanc sauf pommeau inox brossé)
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-agglo-haute-visibilité.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206768'] POTELETS HAUTE VISIBILITÉ (tube RAL standard et pommeau blanc sauf pommeau inox brossé)
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inox-fixe-ø76mm-haute-visibilite.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206557', '206556', '206553', '206558'] SYSTÈME D’AMOVIBILITÉ POUR POTELETS SERRUBLOC® 21
+   4 ligne(s) Excel | URL: https://procity.eu/fr/système-d-amovibilité-pour-potelets-serrubloc-21.html
+   OK product_id Supabase: 1294 (via ref 206557)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['306510', '204294', '204297', '204339'] FOURREAU D'AMOVIBILITÉ VERROUILLABLE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/fourreau-d-amovibilité-verrouillable.html
+   OK product_id Supabase: 1139 (via ref 306510)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['204539'] FOURREAU D'AMOVIBILITÉ VERROUILLABLE
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/fourreau-d-amovibilit%C3%A9-verrouillable.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206562', '206561', '206563', '206574'] FOURREAU D'AMOVIBILITÉ VERROUILLABLE
+   5 ligne(s) Excel | URL: https://procity.eu/fr/fourreau-verrouillable-pour-borne.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204303', '204304'] FOURREAU D'AMOVIBILITÉ SIMPLE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/fourreau-d-amovibilite-simple.html
+   OK product_id Supabase: 1138 (via ref 204303)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['206632'] POTELET INCLINABLE AMORTICHOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inclinable-amortichoc-city.html
+   OK product_id Supabase: 1255 (via ref 206632)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206630'] POTELET INCLINABLE AMORTICHOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inclinable-amortichoc-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206631'] POTELET INCLINABLE AMORTICHOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inclinable-amortichoc-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206397'] POTELET INCLINABLE AMORTICHOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inclinable-amortichoc-inox.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206635'] POTELET INCLINABLE AMORTICHOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inclinable-amortichoc-carrefour.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206733'] POTELET INCLINABLE AMORTICHOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-inclinable-amortichoc-agglo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206674'] POTELETS RABATTABLES SOLIBLOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-rabattable-solibloc-city.html
+   OK product_id Supabase: 1261 (via ref 206674)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206675'] POTELETS RABATTABLES SOLIBLOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-rabattable-solibloc-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206676'] POTELETS RABATTABLES SOLIBLOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-rabattable-solibloc-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206398'] POTELETS RABATTABLES SOLIBLOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-rabattable-solibloc-inox.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206689'] POTELETS RABATTABLES SOLIBLOC®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-rabattable-solibloc-carrefour.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206645', '276642'] POTELET AMOVIBLE PRIMABLOC®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-amovible-primabloc-city.html
+   OK product_id Supabase: 1254 (via ref 206645)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['206647', '206659'] POTELET AMOVIBLE PRIMABLOC®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-amovible-primabloc-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206665', '206666'] POTELET AMOVIBLE PRIMABLOC®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-amovible-primabloc-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204344', '206687'] POTELETS "POMPIER" FIXE ET RABATTABLE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/potelet-pompier.html
+   OK product_id Supabase: 1257 (via ref 204344)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['294030', '294031', '294032'] ARCEAU Ø 60 mm
+   3 ligne(s) Excel | URL: https://procity.eu/fr/arceau-simple-rouge-blanc.html
+   OK product_id Supabase: 1033 (via ref 294030)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['294230', '294231', '294232'] ARCEAU Ø 60 mm
+   3 ligne(s) Excel | URL: https://procity.eu/fr/arceau-renforce-D60mm-rouge-blanc.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206629', '206624'] BORNES PROVINCE INOX ET BARCELONE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/borne-province-inox-brossé-1.html
+   OK product_id Supabase: 1091 (via ref 206629)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['206459', '206458', '206457', '206385', '206383', '206380', '206386', '206384', '206381'] BORNES PROVINCE INOX ET BARCELONE
+   9 ligne(s) Excel | URL: https://procity.eu/fr/borne-barcelone-2.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206775', '206777'] BORNES INOX & PROVINCE CITY
+   2 ligne(s) Excel | URL: https://procity.eu/fr/borne-inox.html
+   OK product_id Supabase: 1090 (via ref 206775)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['206548'] BORNES INOX & PROVINCE CITY
+   1 ligne(s) Excel | URL: https://procity.eu/fr/borne-city.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206456'] BORNE PROVINCE AGORA ET FOURREAU D'AMOVIBILITÉ VERROUILLABLE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/borne-agora.html
+   OK product_id Supabase: 1088 (via ref 206456)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206780'] BORNES RÉTRACTABLES
+   1 ligne(s) Excel | URL: https://procity.eu/fr/borne-rétractable-city.html
+   OK product_id Supabase: 1092 (via ref 206780)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['206575', '206781'] BORNES RÉTRACTABLES
+   2 ligne(s) Excel | URL: https://procity.eu/fr/borne-retractable-inox.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206784', '206783', '206782'] BORNES RÉTRACTABLES
+   3 ligne(s) Excel | URL: https://procity.eu/fr/borne-rétractable-barcelone.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206517', '206446', '206447'] BORNES ANTI-BÉLIER
+   3 ligne(s) Excel | URL: https://procity.eu/fr/borne-anti-bélier-1.html
+   OK product_id Supabase: 1089 (via ref 206517)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['206790', '206516', '206791', '206577', '206792', '206444', '206793', '206539', '206794', '206445'] BORNES ANTI-BÉLIER
+   10 ligne(s) Excel | URL: https://procity.eu/fr/borne-anti-belier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206778', '206779'] BORNES ANTI-BÉLIER
+   2 ligne(s) Excel | URL: https://procity.eu/fr/borne-anti-bélier-tout-inox.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['111600'] COUSSIN BERLINOIS & SÉPARATEUR DE VOIES
+   1 ligne(s) Excel | URL: https://procity.eu/fr/coussin-berlinois.html
+   OK product_id Supabase: 1129 (via ref 111600)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['111601', '111602'] COUSSIN BERLINOIS & SÉPARATEUR DE VOIES
+   2 ligne(s) Excel | URL: https://procity.eu/fr/separateur-de-voies.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['120010', '120012'] PLOTS ROUTIERS - VENDUS PAR LOT DE 6
+   2 ligne(s) Excel | URL: https://procity.eu/fr/plot-routier-solaire-rond-polycarbonate.html
+   OK product_id Supabase: 1244 (via ref 120010)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['120000'] PLOTS ROUTIERS - VENDUS PAR LOT DE 6
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plot-routier-solaire-aluminium.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['120005', '120007'] PLOTS ROUTIERS - VENDUS PAR LOT DE 6
+   2 ligne(s) Excel | URL: https://procity.eu/fr/plot-routier-solaire-coque-aluminium.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['120020'] PLOTS ROUTIERS - VENDUS PAR LOT DE 6
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plot-routier-en-verre-ø100mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['120021'] PLOTS ROUTIERS - VENDUS PAR LOT DE 6
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plot-routier-en-verre-ø50mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306710', '306711', '306712'] STATION BUS KUB.
+   3 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-kub.html
+   OK product_id Supabase: 1278 (via ref 306710)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['529650', '529660', '529651', '529661', '529652', '529662'] STATION BUS VENISE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-venise.html
+   OK product_id Supabase: 1283 (via ref 529650)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['529411'] OPTIONS POUR STATION BUS VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plaque-d-arrêt-latérale.html
+   OK product_id Supabase: 1209 (via ref 529411)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['529680', '529681', '529682', '529683', '529685', '529684'] STATION BUS CONVIVIALE® AVEC BARDAGES EN VERRE
+   8 ligne(s) Excel | URL: https://www.procity.eu/fr/station-bus-conviviale-avec-bardages-verre.html
+   OK product_id Supabase: 1277 (via ref 529680)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['529690', '529691', '529692', '529693', '529694', '529695'] STATION BUS CONVIVIALE® AVEC BARDAGES EN ACIER
+   6 ligne(s) Excel | URL: https://www.procity.eu/fr/stations-bus-conviviale-avec-bardages-acier.html
+   OK product_id Supabase: 1276 (via ref 529690)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['529686'] OPTIONS POUR STATION BUS CONVIVIALE®
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/extension-par-module-interm%C3%A9diaire.html
+   OK product_id Supabase: 1204 (via ref 529686)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['529410'] OPTIONS POUR STATION BUS CONVIVIALE®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plaque-d-arrêt-supplémentaire.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209159'] OPTIONS POUR STATION BUS CONVIVIALE®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-pour-stations-bus-conviviale.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209115'] OPTIONS POUR STATION BUS CONVIVIALE®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-pour-station-bus-conviviale.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529420'] OPTIONS POUR STATION BUS CONVIVIALE®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bavette-coupe-vent-et-coupe-neige-pour-un-vitrage.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529674', '529675', '529670', '529671', '529672', '529673', '599674', '599675', '599670', '599671', '599672', '599673'] STATION BUS MODULO
+   12 ligne(s) Excel | URL: https://procity.eu/fr/abri-bus-modulo.html
+   OK product_id Supabase: 1280 (via ref 529674)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 12 variante(s) a inserer
+   OK Lot 1: 12 variantes
+
+--- ['529679'] OPTIONS POUR STATION BUS MODULO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bavettes-coupe-vent-latérales.html
+   OK product_id Supabase: 1207 (via ref 529679)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['529238', '529239', '529240', '529241', '529242', '529243', '529246', '529247'] STATION BUS MILAN
+   8 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-milan.html
+   OK product_id Supabase: 1279 (via ref 529238)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['529407'] OPTIONS POUR STATION BUS MILAN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/coupe-vent-latéraux-pour-abris-milan-la-paire.html
+   OK product_id Supabase: 1206 (via ref 529407)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['529408', '529409'] OPTIONS POUR STATION BUS MILAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/coupe-vent-face-avant-pour-station-bus-milan.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209147'] OPTIONS POUR STATION BUS MILAN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529208', '529209', '529308', '529309', '529318', '529319', '529338', '529339'] STATION BUS VOÛTE
+   10 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-voûte-poteaux-carrés.html
+   OK product_id Supabase: 1285 (via ref 529208)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 10 variante(s) a inserer
+   OK Lot 1: 10 variantes
+
+--- ['529054'] OPTIONS POUR STATION BUS VOÛTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/coupe-vent-de-toiture-la-paire.html
+   OK product_id Supabase: 1210 (via ref 529054)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['509041'] OPTIONS POUR STATION BUS VOÛTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/éclairage-led-pour-abris-sécurisé-horizon.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529412'] OPTIONS POUR STATION BUS VOÛTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plaque-d-arrêt-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529220', '529225', '529300', '529301', '529310', '529311', '529330', '529331'] STATION BUS PROVINCE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-province-city.html
+   OK product_id Supabase: 1281 (via ref 529220)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['529221', '529226', '529302', '529303', '529312', '529313', '529332', '529333'] STATION BUS PROVINCE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-province-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529222', '529227', '529304', '529305', '529314', '529315', '529334', '529335'] STATION BUS PROVINCE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-province-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529224', '529229', '529327', '529422', '529423', '529424', '529383', '529384'] STATION BUS PROVINCE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-province-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['310011', '310010', '310014', '310013'] STATION BUS TURIN
+   4 ligne(s) Excel | URL: https://procity.eu/fr/station-bus-turin.html
+   OK product_id Supabase: 1282 (via ref 310011)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['310012'] OPTIONS POUR STATION BUS TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/demi-face-avant-pour-stations-bus-turin-2000-mm.html
+   OK product_id Supabase: 1208 (via ref 310012)
+    [!] HTTP 500 pour https://procity.eu/fr/demi-face-avant-pour-stations-bus-turin-2000-mm.html
+   0 image(s) trouvee(s) sur procity.eu
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['310015'] OPTIONS POUR STATION BUS TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/demi-face-avant-pour-stations-bus-turin-3000-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201136'] CLAUSTRA POUR UNE SÉLECTION D'ABRIS (voir catalogue)
+   1 ligne(s) Excel | URL: https://procity.eu/fr/claustra-grillagé-pour-plantes-grimpantes.html
+   OK product_id Supabase: 1106 (via ref 201136)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['505045'] PIÈCES DÉTACHÉES POUR STATIONS BUS MILAN, VOÛTE, PROVINCE & MODULO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-horaire.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529440', '529445'] TOTEM ARRÊT DE BUS MILAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/totem-arret-de-bus-milan.html
+   OK product_id Supabase: 1305 (via ref 529440)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['306721'] ASSIS-DEBOUT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-tout-acier-kub.html
+   OK product_id Supabase: 1037 (via ref 306721)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['306720'] ASSIS-DEBOUT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-bois-acier-kub.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209155'] ASSIS-DEBOUT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-estoril-city.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209156'] ASSIS-DEBOUT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-estoril-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209157'] ASSIS-DEBOUT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-estoril-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209162'] ASSIS-DEBOUT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-estoril-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209161'] ASSIS-DEBOUT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-oslo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207365', '207355', '207315', '207325'] SUPPORT VÉLOS PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-province-city.html
+   OK product_id Supabase: 1288 (via ref 207365)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['207360', '207350', '207310', '207320'] SUPPORT VÉLOS PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-province-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207361', '207351', '207311', '207321'] SUPPORT VÉLOS PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-province-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207364', '207353', '207314', '207323'] SUPPORT VÉLOS PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-province-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207002', '207022', '207003', '207023'] SUPPORTS VÉLOS MERCURE & 16 PLACES
+   4 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-mercure.html
+   OK product_id Supabase: 1291 (via ref 207002)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['204760'] SUPPORTS VÉLOS MERCURE & 16 PLACES
+   1 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-16-places.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204737', '204734'] SUPPORTS VÉLOS OPTIMUM & GRIFFE MURALE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-optimum-galva.html
+   OK product_id Supabase: 1293 (via ref 204737)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['204735'] SUPPORTS VÉLOS OPTIMUM & GRIFFE MURALE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-optimum-peint.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204736'] SUPPORTS VÉLOS OPTIMUM & GRIFFE MURALE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/arceaux-antivol-galva.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204738'] SUPPORTS VÉLOS OPTIMUM & GRIFFE MURALE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/arceaux-antivol-peint-sur-galva.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204702'] SUPPORTS VÉLOS OPTIMUM & GRIFFE MURALE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/griffe-murale-orientable-ou-fixe.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204700', '204711'] SUPPORTS VÉLOS EMPLACEMENTS DÉCALÉS & ÉCO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-6-places-emplacements-decales.html
+   OK product_id Supabase: 1290 (via ref 204700)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['204719'] SUPPORTS VÉLOS EMPLACEMENTS DÉCALÉS & ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-5-places-emplacements-decales.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204701'] SUPPORTS VÉLOS EMPLACEMENTS DÉCALÉS & ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-eco-5-places.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204715', '204717', '204716'] SUPPORTS VÉLOS MODULAIRE INFINITE & TURIN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/support-vélos-modulaire-infinite.html
+   OK product_id Supabase: 1292 (via ref 204715)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['310200'] SUPPORTS VÉLOS MODULAIRE INFINITE & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/support-cycles-6-places.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204790', '204791'] SUPPORT VÉLOS À 2 ÉTAGES HORIZON
+   2 ligne(s) Excel | URL: https://procity.eu/fr/support-vélos-à-2-étages-horizon.html
+   OK product_id Supabase: 1289 (via ref 204790)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['204792'] SUPPORT VÉLOS À 2 ÉTAGES HORIZON
+   1 ligne(s) Excel | URL: https://procity.eu/fr/lot-de-6-arceaux-antivol-galva.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204793'] SUPPORT VÉLOS À 2 ÉTAGES HORIZON
+   1 ligne(s) Excel | URL: https://procity.eu/fr/lot-de-3-arceaux-antivol-galva.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207390'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-classique-city.html
+   OK product_id Supabase: 1027 (via ref 207390)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['207391'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-classique-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207392'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-classique-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207395'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-classique-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207401'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-tradition-city.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207402'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-tradition-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207403'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-tradition-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207405'] APPUIS VÉLOS PROVINCE CLASSIQUE & PROVINCE TRADITION
+   1 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-province-tradition-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207545', '207546', '297545', '297546'] APPUIS VÉLOS LISBONNE & MILAN
+   4 ligne(s) Excel | URL: https://procity.eu/fr/appui-cycles-lisbonne.html
+   OK product_id Supabase: 1026 (via ref 207545)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['204016', '294016', '204017', '294017', '204018', '294018', '204019', '294019'] APPUIS VÉLOS LISBONNE & MILAN
+   8 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-milan.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201056', '201057', '291056', '291057'] APPUIS VÉLOS TROMBONE Ø 50 mm & Ø 60 mm
+   4 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-trombone-ø50mm.html
+   OK product_id Supabase: 1028 (via ref 201056)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['201050', '201051', '201052', '201053', '291050', '291051', '291052', '291053'] APPUIS VÉLOS TROMBONE Ø 50 mm & Ø 60 mm
+   8 ligne(s) Excel | URL: https://procity.eu/fr/appui-vélos-trombone-ø60mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204011', '204012', '294011', '294012'] ARCEAUX VÉLOS RENFORCÉS & SIMPLES
+   4 ligne(s) Excel | URL: https://procity.eu/fr/arceau-vélos-renforcé.html
+   OK product_id Supabase: 1036 (via ref 204011)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['204009', '204010', '294009', '294010'] ARCEAUX VÉLOS RENFORCÉS & SIMPLES
+   4 ligne(s) Excel | URL: https://procity.eu/fr/arceau-vélos-simple.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204013', '204014', '294013', '294014'] ARCEAUX VÉLOS RENFORCÉS & SIMPLES
+   4 ligne(s) Excel | URL: https://procity.eu/fr/arceau-vélos-avec-signalétique.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204020', '204021', '204022', '204023'] CHASSIS POUR APPUIS VÉLOS SUR PLATINES
+   4 ligne(s) Excel | URL: https://procity.eu/fr/chassis-pour-appuis-vélos-sur-platines.html
+   OK product_id Supabase: 1103 (via ref 204020)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['204025', '204027'] STATION DE RÉPARATION ET GONFLEUR VÉLOS AMSTERDAM
+   2 ligne(s) Excel | URL: https://procity.eu/fr/station-de-réparation-gonfleur-amsterdam.html
+   OK product_id Supabase: 1286 (via ref 204025)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['204113', '204114'] BARRE ACCROCHE MOTOS MILAN
+   4 ligne(s) Excel | URL: https://procity.eu/fr/lisse-de-bordure-barre-accroche-moto-peint.html
+   OK product_id Supabase: 1065 (via ref 204113)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['294113', '294114'] BARRE ACCROCHE MOTOS MILAN
+   4 ligne(s) Excel | URL: https://www.procity.eu/fr/lisse-de-bordure-barre-accroche-moto-peint.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204740', '204741'] SUPPORT TROTTINETTES
+   2 ligne(s) Excel | URL: https://procity.eu/fr/support-trottinettes.html
+   OK product_id Supabase: 1287 (via ref 204740)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['529260', '529261', '529265'] ABRI VÉLOS ÉCO
+   3 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-ou-motos-eco.html
+   OK product_id Supabase: 1021 (via ref 529260)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['529270', '529271'] ABRI VÉLOS ÉCO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bardages-latéraux-pour-abri-vélos-éco.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529173', '529174', '529170', '529171', '529172', '529193', '529194', '529190', '529191', '529192', '599173', '599174', '599170', '599171', '599172', '599193', '599194', '599190', '599191', '599192'] ABRI VÉLOS MODULO AVEC BARDAGES EN VERRE
+   22 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-modulo.html
+   OK product_id Supabase: 1015 (via ref 529173)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 22 variante(s) a inserer
+   OK Lot 1: 22 variantes
+
+--- ['529175'] ABRI VÉLOS MODULO AVEC BARDAGES EN VERRE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bardages-pour-abri-velos-modulo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529176', '529177', '599176', '599177'] ABRI VÉLOS MODULO AVEC BARDAGES EN VERRE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bardages-de-fond-pour-abri-vélos-modulo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529213', '529214', '529215', '529216', '529217', '529218', '599213', '599214', '599215', '599216', '599217', '599218'] ABRI VÉLOS MODULO AVEC BARDAGES EN COMPACT
+   12 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-modulo-avec-bardages-en-stratifié-compact.html
+   OK product_id Supabase: 1014 (via ref 529213)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 12 variante(s) a inserer
+   OK Lot 1: 12 variantes
+
+--- ['529255', '529256', '529257', '529258'] ABRI VÉLOS MILAN
+   6 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-milan.html
+   OK product_id Supabase: 1013 (via ref 529255)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['529042', '529043', '529048'] ABRI VÉLOS MILAN
+   5 ligne(s) Excel | URL: https://procity.eu/fr/bardage-pour-abri-vélos-milan.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529252', '529158', '529159'] ABRI VÉLOS MILAN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/coupe-vent-de-toiture-pour-abri-milan.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529403'] ABRI VÉLOS MILAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/signaletique-symbole-velo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529610', '529611', '529613', '529614'] ABRI VÉLOS CONVIVIALE®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-conviviale.html
+   OK product_id Supabase: 1009 (via ref 529610)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['529616', '529615', '529617'] ABRI VÉLOS CONVIVIALE®
+   3 ligne(s) Excel | URL: https://procity.eu/fr/bardage-pour-abri-vélos-conviviale.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['310101', '310100'] ABRI VÉLOS TURIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-turin.html
+   OK product_id Supabase: 1018 (via ref 310101)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['310103', '310104', '310102'] ABRI VÉLOS TURIN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/bardages-de-fond-pour-abri-vélos.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529120', '529140', '529160'] ABRI VÉLOS PROVINCE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-province-city.html
+   OK product_id Supabase: 1016 (via ref 529120)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['529121', '529161'] ABRI VÉLOS PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-province-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529122', '529162'] ABRI VÉLOS PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-province-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529125', '529164'] ABRI VÉLOS PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-province-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529150', '529151'] ABRI VÉLOS PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bardages-pour-abri-vélos-province.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207000'] ABRI VÉLOS PROVINCE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/collier-de-serrage-des-bardages.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529030', '529031', '529036', '529037'] ABRI VÉLOS DEMI-LUNE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-velo-demi-lune.html
+   OK product_id Supabase: 1010 (via ref 529030)
+   14 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/14... OK
+   Upload image 2/14... OK
+   Upload image 3/14... OK
+   Upload image 4/14... OK
+   Upload image 5/14... OK
+   Upload image 6/14... OK
+   Upload image 7/14... OK
+   Upload image 8/14... OK
+   Upload image 9/14... OK
+   Upload image 10/14... OK
+   Upload image 11/14... OK
+   Upload image 12/14... OK
+   Upload image 13/14... OK
+   Upload image 14/14... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['529032'] ABRI VÉLOS DEMI-LUNE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bardages-latéraux-supérieurs.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529040', '529041', '529050', '529374'] ABRI VÉLOS VOÛTE "M" AVEC BARDAGES POLYCARBONATE
+   9 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélo-voûte-m-avec-bardages-polycarbonate.html
+   OK product_id Supabase: 1020 (via ref 529040)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 9 variante(s) a inserer
+   OK Lot 1: 9 variantes
+
+--- ['529020', '529021', '529022', '529023', '529024', '529025'] ABRI VÉLOS VOÛTE "M" AVEC BARDAGES EN VERRE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-voûte-m-avec-bardages-en-verre.html
+   OK product_id Supabase: 1019 (via ref 529020)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['529026', '529027'] ABRI VÉLOS VOÛTE "M" AVEC BARDAGES EN VERRE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bardage-latéral-en-verre-sécurisé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529080', '529081', '529082', '529083'] ABRI VÉLOS ET MOTOS VOÛTE "L" & "XXL"
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-et-motos-voûte-l.html
+   OK product_id Supabase: 1011 (via ref 529080)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['529084', '529085'] ABRI VÉLOS ET MOTOS VOÛTE "L" & "XXL"
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bardages-pour-abri-vélos-et-motos-voûte-l.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529070', '529071'] ABRI VÉLOS ET MOTOS VOÛTE "L" & "XXL"
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-et-motos-voûte-xxl.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529073', '529074', '529075'] ABRI VÉLOS ET MOTOS VOÛTE "L" & "XXL"
+   3 ligne(s) Excel | URL: https://procity.eu/fr/bardages-pour-abri-vélos-et-motos-voûte-xxl.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529090', '529091', '529092', '529093'] ABRI VÉLOS ET MOTOS VOÛTE SÉCURISÉ "L" & "XL"
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-cycle-voûte-sécurisé.html
+   OK product_id Supabase: 1012 (via ref 529090)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['529097', '529098'] ABRI VÉLOS ET MOTOS VOÛTE SÉCURISÉ "L" & "XL"
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-velos-et-motos-voute-securise-l-avec-tole-decorative.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529095', '529096'] ABRI VÉLOS ET MOTOS VOÛTE SÉCURISÉ "L" & "XL"
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-et-motos-voûte-sécurisé-xl.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529094'] ABRI VÉLOS ET MOTOS VOÛTE SÉCURISÉ "L" & "XL"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/abri-velos-et-motos-voute-securise-xl-avec-tole-decorative.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529902', '529903', '529900', '529901'] ABRI VÉLOS SÉCURISÉ HORIZON
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-sécurisé-horizon.html
+   OK product_id Supabase: 1017 (via ref 529902)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['529912', '529913', '529910', '529911'] ABRI VÉLOS SÉCURISÉ HORIZON
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-sécurisé-horizon-avec-bardages-en-acier-et-bois.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529922', '529923', '529920', '529921'] ABRI VÉLOS SÉCURISÉ HORIZON
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-vélos-sécurisé-horizon-avec-bardages-en-bois.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529990'] ABRI VÉLOS SÉCURISÉ HORIZON
+   1 ligne(s) Excel | URL: https://procity.eu/fr/casquette-pour-abris-sécurisés-horizon.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529991'] ABRI VÉLOS SÉCURISÉ HORIZON
+   1 ligne(s) Excel | URL: https://procity.eu/fr/support-vélos-pour-abris-sécurisé-horizon.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529993'] ABRI VÉLOS SÉCURISÉ HORIZON
+   1 ligne(s) Excel | URL: https://procity.eu/fr/sticker-parc-à-vélos.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529089'] OPTION POUR ABRIS VÉLOS ET MOTOS SÉCURISÉS
+   1 ligne(s) Excel | URL: https://procity.eu/fr/serrure-connectee-pour-abris-velos-securises.html
+   OK product_id Supabase: 1198 (via ref 529089)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['529450', '529451', '529452', '529453'] BOX À VÉLOS BERLIN
+   4 ligne(s) Excel | URL: https://procity.eu/fr/box-à-vélos-berlin.html
+   OK product_id Supabase: 1093 (via ref 529450)
+   14 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/14... OK
+   Upload image 2/14... OK
+   Upload image 3/14... OK
+   Upload image 4/14... OK
+   Upload image 5/14... OK
+   Upload image 6/14... OK
+   Upload image 7/14... OK
+   Upload image 8/14... OK
+   Upload image 9/14... OK
+   Upload image 10/14... OK
+   Upload image 11/14... OK
+   Upload image 12/14... OK
+   Upload image 13/14... OK
+   Upload image 14/14... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['529454'] BOX À VÉLOS BERLIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plaque-pour-porte.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529455'] BOX À VÉLOS BERLIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/rail-au-sol.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204739'] BOX À VÉLOS BERLIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/arceaux-antivol-galva-la-paire.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['505000', '405000', '505001', '405001', '505002', '405002', '505060', '405060', '505003', '405003', '505075', '405075', '505076', '405076'] VITRINE TRADITION
+   19 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-tradition.html
+   OK product_id Supabase: 1326 (via ref 505000)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 19 variante(s) a inserer
+   OK Lot 1: 19 variantes
+
+--- ['409000', '409001', '409003', '409005', '409007', '409004', '409006', '409008'] BANDEAUX SIGNALÉTIQUES POUR VITRINES TRADITION & CLASSIQUE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/bandeau-signalétique-dôme.html
+   OK product_id Supabase: 1063 (via ref 409000)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['409030', '409031', '409033', '409035', '409037', '409034', '409036', '409038'] BANDEAUX SIGNALÉTIQUES POUR VITRINES TRADITION & CLASSIQUE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/bandeau-signaletique-horizon.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['506000', '406000', '506001', '406001', '506080', '406080', '506002', '406002', '506350', '406350', '506351', '406351', '506480', '406480', '506352', '406352', '506003', '406003', '506004', '406004', '506081', '406081', '506082', '406082', '506353', '406353', '506354', '406354', '506481', '406481', '506482', '406482'] VITRINE CLASSIQUE
+   32 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-classique.html
+   OK product_id Supabase: 1318 (via ref 506000)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 32 variante(s) a inserer
+   OK Lot 1: 25 variantes
+   OK Lot 2: 7 variantes
+
+--- ['500100', '500101', '500102', '500103', '500104', '500110', '500111', '500112', '500113', '500114'] VITRINE EDGE
+   10 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-edge-epaisseur-54-mm.html
+   OK product_id Supabase: 1321 (via ref 500100)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 10 variante(s) a inserer
+   OK Lot 1: 10 variantes
+
+--- ['500300', '500301', '500302', '500303', '500304', '500310', '500311', '500312', '500313', '500314'] VITRINE EDGE - ÉPAISSEUR 54 mm
+   10 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-edge-sur-poteaux-épaisseur-54-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['501100', '501101', '501102', '501103', '501110', '501111', '501112', '501113'] VITRINE EDGE - ÉPAISSEUR 80 mm
+   8 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-edge-épaisseur-80-mm.html
+   OK product_id Supabase: 1323 (via ref 501100)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['501300', '501301', '501302', '501303', '501310', '501311', '501312', '501313'] VITRINE EDGE - ÉPAISSEUR 80 mm
+   8 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-edge-sur-poteaux-épaisseur-80-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['507084', '407084', '507081', '407081', '507082', '407082', '507083', '407083', '507404', '407404', '507401', '407401', '507402', '407402', '507403', '407403', '507080', '407080', '507002', '407002', '507003', '407003', '514020', '414020', '514021', '414021', '514022', '414022', '507400', '407400', '507352', '407352', '507353', '407353'] VITRINE 1000
+   34 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-1000.html
+   OK product_id Supabase: 1315 (via ref 507084)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 34 variante(s) a inserer
+   OK Lot 1: 25 variantes
+   OK Lot 2: 9 variantes
+
+--- ['510070', '410070', '510002', '410002', '510003', '410003', '510420', '410420', '510352', '410352', '510353', '410353', '510071', '410071', '510072', '410072', '510075', '410075', '510073', '410073', '510074', '410074', '510421', '410421', '510422', '410422', '510425', '410425', '510423', '410423', '510424', '410424'] VITRINE 2000
+   32 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-2000.html
+   OK product_id Supabase: 1316 (via ref 510070)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 32 variante(s) a inserer
+   OK Lot 1: 25 variantes
+   OK Lot 2: 7 variantes
+
+--- ['520100', '580100', '590010', '590410', '530100', '540100', '590110', '590510', '531100', '550100', '590210', '590610', '532100', '560100', '590310', '590710'] PANNEAUX-VITRINES D’INFORMATION
+   16 ligne(s) Excel | URL: https://procity.eu/fr/panneau-vitrines-d-information-city.html
+   OK product_id Supabase: 1219 (via ref 520100)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 16 variante(s) a inserer
+   OK Lot 1: 16 variantes
+
+--- ['520101', '580101', '590011', '590411', '530101', '540101', '590111', '590511', '531101', '550101', '590211', '590611', '532101', '560101', '590311', '590711'] PANNEAUX-VITRINES D’INFORMATION
+   16 ligne(s) Excel | URL: https://procity.eu/fr/panneau-vitrines-d-information-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['520102', '580102', '590012', '590412', '530102', '540102', '590112', '590512', '531102', '550102', '590212', '590612', '532102', '560102', '590312', '590712'] PANNEAUX-VITRINES D’INFORMATION
+   16 ligne(s) Excel | URL: https://procity.eu/fr/panneau-vitrines-d-information-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['520109', '580109', '590019', '590419', '530109', '540109', '590119', '590519', '531109', '550109', '590219', '590619', '532109', '560109', '590319', '590719'] PANNEAUX-VITRINES D’INFORMATION
+   16 ligne(s) Excel | URL: https://procity.eu/fr/panneau-vitrines-d-information-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['591010', '591130', '591040', '591160', '591070', '591190', '591100', '591220'] PANNEAUX D’AFFICHAGE LIBRE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/panneau-d-affichage-libre-city.html
+   OK product_id Supabase: 1217 (via ref 591010)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['591011', '591131', '591041', '591161', '591071', '591191', '591101', '591221'] PANNEAUX D’AFFICHAGE LIBRE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/panneau-d-affichage-libre-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['591012', '591132', '591042', '591162', '591072', '591192', '591102', '591222'] PANNEAUX D’AFFICHAGE LIBRE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/panneau-d-affichage-libre-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['591019', '591139', '591049', '591169', '591079', '591199', '591109', '591231'] PANNEAUX D’AFFICHAGE LIBRE
+   8 ligne(s) Excel | URL: https://procity.eu/fr/panneau-d-affichage-libre-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['307017', '307018'] PANNEAUX-VITRINES TURIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/panneau-d-affichage-turin-avec-toit-1.html
+   OK product_id Supabase: 1220 (via ref 307017)
+   1 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/1... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['307016', '307019'] PANNEAUX-VITRINES TURIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-turin-avec-toit-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['407509', '407511', '407512', '407513'] VITRINE ALUMINIUM ET BOIS
+   4 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-aluminium-et-bois.html
+   OK product_id Supabase: 1317 (via ref 407509)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['570000', '571000', '572000', '573000', '570100', '571100', '572100', '573100'] PANNEAU-VITRINE CARREFOUR
+   8 ligne(s) Excel | URL: https://procity.eu/fr/panneau-vitrine-carrefour.html
+   OK product_id Supabase: 1216 (via ref 570000)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['405026', '405027', '405029'] VITRINE THÉMATIQUE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-thematique.html
+   OK product_id Supabase: 1325 (via ref 405026)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['408010'] VITRINE THÉMATIQUE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-thématique-arbre.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207920'] ENTRÉES DE VILLE PROVINCE & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/panneau-entrée-de-ville-ligne-province-city.html
+   OK product_id Supabase: 1132 (via ref 207920)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['207921'] ENTRÉES DE VILLE PROVINCE & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/entree-de-ville-province-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207922'] ENTRÉES DE VILLE PROVINCE & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/entree-de-ville-province-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207926'] ENTRÉES DE VILLE PROVINCE & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/entrée-de-ville-province-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201316'] ENTRÉES DE VILLE PROVINCE & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/jardiniere-suspendue.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207928'] ENTRÉES DE VILLE PROVINCE & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/entrée-de-ville-venise.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['505081', '505082', '505083', '505084', '515600', '515601'] VITRINE RÉFÉRENCE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-référence.html
+   OK product_id Supabase: 1324 (via ref 505081)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['504010', '504011', '504012', '504013'] VITRINE ULTRA PLATE "ÉCO 100"
+   4 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-ultra-plate-eco-100.html
+   OK product_id Supabase: 1327 (via ref 504010)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['505100', '505101'] VITRINE COULISSANTE RÉFÉRENCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-coulissante-référence.html
+   OK product_id Supabase: 1320 (via ref 505100)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['513000', '513001', '513002', '513003'] VITRINE COULISSANTE CLASSIQUE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/vitrine-coulissante-classique--1.html
+   OK product_id Supabase: 1319 (via ref 513000)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['504110', '504120'] CADRE "ÉCO-CLIC" - VENDU PAR LOT DE 5
+   2 ligne(s) Excel | URL: https://procity.eu/fr/cadre-eco-clic.html
+   OK product_id Supabase: 1100 (via ref 504110)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['513603'] GRILLE D'EXPOSITION - VENDU PAR LOT DE 3
+   1 ligne(s) Excel | URL: https://procity.eu/fr/grille-d-exposition.html
+   OK product_id Supabase: 1140 (via ref 513603)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['209500', '209510'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/fauteuil-silaos-5-lames.html
+   OK product_id Supabase: 1054 (via ref 209500)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['209600', '209610'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/fauteuil-bois-et-acier-silaos-6-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209501', '209502', '209511', '209512'] BANC ET BANQUETTE SILAOS®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-silaos-5-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209601', '209602', '209611', '209612'] BANC ET BANQUETTE SILAOS®
+   6 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-silaos-6-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209506', '209516'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-acier-silaos-5-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209606', '209616'] BANC ET BANQUETTE SILAOS®
+   3 ligne(s) Excel | URL: https://procity.eu/fr/banc-acier-silaos-6-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209505', '209515'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/fauteuil-plastique-recyclé-silaos-5-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209605', '209615'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/fauteuil-plastique-recyclé-silaos-6-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209504', '209514'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-plastique-recyclé-et-acier-silaos-5-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209604', '209614'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-plastique-recyclé-et-acier-silaos-6-lames.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209631', '209632'] BANC ET BANQUETTE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banquette-silaos-acier-et-bois.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209636'] BANC ET BANQUETTE SILAOS®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-silaos-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209634'] BANC ET BANQUETTE SILAOS®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-silaos-acier-et-plastique-recyclé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306394', '306380', '306384'] ESPACE DE REPOS KUB.
+   3 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-acier-design-kub.html
+   OK product_id Supabase: 1133 (via ref 306394)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['306604'] ESPACE DE REPOS KUB.
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-acier-kub.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306397', '306390', '306392'] ESPACE DE REPOS KUB.
+   3 ligne(s) Excel | URL: https://procity.eu/fr/banquette-kub.-acier-et-bois.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306393'] ESPACE DE REPOS KUB.
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-kub-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306425'] ESPACE DE REPOS KUB.
+   1 ligne(s) Excel | URL: https://procity.eu/fr/cube-kub.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209670'] ESPACE DE REPOS LE CAIRE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-le-caire.html
+   OK product_id Supabase: 1134 (via ref 209670)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['209416', '209412'] BANC & BANQUETTE VENISE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-venise.html
+   OK product_id Supabase: 1052 (via ref 209416)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['209419'] BANC & BANQUETTE VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-acier-venise.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209169'] BANC & BANQUETTE VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-venise-acier-et-bois.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209164'] BANC & BANQUETTE VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-venise-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209486'] BANC & BANQUETTE RIGA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-galva-et-bois-brut-riga.html
+   OK product_id Supabase: 1051 (via ref 209486)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['209415'] BANC & BANQUETTE RIGA
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-riga.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209411'] BANC & BANQUETTE RIGA
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/banc-bois-et-acier-riga.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209685'] BANC & BANQUETTE RIGA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-plastique-recyclé-et-acier-riga.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209186'] BANC & BANQUETTE RIGA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-riga-2.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209194'] BANC & BANQUETTE RIGA
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/banquette-riga-2.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209686'] BANC & BANQUETTE RIGA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-riga-acier-et-plastique-recyclé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209480'] BANCS MORA & LUBLIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/mobilier-urbain-banc-bois-mora.html
+   OK product_id Supabase: 1059 (via ref 209480)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['209489'] BANCS MORA & LUBLIN
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/mobilier-urbain-banc-bois-mora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209680'] BANCS MORA & LUBLIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-plastique-recyclé-et-acier-mora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209484'] BANCS MORA & LUBLIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-lublin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['299444'] BANC & BANQUETTE PAGODE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-pagode.html
+   OK product_id Supabase: 1050 (via ref 299444)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['299193'] BANC & BANQUETTE PAGODE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-pagode.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209120', '209121'] BANC & BANQUETTE OSLO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-acier-oslo.html
+   OK product_id Supabase: 1049 (via ref 209120)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['209160'] BANC & BANQUETTE OSLO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-oslo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209020'] BANC & BANQUETTE CONVIVIALE®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-acier-conviviale.html
+   OK product_id Supabase: 1048 (via ref 209020)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['209050'] BANC & BANQUETTE CONVIVIALE®
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-conviviale.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309002'] BANCS ET BANQUETTES PORTO & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-brut-porto.html
+   OK product_id Supabase: 1057 (via ref 309002)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['309001'] BANCS ET BANQUETTES PORTO & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-brut-turin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309000'] BANCS ET BANQUETTES PORTO & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-bois-brut-pagode.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309003'] BANC ET BANQUETTE LILLE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-brut-lille.html
+   OK product_id Supabase: 1053 (via ref 309003)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['309004'] BANC ET BANQUETTE LILLE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-bois-brut-lille.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309015'] BANC OMBRELLE LONDRES SPÉCIAL SÉNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-brut-avec-ombrelle-londres.html
+   OK product_id Supabase: 1056 (via ref 309015)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['209620'] BANC ET FAUTEUIL SILAOS® SPÉCIAL SÉNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/fauteuil-bois-et-acier-silaos-spécial-sénior.html
+   OK product_id Supabase: 1055 (via ref 209620)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['209621', '209622'] BANC ET FAUTEUIL SILAOS® SPÉCIAL SÉNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-silaos-spécial-sénior.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209626'] BANC ET FAUTEUIL SILAOS® SPÉCIAL SÉNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-acier-silaos-spécial-sénior.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209625'] BANC ET FAUTEUIL SILAOS® SPÉCIAL SÉNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/fauteuil-plastique-recyclé-silaos-spécial-sénior.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209624'] BANC ET FAUTEUIL SILAOS® SPÉCIAL SÉNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-plastique-recyclé-et-acier-silaos-spécial-sénior.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209629'] BANC ET FAUTEUIL SILAOS® SPÉCIAL SÉNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/accoudoir-central-pour-banc-silaos.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209640', '209641', '209660', '209642', '209643', '209661'] CHAISE LONGUE SILAOS®
+   6 ligne(s) Excel | URL: https://procity.eu/fr/chaise-longue-bois-et-acier-silaos.html
+   OK product_id Supabase: 1102 (via ref 209640)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['209662', '209663'] CHAISE LONGUE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/chaise-longue-acier-silaos.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209666', '209667'] CHAISE LONGUE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/chaise-longue-plastique-recyclé-et-acier-silaos.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209664', '209665'] CHAISE LONGUE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/chaise-longue-acier-et-plastique-recycle-silaos.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209648', '209649'] BANCS TOUR D’ARBRE SILAOS® & TURIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-tour-d-arbre-circulaire-silaos.html
+   OK product_id Supabase: 1061 (via ref 209648)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309020'] BANCS TOUR D’ARBRE SILAOS® & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-tour-d-arbre-turin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209650', '209651'] ENSEMBLE DE PIQUE-NIQUE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-silaos.html
+   OK product_id Supabase: 1131 (via ref 209650)
+    [!] HTTP 404 pour https://procity.eu/fr/table-de-pique-nique-silaos.html
+   0 image(s) trouvee(s) sur procity.eu
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['209656', '209653'] ENSEMBLE DE PIQUE-NIQUE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-silaos-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209654', '209652'] ENSEMBLE DE PIQUE-NIQUE SILAOS®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-silaos-acier-et-plastique-recyclé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209468', '209469'] TABLES DE PIQUE-NIQUE SÉVILLE & RIGA
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-seville.html
+   OK product_id Supabase: 1301 (via ref 209468)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['209472'] TABLES DE PIQUE-NIQUE SÉVILLE & RIGA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-riga.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209474'] TABLES DE PIQUE-NIQUE SÉVILLE & RIGA
+   1 ligne(s) Excel | URL: https://procity.eu/fr/rallonge-pmr-pour-table-de-pique-nique-riga.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309200', '309201'] TABLES DE PIQUE-NIQUE LILLE & TURIN ÉCO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-lille.html
+   OK product_id Supabase: 1298 (via ref 309200)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309210'] TABLES DE PIQUE-NIQUE LILLE & TURIN ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-fougère.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309212', '309213'] TABLES DE PIQUE-NIQUE TURIN & TURIN AVEC TOIT
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-turin-1.html
+   OK product_id Supabase: 1302 (via ref 309212)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309215', '309216'] TABLES DE PIQUE-NIQUE TURIN & TURIN AVEC TOIT
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-turin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309220', '309221'] TABLES DE PIQUE-NIQUE GÊNES & DUBLIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-genes.html
+   OK product_id Supabase: 1296 (via ref 309220)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309224'] TABLES DE PIQUE-NIQUE GÊNES & DUBLIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-dublin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309225'] TABLES DE PIQUE-NIQUE GÊNES & DUBLIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-carrée-dublin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309009'] OPTION POUR TABLES DE PIQUE-NIQUE TURIN, DUBLIN, ROME & LYON
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-platines-pour-table-de-pique-nique-turin-dublin-version-carrée-turin-rome-et-lyon-junior.html
+   OK product_id Supabase: 1199 (via ref 309009)
+    [!] HTTP 500 pour https://procity.eu/fr/kit-platines-pour-table-de-pique-nique-turin-dublin-version-carrée-turin-rome-et-lyon-junior.html
+   0 image(s) trouvee(s) sur procity.eu
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['209475', '209476'] TABLES DE PIQUE-NIQUE VALENCE & ROME
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-valence.html
+   OK product_id Supabase: 1303 (via ref 209475)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309239'] TABLES DE PIQUE-NIQUE VALENCE & ROME
+   1 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-rome-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['299006', '299007'] BANCS ET BANQUETTES SILAOS® & ARC-EN-CIEL JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bancs-silaos-junior.html
+   OK product_id Supabase: 1058 (via ref 299006)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['299016', '299017'] BANCS ET BANQUETTES SILAOS® & ARC-EN-CIEL JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banquettes-silaos-junior.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309055', '309056'] BANCS ET BANQUETTES SILAOS® & ARC-EN-CIEL JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-arc-en-ciel.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309057', '309058'] BANCS ET BANQUETTES SILAOS® & ARC-EN-CIEL JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banquette-arc-en-ciel-junior.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['299010'] BANCS MORA & PORTO JUNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-bois-et-acier-mora-junior.html
+   OK product_id Supabase: 1060 (via ref 299010)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['309060'] BANCS MORA & PORTO JUNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-mora-junior-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309500'] BANCS MORA & PORTO JUNIOR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banc-porto-junior-bois-brut.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['299034', '299035'] BANCS TOUR D’ARBRE SILAOS® JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/banc-tour-d-arbre-silaos-junior.html
+   OK product_id Supabase: 1062 (via ref 299034)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309270'] TABLES DE PIQUE-NIQUE JUNIOR TURIN & TURIN ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-turin-eco-junior.html
+   OK product_id Supabase: 1297 (via ref 309270)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['309271', '309273'] TABLES DE PIQUE-NIQUE JUNIOR TURIN & TURIN ÉCO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-turin-junior.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208080', '208085'] TABLES DE PIQUE-NIQUE SILAOS® & ARC-EN-CIEL JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-pique-nique-pour-enfants.html
+   OK product_id Supabase: 1300 (via ref 208080)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309255', '309256'] TABLES DE PIQUE-NIQUE SILAOS® & ARC-EN-CIEL JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-arc-en-ciel.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309260', '309261'] TABLES DE PIQUE-NIQUE ROME & LYON JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-rome.html
+   OK product_id Supabase: 1299 (via ref 309260)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['309265', '309267'] TABLES DE PIQUE-NIQUE ROME & LYON JUNIOR
+   2 ligne(s) Excel | URL: https://procity.eu/fr/table-de-pique-nique-lyon.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208063'] CORBEILLES COLOGNE & ARC-EN-CIEL
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-cologne-60-litres.html
+   OK product_id Supabase: 1114 (via ref 208063)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208070'] CORBEILLES COLOGNE & ARC-EN-CIEL
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-cologne-speciale-enfants-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['309059'] CORBEILLES COLOGNE & ARC-EN-CIEL
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-arc-en-ciel-50-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208068', '208059'] CORBEILLES SÉVILLE & GENÈVE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-seville-octogonale-100-litres.html
+   OK product_id Supabase: 1122 (via ref 208068)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['208067'] CORBEILLES SÉVILLE & GENÈVE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-séville-rectangulaire-100-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['308010'] CORBEILLES SÉVILLE & GENÈVE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-genève-110-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['308001'] CORBEILLES TURIN & KUB.
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-turin-avec-toit-160-litres.html
+   OK product_id Supabase: 1123 (via ref 308001)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['308000'] CORBEILLES TURIN & KUB.
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-turin-160-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306489', '306488'] CORBEILLES TURIN & KUB.
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-kub.-acier-et-bois-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306485', '306483'] CORBEILLES TURIN & KUB.
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-kub-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208171', '208172', '208175'] CORBEILLES LOFOTEN & LOFOTEN VIGIPIRATE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-lofoten-acier-80-litres.html
+   OK product_id Supabase: 1119 (via ref 208171)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['208099'] CORBEILLES LOFOTEN & LOFOTEN VIGIPIRATE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-lofoten-vigipirate-100-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208156'] CORBEILLES BERLIN & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-berlin-100-litres.html
+   OK product_id Supabase: 1113 (via ref 208156)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208152'] CORBEILLES BERLIN & VENISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/couvercle-pour-corbeille-berlin-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208108', '208102', '208106'] CORBEILLES BERLIN & VENISE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-venise-80-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208103', '208107'] CORBEILLES BERLIN & VENISE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-venise-couvercle-rehausse-80-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208104', '208105'] CORBEILLES OLBIA & LOSANGE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-olbia-80-litres.html
+   OK product_id Supabase: 1120 (via ref 208104)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['208109'] CORBEILLES OLBIA & LOSANGE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-losange-120-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['594145', '594155', '594147', '594157'] CORBEILLE SILAOS®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-silaos-acier-et-bois-50-litres.html
+   OK product_id Supabase: 1111 (via ref 594145)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['594146', '594156', '594148', '594158'] CORBEILLE SILAOS®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-silaos-acier-50-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['594143', '594153', '594149', '594159'] CORBEILLE SILAOS®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-silaos-acier-et-plastique-recyclé-50-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208127', '208129', '208126'] CORBEILLES VENISE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-venise-120-litres.html
+   OK product_id Supabase: 1125 (via ref 208127)
+   13 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/13... OK
+   Upload image 2/13... OK
+   Upload image 3/13... OK
+   Upload image 4/13... OK
+   Upload image 5/13... OK
+   Upload image 6/13... OK
+   Upload image 7/13... OK
+   Upload image 8/13... OK
+   Upload image 9/13... OK
+   Upload image 10/13... OK
+   Upload image 11/13... OK
+   Upload image 12/13... OK
+   Upload image 13/13... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['208201'] CORBEILLES CÉVENNES & VANOISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-cevennes-60-litres.html
+   OK product_id Supabase: 1115 (via ref 208201)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208203'] CORBEILLES CÉVENNES & VANOISE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-vanoise-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208225'] CORBEILLES SAINTONGE & VERCORS
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-saintonge-city-40-litres.html
+   OK product_id Supabase: 1121 (via ref 208225)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208226'] CORBEILLES SAINTONGE & VERCORS
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-saintonge-agora-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208227'] CORBEILLES SAINTONGE & VERCORS
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-saintonge-boule-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208233'] CORBEILLES SAINTONGE & VERCORS
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-saintonge-inox-brossé-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208211'] CORBEILLES SAINTONGE & VERCORS
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-vercors-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208100'] CORBEILLES GASCOGNE & ESTEREL
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-gascogne-socle-en-fonte-60-litres.html
+   OK product_id Supabase: 1116 (via ref 208100)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208150', '208142', '208141'] CORBEILLES GASCOGNE & ESTEREL
+   3 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-esterel-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208117', '208165'] CORBEILLES GUYENNE & MORVAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-city-40-litres.html
+   OK product_id Supabase: 1117 (via ref 208117)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['208118', '208166'] CORBEILLES GUYENNE & MORVAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-agora-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208120', '208167'] CORBEILLES GUYENNE & MORVAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-boule-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208121', '208164'] CORBEILLES GUYENNE & MORVAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-inox-brossé-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208001'] CORBEILLES GUYENNE & MORVAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-morvan-90-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208000'] CORBEILLES GUYENNE & MORVAN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-morvan-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208019'] CORBEILLES GUYENNE & MORVAN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/poteau-de-fixation-pour-corbeille-morvan-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['308003'] CORBEILLES TURIN & VENISE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-turin-avec-toit-tri-sélectif-2-x-100-litres.html
+   OK product_id Supabase: 1124 (via ref 308003)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['308002'] CORBEILLES TURIN & VENISE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-turin-tri-sélectif-2-x-100-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208128', '208124', '208123'] CORBEILLES TURIN & VENISE TRI SÉLECTIF
+   3 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-venise-tri-selectif-2-x-60-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['228128', '228124', '228123'] CORBEILLES TURIN & VENISE TRI SÉLECTIF
+   3 ligne(s) Excel | URL: https://www.procity.eu/fr/corbeille-venise-tri-selectif-2-x-60-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208147'] CORBEILLES VENISE, OLBIA & LOSANGE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-venise-tri-sélectif.html
+   OK product_id Supabase: 1126 (via ref 208147)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208148'] CORBEILLES VENISE, OLBIA & LOSANGE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-olbia-tri-sélectif.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208149'] CORBEILLES VENISE, OLBIA & LOSANGE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeilles-tri-sélectif-2-x-60-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['228147'] CORBEILLES VENISE, OLBIA & LOSANGE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/corbeille-venise-tri-selectif.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['228148'] CORBEILLES VENISE, OLBIA & LOSANGE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/corbeille-olbia-tri-selectif.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['228149'] CORBEILLES VENISE, OLBIA & LOSANGE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/corbeilles-tri-selectif-losange.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208177', '228177'] CORBEILLES LOFOTEN & GUYENNE TRI SÉLECTIF
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-lofoten-tri-sélectif.html
+   OK product_id Supabase: 1118 (via ref 208177)
+    [!] HTTP 404 pour https://procity.eu/fr/corbeille-lofoten-tri-sélectif.html
+   0 image(s) trouvee(s) sur procity.eu
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['208115', '228115'] CORBEILLES LOFOTEN & GUYENNE TRI SÉLECTIF
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-lofoten-vigipirate-tri-sélectif.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208135'] CORBEILLES LOFOTEN & GUYENNE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-pour-tri-sélectif-city-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208136'] CORBEILLES LOFOTEN & GUYENNE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-pour-tri-sélectif-agora-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208137'] CORBEILLES LOFOTEN & GUYENNE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-pour-tri-sélectif-boule-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208133', '208130'] CORBEILLES LOFOTEN & GUYENNE TRI SÉLECTIF
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-guyenne-pour-tri-sélectif-inox-brossé-40-litres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208132'] CORBEILLES LOFOTEN & GUYENNE TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-4-autocollants-pédagogiques-pour-tri-sélectif.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208157', '208158', '208159'] CORBEILLES BERLIN & KUB. TRI SÉLECTIF
+   3 ligne(s) Excel | URL: https://www.procity.eu/fr/corbeille-berlin-tri-s%C3%A9lectif-3.html
+   OK product_id Supabase: 1112 (via ref 208157)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['306181'] CORBEILLES BERLIN & KUB. TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-kub-tri-selectif-acier-et-bois.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306180'] CORBEILLES BERLIN & KUB. TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-kub-tri-selectif-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['326181'] CORBEILLES BERLIN & KUB. TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/corbeille-kub-tri-selectif-acier-et-bois.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['326180'] CORBEILLES BERLIN & KUB. TRI SÉLECTIF
+   1 ligne(s) Excel | URL: https://www.procity.eu/fr/corbeille-kub-tri-selectif-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208097', '208082', '208084'] CACHES-CONTENEURS MODULABLE & TURIN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/poteaux-cache-conteneurs-modulable-galva.html
+   OK product_id Supabase: 1099 (via ref 208097)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['208197', '208182', '208184'] CACHES-CONTENEURS MODULABLE & TURIN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/poteau-cache-conteneurs-modulable-peint-sur-galva.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208096', '208095'] CACHES-CONTENEURS MODULABLE & TURIN
+   4 ligne(s) Excel | URL: https://procity.eu/fr/cache-conteneurs-modulable-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208089'] CACHES-CONTENEURS MODULABLE & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/cache-conteneurs-modulable-en-acier-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208188'] CACHES-CONTENEURS MODULABLE & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/porte-en-stratifié-compact-pour-cache-conteneurs-modulable.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['308130'] CACHES-CONTENEURS MODULABLE & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/cache-conteneur-turin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['308131'] CACHES-CONTENEURS MODULABLE & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/cache-conteneur-turin-double.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529780', '529781', '529782', '529783', '529784', '529785', '599780', '599781', '599782', '599783', '599784', '599785'] ABRI CONTENEURS MODULO
+   12 ligne(s) Excel | URL: https://procity.eu/fr/abri-conteneurs-modulo-1.html
+   OK product_id Supabase: 1003 (via ref 529780)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 12 variante(s) a inserer
+   OK Lot 1: 12 variantes
+
+--- ['529787', '599787'] ABRI CONTENEURS MODULO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bardage-de-retour-avant-pour-abri-conteneurs-modulo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529788', '599788'] ABRI CONTENEURS MODULO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bardage-de-retour-avant-pour-abri-conteneurs-modulo-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529789'] ABRI CONTENEURS MODULO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/porte-en-stratifié-compact-pour-cache-conteneurs-modulo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208194', '208195'] ABRI CONTENEURS ET BIODÉCHETS BERLIN
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-conteneurs-et-biodechets-berlin-simple.html
+   OK product_id Supabase: 1002 (via ref 208194)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['208290', '208291', '208292'] ABRI CONTENEURS ET BIODÉCHETS BERLIN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/abri-conteneurs-et-biodéchets-berlin-simple-avec-chargement-frontal.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208190', '208191', '208192', '208193'] ABRI CONTENEURS ET BIODÉCHETS BERLIN
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-conteneurs-berlin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['228192', '228193'] ABRI CONTENEURS ET BIODÉCHETS BERLIN
+   2 ligne(s) Excel | URL: https://www.procity.eu/fr/abri-conteneurs-berlin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208189'] ABRI CONTENEURS ET BIODÉCHETS BERLIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/gabarit-de-positionnement-pour-bacs-240-l.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['308140'] COMPOSTEUR TURIN & ARCEAUX BLOQUE CONTENEURS
+   1 ligne(s) Excel | URL: https://procity.eu/fr/composteur-turin.html
+   OK product_id Supabase: 1109 (via ref 308140)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208093', '208094'] COMPOSTEUR TURIN & ARCEAUX BLOQUE CONTENEURS
+   2 ligne(s) Excel | URL: https://procity.eu/fr/arceau-bloque-conteneurs.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201260', '201520', '201700', '201710'] BAC À PALMIER PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-province-city.html
+   OK product_id Supabase: 1038 (via ref 201260)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['201250', '201522', '201701', '201711'] BAC À PALMIER PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-province-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201251', '201524', '201702', '201712'] BAC À PALMIER PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-province-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201262', '201528', '201704', '201714'] BAC À PALMIER PROVINCE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-province-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201550', '201560'] BAC À PALMIER PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-et-bois-province-city.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201551', '201561'] BAC À PALMIER PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-et-bois-province-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201552', '201562'] BAC À PALMIER PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-et-bois-province-boule.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201559', '201569'] BAC À PALMIER PROVINCE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-acier-et-bois-province-inox-brossé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201277', '201175', '201278', '201176', '201279', '201177'] BAC À PALMIER SARLAT
+   6 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-sarlat-1.html
+   OK product_id Supabase: 1039 (via ref 201277)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['201730', '201731', '201732', '201733'] BAC À PALMIER SILAOS®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-silaos-acier-et-bois-1.html
+   OK product_id Supabase: 1040 (via ref 201730)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['201740', '201741', '201742', '201743'] BAC À PALMIER SILAOS®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-silaos-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201735', '201736', '201737', '201738'] BAC À PALMIER SILAOS®
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-silaos-acier-et-plastique-recyclé.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201275', '201543', '201288', '201544', '201289', '201545'] BACS À PALMIER OLBIA & VENISE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-olbia-carré.html
+   OK product_id Supabase: 1042 (via ref 201275)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['201485', '201487', '201490', '201492', '201493', '201495'] BACS À PALMIER OLBIA & VENISE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/bacs-a-palmier-venise-monochrome.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201720', '201722', '201723', '201725', '201726', '201728'] BACS À PALMIER OLBIA & VENISE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/bacs-a-palmier-venise-bicolore.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['306422'] BACS À PALMIER KUB. & LE CAIRE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-kub.-acier-et-bois-1.html
+   OK product_id Supabase: 1041 (via ref 306422)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['306420'] BACS À PALMIER KUB. & LE CAIRE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-kub.-acier-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['209671'] BACS À PALMIER KUB. & LE CAIRE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bac-à-palmier-le-caire.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201601', '201602', '201603'] OPTIONS POUR BACS À PALMIER
+   3 ligne(s) Excel | URL: https://procity.eu/fr/réserve-d-eau-pour-bacs-à-palmier.html
+   OK product_id Supabase: 1201 (via ref 201601)
+    [!] HTTP 500 pour https://procity.eu/fr/réserve-d-eau-pour-bacs-à-palmier.html
+   0 image(s) trouvee(s) sur procity.eu
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['201661', '201662'] VASES TRADITION & HÉRITAGE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/vase-tradition.html
+   OK product_id Supabase: 1314 (via ref 201661)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['201651', '201652'] VASES TRADITION & HÉRITAGE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/vase-héritage-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201669'] VASES TRADITION & HÉRITAGE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-d-ancrage-anti-basculement.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201124', '201134'] CORSETS POUR ARBRE Ø 250 & 450 mm - VENDU PAR LOT DE 5
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corset-pour-arbre-peint-ø250mm.html
+   OK product_id Supabase: 1128 (via ref 201124)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['201122', '201132'] CORSETS POUR ARBRE Ø 250 & 450 mm - VENDU PAR LOT DE 5
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corset-pour-arbre-ø450mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201217', '201218', '201223'] GRILLES D’ARBRE SILAOS® & VENISE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/grille-d-arbre-carrée-silaos.html
+   OK product_id Supabase: 1141 (via ref 201217)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['201183', '201184', '201186'] GRILLES D’ARBRE SILAOS® & VENISE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/grille-d-arbre-carrée-venise.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204100', '204101', '204102'] ARCEAU & LISSE DE BORDURE MILAN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/arceau-de-bordure-galva-ø-60-mm.html
+   OK product_id Supabase: 1030 (via ref 204100)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['204150', '204165', '204151', '204166', '204152', '204167'] ARCEAU & LISSE DE BORDURE MILAN
+   6 ligne(s) Excel | URL: https://procity.eu/fr/arceau-de-bordure-peint-ø-60-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['302100', '302101', '302102', '302103'] CLÔTURES RONDIN & CABANE À LIVRES
+   4 ligne(s) Excel | URL: https://procity.eu/fr/cloture-rodin.html
+   OK product_id Supabase: 1108 (via ref 302100)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['302104', '302105', '306106', '302107', '302108', '302109', '302110', '302111', '302112', '302113'] CLÔTURES RONDIN & CABANE À LIVRES
+   10 ligne(s) Excel | URL: https://www.procity.eu/fr/cl%C3%B4ture-rondin-appui-simple.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['310900'] CLÔTURES RONDIN & CABANE À LIVRES
+   1 ligne(s) Excel | URL: https://procity.eu/fr/cabane-à-livres-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529180', '529181', '529182', '529183'] PERGOLAS OCÉAN & TURIN
+   4 ligne(s) Excel | URL: https://procity.eu/fr/pergola-océan.html
+   OK product_id Supabase: 1237 (via ref 529180)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['310500'] PERGOLAS OCÉAN & TURIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/pergola-turin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202511', '202517', '202518', '202514', '202515', '202519'] PORTIQUE UNIVERSEL TOURNANT
+   6 ligne(s) Excel | URL: https://procity.eu/fr/portique-universel-tournant.html
+   OK product_id Supabase: 1248 (via ref 202511)
+   13 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/13... OK
+   Upload image 2/13... OK
+   Upload image 3/13... OK
+   Upload image 4/13... OK
+   Upload image 5/13... OK
+   Upload image 6/13... OK
+   Upload image 7/13... OK
+   Upload image 8/13... OK
+   Upload image 9/13... OK
+   Upload image 10/13... OK
+   Upload image 11/13... OK
+   Upload image 12/13... OK
+   Upload image 13/13... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['202611'] PORTIQUE UNIVERSEL TOURNANT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202611.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202615'] PORTIQUE UNIVERSEL TOURNANT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202615.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202622'] PORTIQUE UNIVERSEL TOURNANT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202622.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202540', '202541', '202544', '202542', '202543', '202545'] DEMI PORTIQUE TOURNANT
+   6 ligne(s) Excel | URL: https://procity.eu/fr/demi-portique-tournant.html
+   OK product_id Supabase: 1130 (via ref 202540)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['202616'] DEMI PORTIQUE TOURNANT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202616.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202617'] DEMI PORTIQUE TOURNANT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202617.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202623'] DEMI PORTIQUE TOURNANT
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202623.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202321'] KIT DE FIXATION POUR PANNEAU
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-fixation-pour-panneau.html
+   OK product_id Supabase: 1171 (via ref 202321)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['202306'] PORTIQUE ÉCO TOURNANT & BAVETTE LIMITEUR DE HAUTEUR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/portique-eco-tournant.html
+   OK product_id Supabase: 1249 (via ref 202306)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['202601'] PORTIQUE ÉCO TOURNANT & BAVETTE LIMITEUR DE HAUTEUR
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bavette-limiteur-de-hauteur.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202330', '202331', '202340', '202341', '202332', '202342'] PORTIQUE UNIVERSEL FIXE
+   6 ligne(s) Excel | URL: https://procity.eu/fr/portique-universel-fixe.html
+   OK product_id Supabase: 1247 (via ref 202330)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['202610'] PORTIQUE UNIVERSEL FIXE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202610.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202612'] PORTIQUE UNIVERSEL FIXE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202612.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203192'] BARRIÈRES UNIVERSELLE TOURNANTE "M", "L" & "XL"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-universelle-tournante.html
+   OK product_id Supabase: 1086 (via ref 203192)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['202613'] BARRIÈRES UNIVERSELLE TOURNANTE "M", "L" & "XL"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202613.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203160', '203170', '203180'] BARRIÈRES UNIVERSELLE TOURNANTE "M", "L" & "XL"
+   3 ligne(s) Excel | URL: https://procity.eu/fr/barriere-tournante-tres-grande-longueur.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203176'] BARRIÈRES UNIVERSELLE TOURNANTE "M", "L" & "XL"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/poteau-de-réception-en-position-ouverte.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202614'] BARRIÈRES UNIVERSELLE TOURNANTE "M", "L" & "XL"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-202614.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203195'] BARRIÈRES UNIVERSELLE TOURNANTE "M", "L" & "XL"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-universelle-tournante-xl.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202624'] BARRIÈRES UNIVERSELLE TOURNANTE "M", "L" & "XL"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-pour-barrière-universelle-tournante-xl-203195.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['202170'] BARRIÈRES UNIVERSELLE LEVANTE ET À VÉRIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-universelle-lisse-alu-levante.html
+   OK product_id Supabase: 1085 (via ref 202170)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['202171'] BARRIÈRES UNIVERSELLE LEVANTE ET À VÉRIN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-levante-universelle-à-vérin.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['302000', '302001'] BARRIÈRES TURIN FIXE & LEVANTE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barrière-turin-fixe-1.html
+   OK product_id Supabase: 1084 (via ref 302000)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['302020', '302021'] BARRIÈRES TURIN FIXE & LEVANTE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barrière-turin-levante.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203137', '203138'] BARRIÈRE TOURNANTE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barriere-tournante-longueur-1-4-metres.html
+   OK product_id Supabase: 1075 (via ref 203137)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['203142', '203143'] BARRIÈRE TOURNANTE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/barrière-tournante-longueur-2-mètres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203132', '203133'] BARRIÈRE TOURNANTE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/barriere-tournante-peinte-longueur-2-5-metres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203135', '203136'] BARRIÈRE TOURNANTE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barrière-tournante-longueur-3-mètres.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203125', '203128'] BARRIÈRES TOURNANTE TROMBONE & DÉCORATIVE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barriere-tournante-trombone.html
+   OK product_id Supabase: 1082 (via ref 203125)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['203129'] BARRIÈRES TOURNANTE TROMBONE & DÉCORATIVE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-tournante-decorative.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203601'] KIT DE POSE POUR BARRIÈRES TOURNANTE, TROMBONE & DÉCORATIVE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-pour-barrières-tournantes-sauf-lg-3000-mm-trombone-et-décorative.html
+   OK product_id Supabase: 1172 (via ref 203601)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['203602'] KIT DE POSE POUR BARRIÈRES TOURNANTE, TROMBONE & DÉCORATIVE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/kit-de-pose-pour-barrière-tournante-lg-3000-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['203215', '203265'] BARRIÈRES SÉLECTIVE TOURNANTE & FIXE
+   3 ligne(s) Excel | URL: https://procity.eu/fr/barriere-selective-peinte.html
+   OK product_id Supabase: 1081 (via ref 203215)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['203211', '203261'] BARRIÈRES SÉLECTIVE TOURNANTE & FIXE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/barriere-selective-fixe.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204800', '204801', '204802', '204819'] BLOCS PARKING BPE & CLASSIQUE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/bloc-parking-bpe.html
+   OK product_id Supabase: 1087 (via ref 204800)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['204810', '204811'] BLOCS PARKING BPE & CLASSIQUE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bloc-parking-bpe-amortichoc.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204831', '204832'] BLOCS PARKING BPE & CLASSIQUE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bloc-parking-classique.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['207912', '207913', '207914'] BUTÉES DE PARKING CAOUTCHOUC & ACIER
+   3 ligne(s) Excel | URL: https://procity.eu/fr/butée-de-parking-caoutchouc.html
+   OK product_id Supabase: 1094 (via ref 207912)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['207909', '207910'] BUTÉES DE PARKING CAOUTCHOUC & ACIER
+   2 ligne(s) Excel | URL: https://procity.eu/fr/butée-de-parking.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['111780', '111781'] TRACEUR DE LIGNES M-MARKERS, carton de 12 unités, 500 ml
+   2 ligne(s) Excel | URL: https://procity.eu/fr/traceur-de-ligne-m-markers.html
+   OK product_id Supabase: 1307 (via ref 111780)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['111250'] TRACEUR DE LIGNES M-MARKERS, carton de 12 unités, 500 ml
+   1 ligne(s) Excel | URL: https://procity.eu/fr/machine-à-tracer.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['111523', '111524', '111525'] RALENTISSEURS
+   3 ligne(s) Excel | URL: https://procity.eu/fr/ralentisseurs-ht-50-mm.html
+   OK product_id Supabase: 1268 (via ref 111523)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['111533', '111534', '111535'] RALENTISSEURS
+   3 ligne(s) Excel | URL: https://procity.eu/fr/ralentisseurs-ht-70-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['111803'] PROTECTION D’ANGLE EN CAOUTCHOUC - VENDUES PAR LOT DE 15
+   1 ligne(s) Excel | URL: https://procity.eu/fr/protection-d-angle-en-caoutchouc.html
+   OK product_id Supabase: 1266 (via ref 111803)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['201020', '201021', '291020', '291021'] ÉTRIERS DE PROTECTION Ø 35 ET Ø 60 mm & CORSET DE PROTECTION
+   4 ligne(s) Excel | URL: https://procity.eu/fr/étrier-de-protection-ø-35-mm.html
+   OK product_id Supabase: 1334 (via ref 201020)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['201030', '201031', '291030', '291031'] ÉTRIERS DE PROTECTION Ø 35 ET Ø 60 mm & CORSET DE PROTECTION
+   4 ligne(s) Excel | URL: https://procity.eu/fr/etrier-de-protection-ø-60-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201008', '201009'] ÉTRIERS DE PROTECTION Ø 35 ET Ø 60 mm & CORSET DE PROTECTION
+   2 ligne(s) Excel | URL: https://procity.eu/fr/corset-de-protection.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['201060', '201061', '291060', '291061'] ÉPINGLES DE PROTECTION Ø 60 & 50 mm
+   5 ligne(s) Excel | URL: https://procity.eu/fr/epingle-de-protection-peinte-ø-60-mm.html
+   OK product_id Supabase: 1332 (via ref 201060)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 5 variante(s) a inserer
+   OK Lot 1: 5 variantes
+
+--- ['201066', '201067', '291066', '291067'] ÉPINGLES DE PROTECTION Ø 60 & 50 mm
+   4 ligne(s) Excel | URL: https://procity.eu/fr/épingle-de-protection-ø-50-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['200060', '200070'] BARRIÈRE AMOVIBLE ÉCOBAR®
+   2 ligne(s) Excel | URL: https://procity.eu/fr/garde-corps-ecobar-acier.html
+   OK product_id Supabase: 1069 (via ref 200060)
+   13 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/13... OK
+   Upload image 2/13... OK
+   Upload image 3/13... OK
+   Upload image 4/13... OK
+   Upload image 5/13... OK
+   Upload image 6/13... OK
+   Upload image 7/13... OK
+   Upload image 8/13... OK
+   Upload image 9/13... OK
+   Upload image 10/13... OK
+   Upload image 11/13... OK
+   Upload image 12/13... OK
+   Upload image 13/13... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['529777', '599777'] ABRI CHARIOTS MODULO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-chariots-modulo-1.html
+   OK product_id Supabase: 1001 (via ref 529777)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['529770', '529771', '599770', '599771'] ABRIS CAISSE MODULO & VOÛTE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/abri-caisse-modulo.html
+   OK product_id Supabase: 1022 (via ref 529770)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['529200'] ABRIS CAISSE MODULO & VOÛTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/abri-caisse-voute.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['599808', '599809'] PASSAGES COUVERTS VOÛTE S & M
+   2 ligne(s) Excel | URL: https://procity.eu/fr/passage-couvert-voûte-s-avec-bardages-en-polycarbonate.html
+   OK product_id Supabase: 1235 (via ref 599808)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['599802', '599803'] PASSAGES COUVERTS VOÛTE S & M
+   4 ligne(s) Excel | URL: https://procity.eu/fr/passage-couvert-voute-m-avec-bardages-polycarbonate.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['599804', '599805'] PASSAGES COUVERTS VOÛTE S & M
+   2 ligne(s) Excel | URL: https://procity.eu/fr/passage-couvert-voute-m-avec-bardages-verre.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['599812', '599813'] PASSAGES COUVERTS VOÛTE S & M
+   2 ligne(s) Excel | URL: https://procity.eu/fr/bardage-latéral-pour-passage-couvert-voûte-m-en-verre.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['599800', '599801'] PASSAGES COUVERTS MILAN & VOÛTE L
+   2 ligne(s) Excel | URL: https://procity.eu/fr/passage-couvert-milan-1.html
+   OK product_id Supabase: 1234 (via ref 599800)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['599810', '599811'] PASSAGES COUVERTS MILAN & VOÛTE L
+   3 ligne(s) Excel | URL: https://procity.eu/fr/bardage-latéral-pour-passages-couverts-milan-voûte-m-en-polycarbonate.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['599806', '599807'] PASSAGES COUVERTS MILAN & VOÛTE L
+   2 ligne(s) Excel | URL: https://procity.eu/fr/passage-couvert-voute-l.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['599814'] PASSAGES COUVERTS MILAN & VOÛTE L
+   1 ligne(s) Excel | URL: https://procity.eu/fr/bardage-latéral-pour-passage-couvert-voûte-l.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206580', '206581'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   4 ligne(s) Excel | URL: https://procity.eu/fr/potelet-cigarette.html
+   OK product_id Supabase: 1252 (via ref 206580)
+   13 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/13... OK
+   Upload image 2/13... OK
+   Upload image 3/13... OK
+   Upload image 4/13... OK
+   Upload image 5/13... OK
+   Upload image 6/13... OK
+   Upload image 7/13... OK
+   Upload image 8/13... OK
+   Upload image 9/13... OK
+   Upload image 10/13... OK
+   Upload image 11/13... OK
+   Upload image 12/13... OK
+   Upload image 13/13... OK
+   -> 4 variante(s) a inserer
+   OK Lot 1: 4 variantes
+
+--- ['206770'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-cendrier-city.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206771'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-cendrier-agora.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206772'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-cendrier-boule-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206774'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-cendrier-agglo.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206773'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-cendrier-inox-brossé-1.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206776'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/cendrier-cigarette.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206578'] POTELET - CIGARETTE, POTELET - CENDRIER & CENDRIER - CIGARETTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/platines-murales-pour-cendrier-cigarette.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['206597'] CENDRIERS MURAUX TUBE & CARRÉ
+   1 ligne(s) Excel | URL: https://procity.eu/fr/cendrier-mural-tube-biseauté.html
+   OK product_id Supabase: 1101 (via ref 206597)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208021'] CENDRIERS MURAUX TUBE & CARRÉ
+   1 ligne(s) Excel | URL: https://procity.eu/fr/cendrier-mural-carre.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['208040'] CORBEILLE - CENDRIER
+   1 ligne(s) Excel | URL: https://procity.eu/fr/corbeille-cendrier-trémie.html
+   OK product_id Supabase: 1110 (via ref 208040)
+   1 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/1... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['208181'] OPTION ÉCRASE CIGARETTE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/option-écrase-cigarette.html
+   OK product_id Supabase: 1200 (via ref 208181)
+   9 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/9... OK
+   Upload image 2/9... OK
+   Upload image 3/9... OK
+   Upload image 4/9... OK
+   Upload image 5/9... OK
+   Upload image 6/9... OK
+   Upload image 7/9... OK
+   Upload image 8/9... OK
+   Upload image 9/9... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['529405', '529406'] ABRI FUMEURS MILAN
+   3 ligne(s) Excel | URL: https://procity.eu/fr/abri-fumeurs-milan.html
+   OK product_id Supabase: 1004 (via ref 529405)
+   13 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/13... OK
+   Upload image 2/13... OK
+   Upload image 3/13... OK
+   Upload image 4/13... OK
+   Upload image 5/13... OK
+   Upload image 6/13... OK
+   Upload image 7/13... OK
+   Upload image 8/13... OK
+   Upload image 9/13... OK
+   Upload image 10/13... OK
+   Upload image 11/13... OK
+   Upload image 12/13... OK
+   Upload image 13/13... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+--- ['529401'] ABRI FUMEURS MILAN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/autocollant-du-symbole-cigarette.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529402'] ABRI FUMEURS MILAN
+   1 ligne(s) Excel | URL: https://procity.eu/fr/autocollant-du-texte-espace-fumeurs.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529380'] ABRI FUMEURS ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/abri-fumeurs-éco.html
+   OK product_id Supabase: 1008 (via ref 529380)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['529570', '529571', '529574', '529575', '529572', '529573', '529576', '529577', '599570', '599571', '599574', '599575', '599572', '599573', '599576', '599577'] ABRI FUMEURS MODULO
+   17 ligne(s) Excel | URL: https://procity.eu/fr/abri-fumeurs-modulo.html
+   OK product_id Supabase: 1005 (via ref 529570)
+   11 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/11... OK
+   Upload image 2/11... OK
+   Upload image 3/11... OK
+   Upload image 4/11... OK
+   Upload image 5/11... OK
+   Upload image 6/11... OK
+   Upload image 7/11... OK
+   Upload image 8/11... OK
+   Upload image 9/11... OK
+   Upload image 10/11... OK
+   Upload image 11/11... OK
+   -> 17 variante(s) a inserer
+   OK Lot 1: 17 variantes
+
+--- ['529370', '529371'] ABRI FUMEURS VOÛTE "M"
+   5 ligne(s) Excel | URL: https://procity.eu/fr/abri-fumeurs-voûte-m.html
+   OK product_id Supabase: 1007 (via ref 529370)
+   15 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/15... OK
+   Upload image 2/15... OK
+   Upload image 3/15... OK
+   Upload image 4/15... OK
+   Upload image 5/15... OK
+   Upload image 6/15... OK
+   Upload image 7/15... OK
+   Upload image 8/15... OK
+   Upload image 9/15... OK
+   Upload image 10/15... OK
+   Upload image 11/15... OK
+   Upload image 12/15... OK
+   Upload image 13/15... OK
+   Upload image 14/15... OK
+   Upload image 15/15... OK
+   -> 5 variante(s) a inserer
+   OK Lot 1: 5 variantes
+
+--- ['209116'] ABRI FUMEURS VOÛTE "M"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/banquette-tablette-pour-abris-fumeurs.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['529520', '529521'] ABRI FUMEURS VOÛTE "L"
+   2 ligne(s) Excel | URL: https://procity.eu/fr/abri-fumeurs-voûte-l.html
+   OK product_id Supabase: 1006 (via ref 529520)
+   7 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/7... OK
+   Upload image 2/7... OK
+   Upload image 3/7... OK
+   Upload image 4/7... OK
+   Upload image 5/7... OK
+   Upload image 6/7... OK
+   Upload image 7/7... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['208510'] ABRI FUMEURS VOÛTE "L"
+   1 ligne(s) Excel | URL: https://procity.eu/fr/assis-debout-parasol.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['294100', '294103', '294101', '294104', '294102', '294105'] ARCEAU Ø 60 mm
+   6 ligne(s) Excel | URL: https://procity.eu/fr/arceau-bas-de-protection.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['294043', '294044', '294045'] ARCEAU Ø 60 mm
+   3 ligne(s) Excel | URL: https://procity.eu/fr/arceau-simple-ø60mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['294243', '294244', '294245'] ARCEAU Ø 60 mm
+   3 ligne(s) Excel | URL: https://procity.eu/fr/arceau-renforcé-ø60mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204040'] ARCEAU, ÉPINGLE & POTELET Ø 50 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/arceau-ø-50-mm.html
+   OK product_id Supabase: 1034 (via ref 204040)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['204044'] ARCEAU, ÉPINGLE & POTELET Ø 50 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barre-de-renfort-raccords.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204043'] ARCEAU, ÉPINGLE & POTELET Ø 50 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/tôle-de-protection.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204045'] ARCEAU, ÉPINGLE & POTELET Ø 50 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/epingle-ø-50-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204324'] ARCEAU, ÉPINGLE & POTELET Ø 50 mm
+   1 ligne(s) Excel | URL: https://procity.eu/fr/potelet-ø-50-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['294415', '204415'] ARCEAU D’ANGLE RENFORCÉ À 2 PIEDS
+   2 ligne(s) Excel | URL: https://procity.eu/fr/arceau-d-angle-renforcé-galva-à-2-pieds-hauteur-430-mm.html
+   OK product_id Supabase: 1031 (via ref 294415)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['294562', '204562'] ARCEAU D’ANGLE RENFORCÉ À 2 PIEDS
+   2 ligne(s) Excel | URL: https://procity.eu/fr/arceau-d-angle-renforcé-à-2-pieds-hauteur-430-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['294506', '204506'] ARCEAU D’ANGLE RENFORCÉ À 2 PIEDS
+   2 ligne(s) Excel | URL: https://procity.eu/fr/arceau-d-angle-renforcé-galva-à-2-pieds-hauteur-1000-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['294560', '204560'] ARCEAU D’ANGLE RENFORCÉ À 2 PIEDS
+   2 ligne(s) Excel | URL: https://procity.eu/fr/arceau-d-angle-renforcé-à-2-pieds-hauteur-1000-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['213010', '213011'] ARCEAU D’ANGLE À 3 PIEDS
+   2 ligne(s) Excel | URL: https://procity.eu/fr/arceau-d-angle-à-3-pieds.html
+   OK product_id Supabase: 1032 (via ref 213010)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['213206'] ANGLE DE PROTECTION EN TÔLE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/angle-de-protection-en-tôle.html
+   OK product_id Supabase: 1025 (via ref 213206)
+   4 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/4... OK
+   Upload image 2/4... OK
+   Upload image 3/4... OK
+   Upload image 4/4... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['294350', '294352', '294391', '294396', '294681', '294689'] POTEAU DE PROTECTION
+   6 ligne(s) Excel | URL: https://procity.eu/fr/poteau-de-protection.html
+   OK product_id Supabase: 1250 (via ref 294350)
+   8 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/8... OK
+   Upload image 2/8... OK
+   Upload image 3/8... OK
+   Upload image 4/8... OK
+   Upload image 5/8... OK
+   Upload image 6/8... OK
+   Upload image 7/8... OK
+   Upload image 8/8... OK
+   -> 6 variante(s) a inserer
+   OK Lot 1: 6 variantes
+
+--- ['111576'] PASSE CÂBLES
+   1 ligne(s) Excel | URL: https://procity.eu/fr/passe-câble-3-câbles.html
+   OK product_id Supabase: 1236 (via ref 111576)
+   3 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/3... OK
+   Upload image 2/3... OK
+   Upload image 3/3... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['111580'] PASSE CÂBLES
+   1 ligne(s) Excel | URL: https://procity.eu/fr/passe-câbles-2-câbles.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['111380'] BALISAGE TEMPORAIRE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/balisage-temporaire.html
+   OK product_id Supabase: 1047 (via ref 111380)
+   2 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/2... OK
+   Upload image 2/2... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['100100'] BARRIÈRE EXTENSIBLE & DE REGARD
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-extensible-acier-rouge-et-blanc.html
+   OK product_id Supabase: 1070 (via ref 100100)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['100120'] BARRIÈRE EXTENSIBLE & DE REGARD
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barrière-de-regard-extensible-acier.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['100510'] BARRIÈRE ÉCO TP, PASSERELLE TP & BARRIÈRE EXTENSIBLE PVC
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-eco-tp.html
+   OK product_id Supabase: 1077 (via ref 100510)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 1 variante(s) a inserer
+   OK Lot 1: 1 variantes
+
+--- ['100300', '100299'] BARRIÈRE ÉCO TP, PASSERELLE TP & BARRIÈRE EXTENSIBLE PVC
+   2 ligne(s) Excel | URL: https://procity.eu/fr/passerelles-tp.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['100101'] BARRIÈRE ÉCO TP, PASSERELLE TP & BARRIÈRE EXTENSIBLE PVC
+   1 ligne(s) Excel | URL: https://procity.eu/fr/barriere-extensible-a-rangement-integre.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['528500', '528510', '528520', '528530', '528501', '528511', '528521', '528533'] MÂT DE PAVOISEMENT EN ALUMINIUM
+   8 ligne(s) Excel | URL: https://procity.eu/fr/mât-de-pavoisement-en-aluminium.html
+   OK product_id Supabase: 1197 (via ref 528500)
+   5 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/5... OK
+   Upload image 2/5... OK
+   Upload image 3/5... OK
+   Upload image 4/5... OK
+   Upload image 5/5... OK
+   -> 8 variante(s) a inserer
+   OK Lot 1: 8 variantes
+
+--- ['205000', '205010'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/panneau-électoral-modèle-classique.html
+   OK product_id Supabase: 1218 (via ref 205000)
+   10 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/10... OK
+   Upload image 2/10... OK
+   Upload image 3/10... OK
+   Upload image 4/10... OK
+   Upload image 5/10... OK
+   Upload image 6/10... OK
+   Upload image 7/10... OK
+   Upload image 8/10... OK
+   Upload image 9/10... OK
+   Upload image 10/10... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['205020'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/pieds-amovibles-pour-tube-ø-35-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204287'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/fourreau-pour-tube-ø-35-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['205012', '205013'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   2 ligne(s) Excel | URL: https://procity.eu/fr/panneau-électoral-modèle-éco.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['205014'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/système-d-accroche-pour-panneaux-électoraux-éco.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['205021'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/pieds-amovibles-pour-tube-30-x-30-mm.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['204286'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/fourreau-pour-tube-30x30.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['205029'] PANNEAUX ÉLECTORAUX CLASSIQUE ET ÉCO
+   1 ligne(s) Excel | URL: https://procity.eu/fr/plot-béton.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['205101', '205111'] ISOLOIRS ÉLECTORAUX STANDARD & POUR PERSONNES À MOBILITÉ RÉDUITE
+   2 ligne(s) Excel | URL: https://procity.eu/fr/isoloirs-electoraux-standard.html
+   OK product_id Supabase: 1142 (via ref 205101)
+   6 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/6... OK
+   Upload image 2/6... OK
+   Upload image 3/6... OK
+   Upload image 4/6... OK
+   Upload image 5/6... OK
+   Upload image 6/6... OK
+   -> 2 variante(s) a inserer
+   OK Lot 1: 2 variantes
+
+--- ['205122'] ISOLOIRS ÉLECTORAUX STANDARD & POUR PERSONNES À MOBILITÉ RÉDUITE
+   1 ligne(s) Excel | URL: https://procity.eu/fr/isoloir-pour-personnes-a-mobilite-reduite.html
+   [!] Produit non trouve en base Supabase -- skipping
+
+--- ['527128', '527130', '527132'] URNE ÉLECTORALE RÉGLEMENTAIRE
+   3 ligne(s) Excel | URL: https://www.procity.eu/fr/urne-%C3%A9lectorale-r%C3%A9glementaire.html
+   OK product_id Supabase: 1313 (via ref 527128)
+   12 image(s) trouvee(s) sur procity.eu
+      Options [*]: ['Afrique du Sud', 'Allemagne', 'Autriche', 'Belgique', 'Canada']...
+   Upload image 1/12... OK
+   Upload image 2/12... OK
+   Upload image 3/12... OK
+   Upload image 4/12... OK
+   Upload image 5/12... OK
+   Upload image 6/12... OK
+   Upload image 7/12... OK
+   Upload image 8/12... OK
+   Upload image 9/12... OK
+   Upload image 10/12... OK
+   Upload image 11/12... OK
+   Upload image 12/12... OK
+   -> 3 variante(s) a inserer
+   OK Lot 1: 3 variantes
+
+============================================================
+Traites : 208 produits | Ignores (non trouves en base) : 370
+Total variantes : 821

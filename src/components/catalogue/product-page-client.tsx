@@ -145,10 +145,6 @@ export function ProductPageClient({ product, variants, options, category, catego
           </div>
         )}
 
-        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
-          {product.description}
-        </p>
-
         <VariantSelector
           variants={variants}
           selectedVariant={selectedVariant}
