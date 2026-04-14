@@ -156,10 +156,26 @@ export function ProductPageClient({ product, variants, options, category, catego
           hasVariants={variants.length > 0}
         />
 
+        {/* Référence + délai */}
         {displayReference && (
-          <p className="text-xs font-mono text-muted-foreground mb-6">
-            Réf. {displayReference}
-          </p>
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-border/50 bg-secondary/10 px-4 py-3 mb-6 flex-wrap">
+            <div>
+              <p className="text-[11px] uppercase tracking-wider text-muted-foreground font-medium mb-0.5">Référence</p>
+              <p className="font-mono font-bold text-foreground">{displayReference}</p>
+            </div>
+            {selectedVariant?.delai && (
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Clock size={14} className="text-accent flex-shrink-0" />
+                <span>
+                  {/^\d+(\.\d+)?$/.test(selectedVariant.delai)
+                    ? (Number(selectedVariant.delai) >= 14
+                        ? `${Math.ceil(Number(selectedVariant.delai) / 7)} semaines`
+                        : `${selectedVariant.delai} jours`)
+                    : selectedVariant.delai}
+                </span>
+              </div>
+            )}
+          </div>
         )}
 
         {specifications.length > 0 && (

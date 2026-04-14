@@ -18,7 +18,6 @@ const AXES: Array<{ key: AxisKey; label: string }> = [
   { key: 'finition',   label: 'Finition' },
 ]
 
-// Mapping RAL / nom → couleur hex pour les swatches
 const RAL_COLORS: Record<string, string> = {
   // Gris Procity
   'gris procity':    '#8c8c8c',
@@ -48,7 +47,7 @@ const RAL_COLORS: Record<string, string> = {
   '7044':            '#b3b0a7',
   // Bruns
   '8017':            '#4d2c1a',
-  // Corton / aspect
+  // Corten / aspect
   'aspect corten':   '#a0522d',
   'corten':          '#a0522d',
   // Finitions métal
@@ -58,20 +57,17 @@ const RAL_COLORS: Record<string, string> = {
   'inox':            '#d4d4d4',
   'brut':            '#c8b89a',
   'gris métallisé':  '#8c9aaa',
-  // Standard (gris Procity par défaut)
   'standard':        '#8c8c8c',
 }
 
 function getColorHex(coloris: string): string | null {
-  const key = coloris.toLowerCase().trim()
-  return RAL_COLORS[key] ?? null
+  return RAL_COLORS[coloris.toLowerCase().trim()] ?? null
 }
 
-function isLight(hex: string): boolean {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  return (r * 299 + g * 587 + b * 114) / 1000 > 160
+/** Formate le label : "9010" → "RAL 9010", "Gris Procity" → "Gris Procity" */
+function formatColorLabel(coloris: string): string {
+  if (/^\d{4}$/.test(coloris.trim())) return `RAL ${coloris.trim()}`
+  return coloris.trim()
 }
 
 export function VariantSelector({ variants, selectedVariant, onSelect }: Props) {
@@ -95,7 +91,6 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
     return uniqueValues.size > 1
   })
 
-  // Coloris actifs → swatches ; autres axes actifs → dropdowns
   const colorisActive = activeAxes.find(a => a.key === 'coloris')
   const dropdownAxes  = activeAxes.filter(a => a.key !== 'coloris')
 
@@ -106,9 +101,13 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
     const compatible = variants.filter(v =>
       activeAxes.every(({ key }) => !newSelections[key] || v[key] === newSelections[key])
     )
+    if (compatible.length === 0) return
 
     const allAxesSelected = activeAxes.every(({ key }) => newSelections[key])
-    if (compatible.length === 1 || (compatible.length > 0 && allAxesSelected)) {
+
+    // Sélection immédiate pour la couleur → met à jour l'image sans attendre les autres axes
+    // Aussi si une seule variante compatible ou si tout est sélectionné
+    if (axis === 'coloris' || compatible.length === 1 || allAxesSelected) {
       onSelect(compatible[0])
     }
   }
@@ -117,16 +116,16 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
   if (activeAxes.length === 0) {
     return (
       <div className="mb-6">
-        <p className="text-sm font-semibold text-muted-foreground mb-2">Déclinaison</p>
+        <p className="text-sm font-semibold mb-2">Déclinaison</p>
         <select
           value={selectedVariant?.id || ''}
           onChange={(e) => {
             const v = variants.find(v => v.id === e.target.value)
             if (v) onSelect(v)
           }}
-          className="w-full text-sm rounded-lg border border-border/50 bg-secondary/20 px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-accent/50"
+          className="w-full text-sm rounded-xl border-2 border-border/50 bg-background px-3 py-2.5 text-foreground outline-none focus:border-accent transition-colors cursor-pointer"
         >
-          <option value="">Choisir une déclinaison...</option>
+          <option value="">Choisir une déclinaison…</option>
           {variants.map(v => (
             <option key={v.id} value={v.id}>
               {v.label}{v.price > 0 ? ` — ${v.price.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €` : ''}
@@ -138,7 +137,7 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
   }
 
   return (
-    <div className="space-y-5 mb-6">
+    <div className="space-y-6 mb-6">
 
       {/* ── Swatches couleur ── */}
       {colorisActive && (() => {
@@ -152,51 +151,44 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
         )]
         if (values.length === 0) return null
 
-        const hasAnyColor = values.some(c => getColorHex(c) !== null)
-
         return (
           <div>
-            <div className="flex items-center gap-2 mb-2.5">
-              <p className="text-sm font-semibold text-muted-foreground">Couleur</p>
+            <p className="text-sm font-semibold mb-3">
+              Couleur
               {selections.coloris && (
-                <span className="text-sm font-medium text-foreground">
-                  {selections.coloris === 'Standard' ? 'Gris Standard' : `RAL ${selections.coloris}`}
+                <span className="ml-2 font-normal text-muted-foreground">
+                  — {formatColorLabel(selections.coloris)}
                 </span>
               )}
-            </div>
-            <div className="flex flex-wrap gap-2">
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {values.map(value => {
                 const hex = getColorHex(value)
                 const isSelected = selections.coloris === value
-                const light = hex ? isLight(hex) : false
+                const label = formatColorLabel(value)
 
                 return (
                   <button
                     key={value}
                     onClick={() => handleSelect('coloris', value)}
-                    title={value === 'Standard' ? 'Gris Standard' : `RAL ${value}`}
+                    title={label}
+                    aria-pressed={isSelected}
                     className={`
-                      relative transition-all cursor-pointer flex-shrink-0
-                      ${hasAnyColor && hex
-                        ? `w-9 h-9 rounded-lg ring-2 ring-offset-2 ${isSelected ? 'ring-accent scale-110' : 'ring-transparent hover:ring-accent/50'}`
-                        : `px-3 py-1.5 rounded-lg text-sm font-medium ring-1 ${isSelected ? 'ring-accent bg-accent/10 text-accent' : 'ring-border/50 bg-secondary/30 text-foreground hover:ring-accent/50'}`
+                      flex items-center gap-2.5 px-3 py-2.5 rounded-xl border-2 transition-all cursor-pointer text-left
+                      ${isSelected
+                        ? 'border-accent bg-accent/5 shadow-sm'
+                        : 'border-border/50 bg-background hover:border-accent/40 hover:bg-secondary/20'
                       }
                     `}
-                    style={hasAnyColor && hex ? { backgroundColor: hex } : undefined}
-                    aria-pressed={isSelected}
                   >
-                    {hasAnyColor && hex ? (
-                      isSelected && (
-                        <span
-                          className={`absolute inset-0 flex items-center justify-center text-base font-bold ${light ? 'text-black/60' : 'text-white/80'}`}
-                          aria-hidden
-                        >
-                          ✓
-                        </span>
-                      )
-                    ) : (
-                      value
-                    )}
+                    <span
+                      className="w-7 h-7 rounded-lg flex-shrink-0 border border-black/10"
+                      style={{ backgroundColor: hex ?? '#e5e7eb' }}
+                      aria-hidden
+                    />
+                    <span className={`text-xs font-medium leading-tight truncate ${isSelected ? 'text-foreground' : 'text-muted-foreground'}`}>
+                      {label}
+                    </span>
                   </button>
                 )
               })}
@@ -219,11 +211,11 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
 
         return (
           <div key={key}>
-            <p className="text-sm font-semibold text-muted-foreground mb-2">{label}</p>
+            <p className="text-sm font-semibold mb-2">{label}</p>
             <select
               value={selections[key] ?? ''}
               onChange={(e) => handleSelect(key, e.target.value)}
-              className="w-full text-sm rounded-xl border border-border/50 bg-secondary/20 px-3 py-2.5 text-foreground outline-none focus:ring-2 focus:ring-accent/50 cursor-pointer"
+              className="w-full text-sm rounded-xl border-2 border-border/50 bg-background px-3 py-2.5 text-foreground outline-none focus:border-accent transition-colors cursor-pointer hover:border-accent/40"
             >
               <option value="">Choisir…</option>
               {values.map(value => (
