@@ -19,6 +19,7 @@ export interface ProductVariantRow {
   price: number
   delai: string
   specifications: Record<string, string>
+  images: string[]
   created_at: string
 }
 
