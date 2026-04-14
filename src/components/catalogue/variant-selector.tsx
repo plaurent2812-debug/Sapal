@@ -28,36 +28,62 @@ const RAL_COLORS: Record<string, string> = {
   'blanc':           '#f4f4f4',
   // Noirs
   '9005':            '#0a0a0a',
+  '9017':            '#1e1e1e',
   'noir':            '#0a0a0a',
   // Rouges
-  '3004':            '#8b1a1a',
-  '3020':            '#cc2222',
   '3000':            '#ab2524',
+  '3004':            '#8b1a1a',
+  '3005':            '#5e2028',
+  '3020':            '#cc2222',
+  // Oranges
+  '2009':            '#e25303',
+  // Jaunes
+  '1016':            '#ead028',
+  '1021':            '#f3b800',
+  '1023':            '#f9b200',
+  '1028':            '#f5a623',
+  '1034':            '#efa94a',
   // Bleus
   '5010':            '#1a5fa8',
+  '5013':            '#193153',
   '5015':            '#3b83bd',
+  '5018':            '#0e7c8b',
+  '5024':            '#5b7e96',
+  // Violets
+  '4005':            '#6c4675',
+  '4008':            '#844c82',
   // Verts
   '6005':            '#2b5c33',
   '6018':            '#57a639',
-  // Jaunes
-  '1023':            '#f9b200',
-  '1021':            '#f3b800',
+  '6024':            '#308446',
   // Gris
-  '7035':            '#cdd1c4',
+  '7001':            '#8c9ca5',
   '7016':            '#383e42',
+  '7035':            '#cdd1c4',
+  '7039':            '#6b6b60',
+  '7040':            '#9da3a5',
   '7044':            '#b3b0a7',
+  '9006':            '#a5a9ad',
   // Bruns
   '8017':            '#4d2c1a',
+  '8023':            '#a65e2f',
   // Corton / aspect
   'aspect corten':   '#a0522d',
   'corten':          '#a0522d',
-  // Finitions métal
+  // Finitions métal / bois
   'galva':           '#c0c0c0',
   'galvanisé':       '#c0c0c0',
   'anodisé':         '#b8b8c8',
   'inox':            '#d4d4d4',
   'brut':            '#c8b89a',
   'gris métallisé':  '#8c9aaa',
+  'lasure marron':   '#7b4b2a',
+  // Noms de couleurs
+  'rouge':           '#cc2222',
+  'bleu':            '#1a5fa8',
+  'vert':            '#2b5c33',
+  'jaune':           '#f9b200',
+  'marron':          '#7b4b2a',
   // Standard (gris Procity par défaut)
   'standard':        '#8c8c8c',
 }
