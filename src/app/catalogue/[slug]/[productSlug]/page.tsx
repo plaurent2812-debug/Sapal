@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { getCategoryBySlug, getProductBySlug, getProductsByCategory, getVariantsByProduct, getOptionsByProduct } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
-import { ArrowLeft, ChevronRight, Package } from "lucide-react";
+import { ArrowLeft, ChevronRight } from "lucide-react";
 import { ProductPageClient } from "@/components/catalogue/product-page-client";
 import { ProductCard } from "@/components/catalogue/product-card";
 import { AdminEditButton } from "@/components/catalogue/admin-edit-button";
@@ -130,44 +129,13 @@ export default async function ProductPage({
         </Link>
 
         <AnimatedSection direction="up">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16">
-            {/* Photo */}
-            <div className="space-y-4">
-              <div className="aspect-square w-full overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/30 to-secondary/5 border border-border/50 relative group">
-                {product.imageUrl ? (
-                  <Image
-                    src={product.imageUrl}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-contain p-6 md:p-8 group-hover:scale-105 transition-transform duration-500"
-                    priority
-                  />
-                ) : (
-                  <div className="h-full w-full flex items-center justify-center text-muted-foreground">
-                    <div className="text-center">
-                      <Package size={48} className="mx-auto mb-3 opacity-30" />
-                      <span className="text-sm">Photo non disponible</span>
-                    </div>
-                  </div>
-                )}
-                {product.reference && (
-                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/90 backdrop-blur text-[11px] sm:text-xs font-mono font-medium px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-muted-foreground border border-border/50 shadow-sm">
-                    Réf. {product.reference}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Infos — composant client pour la sélection de variantes */}
-            <ProductPageClient
-              product={product}
-              variants={variants}
-              options={options}
-              category={category}
-              categorySlug={slug}
-            />
-          </div>
+          <ProductPageClient
+            product={product}
+            variants={variants}
+            options={options}
+            category={category}
+            categorySlug={slug}
+          />
         </AnimatedSection>
       </div>
 
