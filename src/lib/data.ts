@@ -16,6 +16,7 @@ export interface ClientVariant {
   price: number
   delai: string
   specifications: Record<string, string>
+  images: string[]
 }
 
 export function toClientVariant(v: ProductVariantRow): ClientVariant {
@@ -31,6 +32,7 @@ export function toClientVariant(v: ProductVariantRow): ClientVariant {
     price: Number(v.price) || 0,
     delai: v.delai,
     specifications: v.specifications,
+    images: v.images ?? [],
   }
 }
 

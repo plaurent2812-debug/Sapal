@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 
 export async function GET(
   _req: NextRequest,
-  ctx: RouteContext<'/api/quotes/[id]/pdf'>
+  ctx: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await ctx.params
