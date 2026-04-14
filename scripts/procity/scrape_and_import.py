@@ -69,17 +69,21 @@ def clean(v) -> str:
     return s if s not in ("-", "–", "—") else ""
 
 
-def find_product_id_in_supabase(procity_ref: str) -> str | None:
-    """Cherche l'id du produit Supabase par sa reference Procity."""
-    url = (
-        f"{SUPABASE_URL}/rest/v1/products"
-        f"?reference=eq.{procity_ref}&select=id&limit=1"
-    )
-    r = requests.get(url, headers=API_HEADERS, timeout=10)
-    data = r.json()
-    if isinstance(data, list) and data:
-        return str(data[0]["id"])
-    return None
+def find_product_id_in_supabase(procity_refs: list[str]) -> tuple[str, str] | tuple[None, None]:
+    """
+    Cherche l'id du produit Supabase par une liste de références Procity.
+    Retourne (product_id, matched_ref) ou (None, None) si non trouvé.
+    """
+    for ref in procity_refs:
+        url = (
+            f"{SUPABASE_URL}/rest/v1/products"
+            f"?reference=eq.{ref}&select=id&limit=1"
+        )
+        r = requests.get(url, headers=API_HEADERS, timeout=10)
+        data = r.json()
+        if isinstance(data, list) and data:
+            return str(data[0]["id"]), ref
+    return None, None
 
 
 def scrape_procity_page(url: str) -> dict:
@@ -109,27 +113,26 @@ def scrape_procity_page(url: str) -> dict:
 
         soup = BeautifulSoup(resp.text, "lxml")
 
-        # -- Images --
+        # -- Images produit haute résolution uniquement --
+        # On cible /cache/images/product/ qui contient les fiches produit,
+        # par opposition à /cache/images/category/ (thumbnails de navigation).
         img_candidates = []
+        seen = set()
         for img in soup.find_all("img"):
             src = img.get("src") or img.get("data-src") or ""
-            if "procity" in src and any(
-                ext in src.lower()
-                for ext in [".jpg", ".jpeg", ".png", ".webp"]
-            ):
-                if not any(
-                    skip in src.lower()
-                    for skip in [
-                        "logo", "icon", "picto", "banner", "thumb_",
-                    ]
-                ):
-                    if src not in img_candidates:
-                        img_candidates.append(src)
+            if not src:
+                continue
+            full_src = src if src.startswith("http") else f"https://www.procity.eu{src}"
+            if "/cache/images/product/" not in full_src:
+                continue
+            if not any(ext in full_src.lower() for ext in [".jpg", ".jpeg", ".png", ".webp"]):
+                continue
+            if full_src in seen:
+                continue
+            seen.add(full_src)
+            img_candidates.append(full_src)
 
-        result["images"] = [
-            src if src.startswith("http") else f"https://procity.eu{src}"
-            for src in img_candidates
-        ][:10]
+        result["images"] = img_candidates[:15]
 
         # -- Options (dropdowns / swatches) --
         for sel in soup.find_all("select"):
@@ -343,27 +346,38 @@ def main():
             print(f"   [!] Reference {args.product_id} non trouvee dans l'Excel")
             return
 
+    # Grouper les refs par URL Procity : toutes les refs pointant vers la même
+    # page partagent le même produit (ex: 206200, 206201 → lisbonne.html).
+    # On regroupe pour avoir toutes les variantes (tailles + coloris) ensemble.
+    by_url: dict[str, list[dict]] = {}
+    for rows in excel_data.values():
+        url = rows[0]["url"]
+        by_url.setdefault(url, []).extend(rows)
+
+    print(f"   {len(by_url)} URL(s) uniques Procity (produits logiques)")
+
     processed = 0
     skipped = 0
     total_variants = 0
 
-    for procity_ref, rows in excel_data.items():
+    for url, rows in by_url.items():
         if args.limit and processed >= args.limit:
             break
 
-        url = rows[0]["url"]
+        # Toutes les refs Excel pour cette URL (ex: ["206200", "206201", "206232"])
+        all_refs = list(dict.fromkeys(r["ref"] for r in rows))
         product_name = rows[0]["name"]
-        print(f"\n--- [{procity_ref}] {product_name}")
+        print(f"\n--- {all_refs} {product_name}")
         print(f"   {len(rows)} ligne(s) Excel | URL: {url}")
 
-        # 1) Trouver l'id Supabase du produit
-        supabase_product_id = find_product_id_in_supabase(procity_ref)
+        # 1) Trouver l'id Supabase du produit (essayer chaque ref dans l'ordre)
+        supabase_product_id, found_ref = find_product_id_in_supabase(all_refs)
         if not supabase_product_id:
             print("   [!] Produit non trouve en base Supabase -- skipping")
             skipped += 1
             continue
 
-        print(f"   OK product_id Supabase: {supabase_product_id}")
+        print(f"   OK product_id Supabase: {supabase_product_id} (via ref {found_ref})")
 
         # 2) Scraper la page Procity
         time.sleep(SCRAPE_DELAY)
@@ -377,6 +391,7 @@ def main():
                 print(f"      Options [{k}]: {v[:5]}{suffix}")
 
         # 3) Upload des images dans Supabase Storage
+        # On utilise found_ref comme dossier (ref du produit Supabase matchée)
         stored_image_urls: list[str] = []
         if not args.dry_run:
             for i, img_url in enumerate(scraped["images"]):
@@ -385,7 +400,7 @@ def main():
                     end=" ",
                     flush=True,
                 )
-                stored = upload_image_to_storage(img_url, procity_ref, i)
+                stored = upload_image_to_storage(img_url, found_ref, i)
                 if stored:
                     stored_image_urls.append(stored)
                     print("OK")
