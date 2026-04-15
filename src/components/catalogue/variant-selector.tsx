@@ -133,8 +133,15 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
       activeAxes.every(({ key }) => !newSelections[key] || v[key] === newSelections[key])
     )
 
+    if (compatible.length === 0) return
+
     const allAxesSelected = activeAxes.every(({ key }) => newSelections[key])
-    if (compatible.length === 1 || (compatible.length > 0 && allAxesSelected)) {
+    if (compatible.length === 1 || allAxesSelected) {
+      // Variante exacte trouvée
+      onSelect(compatible[0])
+    } else if (axis === 'coloris') {
+      // Coloris sélectionné mais axes incomplets → on appelle onSelect avec la
+      // première variante compatible pour mettre à jour l'image immédiatement
       onSelect(compatible[0])
     }
   }
