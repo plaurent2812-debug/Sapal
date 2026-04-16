@@ -74,6 +74,9 @@ export default function DevisPageClient() {
             quantity: item.quantity,
             unitPrice: item.variantPrice || item.product.price,
             delai: item.variantDelai || undefined,
+            variantId: item.variantId || undefined,
+            variantReference: item.variantReference || undefined,
+            variantLabel: item.variantLabel || undefined,
           })),
         }),
       });

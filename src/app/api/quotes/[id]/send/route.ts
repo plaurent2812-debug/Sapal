@@ -44,39 +44,50 @@ export async function POST(
     }
 
     // Fetch product prices and references for PDF
-    const productIds = (quote.quote_items as { product_id: string }[]).map(
-      (item) => item.product_id
-    )
+    const quoteItems = quote.quote_items as {
+      product_id: string
+      product_name: string
+      quantity: number
+      unit_price?: number | null
+      variant_id?: string
+      variant_label?: string
+    }[]
 
-    const { data: products } = await supabase
-      .from('products')
-      .select('id, price, reference')
-      .in('id', productIds)
+    const productIds = quoteItems.map((item) => item.product_id)
+    const variantIds = quoteItems.map((item) => item.variant_id).filter(Boolean) as string[]
+
+    const [productsRes, variantsRes] = await Promise.all([
+      supabase.from('products').select('id, price, reference').in('id', productIds),
+      variantIds.length > 0
+        ? supabase.from('product_variants').select('id, reference').in('id', variantIds)
+        : Promise.resolve({ data: [] }),
+    ])
 
     const productMap = new Map(
-      (products ?? []).map((p: { id: string; price: number; reference: string }) => [
+      ((productsRes.data ?? []) as { id: string; price: number; reference: string }[]).map((p) => [
         p.id,
         { price: Number(p.price) || 0, reference: p.reference || '' },
       ])
     )
 
+    const variantMap = new Map(
+      ((variantsRes.data ?? []) as { id: string; reference: string }[]).map((v) => [
+        v.id,
+        v.reference || '',
+      ])
+    )
+
     // Build PDF items — prefer unit_price stored on quote_items if non-zero
-    const pdfItems: QuotePDFItem[] = (
-      quote.quote_items as {
-        product_id: string
-        product_name: string
-        quantity: number
-        unit_price?: number | null
-      }[]
-    ).map((item) => {
+    const pdfItems: QuotePDFItem[] = quoteItems.map((item) => {
       const product = productMap.get(item.product_id)
+      const variantRef = item.variant_id ? variantMap.get(item.variant_id) : undefined
       const unitPriceHT =
         item.unit_price && item.unit_price > 0
           ? item.unit_price
           : (product?.price ?? 0)
       return {
-        reference: product?.reference ?? '',
-        productName: item.product_name,
+        reference: variantRef || product?.reference || '',
+        productName: item.variant_label ? `${item.product_name} — ${item.variant_label}` : item.product_name,
         quantity: item.quantity,
         unitPriceHT,
       }

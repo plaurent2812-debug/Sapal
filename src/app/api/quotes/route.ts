@@ -19,6 +19,9 @@ const quoteSchema = z.object({
     quantity: z.number().int().positive(),
     unitPrice: z.number().optional(),
     delai: z.string().optional(),
+    variantId: z.string().optional(),
+    variantReference: z.string().optional(),
+    variantLabel: z.string().optional(),
   })).min(1),
 })
 
@@ -81,6 +84,8 @@ export async function POST(request: Request) {
           quantity: i.quantity,
           unit_price: i.unitPrice || 0,
           delai: i.delai || null,
+          variant_id: i.variantId || null,
+          variant_label: i.variantLabel || null,
         }))
       )
 
@@ -100,7 +105,7 @@ export async function POST(request: Request) {
       // Silently fail — les devis anonymes restent valides sans user_id
     }
 
-    // Récupérer les références produits pour le PDF
+    // Récupérer les références produits pour le PDF (fallback si pas de variantReference)
     const productIds = items.map(i => i.productId)
     const { data: products } = await supabase
       .from('products')
@@ -117,8 +122,8 @@ export async function POST(request: Request) {
       email,
       phone,
       items: items.map(i => ({
-        reference: refMap.get(i.productId) || '',
-        productName: i.productName,
+        reference: i.variantReference || refMap.get(i.productId) || '',
+        productName: i.variantLabel ? `${i.productName} — ${i.variantLabel}` : i.productName,
         quantity: i.quantity,
         unitPriceHT: i.unitPrice || 0,
         delai: i.delai,
