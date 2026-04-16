@@ -7,6 +7,7 @@ export interface QuoteItem {
   quantity: number;
   variantId?: string;
   variantLabel?: string;
+  variantReference?: string;
   variantDelai?: string;
   variantPrice?: number;
   categorySlug?: string;
@@ -14,7 +15,7 @@ export interface QuoteItem {
 
 interface QuoteStore {
   items: QuoteItem[];
-  addItem: (product: ClientProduct, quantity?: number, variantId?: string, variantLabel?: string, variantDelai?: string, variantPrice?: number, categorySlug?: string) => void;
+  addItem: (product: ClientProduct, quantity?: number, variantId?: string, variantLabel?: string, variantDelai?: string, variantPrice?: number, categorySlug?: string, variantReference?: string) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -24,7 +25,7 @@ export const useQuoteStore = create<QuoteStore>()(
   persist(
     (set) => ({
       items: [],
-      addItem: (product, quantity = 1, variantId?, variantLabel?, variantDelai?, variantPrice?, categorySlug?) => set((state) => {
+      addItem: (product, quantity = 1, variantId?, variantLabel?, variantDelai?, variantPrice?, categorySlug?, variantReference?) => set((state) => {
         const existingItem = state.items.find(
           item => item.product.id === product.id && item.variantId === variantId
         )
@@ -37,7 +38,7 @@ export const useQuoteStore = create<QuoteStore>()(
             )
           }
         }
-        return { items: [...state.items, { product, quantity, variantId, variantLabel, variantDelai, variantPrice, categorySlug }] }
+        return { items: [...state.items, { product, quantity, variantId, variantLabel, variantReference, variantDelai, variantPrice, categorySlug }] }
       }),
       removeItem: (productId) => set((state) => ({
         items: state.items.filter(item => item.product.id !== productId)
