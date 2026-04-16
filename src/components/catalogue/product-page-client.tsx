@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ShieldCheck, Truck, Clock, Package } from "lucide-react"
@@ -8,6 +8,7 @@ import type { ClientProduct, ClientVariant, ClientCategory, ProductOption } from
 import { VariantSelector } from "./variant-selector"
 import { AddToQuoteSection } from "./add-to-quote-section"
 import { ProductOptionsSection } from "./product-options-section"
+import { InlineEditOverlay } from "./inline-edit-overlay"
 
 interface Props {
   product: ClientProduct
@@ -18,21 +19,33 @@ interface Props {
 }
 
 export function ProductPageClient({ product, variants, options, category, categorySlug }: Props) {
+  // Mutable state for inline editing
+  const [currentProduct, setCurrentProduct] = useState(product)
+  const [currentVariants, setCurrentVariants] = useState(variants)
+
   const [selectedVariant, setSelectedVariant] = useState<ClientVariant | null>(
-    variants.length === 1 ? variants[0] : null
+    currentVariants.length === 1 ? currentVariants[0] : null
   )
   const [activeImageIdx, setActiveImageIdx] = useState(0)
 
-  const displayReference = selectedVariant?.reference || product.reference
-  const displayPrice = selectedVariant ? selectedVariant.price : product.price
+  // Sync selectedVariant when variants are updated via inline edit
+  useEffect(() => {
+    if (selectedVariant) {
+      const updated = currentVariants.find(v => v.id === selectedVariant.id)
+      if (updated) setSelectedVariant(updated)
+    }
+  }, [currentVariants]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const displayReference = selectedVariant?.reference || currentProduct.reference
+  const displayPrice = selectedVariant ? selectedVariant.price : currentProduct.price
 
   // Galerie : images de la variante sélectionnée, ou image produit par défaut
   const galleryImages = useMemo(() => {
     if (selectedVariant?.images && selectedVariant.images.length > 0) {
       return selectedVariant.images
     }
-    return product.imageUrl ? [product.imageUrl] : []
-  }, [selectedVariant, product.imageUrl])
+    return currentProduct.imageUrl ? [currentProduct.imageUrl] : []
+  }, [selectedVariant, currentProduct.imageUrl])
 
   // Quand on change de variante, revenir à l'image 0
   const handleVariantSelect = (v: ClientVariant) => {
@@ -43,7 +56,7 @@ export function ProductPageClient({ product, variants, options, category, catego
   const currentImage = galleryImages[activeImageIdx] ?? null
 
   const specifications = useMemo(() => {
-    const specs = { ...product.specifications }
+    const specs = { ...currentProduct.specifications }
 
     if (selectedVariant) {
       if (selectedVariant.dimensions) specs['Dimensions'] = selectedVariant.dimensions
@@ -60,9 +73,10 @@ export function ProductPageClient({ product, variants, options, category, catego
     }
 
     return Object.entries(specs)
-  }, [product.specifications, selectedVariant])
+  }, [currentProduct.specifications, selectedVariant])
 
   return (
+    <>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16">
       {/* ── Colonne image ── */}
       <div className="space-y-3">
@@ -72,7 +86,7 @@ export function ProductPageClient({ product, variants, options, category, catego
             <Image
               key={currentImage}
               src={currentImage}
-              alt={product.name}
+              alt={currentProduct.name}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-contain p-6 md:p-8 group-hover:scale-105 transition-transform duration-500"
@@ -100,7 +114,7 @@ export function ProductPageClient({ product, variants, options, category, catego
               <button
                 key={img}
                 onClick={() => setActiveImageIdx(i)}
-                aria-label={`${product.name} — vue ${i + 1}`}
+                aria-label={`${currentProduct.name} — vue ${i + 1}`}
                 aria-pressed={i === activeImageIdx}
                 className={`w-14 h-14 rounded-lg overflow-hidden border-2 transition-all cursor-pointer flex-shrink-0 ${
                   i === activeImageIdx
@@ -110,7 +124,7 @@ export function ProductPageClient({ product, variants, options, category, catego
               >
                 <Image
                   src={img}
-                  alt={`${product.name} vue ${i + 1}`}
+                  alt={`${currentProduct.name} vue ${i + 1}`}
                   width={56}
                   height={56}
                   className="object-contain w-full h-full p-1"
@@ -133,7 +147,7 @@ export function ProductPageClient({ product, variants, options, category, catego
         </div>
 
         <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl tracking-tight mb-3 sm:mb-4">
-          {product.name}
+          {currentProduct.name}
         </h1>
 
         {displayPrice > 0 && (
@@ -146,10 +160,10 @@ export function ProductPageClient({ product, variants, options, category, catego
         )}
 
         <VariantSelector
-          variants={variants}
+          variants={currentVariants}
           selectedVariant={selectedVariant}
           onSelect={handleVariantSelect}
-          hasVariants={variants.length > 0}
+          hasVariants={currentVariants.length > 0}
         />
 
         {displayReference && (
@@ -178,9 +192,9 @@ export function ProductPageClient({ product, variants, options, category, catego
         )}
 
         <AddToQuoteSection
-          product={product}
+          product={currentProduct}
           selectedVariant={selectedVariant}
-          hasVariants={variants.length > 0}
+          hasVariants={currentVariants.length > 0}
           categorySlug={categorySlug}
         />
 
@@ -228,5 +242,14 @@ export function ProductPageClient({ product, variants, options, category, catego
         </div>
       </div>
     </div>
+
+    {/* Inline Edit Overlay — only visible to admins */}
+    <InlineEditOverlay
+      product={currentProduct}
+      variants={currentVariants}
+      onProductSaved={setCurrentProduct}
+      onVariantsSaved={setCurrentVariants}
+    />
+    </>
   )
 }
