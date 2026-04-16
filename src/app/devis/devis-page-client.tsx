@@ -96,7 +96,7 @@ export default function DevisPageClient() {
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const totalPrice = items.reduce((sum, item) => sum + (item.variantPrice || item.product.price) * item.quantity, 0);
 
   if (success) {
     return (
@@ -182,9 +182,14 @@ export default function DevisPageClient() {
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
                             <Link href={item.product.categorySlug ? `/catalogue/${item.product.categorySlug}/${item.product.slug}` : `/catalogue`} className="font-bold text-foreground leading-tight truncate block hover:text-accent transition-colors">{item.product.name}</Link>
-                            <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{item.product.description}</p>
-                            {item.product.reference && (
-                              <p className="text-[10px] font-mono text-muted-foreground mt-1">Réf. {item.product.reference}</p>
+                            {item.variantLabel && (
+                              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{item.variantLabel}</p>
+                            )}
+                            {!item.variantLabel && item.product.description && (
+                              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{item.product.description}</p>
+                            )}
+                            {(item.variantReference || item.product.reference) && (
+                              <p className="text-[10px] font-mono text-muted-foreground mt-1">Réf. {item.variantReference || item.product.reference}</p>
                             )}
                           </div>
                           <button onClick={() => removeItem(item.product.id)} className="p-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive rounded-lg transition-all cursor-pointer flex-shrink-0" aria-label={`Retirer ${item.product.name}`}>
@@ -210,16 +215,19 @@ export default function DevisPageClient() {
                                 <Clock size={12} className="text-accent" /> {/^\d+(\.\d+)?$/.test(item.variantDelai) ? (Number(item.variantDelai) >= 14 ? `${Math.ceil(Number(item.variantDelai) / 7)} semaines` : `${item.variantDelai} jours`) : item.variantDelai}
                               </span>
                             )}
-                            {item.product.price > 0 && (
+                            {(item.variantPrice || item.product.price) > 0 && (() => {
+                              const unitPrice = item.variantPrice || item.product.price
+                              return (
                               <div className="text-right">
                                 <p className="text-base sm:text-lg font-extrabold text-foreground">
-                                  {(item.product.price * item.quantity).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
+                                  {(unitPrice * item.quantity).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €
                                 </p>
                                 <p className="text-[10px] text-muted-foreground">
-                                  {item.product.price.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € HT / unité
+                                  {unitPrice.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} € HT / unité
                                 </p>
                               </div>
-                            )}
+                              )
+                            })()}
                           </div>
                         </div>
                       </div>
