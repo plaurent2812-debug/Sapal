@@ -52,3 +52,11 @@ supabase/.temp/
 scripts/images/
 scripts/output/
 scripts/procity/.venv/
+
+# Procity sync outputs (téléchargements locaux + logs, pas à versionner)
+scripts/procity/__pycache__/
+scripts/procity/output_inspect/
+scripts/procity/output_preview/
+scripts/procity/sync_full_run.log
+scripts/procity/report_run.log
+scripts/procity/import_full_log*.txt
