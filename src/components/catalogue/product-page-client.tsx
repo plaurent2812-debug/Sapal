@@ -88,20 +88,40 @@ export function ProductPageClient({ product, variants, options, category, catego
     return Object.entries(specs).filter(([, v]) => v && v !== '-' && v !== '')
   }, [currentProduct.specifications, selectedVariant])
 
-  // Délai affiché : variante > produit > fallback
+  // Délai affiché : variante sélectionnée > majorité des variantes > fallback
   const displayDelai = useMemo(() => {
-    const raw = selectedVariant?.delai || ''
-    if (!raw || raw === '-') return 'Délai selon stock'
-    // Si c'est juste un nombre (semaines d'après Procity), on affiche "N semaines"
-    if (/^\d+(\.\d+)?$/.test(raw)) {
-      const n = Number(raw)
-      return n >= 14 ? `${Math.ceil(n / 7)} semaines` : `${raw} jours`
+    const normalize = (raw: string): string => {
+      if (!raw || raw === '-') return ''
+      // Si c'est juste un nombre (semaines d'après Procity), on affiche "N semaines"
+      if (/^\d+(\.\d+)?$/.test(raw)) {
+        const n = Number(raw)
+        return n >= 14 ? `${Math.ceil(n / 7)} semaines` : `${raw} jours`
+      }
+      return raw
     }
-    return raw
-  }, [selectedVariant])
 
-  // Description affichée : SAPAL > raw > vide
-  const displayDescription = currentProduct.descriptionSapal || currentProduct.description || ''
+    if (selectedVariant?.delai) {
+      const out = normalize(selectedVariant.delai)
+      if (out) return out
+    }
+
+    // Pas de variante sélectionnée : on prend le délai le plus courant parmi les variantes
+    if (currentVariants.length > 0) {
+      const counts = new Map<string, number>()
+      for (const v of currentVariants) {
+        const out = normalize(v.delai)
+        if (!out) continue
+        counts.set(out, (counts.get(out) ?? 0) + 1)
+      }
+      if (counts.size > 0) {
+        const [top] = Array.from(counts.entries()).sort((a, b) => b[1] - a[1])
+        return top[0]
+      }
+    }
+
+    return 'Délai selon stock'
+  }, [selectedVariant, currentVariants])
+
 
   return (
     <>
@@ -184,12 +204,6 @@ export function ProductPageClient({ product, variants, options, category, catego
               {displayPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
             </span>
             <span className="text-sm text-muted-foreground font-medium">HT / unité</span>
-          </div>
-        )}
-
-        {displayDescription && (
-          <div className="mb-5 sm:mb-6 text-sm sm:text-base text-muted-foreground leading-relaxed whitespace-pre-line">
-            {displayDescription}
           </div>
         )}
 
