@@ -37,11 +37,19 @@ async function main() {
   const products = groupByProduct(rows);
   console.log(`[scrape] ${products.length} produits uniques, ${rows.length} variantes`);
 
-  let targets = products.filter((p) => p.procityUrl);
-  if (only) targets = targets.filter((p) => p.reference === only);
+  // Dédupliquer par URL Procity (une URL regroupe souvent plusieurs refs SAPAL)
+  const byUrl = new Map<string, { url: string; refs: string[] }>();
+  for (const p of products) {
+    if (!p.procityUrl) continue;
+    if (!byUrl.has(p.procityUrl)) byUrl.set(p.procityUrl, { url: p.procityUrl, refs: [] });
+    byUrl.get(p.procityUrl)!.refs.push(p.reference);
+  }
+
+  let targets = Array.from(byUrl.values());
+  if (only) targets = targets.filter((t) => t.refs.includes(only));
   if (limit) targets = targets.slice(0, limit);
 
-  console.log(`[scrape] ${targets.length} URLs à traiter`);
+  console.log(`[scrape] ${targets.length} URLs uniques à traiter (couvrent ${targets.reduce((s, t) => s + t.refs.length, 0)} produits)`);
 
   const state = new StateManager(STATE_PATH);
   if (!force) await state.load();
@@ -59,8 +67,7 @@ async function main() {
 
   try {
     for (let i = 0; i < targets.length; i++) {
-      const p = targets[i];
-      const url = p.procityUrl!;
+      const { url, refs } = targets[i];
       const progress = `[${i + 1}/${targets.length}]`;
       try {
         const fetched = await throttle(() => fetcher.fetchPage(url), 1500);
@@ -76,22 +83,28 @@ async function main() {
           }
         }
 
-        if (!force && state.shouldSkip(snapshot.reference, snapshot.contentHash)) {
+        const stateKey = `url:${url}`;
+        if (!force && state.shouldSkip(stateKey, snapshot.contentHash)) {
           stats.skipped++;
-          console.log(`${progress} [skip] ${snapshot.reference} (unchanged)`);
+          console.log(`${progress} [skip] ${snapshot.reference} (covers ${refs.length} refs, unchanged)`);
           continue;
         }
 
-        await saveSnapshot(snapshot);
-        await downloadAllMedia(snapshot, fetched);
-        state.record(snapshot.reference, snapshot.contentHash);
+        // Sauvegarder le snapshot sous CHAQUE référence partageant cette URL.
+        // On stocke aussi `mediaRef` = la ref canonique où vivent les images téléchargées.
+        const primaryRef = refs[0];
+        for (const ref of refs) {
+          await saveSnapshot({ ...snapshot, reference: ref, mediaRef: primaryRef });
+        }
+        await downloadAllMedia(snapshot, fetched, refs);
+        state.record(stateKey, snapshot.contentHash);
         await state.save();
         stats.ok++;
-        console.log(`${progress} [ok] ${snapshot.reference} — ${snapshot.title}`);
+        console.log(`${progress} [ok] ${snapshot.reference} — ${snapshot.title} (covers ${refs.length} refs)`);
       } catch (err) {
         stats.failed++;
         const msg = (err as Error).message || String(err);
-        console.error(`${progress} [fail] ${p.reference} ${url}: ${msg}`);
+        console.error(`${progress} [fail] ${refs[0]} ${url}: ${msg}`);
       }
     }
   } finally {
@@ -117,8 +130,13 @@ async function saveSnapshot(snapshot: ProductSnapshot): Promise<void> {
 async function downloadAllMedia(
   snapshot: ProductSnapshot,
   fetched: { imageLinks: string[]; variantImages: Map<string, string> },
+  refs: string[],
 ): Promise<void> {
-  const dir = join(IMAGES_DIR, snapshot.reference);
+  // On télécharge les images UNE SEULE FOIS dans le dossier de la ref canonique,
+  // puis on crée des copies pour les autres refs partageant l'URL (symlinks pas
+  // supportés par tous les systèmes → on dupliquera si besoin lors de l'import).
+  const primaryRef = refs[0];
+  const dir = join(IMAGES_DIR, primaryRef);
 
   // Images variantes (prioritaires)
   for (const imgUrl of fetched.variantImages.values()) {
@@ -129,9 +147,10 @@ async function downloadAllMedia(
     }
   }
 
-  // Autres images liées au produit (filtrer celles qui contiennent la reference)
+  // Autres images liées au produit (filtrer celles qui contiennent une des refs)
+  const knownVariantUrls = new Set(fetched.variantImages.values());
   const related = fetched.imageLinks.filter(
-    (u) => u.includes(snapshot.reference) && !Array.from(fetched.variantImages.values()).includes(u),
+    (u) => refs.some((r) => u.includes(r)) && !knownVariantUrls.has(u),
   );
   for (const imgUrl of related) {
     try {

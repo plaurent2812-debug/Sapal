@@ -15,6 +15,13 @@ export type Universe = 'mobilier-urbain' | 'aires-de-jeux' | 'equipements-sporti
 
 export interface ProductSnapshot {
   reference: string;
+  /**
+   * Référence sous laquelle les médias (images) sont stockés en local.
+   * Quand plusieurs refs SAPAL partagent une même URL Procity, les images sont
+   * téléchargées une seule fois sous la ref canonique pour éviter les doublons.
+   * Si absent, égal à `reference` (retrocompat).
+   */
+  mediaRef?: string;
   procityUrl: string;
   universe: Universe;
   categoryPath: string[];

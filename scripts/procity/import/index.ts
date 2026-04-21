@@ -4,7 +4,6 @@ import { join } from 'path';
 import { getProcitySupabaseClient } from '../shared/supabase-client';
 import { parseTarifExcel, groupByProduct, type ProductFromExcel } from './excel-parser';
 import { loadLocalPhotoIndex, matchImagesForReference } from './image-matcher';
-import { rewriteDescription } from '../../../src/lib/llm-rewriter';
 import { uploadMedia, buildMediaPath } from './storage-uploader';
 import { upsertProduct } from './db-writer';
 import type { ProductSnapshot } from '../scraper/types';
@@ -21,7 +20,6 @@ interface Options {
   apply: boolean;
   limit?: number;
   only?: string;
-  skipLlm: boolean;
 }
 
 function parseArgs(): Options {
@@ -30,14 +28,13 @@ function parseArgs(): Options {
     apply: args.includes('--apply'),
     limit: args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1], 10) : undefined,
     only: args.includes('--only') ? args[args.indexOf('--only') + 1] : undefined,
-    skipLlm: args.includes('--skip-llm'),
   };
 }
 
 async function main() {
   const opts = parseArgs();
   const mode = opts.apply ? 'APPLY' : 'DRY-RUN';
-  console.log(`[import] mode=${mode}${opts.limit ? ` limit=${opts.limit}` : ''}${opts.only ? ` only=${opts.only}` : ''}${opts.skipLlm ? ' (LLM skipped)' : ''}`);
+  console.log(`[import] mode=${mode}${opts.limit ? ` limit=${opts.limit}` : ''}${opts.only ? ` only=${opts.only}` : ''}`);
 
   const supabase = getProcitySupabaseClient();
   const { data: supplier, error: supErr } = await supabase
@@ -83,23 +80,10 @@ async function main() {
         supabase, excel, snapshot, localPhotos,
       );
 
-      let descriptionSapal: string | null = null;
-      if (!opts.skipLlm && snapshot && snapshot.descriptionRaw) {
-        try {
-          descriptionSapal = await rewriteDescription({
-            title: snapshot.title,
-            descriptionRaw: snapshot.descriptionRaw,
-            characteristics: snapshot.characteristics,
-          });
-        } catch (err) {
-          console.warn(`${progress} [llm-warn] ${excel.reference}: ${(err as Error).message}`);
-        }
-      }
-
       const { action } = await upsertProduct(supabase, {
         excel,
         snapshot,
-        descriptionSapal,
+        descriptionSapal: null,   // descriptions désactivées — on n'affiche plus de texte produit
         galleryUrls,
         variantImageUrls,
         techSheetUrl: null,        // Procity bloque les PDFs — on les ajoutera à la main plus tard
@@ -151,8 +135,11 @@ async function uploadProductMedia(
   }
 
   // 2. Images scrapées : gallery supplémentaire + primary par variante
+  // Les images peuvent être stockées sous la ref canonique (mediaRef) quand plusieurs
+  // refs SAPAL partagent la même URL Procity.
   if (snapshot) {
-    const scraperDir = join(IMAGES_DIR, ref);
+    const mediaDirRef = snapshot.mediaRef || ref;
+    const scraperDir = join(IMAGES_DIR, mediaDirRef);
     if (existsSync(scraperDir)) {
       const scraperFiles = await readdir(scraperDir);
 
