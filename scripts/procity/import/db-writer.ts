@@ -188,12 +188,15 @@ async function upsertVariants(
         (structureAxis ? sv.attributes[structureAxis] : '') ||
         excelBase?.finition ||
         '';
+      // Poids : priorité snapshot (Procity expose un poids par variante via PSES),
+      // fallback Excel si absent
+      const weightKg = sv.weightKg ?? excelBase?.weightKg;
       variantsToWrite.push({
         reference: sv.variantRef,
         coloris: normalizeColoris(rawColoris),
         finition: normalizeFinition(rawFinition),
         dimensions: excelBase?.dimensions || '',
-        poids: excelBase?.weightKg ? `${excelBase.weightKg} kg` : '',
+        poids: weightKg ? `${weightKg} kg` : '',
         price: excelBase?.priceNetHt || excelBase?.pricePublicHt || null,
         delai: sv.availability || excelBase?.delai || '',
         images: [],

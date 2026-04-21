@@ -206,6 +206,7 @@ function extractVariants($: CheerioAPI): {
       attributes: combo,
       ral,
       availability: pse.disponibility,
+      weightKg: pse.weight > 0 ? pse.weight : undefined,
       imageFilenames: [],
     };
   });

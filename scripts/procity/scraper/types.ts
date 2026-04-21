@@ -3,6 +3,7 @@ export interface VariantSnapshot {
   attributes: Record<string, string>;
   ral?: string;
   availability?: string;
+  weightKg?: number;
   imageFilenames: string[];
 }
 
