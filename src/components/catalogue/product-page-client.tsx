@@ -43,8 +43,9 @@ export function ProductPageClient({ product, variants, options, category, catego
   // Si pas de variante sélectionnée, on affiche la galerie produit complète
   // (ou l'image principale en fallback).
   const galleryImages = useMemo(() => {
-    const productGallery = currentProduct.galleryImageUrls.length > 0
-      ? currentProduct.galleryImageUrls
+    const gallery = currentProduct.galleryImageUrls ?? []
+    const productGallery = gallery.length > 0
+      ? gallery
       : (currentProduct.imageUrl ? [currentProduct.imageUrl] : [])
 
     if (selectedVariant?.primaryImageUrl) {
