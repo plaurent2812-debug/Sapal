@@ -153,8 +153,8 @@ async function upsertVariants(
     for (const ev of excelVariants) {
       variantsToWrite.push({
         reference: ev.reference,
-        coloris: ev.coloris || '',
-        finition: ev.finition || '',
+        coloris: normalizeColoris(ev.coloris),
+        finition: normalizeFinition(ev.finition),
         dimensions: ev.dimensions || '',
         poids: ev.weightKg ? `${ev.weightKg} kg` : '',
         price: ev.priceNetHt || ev.pricePublicHt || null,
@@ -168,10 +168,12 @@ async function upsertVariants(
     // Excel 1 ligne mais snapshot expose plusieurs variantes : on prend le snapshot comme source
     const excelBase = excelVariants[0];
     for (const sv of snapshot.variants) {
+      const rawColoris = sv.attributes.Couleur || sv.attributes.couleur || excelBase?.coloris || '';
+      const rawFinition = sv.attributes.Finition || sv.attributes['Finition du bois'] || excelBase?.finition || '';
       variantsToWrite.push({
         reference: sv.variantRef,
-        coloris: sv.attributes.Couleur || sv.attributes.couleur || excelBase?.coloris || '',
-        finition: sv.attributes.Finition || sv.attributes['Finition du bois'] || excelBase?.finition || '',
+        coloris: normalizeColoris(rawColoris),
+        finition: normalizeFinition(rawFinition),
         dimensions: excelBase?.dimensions || '',
         poids: excelBase?.weightKg ? `${excelBase.weightKg} kg` : '',
         price: excelBase?.priceNetHt || excelBase?.pricePublicHt || null,
@@ -185,8 +187,8 @@ async function upsertVariants(
     const ev = excelVariants[0];
     variantsToWrite.push({
       reference: ev.reference,
-      coloris: ev.coloris || '',
-      finition: ev.finition || '',
+      coloris: normalizeColoris(ev.coloris),
+      finition: normalizeFinition(ev.finition),
       dimensions: ev.dimensions || '',
       poids: ev.weightKg ? `${ev.weightKg} kg` : '',
       price: ev.priceNetHt || ev.pricePublicHt || null,
@@ -197,26 +199,60 @@ async function upsertVariants(
     });
   }
 
-  // Upsert en bulk avec onConflict sur la clé naturelle
+  // Upsert en bulk avec onConflict sur la clé naturelle.
+  // Le format des colonnes match le format historique prod : coloris sans "RAL ",
+  // finition vide (pas "-") quand absente, label combiné pour l'affichage admin.
   for (const v of variantsToWrite) {
+    const label = buildVariantLabel(v);
     const { error } = await supabase.from('product_variants').upsert(
       {
         product_id: productId,
         reference: v.reference,
+        label,
         coloris: v.coloris,
         finition: v.finition,
         dimensions: v.dimensions,
         poids: v.poids,
-        price: v.price,
+        price: v.price ?? 0,
         delai: v.delai,
-        images: v.images,
+        images: v.images || [],
         primary_image_url: v.primary_image_url,
-        specifications: v.specifications,
+        specifications: v.specifications || {},
       },
       { onConflict: 'product_id,reference,coloris,finition' },
     );
     if (error) throw new Error(`upsert variant ${v.reference}/${v.coloris}: ${error.message}`);
   }
+}
+
+/** Normalise un coloris : retire le préfixe "RAL " pour les codes RAL numériques, conserve tel quel pour "Gris Procity", "Aspect Corten", etc. */
+function normalizeColoris(raw: string | undefined): string {
+  if (!raw) return '';
+  const trimmed = raw.trim();
+  if (trimmed === 'Standard' || trimmed === '-') return trimmed;
+  const ral = trimmed.match(/^RAL\s*(\d{4})$/i);
+  if (ral) return ral[1];
+  return trimmed;
+}
+
+/** Finition vide si absente ou "-" ; on garde la vraie valeur sinon. */
+function normalizeFinition(raw: string | undefined): string {
+  if (!raw) return '';
+  const t = raw.trim();
+  if (t === '-') return '';
+  return t;
+}
+
+/** Label lisible : "[finition — ]dimensions — coloris" */
+function buildVariantLabel(v: { coloris: string; finition: string; dimensions: string; reference: string }): string {
+  const parts: string[] = [];
+  if (v.finition) parts.push(v.finition);
+  if (v.dimensions) parts.push(v.dimensions);
+  if (v.coloris) {
+    const display = /^\d{4}$/.test(v.coloris) ? `RAL ${v.coloris}` : v.coloris;
+    parts.push(display);
+  }
+  return parts.join(' — ') || v.reference;
 }
 
 function slugify(s: string): string {
