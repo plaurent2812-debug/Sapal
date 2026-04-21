@@ -59,6 +59,12 @@ export async function upsertProduct(
   const procityType = excel.productType || null;
   const basePrice = excel.variants[0]?.priceNetHt || excel.variants[0]?.pricePublicHt || 0;
 
+  // Résolution category_id : si le produit existe, on garde sa catégorie.
+  // Sinon, mapping automatique basé sur productType + universe Excel.
+  const categoryId = existing
+    ? undefined // pas d'override sur update
+    : await resolveCategoryId(supabase, excel);
+
   const payload: Record<string, unknown> = {
     supplier_id: supplierId,
     supplier: 'procity',
@@ -95,6 +101,7 @@ export async function upsertProduct(
   } else {
     // Nouveau produit : on utilise la reference comme id (products.id est text)
     payload.id = ref;
+    if (categoryId) payload.category_id = categoryId;
     const { error } = await supabase.from('products').insert(payload);
     if (error) throw new Error(`insert product ${ref}: ${error.message}`);
     productId = ref;
@@ -309,4 +316,65 @@ function slugify(s: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
     .slice(0, 100);
+}
+
+/**
+ * Mapping Excel productType/universe → catégorie SAPAL existante.
+ * On match par mots-clés dans productType/category, et par universe en fallback.
+ * Les slugs SAPAL existants : mobilier-urbain, signalisation, abris-et-cycles,
+ * amenagement-securite, espaces-verts, amenagement-rue, aires-de-jeux,
+ * equipements-sportifs, miroirs-securite, jalonnement-bornes-potelets,
+ * balisage-permanent, balisage-temporaire, balisage-lumineux,
+ * equipements-securite-sol, autres-produits-securite.
+ */
+const categoryCache = new Map<string, string>();
+
+async function resolveCategoryId(
+  supabase: SupabaseClient,
+  excel: ProductFromExcel,
+): Promise<string> {
+  const slug = chooseCategorySlug(excel);
+  const cached = categoryCache.get(slug);
+  if (cached) return cached;
+
+  const { data } = await supabase
+    .from('categories')
+    .select('id')
+    .eq('slug', slug)
+    .maybeSingle();
+
+  // Fallback sur mobilier-urbain si le slug choisi n'existe pas
+  let finalId = data?.id as string | undefined;
+  if (!finalId) {
+    const { data: fallback } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('slug', 'mobilier-urbain')
+      .single();
+    finalId = fallback!.id;
+  }
+  categoryCache.set(slug, finalId!);
+  return finalId!;
+}
+
+function chooseCategorySlug(excel: ProductFromExcel): string {
+  const type = (excel.productType || '').toUpperCase();
+  const family = (excel.category || '').toUpperCase();
+
+  // Univers Excel
+  if (excel.universe === 'aires-de-jeux') return 'aires-de-jeux';
+  if (excel.universe === 'equipements-sportifs') return 'equipements-sportifs';
+  if (excel.universe === 'miroirs') return 'miroirs-securite';
+
+  // Mobilier urbain : sous-catégorisation par productType
+  const typeOrFamily = `${type} ${family}`;
+  if (/ABRI|STATION BUS|ABRIS FUMEURS|ABRI V[ÉE]LO/.test(typeOrFamily)) return 'abris-et-cycles';
+  if (/POTELET|BORNE|JALONNEUR|CATADIOPTRE/.test(typeOrFamily)) return 'jalonnement-bornes-potelets';
+  if (/BARRI[ÈE]RE|ARCEAU|GLISSI[ÈE]RE|PORTIQUE/.test(typeOrFamily)) return 'amenagement-rue';
+  if (/CORBEILLE|CENDRIER|COMPOSTEUR|JARDINI[ÈE]RE|BANC|BANQUETTE|TABLE/.test(typeOrFamily)) return 'espaces-verts';
+  if (/MIROIR/.test(typeOrFamily)) return 'miroirs-securite';
+  if (/PANNEAU|SIGNAL/.test(typeOrFamily)) return 'signalisation';
+
+  // Défaut
+  return 'mobilier-urbain';
 }

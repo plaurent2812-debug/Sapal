@@ -228,25 +228,6 @@ export function ProductPageClient({ product, variants, options, category, catego
           </p>
         )}
 
-        {specifications.length > 0 && (
-          <div className="mb-6 sm:mb-8">
-            <h2 className="font-heading text-lg sm:text-xl mb-3 sm:mb-4">Caractéristiques</h2>
-            <div className="rounded-xl border border-border/50 overflow-hidden">
-              {specifications.map(([key, value], i) => (
-                <div
-                  key={key}
-                  className={`flex justify-between gap-3 px-4 sm:px-5 py-3 sm:py-3.5 text-sm ${
-                    i % 2 === 0 ? "bg-muted/20" : "bg-background"
-                  }`}
-                >
-                  <span className="text-muted-foreground font-medium flex-shrink-0">{key}</span>
-                  <span className="font-semibold text-right break-words min-w-0">{value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         <AddToQuoteSection
           product={currentProduct}
           selectedVariant={selectedVariant}
@@ -265,6 +246,25 @@ export function ProductPageClient({ product, variants, options, category, catego
               <FileDown size={16} className="text-accent" />
               Télécharger la fiche technique
             </a>
+          </div>
+        )}
+
+        {specifications.length > 0 && (
+          <div className="mt-6 sm:mt-8">
+            <h2 className="font-heading text-lg sm:text-xl mb-3 sm:mb-4">Caractéristiques</h2>
+            <div className="rounded-xl border border-border/50 overflow-hidden">
+              {specifications.map(([key, value], i) => (
+                <div
+                  key={key}
+                  className={`flex justify-between gap-3 px-4 sm:px-5 py-3 sm:py-3.5 text-sm ${
+                    i % 2 === 0 ? "bg-muted/20" : "bg-background"
+                  }`}
+                >
+                  <span className="text-muted-foreground font-medium flex-shrink-0">{key}</span>
+                  <span className="font-semibold text-right break-words min-w-0">{value}</span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
