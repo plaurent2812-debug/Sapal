@@ -167,9 +167,20 @@ async function upsertVariants(
   } else if (snapshot && snapshot.variants.length > 0) {
     // Excel 1 ligne mais snapshot expose plusieurs variantes : on prend le snapshot comme source
     const excelBase = excelVariants[0];
+
+    // Détecter le meilleur axe non-couleur à utiliser comme "finition" (pour le selector UI).
+    // Priorité : Finition, Finition du bois, puis Structure autre, Structure, puis tout autre
+    // attribut présent avec plusieurs valeurs.
+    const structureAxis = detectStructureAxis(snapshot.variants);
+
     for (const sv of snapshot.variants) {
       const rawColoris = sv.attributes.Couleur || sv.attributes.couleur || excelBase?.coloris || '';
-      const rawFinition = sv.attributes.Finition || sv.attributes['Finition du bois'] || excelBase?.finition || '';
+      const rawFinition =
+        sv.attributes.Finition ||
+        sv.attributes['Finition du bois'] ||
+        (structureAxis ? sv.attributes[structureAxis] : '') ||
+        excelBase?.finition ||
+        '';
       variantsToWrite.push({
         reference: sv.variantRef,
         coloris: normalizeColoris(rawColoris),
@@ -223,6 +234,41 @@ async function upsertVariants(
     );
     if (error) throw new Error(`upsert variant ${v.reference}/${v.coloris}: ${error.message}`);
   }
+}
+
+/**
+ * Trouve le meilleur attribut variant (hors Couleur) à stocker dans `finition`
+ * pour activer le sélecteur "Structure" côté fiche produit.
+ * Ignore "Couleur"/"Finition du bois" déjà gérés en amont.
+ */
+function detectStructureAxis(
+  variants: Array<{ attributes: Record<string, string> }>,
+): string | null {
+  const ignored = new Set(['Couleur', 'couleur', 'Finition', 'Finition du bois']);
+  const valuesByKey = new Map<string, Set<string>>();
+  for (const v of variants) {
+    for (const [k, val] of Object.entries(v.attributes)) {
+      if (ignored.has(k) || !val) continue;
+      if (!valuesByKey.has(k)) valuesByKey.set(k, new Set());
+      valuesByKey.get(k)!.add(val);
+    }
+  }
+  const candidates: Array<{ key: string; distinct: number }> = [];
+  for (const [k, vals] of valuesByKey) {
+    if (vals.size >= 2) candidates.push({ key: k, distinct: vals.size });
+  }
+  if (candidates.length === 0) return null;
+  // Privilégier "Structure autre" / "Structure" explicitement, sinon prendre
+  // l'axe avec le moins de valeurs distinctes (probablement une option binaire).
+  candidates.sort((a, b) => {
+    const priority = (k: string) =>
+      /structure autre/i.test(k) ? 0 : /^structure$/i.test(k) ? 1 : 2;
+    const pa = priority(a.key);
+    const pb = priority(b.key);
+    if (pa !== pb) return pa - pb;
+    return a.distinct - b.distinct;
+  });
+  return candidates[0].key;
 }
 
 /** Normalise un coloris : retire le préfixe "RAL " pour les codes RAL numériques, conserve tel quel pour "Gris Procity", "Aspect Corten", etc. */

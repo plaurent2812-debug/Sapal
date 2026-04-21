@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ShieldCheck, Truck, Clock, Package } from "lucide-react"
+import { ShieldCheck, Truck, Clock, Package, FileDown, Calendar } from "lucide-react"
 import type { ClientProduct, ClientVariant, ClientCategory, ProductOption } from "@/lib/data"
 import { VariantSelector } from "./variant-selector"
 import { AddToQuoteSection } from "./add-to-quote-section"
@@ -39,13 +39,25 @@ export function ProductPageClient({ product, variants, options, category, catego
   const displayReference = selectedVariant?.reference || currentProduct.reference
   const displayPrice = selectedVariant ? selectedVariant.price : currentProduct.price
 
-  // Galerie : images de la variante sélectionnée, ou image produit par défaut
+  // Galerie : image variante (primary) en tête + galerie produit, dédupliquée.
+  // Si pas de variante sélectionnée, on affiche la galerie produit complète
+  // (ou l'image principale en fallback).
   const galleryImages = useMemo(() => {
+    const productGallery = currentProduct.galleryImageUrls.length > 0
+      ? currentProduct.galleryImageUrls
+      : (currentProduct.imageUrl ? [currentProduct.imageUrl] : [])
+
+    if (selectedVariant?.primaryImageUrl) {
+      const rest = productGallery.filter(u => u !== selectedVariant.primaryImageUrl)
+      return [selectedVariant.primaryImageUrl, ...rest]
+    }
+
     if (selectedVariant?.images && selectedVariant.images.length > 0) {
       return selectedVariant.images
     }
-    return currentProduct.imageUrl ? [currentProduct.imageUrl] : []
-  }, [selectedVariant, currentProduct.imageUrl])
+
+    return productGallery
+  }, [selectedVariant, currentProduct.imageUrl, currentProduct.galleryImageUrls])
 
   // Quand on change de variante, revenir à l'image 0
   const handleVariantSelect = (v: ClientVariant) => {
@@ -56,24 +68,39 @@ export function ProductPageClient({ product, variants, options, category, catego
   const currentImage = galleryImages[activeImageIdx] ?? null
 
   const specifications = useMemo(() => {
-    const specs = { ...currentProduct.specifications }
+    const specs: Record<string, string> = { ...currentProduct.specifications }
 
     if (selectedVariant) {
       if (selectedVariant.dimensions) specs['Dimensions'] = selectedVariant.dimensions
       if (selectedVariant.poids) specs['Poids'] = selectedVariant.poids
       if (selectedVariant.finition) specs['Finition'] = selectedVariant.finition
-      if (selectedVariant.delai) specs['Délai'] = /^\d+(\.\d+)?$/.test(selectedVariant.delai)
-        ? (Number(selectedVariant.delai) >= 14
-          ? `${Math.ceil(Number(selectedVariant.delai) / 7)} semaines`
-          : `${selectedVariant.delai} jours`)
-        : selectedVariant.delai
       if (selectedVariant.specifications && Object.keys(selectedVariant.specifications).length > 0) {
-        Object.assign(specs, selectedVariant.specifications)
+        // Les attributs variantes ne surchargent PAS les caractéristiques produit,
+        // ils les complètent (ex : "Structure autre" de variante, "Dimensions" de produit).
+        for (const [k, v] of Object.entries(selectedVariant.specifications)) {
+          if (!specs[k] && v) specs[k] = v
+        }
       }
     }
 
-    return Object.entries(specs)
+    // Supprimer les entrées vides ou génériques
+    return Object.entries(specs).filter(([, v]) => v && v !== '-' && v !== '')
   }, [currentProduct.specifications, selectedVariant])
+
+  // Délai affiché : variante > produit > fallback
+  const displayDelai = useMemo(() => {
+    const raw = selectedVariant?.delai || ''
+    if (!raw || raw === '-') return 'Délai selon stock'
+    // Si c'est juste un nombre (semaines d'après Procity), on affiche "N semaines"
+    if (/^\d+(\.\d+)?$/.test(raw)) {
+      const n = Number(raw)
+      return n >= 14 ? `${Math.ceil(n / 7)} semaines` : `${raw} jours`
+    }
+    return raw
+  }, [selectedVariant])
+
+  // Description affichée : SAPAL > raw > vide
+  const displayDescription = currentProduct.descriptionSapal || currentProduct.description || ''
 
   return (
     <>
@@ -159,6 +186,20 @@ export function ProductPageClient({ product, variants, options, category, catego
           </div>
         )}
 
+        {displayDescription && (
+          <div className="mb-5 sm:mb-6 text-sm sm:text-base text-muted-foreground leading-relaxed whitespace-pre-line">
+            {displayDescription}
+          </div>
+        )}
+
+        {displayDelai && (
+          <div className="mb-5 sm:mb-6 inline-flex items-center gap-2 text-sm">
+            <Calendar size={16} className="text-accent flex-shrink-0" />
+            <span className="text-muted-foreground">Disponibilité :</span>
+            <span className="font-semibold text-foreground">{displayDelai}</span>
+          </div>
+        )}
+
         <VariantSelector
           variants={currentVariants}
           selectedVariant={selectedVariant}
@@ -198,6 +239,20 @@ export function ProductPageClient({ product, variants, options, category, catego
           categorySlug={categorySlug}
         />
 
+        {currentProduct.techSheetUrl && (
+          <div className="mt-4">
+            <a
+              href={currentProduct.techSheetUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-border/50 rounded-lg text-sm font-medium text-foreground hover:bg-secondary/20 transition-colors"
+            >
+              <FileDown size={16} className="text-accent" />
+              Télécharger la fiche technique
+            </a>
+          </div>
+        )}
+
         <ProductOptionsSection options={options} />
 
         <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-border/50">
@@ -208,7 +263,7 @@ export function ProductPageClient({ product, variants, options, category, catego
               </div>
               <div>
                 <p className="font-semibold text-foreground">Livraison France</p>
-                <p className="text-xs text-muted-foreground">Délai selon stock</p>
+                <p className="text-xs text-muted-foreground">{displayDelai}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 text-sm">
@@ -240,6 +295,12 @@ export function ProductPageClient({ product, variants, options, category, catego
             </div>
           </div>
         </div>
+
+        {currentProduct.supplier === 'procity' && (
+          <div className="mt-5 text-xs text-muted-foreground italic">
+            Produit fabriqué par Procity
+          </div>
+        )}
       </div>
     </div>
 

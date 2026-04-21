@@ -17,6 +17,7 @@ export interface ClientVariant {
   delai: string
   specifications: Record<string, string>
   images: string[]
+  primaryImageUrl: string | null
 }
 
 export function toClientVariant(v: ProductVariantRow): ClientVariant {
@@ -33,6 +34,7 @@ export function toClientVariant(v: ProductVariantRow): ClientVariant {
     delai: v.delai,
     specifications: v.specifications,
     images: v.images ?? [],
+    primaryImageUrl: v.primary_image_url ?? null,
   }
 }
 
@@ -55,8 +57,12 @@ export interface ClientProduct {
   name: string
   slug: string
   description: string
+  descriptionSapal: string | null
   specifications: Record<string, string>
   imageUrl: string
+  galleryImageUrls: string[]
+  techSheetUrl: string | null
+  procityUrl: string | null
   price: number
   reference: string
   supplier?: string
@@ -73,8 +79,12 @@ export function toClientProduct(p: Product, categorySlug?: string): ClientProduc
     name: p.name,
     slug: p.slug,
     description: p.description,
+    descriptionSapal: p.description_sapal ?? null,
     specifications: p.specifications,
     imageUrl: p.image_url,
+    galleryImageUrls: p.gallery_image_urls ?? [],
+    techSheetUrl: p.tech_sheet_url ?? null,
+    procityUrl: p.procity_url ?? null,
     price: Number(p.price) || 0,
     reference: p.reference || '',
     supplier: p.supplier ?? undefined,

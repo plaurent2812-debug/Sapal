@@ -9,8 +9,12 @@ const mockProduct: ClientProduct = {
   name: 'Panneau Stop',
   slug: 'panneau-stop',
   description: 'Panneau de signalisation',
+  descriptionSapal: null,
   specifications: {},
   imageUrl: 'https://example.com/stop.webp',
+  galleryImageUrls: [],
+  techSheetUrl: null,
+  procityUrl: null,
   price: 120,
   reference: 'REF-001',
 }

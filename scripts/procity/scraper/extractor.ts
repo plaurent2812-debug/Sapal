@@ -1,4 +1,6 @@
-import { load, type CheerioAPI } from 'cheerio';
+import { load } from 'cheerio';
+
+type CheerioAPI = ReturnType<typeof load>;
 import { createHash } from 'crypto';
 import type {
   ProductSnapshot,

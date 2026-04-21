@@ -1,0 +1,2095 @@
+[
+  {
+    "product_id": "1023",
+    "product_name": "Accessoires",
+    "product_ref": "100008",
+    "supplier_url": "",
+    "procity_family": "ACCESSOIRES"
+  },
+  {
+    "product_id": "1107",
+    "product_name": "Clotûre Aire De Jeux",
+    "product_ref": "813000",
+    "supplier_url": "https://www.procity.eu/fr/miroir-hémisphérique-¼-sphère-1.html",
+    "procity_family": "ÉQUIPEMENTS AIRES DE JEUX"
+  },
+  {
+    "product_id": "1211",
+    "product_name": "Panneau Animal",
+    "product_ref": "814009",
+    "supplier_url": "https://www.procity.eu/fr/panneau-animaux-interdiction-de-fumer.html",
+    "procity_family": "ÉQUIPEMENTS AIRES DE JEUX"
+  },
+  {
+    "product_id": "1212",
+    "product_name": "Panneau Animal & Interdiction De Fumer",
+    "product_ref": "814013",
+    "supplier_url": "https://www.procity.eu/fr/bâche-étanche-pour-bac.html",
+    "procity_family": "ÉQUIPEMENTS AIRES DE JEUX"
+  },
+  {
+    "product_id": "1214",
+    "product_name": "Panneau Interdiction De Fumer",
+    "product_ref": "814007",
+    "supplier_url": "https://www.procity.eu/fr/clôture-rondin-appui-simple.html",
+    "procity_family": "ÉQUIPEMENTS AIRES DE JEUX"
+  },
+  {
+    "product_id": "1215",
+    "product_name": "Panneau Nuage",
+    "product_ref": "814001",
+    "supplier_url": "https://www.procity.eu/fr/panneau-annimaux.html",
+    "procity_family": "ÉQUIPEMENTS AIRES DE JEUX"
+  },
+  {
+    "product_id": "1245",
+    "product_name": "Portillon",
+    "product_ref": "813001",
+    "supplier_url": "https://www.procity.eu/fr/jeux-à-grimper-pago-pago.html",
+    "procity_family": "ÉQUIPEMENTS AIRES DE JEUX"
+  },
+  {
+    "product_id": "1000",
+    "product_name": "Abdominaux",
+    "product_ref": "820000",
+    "supplier_url": "https://www.procity.eu/fr/arbre.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1029",
+    "product_name": "Arbre",
+    "product_ref": "820014",
+    "supplier_url": "https://www.procity.eu/fr/barres-asymétriques.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1066",
+    "product_name": "Barres Asymétriques",
+    "product_ref": "820010",
+    "supplier_url": "https://www.procity.eu/fr/barres-fixes-3-barres.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1067",
+    "product_name": "Barres Fixes",
+    "product_ref": "820011",
+    "supplier_url": "https://www.procity.eu/fr/barres-parralèles.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1068",
+    "product_name": "Barres Parallèles",
+    "product_ref": "820012",
+    "supplier_url": "https://www.procity.eu/fr/chicanes.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1105",
+    "product_name": "Chicanes",
+    "product_ref": "820020",
+    "supplier_url": "https://www.procity.eu/fr/cordes-d-équilibre.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1127",
+    "product_name": "Cordes D'Équilibre",
+    "product_ref": "820071",
+    "supplier_url": "https://www.procity.eu/fr/echelle-de-suspension-inclinée.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1328",
+    "product_name": "Échelle De Suspension Inclinée",
+    "product_ref": "820030",
+    "supplier_url": "https://www.procity.eu/fr/echelle-double.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1329",
+    "product_name": "Échelle Double",
+    "product_ref": "820031",
+    "supplier_url": "https://www.procity.eu/fr/echelles-de-saut.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1330",
+    "product_name": "Échelles De Saut",
+    "product_ref": "820032",
+    "supplier_url": "https://www.procity.eu/fr/echelles-de-suspension.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1331",
+    "product_name": "Échelles De Suspension",
+    "product_ref": "820033",
+    "supplier_url": "https://www.procity.eu/fr/espalier-double.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1135",
+    "product_name": "Espalier Double",
+    "product_ref": "820040",
+    "supplier_url": "https://www.procity.eu/fr/espaliers-ondules.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1136",
+    "product_name": "Espaliers Ondules",
+    "product_ref": "820041",
+    "supplier_url": "https://www.procity.eu/fr/etirements-jambes.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1333",
+    "product_name": "Étirements Jambes",
+    "product_ref": "820055",
+    "supplier_url": "https://www.procity.eu/fr/mur-d-escalade.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1196",
+    "product_name": "Mur D'Escalade 2 Faces",
+    "product_ref": "820070",
+    "supplier_url": "https://www.procity.eu/fr/panneau-d-arrivée-atelier-de-pacours-sportifs-en-bois.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1213",
+    "product_name": "Panneau De Consignes",
+    "product_ref": "820100",
+    "supplier_url": "https://www.procity.eu/fr/panneau-départ-atelier-de-pacours-sportifs-en-bois.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1228",
+    "product_name": "Parcours De Santé Bois : Lot 1 (12 Éléments)",
+    "product_ref": "820120",
+    "supplier_url": "https://www.procity.eu/fr/lot-2-parcours-de-santé-bois.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1229",
+    "product_name": "Parcours De Santé Bois : Lot 2 (13 Éléments)",
+    "product_ref": "820121",
+    "supplier_url": "https://www.procity.eu/fr/lot-3-parcours-de-santé-bois.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1230",
+    "product_name": "Parcours De Santé Bois : Lot 3 (14 Éléments)",
+    "product_ref": "820122",
+    "supplier_url": "https://www.procity.eu/fr/lot-1-parcours-de-santé-bois.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1231",
+    "product_name": "Parcours De Sauts",
+    "product_ref": "820067",
+    "supplier_url": "https://www.procity.eu/fr/pas-de-berger.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1232",
+    "product_name": "Pas De Berger",
+    "product_ref": "820068",
+    "supplier_url": "https://www.procity.eu/fr/pas-de-géants-15-plots.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1233",
+    "product_name": "Pas De Géant",
+    "product_ref": "820069",
+    "supplier_url": "https://www.procity.eu/fr/portique-2-agrés.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1246",
+    "product_name": "Portique 2 Agres",
+    "product_ref": "820015",
+    "supplier_url": "https://www.procity.eu/fr/poutre-d-équilibre.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1264",
+    "product_name": "Poutre D'Équilibre",
+    "product_ref": "820050",
+    "supplier_url": "https://www.procity.eu/fr/poutre-mobile.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1265",
+    "product_name": "Poutre Mobile",
+    "product_ref": "820051",
+    "supplier_url": "https://www.procity.eu/fr/pupitre-de-force.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1267",
+    "product_name": "Pupitre De Force",
+    "product_ref": "820016",
+    "supplier_url": "https://www.procity.eu/fr/saute-mouton-16-plots.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1269",
+    "product_name": "Saute Mouton",
+    "product_ref": "820060",
+    "supplier_url": "https://www.procity.eu/fr/sauts-alternés.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1270",
+    "product_name": "Sauts Alternés",
+    "product_ref": "820061",
+    "supplier_url": "https://www.procity.eu/fr/sauts-ciseaux.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1271",
+    "product_name": "Sauts Ciseaux",
+    "product_ref": "820062",
+    "supplier_url": "https://www.procity.eu/fr/sauts-de-grenouille.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1272",
+    "product_name": "Sauts De Grenouille",
+    "product_ref": "820063",
+    "supplier_url": "https://www.procity.eu/fr/sauts-de-puce.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1273",
+    "product_name": "Sauts De Puce",
+    "product_ref": "820064",
+    "supplier_url": "https://www.procity.eu/fr/slalom-10-plots.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1275",
+    "product_name": "Slalom (10 Plots)",
+    "product_ref": "820021",
+    "supplier_url": "https://www.procity.eu/fr/tables-abdominaux.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1295",
+    "product_name": "Tables Abdominaux",
+    "product_ref": "820001",
+    "supplier_url": "https://www.procity.eu/fr/tractions.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1308",
+    "product_name": "Tractions",
+    "product_ref": "820013",
+    "supplier_url": "https://www.procity.eu/fr/tremplin-de-saut.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1309",
+    "product_name": "Tremplin De Saut",
+    "product_ref": "820065",
+    "supplier_url": "https://www.procity.eu/fr/tremplin-double.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1310",
+    "product_name": "Tremplin Double",
+    "product_ref": "820066",
+    "supplier_url": "https://www.procity.eu/fr/tunnel.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1311",
+    "product_name": "Tunnel",
+    "product_ref": "820022",
+    "supplier_url": "https://www.procity.eu/fr/lot-1-parcours-de-santé-bois.html",
+    "procity_family": "ÉQUIPEMENTS SPORTIFS"
+  },
+  {
+    "product_id": "1002",
+    "product_name": "Abri Conteneurs Et Biodéchets Berlin",
+    "product_ref": "208194",
+    "supplier_url": "https://procity.eu/fr/abri-conteneurs-et-biodechets-berlin-simple.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1003",
+    "product_name": "Abri Conteneurs Modulo",
+    "product_ref": "529780",
+    "supplier_url": "https://procity.eu/fr/abri-conteneurs-modulo-1.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1030",
+    "product_name": "Arceau & Lisse De Bordure Milan",
+    "product_ref": "204100",
+    "supplier_url": "https://procity.eu/fr/arceau-de-bordure-galva-ø-60-mm.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1038",
+    "product_name": "Bac À Palmier Province",
+    "product_ref": "201260",
+    "supplier_url": "https://procity.eu/fr/bac-à-palmier-acier-province-city.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1039",
+    "product_name": "Bac À Palmier Sarlat",
+    "product_ref": "201277",
+    "supplier_url": "https://procity.eu/fr/bac-à-palmier-sarlat-1.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1040",
+    "product_name": "Bac À Palmier Silaos®",
+    "product_ref": "201730",
+    "supplier_url": "https://procity.eu/fr/bac-à-palmier-silaos-acier-et-bois-1.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1041",
+    "product_name": "Bacs À Palmier Kub. & Le Caire",
+    "product_ref": "306422",
+    "supplier_url": "https://procity.eu/fr/bac-à-palmier-kub.-acier-et-bois-1.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1042",
+    "product_name": "Bacs À Palmier Olbia & Venise",
+    "product_ref": "201275",
+    "supplier_url": "https://procity.eu/fr/bac-à-palmier-olbia-carré.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1048",
+    "product_name": "Banc & Banquette Conviviale®",
+    "product_ref": "209020",
+    "supplier_url": "https://procity.eu/fr/banc-acier-conviviale.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1049",
+    "product_name": "Banc & Banquette Oslo",
+    "product_ref": "209120",
+    "supplier_url": "https://procity.eu/fr/banc-acier-oslo.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1050",
+    "product_name": "Banc & Banquette Pagode",
+    "product_ref": "299444",
+    "supplier_url": "https://procity.eu/fr/banc-bois-et-acier-pagode.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1051",
+    "product_name": "Banc & Banquette Riga",
+    "product_ref": "209486",
+    "supplier_url": "https://procity.eu/fr/banc-galva-et-bois-brut-riga.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1052",
+    "product_name": "Banc & Banquette Venise",
+    "product_ref": "209416",
+    "supplier_url": "https://procity.eu/fr/banc-bois-et-acier-venise.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1053",
+    "product_name": "Banc Et Banquette Lille",
+    "product_ref": "309003",
+    "supplier_url": "https://procity.eu/fr/banc-bois-brut-lille.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1054",
+    "product_name": "Banc Et Banquette Silaos®",
+    "product_ref": "209500",
+    "supplier_url": "https://procity.eu/fr/fauteuil-silaos-5-lames.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1055",
+    "product_name": "Banc Et Fauteuil Silaos® Spécial Sénior",
+    "product_ref": "209620",
+    "supplier_url": "https://procity.eu/fr/fauteuil-bois-et-acier-silaos-spécial-sénior.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1056",
+    "product_name": "Banc Ombrelle Londres Spécial Sénior",
+    "product_ref": "309015",
+    "supplier_url": "https://procity.eu/fr/banc-bois-brut-avec-ombrelle-londres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1057",
+    "product_name": "Bancs Et Banquettes Porto & Turin",
+    "product_ref": "309002",
+    "supplier_url": "https://procity.eu/fr/banc-bois-brut-porto.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1058",
+    "product_name": "Bancs Et Banquettes Silaos® & Arc-En-Ciel Junior",
+    "product_ref": "299006",
+    "supplier_url": "https://procity.eu/fr/bancs-silaos-junior.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1059",
+    "product_name": "Bancs Mora & Lublin",
+    "product_ref": "209480",
+    "supplier_url": "https://procity.eu/fr/mobilier-urbain-banc-bois-mora.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1060",
+    "product_name": "Bancs Mora & Porto Junior",
+    "product_ref": "299010",
+    "supplier_url": "https://procity.eu/fr/banc-bois-et-acier-mora-junior.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1061",
+    "product_name": "Bancs Tour D’Arbre Silaos® & Turin",
+    "product_ref": "209648",
+    "supplier_url": "https://procity.eu/fr/banc-tour-d-arbre-circulaire-silaos.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1062",
+    "product_name": "Bancs Tour D’Arbre Silaos® Junior",
+    "product_ref": "299034",
+    "supplier_url": "https://procity.eu/fr/banc-tour-d-arbre-silaos-junior.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1099",
+    "product_name": "Caches-Conteneurs Modulable & Turin",
+    "product_ref": "208097",
+    "supplier_url": "https://procity.eu/fr/poteaux-cache-conteneurs-modulable-galva.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1102",
+    "product_name": "Chaise Longue Silaos®",
+    "product_ref": "209640",
+    "supplier_url": "https://procity.eu/fr/chaise-longue-bois-et-acier-silaos.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1108",
+    "product_name": "Clôtures Rondin & Cabane À Livres",
+    "product_ref": "302100",
+    "supplier_url": "https://procity.eu/fr/cloture-rodin.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1109",
+    "product_name": "Composteur Turin & Arceaux Bloque Conteneurs",
+    "product_ref": "308140",
+    "supplier_url": "https://procity.eu/fr/composteur-turin.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1111",
+    "product_name": "Corbeille Silaos®",
+    "product_ref": "594145",
+    "supplier_url": "https://procity.eu/fr/corbeille-silaos-acier-et-bois-50-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1112",
+    "product_name": "Corbeilles Berlin & Kub. Tri Sélectif",
+    "product_ref": "208157",
+    "supplier_url": "https://www.procity.eu/fr/corbeille-berlin-tri-s%C3%A9lectif-3.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1113",
+    "product_name": "Corbeilles Berlin & Venise",
+    "product_ref": "208156",
+    "supplier_url": "https://procity.eu/fr/corbeille-berlin-100-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1115",
+    "product_name": "Corbeilles Cévennes & Vanoise",
+    "product_ref": "208201",
+    "supplier_url": "https://procity.eu/fr/corbeille-cevennes-60-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1114",
+    "product_name": "Corbeilles Cologne & Arc-En-Ciel",
+    "product_ref": "208063",
+    "supplier_url": "https://procity.eu/fr/corbeille-cologne-60-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1116",
+    "product_name": "Corbeilles Gascogne & Esterel",
+    "product_ref": "208100",
+    "supplier_url": "https://procity.eu/fr/corbeille-gascogne-socle-en-fonte-60-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1117",
+    "product_name": "Corbeilles Guyenne & Morvan",
+    "product_ref": "208117",
+    "supplier_url": "https://procity.eu/fr/corbeille-guyenne-city-40-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1118",
+    "product_name": "Corbeilles Lofoten & Guyenne Tri Sélectif",
+    "product_ref": "208177",
+    "supplier_url": "https://procity.eu/fr/corbeille-lofoten-tri-sélectif.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1119",
+    "product_name": "Corbeilles Lofoten & Lofoten Vigipirate",
+    "product_ref": "208171",
+    "supplier_url": "https://procity.eu/fr/corbeille-lofoten-acier-80-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1120",
+    "product_name": "Corbeilles Olbia & Losange",
+    "product_ref": "208104",
+    "supplier_url": "https://procity.eu/fr/corbeille-olbia-80-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1121",
+    "product_name": "Corbeilles Saintonge & Vercors",
+    "product_ref": "208225",
+    "supplier_url": "https://procity.eu/fr/corbeille-saintonge-city-40-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1122",
+    "product_name": "Corbeilles Séville & Genève",
+    "product_ref": "208068",
+    "supplier_url": "https://procity.eu/fr/corbeille-seville-octogonale-100-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1123",
+    "product_name": "Corbeilles Turin & Kub.",
+    "product_ref": "308001",
+    "supplier_url": "https://procity.eu/fr/corbeille-turin-avec-toit-160-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1124",
+    "product_name": "Corbeilles Turin & Venise Tri Sélectif",
+    "product_ref": "308003",
+    "supplier_url": "https://procity.eu/fr/corbeille-turin-avec-toit-tri-sélectif-2-x-100-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1125",
+    "product_name": "Corbeilles Venise",
+    "product_ref": "208127",
+    "supplier_url": "https://procity.eu/fr/corbeille-venise-120-litres.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1126",
+    "product_name": "Corbeilles Venise, Olbia & Losange Tri Sélectif",
+    "product_ref": "208147",
+    "supplier_url": "https://procity.eu/fr/corbeille-venise-tri-sélectif.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1128",
+    "product_name": "Corsets Pour Arbre Ø 250 & 450 Mm - Vendu Par Lot De 5",
+    "product_ref": "201124",
+    "supplier_url": "https://procity.eu/fr/corset-pour-arbre-peint-ø250mm.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1131",
+    "product_name": "Ensemble De Pique-Nique Silaos®",
+    "product_ref": "209650",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-silaos.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1133",
+    "product_name": "Espace De Repos Kub.",
+    "product_ref": "306394",
+    "supplier_url": "https://procity.eu/fr/banc-bois-acier-design-kub.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1134",
+    "product_name": "Espace De Repos Le Caire",
+    "product_ref": "209670",
+    "supplier_url": "https://procity.eu/fr/banquette-le-caire.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1141",
+    "product_name": "Grilles D’Arbre Silaos® & Venise",
+    "product_ref": "201217",
+    "supplier_url": "https://procity.eu/fr/grille-d-arbre-carrée-silaos.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1199",
+    "product_name": "Option Pour Tables De Pique-Nique Turin, Dublin, Rome & Lyon",
+    "product_ref": "309009",
+    "supplier_url": "https://procity.eu/fr/kit-platines-pour-table-de-pique-nique-turin-dublin-version-carrée-turin-rome-et-lyon-junior.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1201",
+    "product_name": "Options Pour Bacs À Palmier",
+    "product_ref": "201601",
+    "supplier_url": "https://procity.eu/fr/réserve-d-eau-pour-bacs-à-palmier.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1202",
+    "product_name": "Options Pour Corbeilles De Propreté",
+    "product_ref": "208113",
+    "supplier_url": "",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1237",
+    "product_name": "Pergolas Océan & Turin",
+    "product_ref": "529180",
+    "supplier_url": "https://procity.eu/fr/pergola-océan.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1274",
+    "product_name": "Seaux Acier",
+    "product_ref": "208030",
+    "supplier_url": "",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1296",
+    "product_name": "Tables De Pique-Nique Gênes & Dublin",
+    "product_ref": "309220",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-genes.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1297",
+    "product_name": "Tables De Pique-Nique Junior Turin & Turin Éco",
+    "product_ref": "309270",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-turin-eco-junior.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1298",
+    "product_name": "Tables De Pique-Nique Lille & Turin Éco",
+    "product_ref": "309200",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-lille.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1299",
+    "product_name": "Tables De Pique-Nique Rome & Lyon Junior",
+    "product_ref": "309260",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-rome.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1301",
+    "product_name": "Tables De Pique-Nique Séville & Riga",
+    "product_ref": "209468",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-seville.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1300",
+    "product_name": "Tables De Pique-Nique Silaos® & Arc-En-Ciel Junior",
+    "product_ref": "208080",
+    "supplier_url": "https://procity.eu/fr/table-pique-nique-pour-enfants.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1302",
+    "product_name": "Tables De Pique-Nique Turin & Turin Avec Toit",
+    "product_ref": "309212",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-turin-1.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1303",
+    "product_name": "Tables De Pique-Nique Valence & Rome",
+    "product_ref": "209475",
+    "supplier_url": "https://procity.eu/fr/table-de-pique-nique-valence.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1314",
+    "product_name": "Vases Tradition & Héritage",
+    "product_ref": "201661",
+    "supplier_url": "https://procity.eu/fr/vase-tradition.html",
+    "procity_family": "ESPACES VERTS"
+  },
+  {
+    "product_id": "1137",
+    "product_name": "Fabrications Spéciales",
+    "product_ref": "100068",
+    "supplier_url": "",
+    "procity_family": "FABRICATIONS SPÉCIALES"
+  },
+  {
+    "product_id": "1025",
+    "product_name": "Angle De Protection En Tôle",
+    "product_ref": "213206",
+    "supplier_url": "https://procity.eu/fr/angle-de-protection-en-tôle.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1032",
+    "product_name": "Arceau D’Angle À 3 Pieds",
+    "product_ref": "213010",
+    "supplier_url": "https://procity.eu/fr/arceau-d-angle-à-3-pieds.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1031",
+    "product_name": "Arceau D’Angle Renforcé À 2 Pieds",
+    "product_ref": "294415",
+    "supplier_url": "https://procity.eu/fr/arceau-d-angle-renforcé-galva-à-2-pieds-hauteur-430-mm.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1034",
+    "product_name": "Arceau, Épingle & Potelet Ø 50 Mm",
+    "product_ref": "204040",
+    "supplier_url": "https://procity.eu/fr/arceau-ø-50-mm.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1047",
+    "product_name": "Balisage Temporaire",
+    "product_ref": "111380",
+    "supplier_url": "https://procity.eu/fr/balisage-temporaire.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1077",
+    "product_name": "Barrière Éco Tp, Passerelle Tp & Barrière Extensible Pvc",
+    "product_ref": "100510",
+    "supplier_url": "https://procity.eu/fr/barriere-eco-tp.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1070",
+    "product_name": "Barrière Extensible & De Regard",
+    "product_ref": "100100",
+    "supplier_url": "https://procity.eu/fr/barrière-extensible-acier-rouge-et-blanc.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1236",
+    "product_name": "Passe Câbles",
+    "product_ref": "111576",
+    "supplier_url": "https://procity.eu/fr/passe-câble-3-câbles.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1250",
+    "product_name": "Poteau De Protection",
+    "product_ref": "294350",
+    "supplier_url": "https://procity.eu/fr/poteau-de-protection.html",
+    "procity_family": "INDUSTRIE ET TP"
+  },
+  {
+    "product_id": "1170",
+    "product_name": "Jeux À Grimper Pago-Pago",
+    "product_ref": "804001",
+    "supplier_url": "https://www.procity.eu/fr/parcours-d-obstacle-araignée.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1221",
+    "product_name": "Parcours D'Obstacle Araignée",
+    "product_ref": "809010",
+    "supplier_url": "https://www.procity.eu/fr/parcours-d-obstacle-cadre-à-grimper.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1222",
+    "product_name": "Parcours D'Obstacle Cadre À Grimper",
+    "product_ref": "809012",
+    "supplier_url": "https://www.procity.eu/fr/jeux-à-grimper-dialo.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1223",
+    "product_name": "Parcours D'Obstacle Grimpette Armée",
+    "product_ref": "809011",
+    "supplier_url": "https://www.procity.eu/fr/pont-amazonien.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1224",
+    "product_name": "Parcours D'Obstacle Pont Amazonien",
+    "product_ref": "809002",
+    "supplier_url": "https://www.procity.eu/fr/pont-de-tarzan.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1225",
+    "product_name": "Parcours D'Obstacle Pont De Tarzan",
+    "product_ref": "809013",
+    "supplier_url": "https://www.procity.eu/fr/poutre-d-équilibre-pattes-d-ours.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1226",
+    "product_name": "Parcours D'Obstacle Poutre D'Équilibre Pattes D'Ours",
+    "product_ref": "809021",
+    "supplier_url": "https://www.procity.eu/fr/tapis-volant.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1227",
+    "product_name": "Parcours D'Obstacle Tapis Volant",
+    "product_ref": "809000",
+    "supplier_url": "https://www.procity.eu/fr/tyrolienne.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1312",
+    "product_name": "Tyrolienne",
+    "product_ref": "810000",
+    "supplier_url": "https://www.procity.eu/fr/panneau-nuage-avec-texte.html",
+    "procity_family": "JEUX À GRIMPER ET D'ÉQUILIBRE"
+  },
+  {
+    "product_id": "1181",
+    "product_name": "Multi-Activités Bouton D'Or",
+    "product_ref": "800200",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-bouton-d-or-junior-bois-1.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1182",
+    "product_name": "Multi-Activités Cabane De L'Ours",
+    "product_ref": "800630",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-corsaire-bois-ligne-park.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1183",
+    "product_name": "Multi-Activités Cache Cache Monstre",
+    "product_ref": "800620",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-lemur-inox-ligne-savana.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1184",
+    "product_name": "Multi-Activités Jungle Le Panda",
+    "product_ref": "800600",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-météorite-bois-ligne-park.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1185",
+    "product_name": "Multi-Activités Jungle Tiki Tours",
+    "product_ref": "800601",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-cache-cache-monstre-1.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1186",
+    "product_name": "Multi-Activités Park Abeille",
+    "product_ref": "800101",
+    "supplier_url": "https://www.procity.eu/fr/balançoire-tout-bois-avec-1-balançoire-et-1-nacelle.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1187",
+    "product_name": "Multi-Activités Park Corsaire",
+    "product_ref": "800230",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-escatour-bois-ligne-park.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1188",
+    "product_name": "Multi-Activités Park Escatour",
+    "product_ref": "800220",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-gymino-bois-ligne-park.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1189",
+    "product_name": "Multi-Activités Park Gymino",
+    "product_ref": "800100",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-le-panda-bois-ligne-jungle.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1190",
+    "product_name": "Multi-Activités Park Meteorite",
+    "product_ref": "800110",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-papyrus-bois-ligne-park.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1191",
+    "product_name": "Multi-Activités Park Papyrus",
+    "product_ref": "800225",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-petit-train-bois.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1192",
+    "product_name": "Multi-Activités Park Pitchounette",
+    "product_ref": "800221",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-tiki-tours-bois-ligne-jungle.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1193",
+    "product_name": "Multi-Activités Petit Train",
+    "product_ref": "800610",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-pitchounette-bois-ligne-park.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1194",
+    "product_name": "Multi-Activités Savana",
+    "product_ref": "800501",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-orang-outan-inox-ligne-savana.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1195",
+    "product_name": "Multi-Activités Square",
+    "product_ref": "800301",
+    "supplier_url": "https://www.procity.eu/fr/multi-activités-ja02-bois-ligne-square-1.html",
+    "procity_family": "JEUX MULTI-ACTIVITÉS"
+  },
+  {
+    "product_id": "1043",
+    "product_name": "Bacs À Sable",
+    "product_ref": "811000",
+    "supplier_url": "https://www.procity.eu/fr/bac-à-sable-avec-couvercle.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1044",
+    "product_name": "Balançoire Acier Et Bois",
+    "product_ref": "805100",
+    "supplier_url": "https://www.procity.eu/fr/balan-ccedil-oire-tout-bois-avec-nacelle.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1045",
+    "product_name": "Balançoire Tout Acier",
+    "product_ref": "805200",
+    "supplier_url": "https://www.procity.eu/fr/bac-à-sable.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1046",
+    "product_name": "Balançoire Tout Bois",
+    "product_ref": "805000",
+    "supplier_url": "https://www.procity.eu/fr/balan-ccedil-oire-acier-et-bois.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1095",
+    "product_name": "Cabane Auberge",
+    "product_ref": "802000",
+    "supplier_url": "https://www.procity.eu/fr/jeux-à-bascule-balan-ccedil-oire-horizontale-2000-mm.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1096",
+    "product_name": "Cabane Lou Boy",
+    "product_ref": "802001",
+    "supplier_url": "https://www.procity.eu/fr/cabane-mississipi.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1097",
+    "product_name": "Cabane Maison Du Pêcheur",
+    "product_ref": "802020",
+    "supplier_url": "https://www.procity.eu/fr/tourniquet-manège-araignée-1700-mm.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1098",
+    "product_name": "Cabane Mississippi",
+    "product_ref": "802010",
+    "supplier_url": "https://www.procity.eu/fr/cabane-mississipi-terrasse.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1164",
+    "product_name": "Jeux À Bascule Balançoire Horizontale",
+    "product_ref": "807000",
+    "supplier_url": "https://www.procity.eu/fr/jeux-à-bascule-balan-ccedil-oire-horizontale-3000-mm.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1165",
+    "product_name": "Jeux À Bascule Balançoire Horizontale Bono Bono",
+    "product_ref": "807101",
+    "supplier_url": "https://www.procity.eu/fr/jeux-à-bascule-balan-ccedil-oire-horizontale-cache-cache-monstre.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1166",
+    "product_name": "Jeux À Bascule Balançoire Horizontale Bouton D'Or",
+    "product_ref": "807010",
+    "supplier_url": "https://www.procity.eu/fr/jeux-à-bascule-balan-ccedil-oire-horizontale-3000-mm.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1167",
+    "product_name": "Jeux À Bascule Balançoire Horizontale Cache-Cache Monstre",
+    "product_ref": "807110",
+    "supplier_url": "https://www.procity.eu/fr/balan-ccedil-oire-tout-acier.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1168",
+    "product_name": "Jeux À Bascule Balançoire Horizontale Cheval",
+    "product_ref": "807020",
+    "supplier_url": "https://www.procity.eu/fr/cabane-maison-du-p-cheur.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1169",
+    "product_name": "Jeux À Grimper Dialo",
+    "product_ref": "815133",
+    "supplier_url": "",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1143",
+    "product_name": "Jeux Récré Filou",
+    "product_ref": "812000",
+    "supplier_url": "https://www.procity.eu/fr/jeux-palets-géants.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1144",
+    "product_name": "Jeux Récré Palets Géants",
+    "product_ref": "812001",
+    "supplier_url": "https://www.procity.eu/fr/toboggan-hauteur-900-mm.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1145",
+    "product_name": "Jeux Sur Ressort Bateau Pirate",
+    "product_ref": "806080",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-coccinelle.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1146",
+    "product_name": "Jeux Sur Ressort Bono Bono",
+    "product_ref": "806040",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-sam-le-tracteur.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1147",
+    "product_name": "Jeux Sur Ressort Bouton D'Or",
+    "product_ref": "806042",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-luma.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1148",
+    "product_name": "Jeux Sur Ressort Cheval",
+    "product_ref": "806014",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-zèbre.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1149",
+    "product_name": "Jeux Sur Ressort Coccinelle",
+    "product_ref": "806071",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-tortue.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1150",
+    "product_name": "Jeux Sur Ressort Dauphin",
+    "product_ref": "806018",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-dinosaure.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1151",
+    "product_name": "Jeux Sur Ressort Dino",
+    "product_ref": "806056",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-pompier.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1152",
+    "product_name": "Jeux Sur Ressort Dinosaure",
+    "product_ref": "806019",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-scooter.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1153",
+    "product_name": "Jeux Sur Ressort Elephant",
+    "product_ref": "806017",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-dauphin.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1154",
+    "product_name": "Jeux Sur Ressort Luma",
+    "product_ref": "806043",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-woody.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1155",
+    "product_name": "Jeux Sur Ressort Natura Kenny Bike",
+    "product_ref": "806013",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-bouton-d-or.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1156",
+    "product_name": "Jeux Sur Ressort Nuage",
+    "product_ref": "806054",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-panda-1.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1157",
+    "product_name": "Jeux Sur Ressort Panda",
+    "product_ref": "806055",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-dino.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1158",
+    "product_name": "Jeux Sur Ressort Pompier",
+    "product_ref": "806057",
+    "supplier_url": "https://www.procity.eu/fr/abri-vélos-sécurisé-horizon-avec-bardages-en-acier-et-bois-1.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1159",
+    "product_name": "Jeux Sur Ressort Sam Le Tracteur",
+    "product_ref": "806041",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-bono-bono.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1160",
+    "product_name": "Jeux Sur Ressort Scooter",
+    "product_ref": "806009",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-nuage.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1161",
+    "product_name": "Jeux Sur Ressort Tortue",
+    "product_ref": "806072",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-bono-bono-simple-figurine.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1162",
+    "product_name": "Jeux Sur Ressort Woody",
+    "product_ref": "806061",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-bateau-pirate.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1163",
+    "product_name": "Jeux Sur Ressort Zebre",
+    "product_ref": "806015",
+    "supplier_url": "https://www.procity.eu/fr/jeux-sur-ressort-panda.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1203",
+    "product_name": "Options Pour Jeux Sur Ressort",
+    "product_ref": "815102",
+    "supplier_url": "",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1304",
+    "product_name": "Toboggans",
+    "product_ref": "803000",
+    "supplier_url": "https://www.procity.eu/fr/toboggan-hauteur-1100-mm.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1306",
+    "product_name": "Tourniquet Manège Araignée",
+    "product_ref": "808000",
+    "supplier_url": "https://www.procity.eu/fr/tourniquet-manège-araignée-2300-mm.html",
+    "procity_family": "JEUX TRADITIONNELS"
+  },
+  {
+    "product_id": "1001",
+    "product_name": "Abri Chariots Modulo",
+    "product_ref": "529777",
+    "supplier_url": "https://procity.eu/fr/abri-chariots-modulo-1.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1022",
+    "product_name": "Abris Caisse Modulo & Voûte",
+    "product_ref": "529770",
+    "supplier_url": "https://procity.eu/fr/abri-caisse-modulo.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1069",
+    "product_name": "Barrière Amovible Écobar®",
+    "product_ref": "200060",
+    "supplier_url": "https://procity.eu/fr/garde-corps-ecobar-acier.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1075",
+    "product_name": "Barrière Tournante",
+    "product_ref": "203137",
+    "supplier_url": "https://procity.eu/fr/barriere-tournante-longueur-1-4-metres.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1081",
+    "product_name": "Barrières Sélective Tournante & Fixe",
+    "product_ref": "203215",
+    "supplier_url": "https://procity.eu/fr/barriere-selective-peinte.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1082",
+    "product_name": "Barrières Tournante Trombone & Décorative",
+    "product_ref": "203125",
+    "supplier_url": "https://procity.eu/fr/barriere-tournante-trombone.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1084",
+    "product_name": "Barrières Turin Fixe & Levante",
+    "product_ref": "302000",
+    "supplier_url": "https://procity.eu/fr/barrière-turin-fixe-1.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1085",
+    "product_name": "Barrières Universelle Levante Et À Vérin",
+    "product_ref": "202170",
+    "supplier_url": "https://procity.eu/fr/barriere-universelle-lisse-alu-levante.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1086",
+    "product_name": "Barrières Universelle Tournante \"M\", \"L\" & \"Xl\"",
+    "product_ref": "203192",
+    "supplier_url": "https://procity.eu/fr/barrière-universelle-tournante.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1087",
+    "product_name": "Blocs Parking Bpe & Classique",
+    "product_ref": "204800",
+    "supplier_url": "https://procity.eu/fr/bloc-parking-bpe.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1094",
+    "product_name": "Butées De Parking Caoutchouc & Acier",
+    "product_ref": "207912",
+    "supplier_url": "https://procity.eu/fr/butée-de-parking-caoutchouc.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1130",
+    "product_name": "Demi Portique Tournant",
+    "product_ref": "202540",
+    "supplier_url": "https://procity.eu/fr/demi-portique-tournant.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1332",
+    "product_name": "Épingles De Protection Ø 60 & 50 Mm",
+    "product_ref": "201060",
+    "supplier_url": "https://procity.eu/fr/epingle-de-protection-peinte-ø-60-mm.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1334",
+    "product_name": "Étriers De Protection Ø 35 Et Ø 60 Mm & Corset De Protection",
+    "product_ref": "201020",
+    "supplier_url": "https://procity.eu/fr/étrier-de-protection-ø-35-mm.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1171",
+    "product_name": "Kit De Fixation Pour Panneau",
+    "product_ref": "202321",
+    "supplier_url": "https://procity.eu/fr/kit-de-fixation-pour-panneau.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1172",
+    "product_name": "Kit De Pose Pour Barrières Tournante, Trombone & Décorative",
+    "product_ref": "203601",
+    "supplier_url": "https://procity.eu/fr/kit-de-pose-pour-barrières-tournantes-sauf-lg-3000-mm-trombone-et-décorative.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1234",
+    "product_name": "Passages Couverts Milan & Voûte L",
+    "product_ref": "599800",
+    "supplier_url": "https://procity.eu/fr/passage-couvert-milan-1.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1235",
+    "product_name": "Passages Couverts Voûte S & M",
+    "product_ref": "599808",
+    "supplier_url": "https://procity.eu/fr/passage-couvert-voûte-s-avec-bardages-en-polycarbonate.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1249",
+    "product_name": "Portique Éco Tournant & Bavette Limiteur De Hauteur",
+    "product_ref": "202306",
+    "supplier_url": "https://procity.eu/fr/portique-eco-tournant.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1247",
+    "product_name": "Portique Universel Fixe",
+    "product_ref": "202330",
+    "supplier_url": "https://procity.eu/fr/portique-universel-fixe.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1248",
+    "product_name": "Portique Universel Tournant",
+    "product_ref": "202511",
+    "supplier_url": "https://procity.eu/fr/portique-universel-tournant.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1266",
+    "product_name": "Protection D’Angle En Caoutchouc - Vendues Par Lot De 15",
+    "product_ref": "111803",
+    "supplier_url": "https://procity.eu/fr/protection-d-angle-en-caoutchouc.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1268",
+    "product_name": "Ralentisseurs",
+    "product_ref": "111523",
+    "supplier_url": "https://procity.eu/fr/ralentisseurs-ht-50-mm.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1307",
+    "product_name": "Traceur De Lignes M-Markers, Carton De 12 Unités, 500 Ml",
+    "product_ref": "111780",
+    "supplier_url": "https://procity.eu/fr/traceur-de-ligne-m-markers.html",
+    "procity_family": "MAÎTRISE D'ACCÈS ET PARKING"
+  },
+  {
+    "product_id": "1176",
+    "product_name": "Miroirs Extérieurs",
+    "product_ref": "100011",
+    "supplier_url": "",
+    "procity_family": "MIROIRS INDUSTRIE ET LOGISTIQUE"
+  },
+  {
+    "product_id": "1177",
+    "product_name": "Miroirs Hémisphériques",
+    "product_ref": "100177",
+    "supplier_url": "",
+    "procity_family": "MIROIRS INDUSTRIE ET LOGISTIQUE"
+  },
+  {
+    "product_id": "1178",
+    "product_name": "Miroirs Industrie Et Logistique",
+    "product_ref": "100266",
+    "supplier_url": "",
+    "procity_family": "MIROIRS INDUSTRIE ET LOGISTIQUE"
+  },
+  {
+    "product_id": "1179",
+    "product_name": "Miroirs Intérieurs",
+    "product_ref": "100268",
+    "supplier_url": "",
+    "procity_family": "MIROIRS INDUSTRIE ET LOGISTIQUE"
+  },
+  {
+    "product_id": "1180",
+    "product_name": "Miroirs Multi-Usages",
+    "product_ref": "100038",
+    "supplier_url": "",
+    "procity_family": "MIROIRS MULTI-USAGES"
+  },
+  {
+    "product_id": "1175",
+    "product_name": "Miroirs",
+    "product_ref": "100001",
+    "supplier_url": "",
+    "procity_family": "MIROIRS RÉGLEMENTAIRES D'AGGLOMÉRATION"
+  },
+  {
+    "product_id": "1142",
+    "product_name": "Isoloirs Électoraux Standard & Pour Personnes À Mobilité Réduite",
+    "product_ref": "205101",
+    "supplier_url": "https://procity.eu/fr/isoloirs-electoraux-standard.html",
+    "procity_family": "PAVOISEMENT ET MATÉRIEL ÉLECTORAL"
+  },
+  {
+    "product_id": "1197",
+    "product_name": "Mât De Pavoisement En Aluminium",
+    "product_ref": "528500",
+    "supplier_url": "https://procity.eu/fr/mât-de-pavoisement-en-aluminium.html",
+    "procity_family": "PAVOISEMENT ET MATÉRIEL ÉLECTORAL"
+  },
+  {
+    "product_id": "1218",
+    "product_name": "Panneaux Électoraux Classique Et Éco",
+    "product_ref": "205000",
+    "supplier_url": "https://procity.eu/fr/panneau-électoral-modèle-classique.html",
+    "procity_family": "PAVOISEMENT ET MATÉRIEL ÉLECTORAL"
+  },
+  {
+    "product_id": "1313",
+    "product_name": "Urne Électorale Réglementaire",
+    "product_ref": "527128",
+    "supplier_url": "https://www.procity.eu/fr/urne-%C3%A9lectorale-r%C3%A9glementaire.html",
+    "procity_family": "PAVOISEMENT ET MATÉRIEL ÉLECTORAL"
+  },
+  {
+    "product_id": "1008",
+    "product_name": "Abri Fumeurs Éco",
+    "product_ref": "529380",
+    "supplier_url": "https://procity.eu/fr/abri-fumeurs-éco.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1004",
+    "product_name": "Abri Fumeurs Milan",
+    "product_ref": "529405",
+    "supplier_url": "https://procity.eu/fr/abri-fumeurs-milan.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1005",
+    "product_name": "Abri Fumeurs Modulo",
+    "product_ref": "529570",
+    "supplier_url": "https://procity.eu/fr/abri-fumeurs-modulo.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1006",
+    "product_name": "Abri Fumeurs Voûte \"L\"",
+    "product_ref": "529520",
+    "supplier_url": "https://procity.eu/fr/abri-fumeurs-voûte-l.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1007",
+    "product_name": "Abri Fumeurs Voûte \"M\"",
+    "product_ref": "529370",
+    "supplier_url": "https://procity.eu/fr/abri-fumeurs-voûte-m.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1101",
+    "product_name": "Cendriers Muraux Tube & Carré",
+    "product_ref": "206597",
+    "supplier_url": "https://procity.eu/fr/cendrier-mural-tube-biseauté.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1110",
+    "product_name": "Corbeille - Cendrier",
+    "product_ref": "208040",
+    "supplier_url": "https://procity.eu/fr/corbeille-cendrier-trémie.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1200",
+    "product_name": "Option Écrase Cigarette",
+    "product_ref": "208181",
+    "supplier_url": "https://procity.eu/fr/option-écrase-cigarette.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1252",
+    "product_name": "Potelet - Cigarette, Potelet - Cendrier & Cendrier - Cigarette",
+    "product_ref": "206580",
+    "supplier_url": "https://procity.eu/fr/potelet-cigarette.html",
+    "procity_family": "SOLUTIONS FUMEURS"
+  },
+  {
+    "product_id": "1009",
+    "product_name": "Abri Vélos Conviviale®",
+    "product_ref": "529610",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-conviviale.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1010",
+    "product_name": "Abri Vélos Demi-Lune",
+    "product_ref": "529030",
+    "supplier_url": "https://procity.eu/fr/abri-velo-demi-lune.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1021",
+    "product_name": "Abri Vélos Éco",
+    "product_ref": "529260",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-ou-motos-eco.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1011",
+    "product_name": "Abri Vélos Et Motos Voûte \"L\" & \"Xxl\"",
+    "product_ref": "529080",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-et-motos-voûte-l.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1012",
+    "product_name": "Abri Vélos Et Motos Voûte Sécurisé \"L\" & \"Xl\"",
+    "product_ref": "529090",
+    "supplier_url": "https://procity.eu/fr/abri-cycle-voûte-sécurisé.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1013",
+    "product_name": "Abri Vélos Milan",
+    "product_ref": "529255",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-milan.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1014",
+    "product_name": "Abri Vélos Modulo Avec Bardages En Compact",
+    "product_ref": "529213",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-modulo-avec-bardages-en-stratifié-compact.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1015",
+    "product_name": "Abri Vélos Modulo Avec Bardages En Verre",
+    "product_ref": "529173",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-modulo.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1016",
+    "product_name": "Abri Vélos Province",
+    "product_ref": "529120",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-province-city.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1017",
+    "product_name": "Abri Vélos Sécurisé Horizon",
+    "product_ref": "529902",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-sécurisé-horizon.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1018",
+    "product_name": "Abri Vélos Turin",
+    "product_ref": "310101",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-turin.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1019",
+    "product_name": "Abri Vélos Voûte \"M\" Avec Bardages En Verre",
+    "product_ref": "529020",
+    "supplier_url": "https://procity.eu/fr/abri-vélos-voûte-m-avec-bardages-en-verre.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1020",
+    "product_name": "Abri Vélos Voûte \"M\" Avec Bardages Polycarbonate",
+    "product_ref": "529040",
+    "supplier_url": "https://procity.eu/fr/abri-vélo-voûte-m-avec-bardages-polycarbonate.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1026",
+    "product_name": "Appuis Vélos Lisbonne & Milan",
+    "product_ref": "207545",
+    "supplier_url": "https://procity.eu/fr/appui-cycles-lisbonne.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1027",
+    "product_name": "Appuis Vélos Province Classique & Province Tradition",
+    "product_ref": "207390",
+    "supplier_url": "https://procity.eu/fr/appui-vélos-province-classique-city.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1028",
+    "product_name": "Appuis Vélos Trombone Ø 50 Mm & Ø 60 Mm",
+    "product_ref": "201056",
+    "supplier_url": "https://procity.eu/fr/appui-vélos-trombone-ø50mm.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1036",
+    "product_name": "Arceaux Vélos Renforcés & Simples",
+    "product_ref": "204011",
+    "supplier_url": "https://procity.eu/fr/arceau-vélos-renforcé.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1065",
+    "product_name": "Barre Accroche Motos Milan",
+    "product_ref": "204113",
+    "supplier_url": "https://procity.eu/fr/lisse-de-bordure-barre-accroche-moto-peint.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1093",
+    "product_name": "Box À Vélos Berlin",
+    "product_ref": "529450",
+    "supplier_url": "https://procity.eu/fr/box-à-vélos-berlin.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1103",
+    "product_name": "Chassis Pour Appuis Vélos Sur Platines",
+    "product_ref": "204020",
+    "supplier_url": "https://procity.eu/fr/chassis-pour-appuis-vélos-sur-platines.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1198",
+    "product_name": "Option Pour Abris Vélos Et Motos Sécurisés",
+    "product_ref": "529089",
+    "supplier_url": "https://procity.eu/fr/serrure-connectee-pour-abris-velos-securises.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1238",
+    "product_name": "Pièces Détachées Pour Station De Réparation Et Gonfleur Vélos Amsterdam",
+    "product_ref": "204030",
+    "supplier_url": "",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1286",
+    "product_name": "Station De Réparation Et Gonfleur Vélos Amsterdam",
+    "product_ref": "204025",
+    "supplier_url": "https://procity.eu/fr/station-de-réparation-gonfleur-amsterdam.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1287",
+    "product_name": "Support Trottinettes",
+    "product_ref": "204740",
+    "supplier_url": "https://procity.eu/fr/support-trottinettes.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1289",
+    "product_name": "Support Vélos À 2 Étages Horizon",
+    "product_ref": "204790",
+    "supplier_url": "https://procity.eu/fr/support-vélos-à-2-étages-horizon.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1288",
+    "product_name": "Support Vélos Province",
+    "product_ref": "207365",
+    "supplier_url": "https://procity.eu/fr/support-cycles-province-city.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1290",
+    "product_name": "Supports Vélos Emplacements Décalés & Éco",
+    "product_ref": "204700",
+    "supplier_url": "https://procity.eu/fr/support-cycles-6-places-emplacements-decales.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1291",
+    "product_name": "Supports Vélos Mercure & 16 Places",
+    "product_ref": "207002",
+    "supplier_url": "https://procity.eu/fr/support-cycles-mercure.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1292",
+    "product_name": "Supports Vélos Modulaire Infinite & Turin",
+    "product_ref": "204715",
+    "supplier_url": "https://procity.eu/fr/support-vélos-modulaire-infinite.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1293",
+    "product_name": "Supports Vélos Optimum & Griffe Murale",
+    "product_ref": "204737",
+    "supplier_url": "https://procity.eu/fr/support-cycles-optimum-galva.html",
+    "procity_family": "SOLUTIONS VÉLOS & MOTOS"
+  },
+  {
+    "product_id": "1037",
+    "product_name": "Assis-Debout",
+    "product_ref": "306721",
+    "supplier_url": "https://procity.eu/fr/assis-debout-tout-acier-kub.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1106",
+    "product_name": "Claustra Pour Une Sélection D'Abris (Voir Catalogue)",
+    "product_ref": "201136",
+    "supplier_url": "https://procity.eu/fr/claustra-grillagé-pour-plantes-grimpantes.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1204",
+    "product_name": "Options Pour Station Bus Conviviale®",
+    "product_ref": "529686",
+    "supplier_url": "https://www.procity.eu/fr/extension-par-module-interm%C3%A9diaire.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1205",
+    "product_name": "Options Pour Station Bus Kub.",
+    "product_ref": "306719",
+    "supplier_url": "",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1206",
+    "product_name": "Options Pour Station Bus Milan",
+    "product_ref": "529407",
+    "supplier_url": "https://procity.eu/fr/coupe-vent-latéraux-pour-abris-milan-la-paire.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1207",
+    "product_name": "Options Pour Station Bus Modulo",
+    "product_ref": "529679",
+    "supplier_url": "https://procity.eu/fr/bavettes-coupe-vent-latérales.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1208",
+    "product_name": "Options Pour Station Bus Turin",
+    "product_ref": "310012",
+    "supplier_url": "https://procity.eu/fr/demi-face-avant-pour-stations-bus-turin-2000-mm.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1209",
+    "product_name": "Options Pour Station Bus Venise",
+    "product_ref": "529411",
+    "supplier_url": "https://procity.eu/fr/plaque-d-arrêt-latérale.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1210",
+    "product_name": "Options Pour Station Bus Voûte",
+    "product_ref": "529054",
+    "supplier_url": "https://procity.eu/fr/coupe-vent-de-toiture-la-paire.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1239",
+    "product_name": "Pièces Détachées Pour Stations Bus Conviviale®",
+    "product_ref": "529467",
+    "supplier_url": "",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1240",
+    "product_name": "Pièces Détachées Pour Stations Bus Milan, Voûte, Province & Modulo",
+    "product_ref": "529461",
+    "supplier_url": "",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1276",
+    "product_name": "Station Bus Conviviale® Avec Bardages En Acier",
+    "product_ref": "529690",
+    "supplier_url": "https://www.procity.eu/fr/stations-bus-conviviale-avec-bardages-acier.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1277",
+    "product_name": "Station Bus Conviviale® Avec Bardages En Verre",
+    "product_ref": "529680",
+    "supplier_url": "https://www.procity.eu/fr/station-bus-conviviale-avec-bardages-verre.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1278",
+    "product_name": "Station Bus Kub.",
+    "product_ref": "306710",
+    "supplier_url": "https://procity.eu/fr/station-bus-kub.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1279",
+    "product_name": "Station Bus Milan",
+    "product_ref": "529238",
+    "supplier_url": "https://procity.eu/fr/station-bus-milan.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1280",
+    "product_name": "Station Bus Modulo",
+    "product_ref": "529674",
+    "supplier_url": "https://procity.eu/fr/abri-bus-modulo.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1281",
+    "product_name": "Station Bus Province",
+    "product_ref": "529220",
+    "supplier_url": "https://procity.eu/fr/station-bus-province-city.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1282",
+    "product_name": "Station Bus Turin",
+    "product_ref": "310011",
+    "supplier_url": "https://procity.eu/fr/station-bus-turin.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1283",
+    "product_name": "Station Bus Venise",
+    "product_ref": "529650",
+    "supplier_url": "https://procity.eu/fr/station-bus-venise.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1284",
+    "product_name": "Station Bus Venise Avec Un Éclairage Led",
+    "product_ref": "529650L",
+    "supplier_url": "https://procity.eu/fr/station-bus-venise.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1285",
+    "product_name": "Station Bus Voûte",
+    "product_ref": "529208",
+    "supplier_url": "https://procity.eu/fr/station-bus-voûte-poteaux-carrés.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1305",
+    "product_name": "Totem Arrêt De Bus Milan",
+    "product_ref": "529440",
+    "supplier_url": "https://procity.eu/fr/totem-arret-de-bus-milan.html",
+    "procity_family": "STATIONS BUS"
+  },
+  {
+    "product_id": "1024",
+    "product_name": "Adhésifs Standards Pour Vitrines 1000, 2000, Province & Panneau D'Affichage Libre",
+    "product_ref": "502920",
+    "supplier_url": "",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1063",
+    "product_name": "Bandeaux Signalétiques Pour Vitrines Tradition & Classique",
+    "product_ref": "409000",
+    "supplier_url": "https://procity.eu/fr/bandeau-signalétique-dôme.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1064",
+    "product_name": "Bandeaux-Titre Pour Vitrines 1000 & 2000",
+    "product_ref": "502910",
+    "supplier_url": "",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1100",
+    "product_name": "Cadre \"Éco-Clic\" - Vendu Par Lot De 5",
+    "product_ref": "504110",
+    "supplier_url": "https://procity.eu/fr/cadre-eco-clic.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1132",
+    "product_name": "Entrées De Ville Province & Venise",
+    "product_ref": "207920",
+    "supplier_url": "https://procity.eu/fr/panneau-entrée-de-ville-ligne-province-city.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1140",
+    "product_name": "Grille D'Exposition - Vendu Par Lot De 3",
+    "product_ref": "513603",
+    "supplier_url": "https://procity.eu/fr/grille-d-exposition.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1174",
+    "product_name": "Kit Éclairage Led",
+    "product_ref": "509100",
+    "supplier_url": "",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1216",
+    "product_name": "Panneau-Vitrine Carrefour",
+    "product_ref": "570000",
+    "supplier_url": "https://procity.eu/fr/panneau-vitrine-carrefour.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1219",
+    "product_name": "Panneaux-Vitrines D’Information",
+    "product_ref": "520100",
+    "supplier_url": "https://procity.eu/fr/panneau-vitrines-d-information-city.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1220",
+    "product_name": "Panneaux-Vitrines Turin",
+    "product_ref": "307017",
+    "supplier_url": "https://procity.eu/fr/panneau-d-affichage-turin-avec-toit-1.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1241",
+    "product_name": "Piètements 60 X 40 Mm Pour Vitrines Tradition & Classique",
+    "product_ref": "516357",
+    "supplier_url": "",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1243",
+    "product_name": "Piètements Ø 76 Mm Pour Vitrines 1000 & 2000",
+    "product_ref": "516410",
+    "supplier_url": "",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1242",
+    "product_name": "Piètements Quatro Pour Vitrines 1000 & 2000",
+    "product_ref": "516401",
+    "supplier_url": "",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1315",
+    "product_name": "Vitrine 1000",
+    "product_ref": "507084",
+    "supplier_url": "https://procity.eu/fr/vitrine-1000.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1316",
+    "product_name": "Vitrine 2000",
+    "product_ref": "510070",
+    "supplier_url": "https://procity.eu/fr/vitrine-2000.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1317",
+    "product_name": "Vitrine Aluminium Et Bois",
+    "product_ref": "407509",
+    "supplier_url": "https://procity.eu/fr/vitrine-aluminium-et-bois.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1318",
+    "product_name": "Vitrine Classique",
+    "product_ref": "506000",
+    "supplier_url": "https://procity.eu/fr/vitrine-classique.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1319",
+    "product_name": "Vitrine Coulissante Classique",
+    "product_ref": "513000",
+    "supplier_url": "https://procity.eu/fr/vitrine-coulissante-classique--1.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1320",
+    "product_name": "Vitrine Coulissante Référence",
+    "product_ref": "505100",
+    "supplier_url": "https://procity.eu/fr/vitrine-coulissante-référence.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1321",
+    "product_name": "Vitrine Edge",
+    "product_ref": "500100",
+    "supplier_url": "https://procity.eu/fr/vitrine-edge-epaisseur-54-mm.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1322",
+    "product_name": "Vitrine Edge - Épaisseur 54 Mm",
+    "product_ref": "500101",
+    "supplier_url": "https://procity.eu/fr/vitrine-edge-epaisseur-54-mm.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1323",
+    "product_name": "Vitrine Edge - Épaisseur 80 Mm",
+    "product_ref": "501100",
+    "supplier_url": "https://procity.eu/fr/vitrine-edge-épaisseur-80-mm.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1324",
+    "product_name": "Vitrine Référence",
+    "product_ref": "505081",
+    "supplier_url": "https://procity.eu/fr/vitrine-référence.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1325",
+    "product_name": "Vitrine Thématique",
+    "product_ref": "405026",
+    "supplier_url": "https://procity.eu/fr/vitrine-thematique.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1326",
+    "product_name": "Vitrine Tradition",
+    "product_ref": "505000",
+    "supplier_url": "https://procity.eu/fr/vitrine-tradition.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  },
+  {
+    "product_id": "1327",
+    "product_name": "Vitrine Ultra Plate \"Éco 100\"",
+    "product_ref": "504010",
+    "supplier_url": "https://procity.eu/fr/vitrine-ultra-plate-eco-100.html",
+    "procity_family": "VITRINES ET AFFICHAGE"
+  }
+]
