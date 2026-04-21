@@ -73,13 +73,40 @@ async function main() {
         const fetched = await throttle(() => fetcher.fetchPage(url), 1500);
         const snapshot = extractProductSnapshot({ html: fetched.html, url });
 
-        // Enrichir les variantes avec les images capturées lors des clics
+        // Mapper les combinaisons capturées (color × Longueur × Structure × Structure autre...)
+        // aux variantes PSES (qui ont attributes = { Couleur, Longueur, Structure, ... }).
+        // La clé combinaisonImages est "color=X||sel=Y||sel=Z..." — on reconstruit cette clé
+        // depuis les attributs PSE pour retrouver l'image de chaque variante.
+        const imageByAttributes: Record<string, string> = {};
+        for (const [key, imgUrl] of fetched.combinationImages) {
+          imageByAttributes[key] = imgUrl;
+        }
+
         for (const variant of snapshot.variants) {
-          const label = variant.attributes.Couleur || variant.attributes.couleur;
-          if (!label) continue;
-          const imgUrl = fetched.variantImages.get(label);
-          if (imgUrl) {
-            variant.imageFilenames = [filenameFromUrl(imgUrl)];
+          const color = variant.attributes.Couleur || variant.attributes.couleur;
+          // Les attributs non-couleur (Longueur, Structure, Structure autre, etc.)
+          const nonColorAttrs = Object.entries(variant.attributes)
+            .filter(([k]) => k !== 'Couleur' && k !== 'couleur')
+            .map(([, v]) => v);
+
+          // Chercher la combinaison qui matche (on compare via label car la clé fetcher est "sel=<label>")
+          let matchedImg: string | undefined;
+          for (const [key, imgUrl] of fetched.combinationImages) {
+            const keyColor = key.match(/color=([^|]+)/)?.[1];
+            const keySelValues = [...key.matchAll(/sel=([^|]+)/g)].map((m) => m[1]);
+            if (color && keyColor !== color) continue;
+            // Tous les attributs non-couleur doivent être présents dans la clé
+            const allMatched = nonColorAttrs.every((v) =>
+              keySelValues.some((sv) => sv === v || sv.startsWith(v) || v.startsWith(sv)),
+            );
+            if (allMatched) {
+              matchedImg = imgUrl;
+              break;
+            }
+          }
+
+          if (matchedImg) {
+            variant.imageFilenames = [filenameFromUrl(matchedImg)];
           }
         }
 
@@ -129,7 +156,7 @@ async function saveSnapshot(snapshot: ProductSnapshot): Promise<void> {
 
 async function downloadAllMedia(
   snapshot: ProductSnapshot,
-  fetched: { imageLinks: string[]; variantImages: Map<string, string> },
+  fetched: { imageLinks: string[]; combinationImages: Map<string, string> },
   refs: string[],
 ): Promise<void> {
   // On télécharge les images UNE SEULE FOIS dans le dossier de la ref canonique,
@@ -138,8 +165,9 @@ async function downloadAllMedia(
   const primaryRef = refs[0];
   const dir = join(IMAGES_DIR, primaryRef);
 
-  // Images variantes (prioritaires)
-  for (const imgUrl of fetched.variantImages.values()) {
+  // Images de chaque combinaison (prioritaires, déduplication automatique par URL)
+  const comboUrls = new Set(fetched.combinationImages.values());
+  for (const imgUrl of comboUrls) {
     try {
       await downloadMedia(imgUrl, dir, filenameFromUrl(imgUrl));
     } catch (err) {
@@ -148,9 +176,8 @@ async function downloadAllMedia(
   }
 
   // Autres images liées au produit (filtrer celles qui contiennent une des refs)
-  const knownVariantUrls = new Set(fetched.variantImages.values());
   const related = fetched.imageLinks.filter(
-    (u) => refs.some((r) => u.includes(r)) && !knownVariantUrls.has(u),
+    (u) => refs.some((r) => u.includes(r)) && !comboUrls.has(u),
   );
   for (const imgUrl of related) {
     try {
