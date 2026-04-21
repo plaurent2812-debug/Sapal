@@ -10,9 +10,13 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "scrape:procity": "tsx scripts/procity/scraper/index.ts",
+    "import:procity:dry": "tsx scripts/procity/import/index.ts --dry-run",
+    "import:procity:apply": "tsx scripts/procity/import/index.ts --apply"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.90.0",
     "@supabase/ssr": "^0.10.0",
     "@supabase/supabase-js": "^2.100.1",
     "@upstash/ratelimit": "^2.0.8",
@@ -20,6 +24,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
+    "exceljs": "^4.4.0",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.7.0",
     "next": "16.2.1",
@@ -35,14 +40,18 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/cheerio": "^0.22.35",
     "@types/node": "^20.19.39",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitest/coverage-v8": "^4.1.4",
+    "cheerio": "^1.2.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "jsdom": "^29.0.2",
+    "playwright": "^1.59.1",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vitest": "^4.1.4"
   }
