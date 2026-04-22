@@ -11,7 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
 import { ArrowLeft, ChevronRight } from "lucide-react";
-import { ProductCard } from "@/components/catalogue/product-card";
+import { ProductCard } from "@/components/catalogue/product-card"
+import { CategoryPageClient } from '@/components/catalogue/category-page-client';
 
 export async function generateMetadata({
   params,
@@ -64,6 +65,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     : products.length;
 
   return (
+    <CategoryPageClient initialCategory={category}>
     <div className="flex flex-col min-h-screen bg-background pb-20">
       {/* Hero */}
       <section className="relative w-full py-10 md:py-14 lg:py-20 bg-secondary/20 border-b border-border/50">
@@ -150,5 +152,6 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </section>
       )}
     </div>
+    </CategoryPageClient>
   );
 }
