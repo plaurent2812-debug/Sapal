@@ -5,6 +5,7 @@ import {
   getCategoryBySlug,
   getCategoryChildren,
   getCategoryThumbnails,
+  getCategoryProductCount,
   getProductsInCategoryTree,
 } from "@/lib/data";
 import { Button } from "@/components/ui/button";
@@ -57,8 +58,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     ? await getCategoryThumbnails(children.map((c) => c.id))
     : {};
 
+  // Total : 1 appel RPC count au lieu de charger tous les produits
   const totalProducts = hasChildren
-    ? (await getProductsInCategoryTree(category.id)).length
+    ? await getCategoryProductCount(category.id)
     : products.length;
 
   return (

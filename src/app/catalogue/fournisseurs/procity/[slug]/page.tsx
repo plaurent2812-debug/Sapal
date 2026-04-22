@@ -5,6 +5,7 @@ import {
   getCategoryBySlugForSupplier,
   getCategoryChildrenBySupplier,
   getCategoryThumbnailsBySupplier,
+  getCategoryProductCount,
   getProductsInCategoryTreeBySupplier,
 } from "@/lib/data"
 import { Button } from "@/components/ui/button"
@@ -61,7 +62,7 @@ export default async function ProcityCategoryPage({
     : {}
 
   const totalProducts = hasChildren
-    ? (await getProductsInCategoryTreeBySupplier(category.id, SUPPLIER)).length
+    ? await getCategoryProductCount(category.id, SUPPLIER)
     : products.length
 
   return (
