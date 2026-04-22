@@ -1,5 +1,16 @@
 # SAPAL — Lessons Learned
 
+## 22/04/2026 — Itération Procity mirror
+
+| Problème | Cause | Règle |
+|----------|-------|-------|
+| 3 re-imports successifs pour fixer les images variantes Lisbonne (5010 puis 1500 Simple croix) | J'ai traité les cas un par un au lieu d'inventorier tous les patterns de défaillance du mapping image en amont | AVANT de coder un mapping, dresser la liste exhaustive des cas : (a) snapshot absent pour ref, (b) fichiers locaux présents mais non mappés, (c) scraper qui partage la même photo entre combos. Implémenter tous les fallbacks d'un coup |
+| Cache Next.js `unstable_cache` invalide même après `rm .next/cache` | `unstable_cache` stocke aussi en mémoire process → purger disque ne suffit pas | Restart le dev server APRÈS avoir changé les clés cache (`['categories-roots-v2']` → `['categories-roots-v3']`) OU ajouter `revalidateTag` dans un endpoint admin |
+| Re-import complet (1h30) alors qu'on cherchait à rattraper 19 fails | J'ai relancé sans `--only` par flemme de filtrer | TOUJOURS ajouter un flag `--orphans-only` ou cibler précisément via `--only` quand on fait des retries. Ne jamais re-traiter tous les succès juste pour rattraper quelques échecs |
+| Produit test `1001` dupliqué par un import `529777` | Mon filtre initial excluait `id NOT IN ('1001', '1015')` mais l'import a réinséré `529777` car c'est la ref Excel (et non l'id DB) | Pour les produits préservés avec id custom, stocker la correspondance `excel_ref → db_id` ailleurs (ex: table de mapping) plutôt que de filtrer sur les id DB |
+| Tentative download `fetch()` des images Procity → HTTP 500 | Procity requiert cookies de session revendeur pour les images variantes | NE PAS essayer de deviner les URLs puis fetch en dehors de Playwright. Utiliser `page.on('response', ...)` avec `response.body()` depuis la session authentifiée |
+| Fichier vidé (commande scrape en background interrompue par `Cmd+C` ou fermeture de session) | Scrape lancé via `Bash` tool sans `nohup` → meurt avec le shell | Pour tout script long (>5 min), utiliser `nohup ... &` + `caffeinate -i -w <PID>` pour survivre à la session + à la mise en veille |
+
 ## 03/04/2026
 
 | Problème | Cause | Règle |
