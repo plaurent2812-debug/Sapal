@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import type { ReactNode } from 'react'
 import { CategoryEditButton } from '@/components/catalogue/category-edit-button'
 import { CategoryEditPanel } from '@/components/catalogue/category-edit-panel'
 import type { ClientCategory } from '@/lib/data'
 
 interface CategoryPageClientProps {
   initialCategory: ClientCategory
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export function CategoryPageClient({ initialCategory, children }: CategoryPageClientProps) {
