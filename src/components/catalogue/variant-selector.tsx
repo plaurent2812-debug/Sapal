@@ -10,53 +10,46 @@ interface Props {
   hasVariants: boolean
 }
 
-type AxisKey = 'dimensions' | 'finition' | 'coloris'
+type AxisKey = 'coloris' | 'dimensions' | 'finition' | 'structure'
 
-const AXES: Array<{ key: AxisKey; label: string }> = [
-  { key: 'coloris',    label: 'Couleur' },
-  { key: 'dimensions', label: 'Longueur' },
-  { key: 'finition',   label: 'Structure' },
+// `structure` vit dans specifications.Structure (ou .Crosse fallback) — on l'extrait
+// à la volée via accessor. Les 3 autres sont des colonnes directes.
+const AXES: Array<{ key: AxisKey; label: string; get: (v: ClientVariant) => string }> = [
+  { key: 'coloris',    label: 'Couleur',   get: (v) => v.coloris },
+  { key: 'dimensions', label: 'Longueur',  get: (v) => v.dimensions },
+  { key: 'finition',   label: 'Crosse',    get: (v) => v.finition },
+  { key: 'structure',  label: 'Structure', get: (v) => v.specifications?.Structure || '' },
 ]
 
 // Mapping RAL / nom → couleur hex pour les swatches
 const RAL_COLORS: Record<string, string> = {
-  // Gris Procity
   'gris procity':    '#8c8c8c',
   'gris procity®':   '#8c8c8c',
-  // Blancs
   '9010':            '#f4f4f4',
   'blanc':           '#f4f4f4',
-  // Noirs
   '9005':            '#0a0a0a',
   '9017':            '#1e1e1e',
   'noir':            '#0a0a0a',
-  // Rouges
   '3000':            '#ab2524',
   '3004':            '#8b1a1a',
   '3005':            '#5e2028',
   '3020':            '#cc2222',
-  // Oranges
   '2009':            '#e25303',
-  // Jaunes
   '1016':            '#ead028',
   '1021':            '#f3b800',
   '1023':            '#f9b200',
   '1028':            '#f5a623',
   '1034':            '#efa94a',
-  // Bleus
   '5010':            '#1a5fa8',
   '5013':            '#193153',
   '5015':            '#3b83bd',
   '5018':            '#0e7c8b',
   '5024':            '#5b7e96',
-  // Violets
   '4005':            '#6c4675',
   '4008':            '#844c82',
-  // Verts
   '6005':            '#2b5c33',
   '6018':            '#57a639',
   '6024':            '#308446',
-  // Gris
   '7001':            '#8c9ca5',
   '7016':            '#383e42',
   '7035':            '#cdd1c4',
@@ -64,13 +57,10 @@ const RAL_COLORS: Record<string, string> = {
   '7040':            '#9da3a5',
   '7044':            '#b3b0a7',
   '9006':            '#a5a9ad',
-  // Bruns
   '8017':            '#4d2c1a',
   '8023':            '#a65e2f',
-  // Corton / aspect
   'aspect corten':   '#a0522d',
   'corten':          '#a0522d',
-  // Finitions métal / bois
   'galva':           '#c0c0c0',
   'galvanisé':       '#c0c0c0',
   'anodisé':         '#b8b8c8',
@@ -78,13 +68,11 @@ const RAL_COLORS: Record<string, string> = {
   'brut':            '#c8b89a',
   'gris métallisé':  '#8c9aaa',
   'lasure marron':   '#7b4b2a',
-  // Noms de couleurs
   'rouge':           '#cc2222',
   'bleu':            '#1a5fa8',
   'vert':            '#2b5c33',
   'jaune':           '#f9b200',
   'marron':          '#7b4b2a',
-  // Standard (gris Procity par défaut)
   'standard':        '#8c8c8c',
 }
 
@@ -93,21 +81,15 @@ function getColorHex(coloris: string): string | null {
   return RAL_COLORS[key] ?? null
 }
 
-function isLight(hex: string): boolean {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  return (r * 299 + g * 587 + b * 114) / 1000 > 160
-}
-
 export function VariantSelector({ variants, selectedVariant, onSelect }: Props) {
   const [selections, setSelections] = useState<Partial<Record<AxisKey, string>>>({})
 
   useEffect(() => {
     if (selectedVariant) {
       const newSel: Partial<Record<AxisKey, string>> = {}
-      AXES.forEach(({ key }) => {
-        if (selectedVariant[key]) newSel[key] = selectedVariant[key]
+      AXES.forEach(({ key, get }) => {
+        const v = get(selectedVariant)
+        if (v) newSel[key] = v
       })
       setSelections(newSel)
     }
@@ -116,32 +98,29 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
   if (variants.length === 0) return null
 
   // Axes actifs = ceux qui ont au moins 2 valeurs distinctes non vides
-  const activeAxes = AXES.filter(({ key }) => {
-    const uniqueValues = new Set(variants.map(v => v[key]).filter(Boolean))
+  const activeAxes = AXES.filter(({ get }) => {
+    const uniqueValues = new Set(variants.map(v => get(v)).filter(Boolean))
     return uniqueValues.size > 1
   })
 
-  // Coloris actifs → swatches ; autres axes actifs → dropdowns
   const colorisActive = activeAxes.find(a => a.key === 'coloris')
   const dropdownAxes  = activeAxes.filter(a => a.key !== 'coloris')
 
-  const handleSelect = (axis: AxisKey, value: string) => {
-    const newSelections = { ...selections, [axis]: value }
+  const matches = (v: ClientVariant, sels: Partial<Record<AxisKey, string>>) =>
+    activeAxes.every(({ key, get }) => !sels[key] || get(v) === sels[key])
+
+  const handleSelect = (axisKey: AxisKey, value: string) => {
+    const newSelections = { ...selections, [axisKey]: value }
     setSelections(newSelections)
 
-    const compatible = variants.filter(v =>
-      activeAxes.every(({ key }) => !newSelections[key] || v[key] === newSelections[key])
-    )
-
+    const compatible = variants.filter(v => matches(v, newSelections))
     if (compatible.length === 0) return
 
     const allAxesSelected = activeAxes.every(({ key }) => newSelections[key])
     if (compatible.length === 1 || allAxesSelected) {
-      // Variante exacte trouvée
       onSelect(compatible[0])
-    } else if (axis === 'coloris') {
-      // Coloris sélectionné mais axes incomplets → on appelle onSelect avec la
-      // première variante compatible pour mettre à jour l'image immédiatement
+    } else if (axisKey === 'coloris') {
+      // Maj image immédiate si coloris changé mais autres axes incomplets
       onSelect(compatible[0])
     }
   }
@@ -177,15 +156,13 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
       {colorisActive && (() => {
         const values = [...new Set(
           variants
-            .filter(v => dropdownAxes.every(({ key }) =>
-              !selections[key] || v[key] === selections[key]
+            .filter(v => dropdownAxes.every(({ key, get }) =>
+              !selections[key] || get(v) === selections[key]
             ))
             .map(v => v.coloris)
             .filter(Boolean)
         )]
         if (values.length === 0) return null
-
-        const hasAnyColor = values.some(c => getColorHex(c) !== null)
 
         return (
           <div>
@@ -197,7 +174,8 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
                 const label = value === 'Standard' ? 'Gris Standard'
                   : value.toLowerCase().includes('corten') ? 'Aspect Corten'
                   : value.toLowerCase().includes('gris procity') ? 'Gris Procity'
-                  : `RAL ${value}`
+                  : /^\d{4}$/.test(value) ? `RAL ${value}`
+                  : value
 
                 return (
                   <button
@@ -224,14 +202,14 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
         )
       })()}
 
-      {/* ── Dropdowns dimensions + finition ── */}
-      {dropdownAxes.map(({ key, label }) => {
+      {/* ── Dropdowns dimensions + finition + structure ── */}
+      {dropdownAxes.map(({ key, label, get }) => {
         const values = [...new Set(
           variants
-            .filter(v => activeAxes.every(({ key: k }) =>
-              k === key || !selections[k] || v[k] === selections[k]
+            .filter(v => activeAxes.every(({ key: k, get: g }) =>
+              k === key || !selections[k] || g(v) === selections[k]
             ))
-            .map(v => v[key])
+            .map(v => get(v))
             .filter(Boolean)
         )]
         if (values.length === 0) return null

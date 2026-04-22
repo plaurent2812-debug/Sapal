@@ -1,0 +1,214 @@
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
+import { parseTarifExcel, groupByProduct } from '../import/excel-parser';
+import { ProcityFetcher, throttle } from './fetcher';
+import { extractProductSnapshot } from './extractor';
+import { downloadMedia, filenameFromUrl } from './media-downloader';
+import { StateManager } from './state';
+import type { ProductSnapshot } from './types';
+
+const OUTPUT_DIR = join(process.cwd(), 'scripts/procity/scraper-output');
+const SNAPSHOTS_DIR = join(OUTPUT_DIR, 'snapshots');
+const IMAGES_DIR = join(OUTPUT_DIR, 'images');
+const STATE_PATH = join(OUTPUT_DIR, 'state.json');
+const EXCEL_PATH =
+  '/Users/pierrelaurent/Desktop/OptiPro/Clients/SAPAL/Fournisseurs/Procity/tarifprocityvialux2026-fr.v1.7-699.xlsx';
+
+interface Stats {
+  total: number;
+  ok: number;
+  skipped: number;
+  skippedNoUrl: number;
+  failed: number;
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const limit = args.includes('--limit')
+    ? parseInt(args[args.indexOf('--limit') + 1], 10)
+    : undefined;
+  const force = args.includes('--force'); // ignore state, re-scrape tout
+  const only = args.includes('--only')
+    ? args[args.indexOf('--only') + 1]
+    : undefined; // scraper une seule ref
+
+  console.log('[scrape] loading Excel…');
+  const rows = await parseTarifExcel(EXCEL_PATH);
+  const products = groupByProduct(rows);
+  console.log(`[scrape] ${products.length} produits uniques, ${rows.length} variantes`);
+
+  // Dédupliquer par URL Procity (une URL regroupe souvent plusieurs refs SAPAL)
+  const byUrl = new Map<string, { url: string; refs: string[] }>();
+  for (const p of products) {
+    if (!p.procityUrl) continue;
+    if (!byUrl.has(p.procityUrl)) byUrl.set(p.procityUrl, { url: p.procityUrl, refs: [] });
+    byUrl.get(p.procityUrl)!.refs.push(p.reference);
+  }
+
+  let targets = Array.from(byUrl.values());
+  if (only) targets = targets.filter((t) => t.refs.includes(only));
+  if (limit) targets = targets.slice(0, limit);
+
+  console.log(`[scrape] ${targets.length} URLs uniques à traiter (couvrent ${targets.reduce((s, t) => s + t.refs.length, 0)} produits)`);
+
+  const state = new StateManager(STATE_PATH);
+  if (!force) await state.load();
+
+  const fetcher = new ProcityFetcher();
+  await fetcher.start();
+
+  const stats: Stats = {
+    total: targets.length,
+    ok: 0,
+    skipped: 0,
+    skippedNoUrl: products.length - targets.length,
+    failed: 0,
+  };
+
+  try {
+    for (let i = 0; i < targets.length; i++) {
+      const { url, refs } = targets[i];
+      const progress = `[${i + 1}/${targets.length}]`;
+      try {
+        const fetched = await throttle(() => fetcher.fetchPage(url), 1500);
+        const snapshot = extractProductSnapshot({ html: fetched.html, url });
+
+        // Mapper les combinaisons capturées (color × Longueur × Structure × Structure autre...)
+        // aux variantes PSES (qui ont attributes = { Couleur, Longueur, Structure, ... }).
+        // La clé combinaisonImages est "color=X||sel=Y||sel=Z..." — on reconstruit cette clé
+        // depuis les attributs PSE pour retrouver l'image de chaque variante.
+        const imageByAttributes: Record<string, string> = {};
+        for (const [key, imgUrl] of fetched.combinationImages) {
+          imageByAttributes[key] = imgUrl;
+        }
+
+        for (const variant of snapshot.variants) {
+          const color = variant.attributes.Couleur || variant.attributes.couleur;
+          // Les attributs non-couleur (Longueur, Structure, Structure autre, etc.)
+          const nonColorAttrs = Object.entries(variant.attributes)
+            .filter(([k]) => k !== 'Couleur' && k !== 'couleur')
+            .map(([, v]) => v);
+
+          // Chercher la combinaison qui matche (on compare via label car la clé fetcher est "sel=<label>")
+          let matchedImg: string | undefined;
+          for (const [key, imgUrl] of fetched.combinationImages) {
+            const keyColor = key.match(/color=([^|]+)/)?.[1];
+            const keySelValues = [...key.matchAll(/sel=([^|]+)/g)].map((m) => m[1]);
+            if (color && keyColor !== color) continue;
+            // Tous les attributs non-couleur doivent être présents dans la clé
+            const allMatched = nonColorAttrs.every((v) =>
+              keySelValues.some((sv) => sv === v || sv.startsWith(v) || v.startsWith(sv)),
+            );
+            if (allMatched) {
+              matchedImg = imgUrl;
+              break;
+            }
+          }
+
+          if (matchedImg) {
+            variant.imageFilenames = [filenameFromUrl(matchedImg)];
+          }
+        }
+
+        const stateKey = `url:${url}`;
+        if (!force && state.shouldSkip(stateKey, snapshot.contentHash)) {
+          stats.skipped++;
+          console.log(`${progress} [skip] ${snapshot.reference} (covers ${refs.length} refs, unchanged)`);
+          continue;
+        }
+
+        // Sauvegarder le snapshot sous CHAQUE référence partageant cette URL.
+        // On stocke aussi `mediaRef` = la ref canonique où vivent les images téléchargées.
+        const primaryRef = refs[0];
+        for (const ref of refs) {
+          await saveSnapshot({ ...snapshot, reference: ref, mediaRef: primaryRef });
+        }
+        await downloadAllMedia(snapshot, fetched, refs);
+        state.record(stateKey, snapshot.contentHash);
+        await state.save();
+        stats.ok++;
+        console.log(`${progress} [ok] ${snapshot.reference} — ${snapshot.title} (covers ${refs.length} refs)`);
+      } catch (err) {
+        stats.failed++;
+        const msg = (err as Error).message || String(err);
+        console.error(`${progress} [fail] ${refs[0]} ${url}: ${msg}`);
+      }
+    }
+  } finally {
+    await fetcher.stop();
+  }
+
+  console.log('[scrape] done', stats);
+  await mkdir(OUTPUT_DIR, { recursive: true });
+  await writeFile(
+    join(OUTPUT_DIR, `run-${Date.now()}.stats.json`),
+    JSON.stringify(stats, null, 2),
+  );
+}
+
+async function saveSnapshot(snapshot: ProductSnapshot): Promise<void> {
+  await mkdir(SNAPSHOTS_DIR, { recursive: true });
+  await writeFile(
+    join(SNAPSHOTS_DIR, `${snapshot.reference}.json`),
+    JSON.stringify(snapshot, null, 2),
+  );
+}
+
+async function downloadAllMedia(
+  snapshot: ProductSnapshot,
+  fetched: {
+    imageLinks: string[];
+    combinationImages: Map<string, string>;
+    imageBodies: Map<string, Buffer>;
+  },
+  refs: string[],
+): Promise<void> {
+  const primaryRef = refs[0];
+  const dir = join(IMAGES_DIR, primaryRef);
+  await mkdir(dir, { recursive: true });
+
+  // 1) Écrire les bodies déjà téléchargés par Playwright (cookies de session).
+  //    Ça couvre la plupart des images variantes, y compris celles qui ne sont
+  //    accessibles qu'avec auth revendeur.
+  for (const [url, buf] of fetched.imageBodies) {
+    const filename = filenameFromUrl(url);
+    const target = join(dir, filename);
+    try {
+      const { existsSync } = await import('fs');
+      if (!existsSync(target)) {
+        await writeFile(target, buf);
+      }
+    } catch (err) {
+      console.warn(`[media-write-warn] ${filename}: ${(err as Error).message}`);
+    }
+  }
+
+  // 2) Fallback pour les images de combinaison non captées en réseau
+  //    (anciens mécanismes : URL dans le DOM).
+  const comboUrls = new Set(fetched.combinationImages.values());
+  for (const imgUrl of comboUrls) {
+    if (fetched.imageBodies.has(imgUrl)) continue; // déjà sauvé
+    try {
+      await downloadMedia(imgUrl, dir, filenameFromUrl(imgUrl));
+    } catch (err) {
+      console.warn(`[media-warn] ${imgUrl}: ${(err as Error).message}`);
+    }
+  }
+
+  // 3) Autres images liées au produit (filtrer celles qui contiennent une des refs)
+  const related = fetched.imageLinks.filter(
+    (u) => refs.some((r) => u.includes(r)) && !comboUrls.has(u) && !fetched.imageBodies.has(u),
+  );
+  for (const imgUrl of related) {
+    try {
+      await downloadMedia(imgUrl, dir, filenameFromUrl(imgUrl));
+    } catch (err) {
+      console.warn(`[media-warn] ${imgUrl}: ${(err as Error).message}`);
+    }
+  }
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

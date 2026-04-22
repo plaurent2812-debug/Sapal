@@ -79,8 +79,8 @@ export function Header() {
               <ChevronDown size={14} className="opacity-50 group-hover:opacity-100 transition-opacity" />
               <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
-            <Link href="/catalogue/procity" className="relative py-3.5 px-5 text-muted-foreground hover:text-foreground transition-colors group">
-              Catalogue ProCity
+            <Link href="/catalogue/fournisseurs/procity" className="relative py-3.5 px-5 text-muted-foreground hover:text-foreground transition-colors group">
+              Catalogue Procity
               <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
             </Link>
             <div className="flex-1"></div>

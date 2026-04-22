@@ -20,6 +20,7 @@ export interface ProductVariantRow {
   delai: string
   specifications: Record<string, string>
   images: string[]
+  primary_image_url: string | null
   created_at: string
 }
 
@@ -46,6 +47,7 @@ export interface ProductRow {
   name: string
   slug: string
   description: string
+  description_sapal: string | null
   specifications: Record<string, string>
   image_url: string
   price: number
@@ -57,6 +59,10 @@ export interface ProductRow {
   procity_sheet: string | null
   procity_family: string | null
   procity_type: string | null
+  procity_url: string | null
+  tech_sheet_url: string | null
+  gallery_image_urls: string[] | null
+  last_scraped_at: string | null
   created_at: string
 }
 
@@ -122,6 +128,10 @@ export interface SupplierRow {
   contact_name: string | null
   payment_terms: '30j' | 'prepayment'
   notes: string | null
+  website: string | null
+  logo_url: string | null
+  default_availability: string | null
+  scraper_config: Record<string, unknown> | null
   created_at: string
   updated_at: string
 }

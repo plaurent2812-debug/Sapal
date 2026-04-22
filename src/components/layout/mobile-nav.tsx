@@ -7,10 +7,7 @@ import { createBrowserClient } from "@/lib/supabase/client";
 
 const NAV_LINKS = [
   { href: "/catalogue", label: "Tous nos produits" },
-  { href: "/catalogue/procity", label: "Catalogue ProCity" },
-  { href: "/catalogue/signalisation", label: "Signalisation" },
-  { href: "/catalogue/mobilier-urbain", label: "Mobilier Urbain" },
-  { href: "/catalogue/amenagement-securite", label: "Aménagement & Sécurité" },
+  { href: "/catalogue/fournisseurs/procity", label: "Catalogue Procity" },
   { href: "/realisations", label: "Réalisations" },
   { href: "/contact", label: "Contact" },
 ];

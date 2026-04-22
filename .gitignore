@@ -60,3 +60,12 @@ scripts/procity/output_preview/
 scripts/procity/sync_full_run.log
 scripts/procity/report_run.log
 scripts/procity/import_full_log*.txt
+scripts/procity/scraper-output/
+
+# Scripts d'analyse one-off (non versionnés, utiles localement)
+scripts/procity/analyze-taxonomy.ts
+scripts/procity/analyze-url-groups.ts
+scripts/procity/build-taxonomy.ts
+scripts/procity/check-test-refs.ts
+scripts/procity/count-other-universes.ts
+scripts/procity/inspect-miroirs.ts
