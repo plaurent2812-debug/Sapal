@@ -1,26 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Pencil } from 'lucide-react'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { useAdminRole } from '@/hooks/useAdminRole'
 
 interface CategoryEditButtonProps {
   onEdit: () => void
 }
 
 export function CategoryEditButton({ onEdit }: CategoryEditButtonProps) {
-  const [isAdmin, setIsAdmin] = useState(false)
+  const { isAdmin, loading } = useAdminRole()
 
-  useEffect(() => {
-    const supabase = createBrowserClient()
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user.user_metadata?.role === 'admin') {
-        setIsAdmin(true)
-      }
-    })
-  }, [])
-
-  if (!isAdmin) return null
+  if (loading || !isAdmin) return null
 
   return (
     <button
