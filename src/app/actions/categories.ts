@@ -15,7 +15,7 @@ export interface UpdateCategoryPayload {
 export async function updateCategory(
   id: string,
   payload: UpdateCategoryPayload
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; universe?: string | null }> {
   const supabase = await createServerSupabaseClient()
 
   const { data: { user }, error: authError } = await supabase.auth.getUser()
@@ -47,8 +47,15 @@ export async function updateCategory(
 
   if (error) return { error: error.message }
 
+  // Fetch the updated universe value to return to client
+  const { data: updated } = await supabase
+    .from('categories')
+    .select('universe')
+    .eq('id', id)
+    .single()
+
   revalidatePath(`/catalogue/${payload.slug}`, 'page')
   revalidatePath('/catalogue', 'page')
 
-  return {}
+  return { universe: updated?.universe ?? null }
 }

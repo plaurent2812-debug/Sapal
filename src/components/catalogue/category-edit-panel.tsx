@@ -46,7 +46,14 @@ export function CategoryEditPanel({ category, isOpen, onClose, onSaved }: Catego
     setError(null)
     try {
       const supabase = createBrowserClient()
-      const ext = file.name.split('.').pop()
+      const rawExt = file.name.split('.').pop()?.toLowerCase()
+      const allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif']
+      if (!rawExt || !allowedExts.includes(rawExt)) {
+        setError('Format non supporté. Utilisez JPG, PNG, WEBP, GIF ou AVIF.')
+        setUploading(false)
+        return
+      }
+      const ext = rawExt
       const path = `${category.id}/${Date.now()}.${ext}`
       const { error: uploadError } = await supabase.storage
         .from('categories')
@@ -58,6 +65,7 @@ export function CategoryEditPanel({ category, isOpen, onClose, onSaved }: Catego
       setError(e instanceof Error ? e.message : 'Erreur upload')
     } finally {
       setUploading(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
     }
   }
 
@@ -76,13 +84,18 @@ export function CategoryEditPanel({ category, isOpen, onClose, onSaved }: Catego
       sort_order: sortOrder,
       ...(category.level === 1 ? { universe: universe.trim() || null } : {}),
     }
-    const result = await updateCategory(category.id, payload)
-    setSaving(false)
-    if (result.error) {
-      setError(result.error)
-      return
+    try {
+      const result = await updateCategory(category.id, payload)
+      if (result.error) {
+        setError(result.error)
+        return
+      }
+      onSaved({ ...category, name: payload.name, slug: payload.slug, description: payload.description, imageUrl: payload.image_url, sortOrder: payload.sort_order, universe: result.universe ?? payload.universe ?? category.universe })
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Erreur inattendue')
+    } finally {
+      setSaving(false)
     }
-    onSaved({ ...category, name: payload.name, slug: payload.slug, description: payload.description, imageUrl: payload.image_url, sortOrder: payload.sort_order, universe: payload.universe ?? category.universe })
   }
 
   if (!isOpen) return null
@@ -193,7 +206,7 @@ export function CategoryEditPanel({ category, isOpen, onClose, onSaved }: Catego
             <input
               type="number"
               value={sortOrder}
-              onChange={(e) => setSortOrder(Number(e.target.value))}
+              onChange={(e) => setSortOrder(parseInt(e.target.value, 10) || 0)}
               min={0}
               className="w-32 px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent/30"
             />
