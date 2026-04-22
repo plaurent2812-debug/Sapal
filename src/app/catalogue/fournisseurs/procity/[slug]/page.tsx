@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { AnimatedSection, AnimatedItem } from "@/components/ui/motion"
 import { ArrowLeft, ChevronRight } from "lucide-react"
 import { ProductCard } from "@/components/catalogue/product-card"
+import { CategoryPageClient } from "@/components/catalogue/category-page-client"
 
 const SUPPLIER = "procity"
 const BASE_PATH = "/catalogue/fournisseurs/procity"
@@ -66,6 +67,7 @@ export default async function ProcityCategoryPage({
     : products.length
 
   return (
+    <CategoryPageClient initialCategory={category}>
     <div className="flex flex-col min-h-screen bg-background pb-20">
       <section className="relative w-full py-10 md:py-14 lg:py-20 bg-secondary/20 border-b border-border/50">
         <div className="container px-4 md:px-6 mx-auto">
@@ -169,5 +171,6 @@ export default async function ProcityCategoryPage({
         </section>
       )}
     </div>
+    </CategoryPageClient>
   )
 }
