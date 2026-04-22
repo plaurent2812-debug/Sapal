@@ -9,6 +9,8 @@ export interface FetchedPage {
   imageLinks: string[];
   /** Liens PDF trouves (visibles seulement apres login revendeur) */
   pdfLinks: string[];
+  /** Contenu binaire des images variantes captées au fil du réseau (URL → bytes). */
+  imageBodies: Map<string, Buffer>;
 }
 
 const USER_AGENT =
@@ -69,6 +71,34 @@ export class ProcityFetcher {
   async fetchPage(url: string): Promise<FetchedPage> {
     if (!this.context) throw new Error('Fetcher not started');
     const page = await this.context.newPage();
+
+    // Enregistrer toutes les URLs d'images variantes vues par le navigateur.
+    // Procity ne met l'image d'une variante dans le DOM qu'après clic sur la
+    // combinaison correspondante. En écoutant le réseau, on capte tout ET on
+    // récupère le body directement (pour éviter de re-télécharger sans cookie de
+    // session — Procity refuse les requêtes anonymes pour les images revendeur).
+    const networkImages = new Set<string>();
+    const imageBodies = new Map<string, Buffer>();
+    const bodyPromises: Promise<void>[] = [];
+    page.on('response', (response) => {
+      const reqUrl = response.url();
+      if (/\/cache\/images\/product\/[a-f0-9]{32}-\d{6,}_[a-z0-9]+_\d+\.(webp|jpg|jpeg|png)$/i.test(reqUrl)) {
+        if (response.ok()) {
+          networkImages.add(reqUrl);
+          // Capturer le body en asynchrone (ne pas bloquer le event loop)
+          bodyPromises.push(
+            response
+              .body()
+              .then((buf) => {
+                if (buf && buf.length > 500) imageBodies.set(reqUrl, buf);
+              })
+              .catch(() => {}),
+          );
+        }
+      }
+    });
+    const pageUrlForLog = url;
+
     try {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30_000 });
       try {
@@ -84,11 +114,21 @@ export class ProcityFetcher {
           .map((i) => (i as HTMLImageElement).currentSrc || (i as HTMLImageElement).src)
           .filter(Boolean),
       );
+      // Ajouter les URLs d'images variantes captées au fil des requêtes réseau
+      // (Procity les charge à la demande lors des clics, elles n'apparaissent donc
+      // pas dans le DOM final).
+      let added = 0;
+      for (const u of networkImages) {
+        if (!imageLinks.includes(u)) { imageLinks.push(u); added++; }
+      }
+      console.log(`[fetcher] ${pageUrlForLog}: ${networkImages.size} images captées, ${imageBodies.size} bodies sauvés`);
+      // Attendre que tous les bodies soient téléchargés
+      await Promise.all(bodyPromises);
       const pdfLinks = await page.$$eval('a[href$=".pdf"]', (links) =>
         links.map((l) => (l as HTMLAnchorElement).href),
       );
 
-      return { url, html, combinationImages, imageLinks, pdfLinks };
+      return { url, html, combinationImages, imageLinks, pdfLinks, imageBodies };
     } finally {
       await page.close();
     }

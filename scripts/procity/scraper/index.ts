@@ -156,18 +156,38 @@ async function saveSnapshot(snapshot: ProductSnapshot): Promise<void> {
 
 async function downloadAllMedia(
   snapshot: ProductSnapshot,
-  fetched: { imageLinks: string[]; combinationImages: Map<string, string> },
+  fetched: {
+    imageLinks: string[];
+    combinationImages: Map<string, string>;
+    imageBodies: Map<string, Buffer>;
+  },
   refs: string[],
 ): Promise<void> {
-  // On télécharge les images UNE SEULE FOIS dans le dossier de la ref canonique,
-  // puis on crée des copies pour les autres refs partageant l'URL (symlinks pas
-  // supportés par tous les systèmes → on dupliquera si besoin lors de l'import).
   const primaryRef = refs[0];
   const dir = join(IMAGES_DIR, primaryRef);
+  await mkdir(dir, { recursive: true });
 
-  // Images de chaque combinaison (prioritaires, déduplication automatique par URL)
+  // 1) Écrire les bodies déjà téléchargés par Playwright (cookies de session).
+  //    Ça couvre la plupart des images variantes, y compris celles qui ne sont
+  //    accessibles qu'avec auth revendeur.
+  for (const [url, buf] of fetched.imageBodies) {
+    const filename = filenameFromUrl(url);
+    const target = join(dir, filename);
+    try {
+      const { existsSync } = await import('fs');
+      if (!existsSync(target)) {
+        await writeFile(target, buf);
+      }
+    } catch (err) {
+      console.warn(`[media-write-warn] ${filename}: ${(err as Error).message}`);
+    }
+  }
+
+  // 2) Fallback pour les images de combinaison non captées en réseau
+  //    (anciens mécanismes : URL dans le DOM).
   const comboUrls = new Set(fetched.combinationImages.values());
   for (const imgUrl of comboUrls) {
+    if (fetched.imageBodies.has(imgUrl)) continue; // déjà sauvé
     try {
       await downloadMedia(imgUrl, dir, filenameFromUrl(imgUrl));
     } catch (err) {
@@ -175,9 +195,9 @@ async function downloadAllMedia(
     }
   }
 
-  // Autres images liées au produit (filtrer celles qui contiennent une des refs)
+  // 3) Autres images liées au produit (filtrer celles qui contiennent une des refs)
   const related = fetched.imageLinks.filter(
-    (u) => refs.some((r) => u.includes(r)) && !comboUrls.has(u),
+    (u) => refs.some((r) => u.includes(r)) && !comboUrls.has(u) && !fetched.imageBodies.has(u),
   );
   for (const imgUrl of related) {
     try {
