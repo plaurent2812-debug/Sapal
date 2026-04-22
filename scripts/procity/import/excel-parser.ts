@@ -36,10 +36,12 @@ export interface TarifVariantRow {
   isNouveaute?: string;
 }
 
+export type UniverseSlug = 'mobilier-urbain' | 'aires-de-jeux' | 'equipements-sportifs' | 'miroirs';
+
 export interface ProductFromExcel {
   reference: string;
   procityUrl?: string;
-  universe: 'mobilier-urbain' | 'aires-de-jeux' | 'equipements-sportifs' | 'miroirs';
+  universe: UniverseSlug;
   category?: string;
   productType?: string;
   designationShort?: string;
@@ -50,7 +52,7 @@ export interface ProductFromExcel {
 interface SheetConfig {
   name: string;
   headerRow: number;
-  universe: ProductFromExcel['universe'];
+  universe: UniverseSlug;
   cols: {
     reference: number;
     nouveautes?: number;
@@ -153,6 +155,32 @@ const SHEET_CONFIGS: SheetConfig[] = [
       marque: 16,
     },
   },
+  {
+    // Onglet MIROIRS : l'en-tête est différente (ref SPL en col 1, ref MI en col 2,
+    // category en 4, type en 5, designation en 6/7). Les dimensions sont décomposées
+    // (Optique col 9 + Cadre col 10) mais on prendra "Optique" comme dimension.
+    name: 'MIROIRS',
+    headerRow: 5,
+    universe: 'miroirs',
+    cols: {
+      reference: 1,
+      nouveautes: 3,
+      category: 4,
+      productType: 5,
+      designationShort: 6,
+      designationFull: 7,
+      finition: 8, // "QUALITE" (Polymir, Stainless, etc.)
+      dimensions: 9, // "DIMENSIONS OPTIQUE"
+      poids: 11,
+      pricePublic: 12,
+      priceNet: 13,
+      coloris: 14,
+      delai: 15,
+      page: 16,
+      url: 17,
+      marque: 18,
+    },
+  },
 ];
 
 export async function parseTarifExcel(filePath: string): Promise<TarifVariantRow[]> {
@@ -241,7 +269,7 @@ export function groupByProduct(rows: TarifVariantRow[]): ProductFromExcel[] {
   return Array.from(map.values());
 }
 
-function sheetNameToUniverse(name: string): ProductFromExcel['universe'] {
+function sheetNameToUniverse(name: string): UniverseSlug {
   if (name === 'AIRES DE JEUX') return 'aires-de-jeux';
   if (name === 'ÉQUIPEMENTS SPORTIFS') return 'equipements-sportifs';
   if (name === 'MIROIRS') return 'miroirs';

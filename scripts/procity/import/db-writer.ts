@@ -1,82 +1,107 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { ProductSnapshot } from '../scraper/types';
+import type { ProductSnapshot, VariantSnapshot } from '../scraper/types';
 import type { ProductFromExcel, TarifVariantRow } from './excel-parser';
 
+/**
+ * Entrée d'import pour UN produit canonique (qui peut regrouper plusieurs refs Excel
+ * partageant la même URL Procity).
+ */
 export interface ImportInput {
-  excel: ProductFromExcel;
-  snapshot: ProductSnapshot | null;      // null si pas de scraping dispo
-  descriptionSapal: string | null;       // null si LLM skippé
-  galleryUrls: string[];                 // URLs Storage (photos produit)
-  variantImageUrls: Record<string, string>; // variantRef -> URL Storage
-  techSheetUrl: string | null;           // PDF Storage
-  supplierId: string;                    // UUID supplier Procity
+  /** Refs Excel partageant la même URL Procity ; le premier élément est la ref canonique. */
+  excelGroup: ProductFromExcel[];
+  snapshot: ProductSnapshot | null;
+  descriptionSapal: string | null;
+  galleryUrls: string[];
+  /** Map : variantKey (ref Excel ou variantRef snapshot) → URL Storage */
+  variantImageUrls: Record<string, string>;
+  techSheetUrl: string | null;
+  supplierId: string;
 }
 
 /**
- * Upsert idempotent produit + variantes.
+ * Upsert idempotent d'un produit canonique + variantes dérivées.
  *
- * Stratégie : la PK de products est `text` et n'a pas de contrainte unique sur `reference`.
- * On SELECT d'abord par (supplier_id, reference), on UPDATE si trouvé, INSERT sinon.
- * Pour les variantes, on utilise la contrainte naturelle product_variants_natural_key_unique
- * (product_id, reference, coloris, finition) via onConflict.
+ * Un "produit canonique" regroupe toutes les refs Excel qui pointent vers la même URL
+ * Procity. Les refs distinctes (ex: Héritage 206130..206153 = 12 refs) deviennent des
+ * variantes d'UN seul produit avec axes (longueur, crosse, structure) dérivés Excel,
+ * multipliés par coloris depuis le snapshot.
+ *
+ * products.id = ref canonique (premier élément de excelGroup)
+ * product_variants.reference = ref Excel + suffixe coloris si coloris vient du snapshot
  */
 export async function upsertProduct(
   supabase: SupabaseClient,
   input: ImportInput,
-): Promise<{ productId: string; action: 'insert' | 'update' }> {
-  const { excel, snapshot, descriptionSapal, galleryUrls, variantImageUrls, techSheetUrl, supplierId } = input;
-  const ref = excel.reference;
+): Promise<{ productId: string; action: 'insert' | 'update'; variantCount: number }> {
+  const { excelGroup, snapshot, descriptionSapal, galleryUrls, variantImageUrls, techSheetUrl, supplierId } = input;
+  if (excelGroup.length === 0) throw new Error('excelGroup vide');
 
-  // Cherche produit existant — d'abord par supplier_id + reference
-  const { data: existing, error: selectErr } = await supabase
+  const canonical = excelGroup[0];
+  const productId = canonical.reference;
+
+  // Cherche produit existant — priorité à l'id canonique puis fallback supplier+reference
+  const { data: existingById } = await supabase
     .from('products')
     .select('id, name, description, image_url, slug, gallery_image_urls')
-    .eq('supplier_id', supplierId)
-    .eq('reference', ref)
+    .eq('id', productId)
     .maybeSingle();
-  if (selectErr) throw new Error(`select product ${ref}: ${selectErr.message}`);
+  const existing = existingById;
 
-  const title = snapshot?.title || excel.designationShort || excel.designationFull || `Produit ${ref}`;
-  const slug = existing?.slug || slugify(`${title} ${ref}`);
+  const title = canonicalTitle(canonical, snapshot);
+  // Slug : si le slug de base est déjà pris par un AUTRE produit, on suffixe
+  // avec la ref canonique pour garantir l'unicité. Cela évite les fails sur la
+  // contrainte `products_slug_key` quand 2 URLs Procity ont le même titre court.
+  let slug: string;
+  if (existing?.slug) {
+    slug = existing.slug;
+  } else {
+    const baseSlug = slugifyCanonical(title);
+    const { data: slugCollision } = await supabase
+      .from('products')
+      .select('id')
+      .eq('slug', baseSlug)
+      .neq('id', productId)
+      .maybeSingle();
+    slug = slugCollision ? `${baseSlug}-${productId}` : baseSlug;
+  }
   const rawDescription = snapshot?.descriptionRaw || '';
 
-  // specifications : merge snapshot.characteristics (prioritaire) + infos Excel (dimensions/poids)
   const specifications: Record<string, string> = {};
   if (snapshot?.characteristics) {
     for (const c of snapshot.characteristics) specifications[c.label] = c.value;
   }
-  if (excel.variants[0]?.dimensions && !specifications.Dimensions) {
-    specifications.Dimensions = excel.variants[0].dimensions;
+  // Dimensions/Poids/Type : on prend de la ref canonique en premier (plus représentatif)
+  const firstVariant = canonical.variants[0];
+  if (firstVariant?.dimensions && !specifications.Dimensions) {
+    specifications.Dimensions = firstVariant.dimensions;
   }
-  if (excel.variants[0]?.weightKg && !specifications.Poids) {
-    specifications.Poids = `${excel.variants[0].weightKg} kg`;
+  if (firstVariant?.weightKg && !specifications.Poids) {
+    specifications.Poids = `${firstVariant.weightKg} kg`;
   }
-  if (excel.productType && !specifications.Type) {
-    specifications.Type = excel.productType;
+  if (canonical.productType && !specifications.Type) {
+    specifications.Type = canonical.productType;
   }
 
-  const procityFamily = excel.category || null;
-  const procityType = excel.productType || null;
-  const basePrice = excel.variants[0]?.priceNetHt || excel.variants[0]?.pricePublicHt || 0;
+  // Prix affiché = min des prix du groupe (prix "à partir de")
+  const allPrices = excelGroup
+    .flatMap((p) => p.variants.map((v) => v.priceNetHt || v.pricePublicHt || 0))
+    .filter((p) => p > 0);
+  const basePrice = allPrices.length > 0 ? Math.min(...allPrices) : 0;
 
-  // Résolution category_id : si le produit existe, on garde sa catégorie.
-  // Sinon, mapping automatique basé sur productType + universe Excel.
-  const categoryId = existing
-    ? undefined // pas d'override sur update
-    : await resolveCategoryId(supabase, excel);
+  const categoryId = existing ? undefined : await resolveCategoryId(supabase, canonical);
 
   const payload: Record<string, unknown> = {
     supplier_id: supplierId,
     supplier: 'procity',
-    reference: ref,
+    reference: productId,
     name: title,
     slug,
     description: rawDescription || existing?.description || '',
     description_sapal: descriptionSapal,
     description_source_hash: snapshot?.contentHash || null,
-    procity_url: excel.procityUrl || null,
-    procity_family: procityFamily,
-    procity_type: procityType,
+    procity_url: canonical.procityUrl || null,
+    procity_family: canonical.category || null,
+    procity_type: canonical.productType || null,
     specifications,
     gallery_image_urls: galleryUrls.length ? galleryUrls : existing?.gallery_image_urls || [],
     tech_sheet_url: techSheetUrl,
@@ -84,235 +109,307 @@ export async function upsertProduct(
   };
 
   if (basePrice > 0) payload.price = basePrice;
-
-  // image_url : on ne l'écrase que si elle est vide ET qu'on a une galerie
   if (!existing?.image_url && galleryUrls.length > 0) {
     payload.image_url = galleryUrls[0];
   }
 
-  let productId: string;
   let action: 'insert' | 'update';
-
   if (existing) {
-    const { error } = await supabase.from('products').update(payload).eq('id', existing.id);
-    if (error) throw new Error(`update product ${ref}: ${error.message}`);
-    productId = existing.id;
+    const { error } = await supabase.from('products').update(payload).eq('id', productId);
+    if (error) throw new Error(`update product ${productId}: ${error.message}`);
     action = 'update';
   } else {
-    // Nouveau produit : on utilise la reference comme id (products.id est text)
-    payload.id = ref;
+    payload.id = productId;
     if (categoryId) payload.category_id = categoryId;
     const { error } = await supabase.from('products').insert(payload);
-    if (error) throw new Error(`insert product ${ref}: ${error.message}`);
-    productId = ref;
+    if (error) throw new Error(`insert product ${productId}: ${error.message}`);
     action = 'insert';
   }
 
-  await upsertVariants(supabase, productId, excel.variants, snapshot, variantImageUrls);
+  const variantCount = await rewriteVariants(supabase, productId, excelGroup, snapshot, variantImageUrls);
 
-  return { productId, action };
-}
-
-async function upsertVariants(
-  supabase: SupabaseClient,
-  productId: string,
-  excelVariants: TarifVariantRow[],
-  snapshot: ProductSnapshot | null,
-  variantImageUrls: Record<string, string>,
-): Promise<void> {
-  // Stratégie : l'Excel est source de vérité pour les prix/délais/coloris.
-  // Le snapshot complète avec les sous-variantes scrapées (ex: 10 couleurs pour 1 ligne Excel).
-  //
-  // Cas 1 : Excel a plusieurs lignes (ex: Lisbonne avec Standard+3004+6005)
-  //   → chaque ligne Excel = 1 variante
-  // Cas 2 : Excel a 1 ligne "Standard" mais snapshot a 10 couleurs
-  //   → on prend les 10 variantes du snapshot, avec prix/délai de la ligne Excel
-  // Cas 3 : Excel a 1 ligne et pas de scraping
-  //   → 1 variante "Standard"
-
-  const variantsToWrite: Array<{
-    reference: string;
-    coloris: string;
-    finition: string;
-    dimensions: string;
-    poids: string;
-    price: number | null;
-    delai: string;
-    images: string[];
-    primary_image_url: string | null;
-    specifications: Record<string, string>;
-  }> = [];
-
-  // Map snapshot variants by their variant ref (ex: 529777.GPRO)
-  const snapshotByRef = new Map<string, { couleur: string; attributes: Record<string, string>; imageFilenames: string[] }>();
-  if (snapshot) {
-    for (const v of snapshot.variants) {
-      snapshotByRef.set(v.variantRef, {
-        couleur: v.attributes.Couleur || v.attributes.couleur || '',
-        attributes: v.attributes,
-        imageFilenames: v.imageFilenames,
-      });
-    }
-  }
-
-  // Si Excel a plusieurs variantes distinctes : Excel est source
-  if (excelVariants.length > 1) {
-    for (const ev of excelVariants) {
-      variantsToWrite.push({
-        reference: ev.reference,
-        coloris: normalizeColoris(ev.coloris),
-        finition: normalizeFinition(ev.finition),
-        dimensions: ev.dimensions || '',
-        poids: ev.weightKg ? `${ev.weightKg} kg` : '',
-        price: ev.priceNetHt || ev.pricePublicHt || null,
-        delai: ev.delai || '',
-        images: [],
-        primary_image_url: variantImageUrls[ev.reference] || null,
-        specifications: {},
-      });
-    }
-  } else if (snapshot && snapshot.variants.length > 0) {
-    // Excel 1 ligne mais snapshot expose plusieurs variantes : on prend le snapshot comme source
-    const excelBase = excelVariants[0];
-
-    // Détecter le meilleur axe non-couleur à utiliser comme "finition" (pour le selector UI).
-    // Priorité : Finition, Finition du bois, puis Structure autre, Structure, puis tout autre
-    // attribut présent avec plusieurs valeurs.
-    const structureAxis = detectStructureAxis(snapshot.variants);
-
-    for (const sv of snapshot.variants) {
-      const rawColoris = sv.attributes.Couleur || sv.attributes.couleur || excelBase?.coloris || '';
-      const rawFinition =
-        sv.attributes.Finition ||
-        sv.attributes['Finition du bois'] ||
-        (structureAxis ? sv.attributes[structureAxis] : '') ||
-        excelBase?.finition ||
-        '';
-      // Poids : priorité snapshot (Procity expose un poids par variante via PSES),
-      // fallback Excel si absent
-      const weightKg = sv.weightKg ?? excelBase?.weightKg;
-      variantsToWrite.push({
-        reference: sv.variantRef,
-        coloris: normalizeColoris(rawColoris),
-        finition: normalizeFinition(rawFinition),
-        dimensions: excelBase?.dimensions || '',
-        poids: weightKg ? `${weightKg} kg` : '',
-        price: excelBase?.priceNetHt || excelBase?.pricePublicHt || null,
-        delai: sv.availability || excelBase?.delai || '',
-        images: [],
-        primary_image_url: variantImageUrls[sv.variantRef] || null,
-        specifications: sv.attributes,
-      });
-    }
-  } else if (excelVariants.length === 1) {
-    const ev = excelVariants[0];
-    variantsToWrite.push({
-      reference: ev.reference,
-      coloris: normalizeColoris(ev.coloris),
-      finition: normalizeFinition(ev.finition),
-      dimensions: ev.dimensions || '',
-      poids: ev.weightKg ? `${ev.weightKg} kg` : '',
-      price: ev.priceNetHt || ev.pricePublicHt || null,
-      delai: ev.delai || '',
-      images: [],
-      primary_image_url: null,
-      specifications: {},
-    });
-  }
-
-  // Upsert en bulk avec onConflict sur la clé naturelle.
-  // Le format des colonnes match le format historique prod : coloris sans "RAL ",
-  // finition vide (pas "-") quand absente, label combiné pour l'affichage admin.
-  for (const v of variantsToWrite) {
-    const label = buildVariantLabel(v);
-    const { error } = await supabase.from('product_variants').upsert(
-      {
-        product_id: productId,
-        reference: v.reference,
-        label,
-        coloris: v.coloris,
-        finition: v.finition,
-        dimensions: v.dimensions,
-        poids: v.poids,
-        price: v.price ?? 0,
-        delai: v.delai,
-        images: v.images || [],
-        primary_image_url: v.primary_image_url,
-        specifications: v.specifications || {},
-      },
-      { onConflict: 'product_id,reference,coloris,finition' },
-    );
-    if (error) throw new Error(`upsert variant ${v.reference}/${v.coloris}: ${error.message}`);
-  }
+  return { productId, action, variantCount };
 }
 
 /**
- * Trouve le meilleur attribut variant (hors Couleur) à stocker dans `finition`
- * pour activer le sélecteur "Structure" côté fiche produit.
- * Ignore "Couleur"/"Finition du bois" déjà gérés en amont.
+ * Reconstruit complètement les variantes du produit canonique.
+ *
+ * Stratégie :
+ * 1. DELETE toutes les variantes existantes du product_id (on refait tout proprement).
+ * 2. Pour chaque ref Excel du groupe : extraire (longueur, crosse, structure) depuis les
+ *    colonnes Excel.
+ * 3. Si le snapshot existe, multiplier chaque ref Excel par les coloris du snapshot qui
+ *    matchent (longueur, crosse, structure).
+ * 4. Sinon, 1 seule variante par ref Excel (coloris Standard).
  */
-function detectStructureAxis(
-  variants: Array<{ attributes: Record<string, string> }>,
-): string | null {
-  const ignored = new Set(['Couleur', 'couleur', 'Finition', 'Finition du bois']);
-  const valuesByKey = new Map<string, Set<string>>();
-  for (const v of variants) {
-    for (const [k, val] of Object.entries(v.attributes)) {
-      if (ignored.has(k) || !val) continue;
-      if (!valuesByKey.has(k)) valuesByKey.set(k, new Set());
-      valuesByKey.get(k)!.add(val);
+async function rewriteVariants(
+  supabase: SupabaseClient,
+  productId: string,
+  excelGroup: ProductFromExcel[],
+  snapshot: ProductSnapshot | null,
+  variantImageUrls: Record<string, string>,
+): Promise<number> {
+  // Purge : on supprime tout pour reconstruire proprement (pas de diff partiel)
+  const { error: delErr } = await supabase
+    .from('product_variants')
+    .delete()
+    .eq('product_id', productId);
+  if (delErr) throw new Error(`delete variants ${productId}: ${delErr.message}`);
+
+  const rows: VariantRow[] = [];
+
+  for (const excel of excelGroup) {
+    for (const ev of excel.variants) {
+      const longueur = extractLongueur(ev);
+      const crosse = extractCrosse(ev);
+      const structure = extractStructure(excel, ev);
+
+      // Coloris depuis le snapshot qui match cette combinaison ; sinon "Standard"
+      const matchingColors = snapshot
+        ? findMatchingColors(snapshot.variants, { longueur, crosse, structure })
+        : [];
+
+      if (matchingColors.length === 0) {
+        // 1 variante unique — coloris Excel (souvent "Standard")
+        rows.push(buildRow({
+          excelRef: ev.reference,
+          coloris: normalizeColoris(ev.coloris) || 'Standard',
+          longueur,
+          crosse,
+          structure,
+          dimensions: ev.dimensions || '',
+          weightKg: ev.weightKg,
+          price: ev.priceNetHt || ev.pricePublicHt || null,
+          delai: ev.delai || '',
+          primaryImage: variantImageUrls[ev.reference] || null,
+          attrs: {},
+        }));
+      } else {
+        // Multi-coloris depuis snapshot
+        for (const sv of matchingColors) {
+          const coloris = normalizeColoris(sv.attributes.Couleur || sv.attributes.couleur);
+          if (!coloris) continue;
+          // Lookup image :
+          //  1) Priorité ABSOLUE : `${refExcel}__${coloris}` — cette clé, quand
+          //     elle existe, provient du fallback "nom de fichier" qui matche
+          //     un fichier `<hash>-<refExcel>_<colorCode>_<n>.ext` — c'est la
+          //     photo exacte de CETTE variante Excel (car Procity nomme ses fichiers
+          //     avec la ref produit qu'ils représentent). Toujours la plus précise.
+          //  2) Fallback : clé combo (couleur × structure × longueur × crosse) venant
+          //     du mapping par clic du scraper. Moins fiable car Procity partage
+          //     parfois la même photo entre 2 combinaisons.
+          //  3) Dernier fallback : variantRef snapshot.
+          const svStructure = sv.attributes.Structure || '';
+          const svLongueur = sv.attributes.Longueur || sv.attributes['Longueur (mm)'] || '';
+          const svCrosse = sv.attributes['Structure autre'] || sv.attributes.Crosse || '';
+          const comboKey = makeComboKey(coloris, svStructure, svLongueur, svCrosse);
+          const primary =
+            variantImageUrls[`${ev.reference}__${coloris}`] ||
+            variantImageUrls[`${ev.reference}__${comboKey}`] ||
+            variantImageUrls[sv.variantRef] ||
+            null;
+          rows.push(buildRow({
+            excelRef: ev.reference,
+            coloris,
+            longueur,
+            crosse,
+            structure,
+            dimensions: ev.dimensions || '',
+            weightKg: sv.weightKg ?? ev.weightKg,
+            price: ev.priceNetHt || ev.pricePublicHt || null,
+            delai: sv.availability || ev.delai || '',
+            primaryImage: primary,
+            attrs: sv.attributes,
+          }));
+        }
+      }
     }
   }
-  const candidates: Array<{ key: string; distinct: number }> = [];
-  for (const [k, vals] of valuesByKey) {
-    if (vals.size >= 2) candidates.push({ key: k, distinct: vals.size });
-  }
-  if (candidates.length === 0) return null;
-  // Privilégier "Structure autre" / "Structure" explicitement, sinon prendre
-  // l'axe avec le moins de valeurs distinctes (probablement une option binaire).
-  candidates.sort((a, b) => {
-    const priority = (k: string) =>
-      /structure autre/i.test(k) ? 0 : /^structure$/i.test(k) ? 1 : 2;
-    const pa = priority(a.key);
-    const pb = priority(b.key);
-    if (pa !== pb) return pa - pb;
-    return a.distinct - b.distinct;
+
+  // Dédupliquer sur (reference, coloris, finition) — la contrainte naturelle.
+  // En cas de collision on garde la première.
+  const seen = new Set<string>();
+  const deduped = rows.filter((r) => {
+    const key = `${r.reference}||${r.coloris}||${r.finition}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
   });
-  return candidates[0].key;
+
+  // Insert bulk — après delete on peut insert sans onConflict
+  if (deduped.length === 0) return 0;
+  const payload = deduped.map((r) => ({
+    product_id: productId,
+    reference: r.reference,
+    label: r.label,
+    coloris: r.coloris,
+    finition: r.finition,
+    dimensions: r.dimensions,
+    poids: r.poids,
+    price: r.price ?? 0,
+    delai: r.delai,
+    images: [],
+    primary_image_url: r.primary_image_url,
+    specifications: r.specifications,
+  }));
+
+  const { error } = await supabase.from('product_variants').insert(payload);
+  if (error) throw new Error(`insert variants ${productId}: ${error.message}`);
+  return deduped.length;
 }
 
-/** Normalise un coloris : retire le préfixe "RAL " pour les codes RAL numériques, conserve tel quel pour "Gris Procity", "Aspect Corten", etc. */
-function normalizeColoris(raw: string | undefined): string {
-  if (!raw) return '';
-  const trimmed = raw.trim();
-  if (trimmed === 'Standard' || trimmed === '-') return trimmed;
-  const ral = trimmed.match(/^RAL\s*(\d{4})$/i);
-  if (ral) return ral[1];
-  return trimmed;
+interface VariantRow {
+  reference: string;
+  coloris: string;
+  finition: string;         // encode la crosse (SANS/SIMPLE/DOUBLE CROSSE)
+  dimensions: string;       // longueur affichable (ex: "800 mm")
+  poids: string;
+  price: number | null;
+  delai: string;
+  primary_image_url: string | null;
+  specifications: Record<string, string>;
+  label: string;
 }
 
-/** Finition vide si absente ou "-" ; on garde la vraie valeur sinon. */
-function normalizeFinition(raw: string | undefined): string {
-  if (!raw) return '';
-  const t = raw.trim();
-  if (t === '-') return '';
-  return t;
+interface BuildRowInput {
+  excelRef: string;
+  coloris: string;
+  longueur: string;
+  crosse: string;
+  structure: string;
+  dimensions: string;
+  weightKg?: number;
+  price: number | null;
+  delai: string;
+  primaryImage: string | null;
+  attrs: Record<string, string>;
 }
 
-/** Label lisible : "[finition — ]dimensions — coloris" */
-function buildVariantLabel(v: { coloris: string; finition: string; dimensions: string; reference: string }): string {
-  const parts: string[] = [];
-  if (v.finition) parts.push(v.finition);
-  if (v.dimensions) parts.push(v.dimensions);
-  if (v.coloris) {
-    const display = /^\d{4}$/.test(v.coloris) ? `RAL ${v.coloris}` : v.coloris;
-    parts.push(display);
-  }
-  return parts.join(' — ') || v.reference;
+function buildRow(i: BuildRowInput): VariantRow {
+  // `finition` DB = uniquement la Crosse (axe UI "Crosse"). Si le produit n'a pas
+  // d'axe crosse dans l'Excel (ex: Lisbonne qui a Structure mais pas Crosse), on
+  // laisse vide pour que le sélecteur Crosse ne se déclenche pas côté front
+  // (il n'active un axe que s'il y a 2+ valeurs distinctes).
+  const finition = i.crosse || '';
+  // dimensions DB = longueur affichable (pas "800 mm" mais juste ce que la ref porte)
+  const dimensions = i.longueur || i.dimensions;
+  const specifications: Record<string, string> = { ...i.attrs };
+  if (i.structure) specifications.Structure = i.structure;
+  if (i.crosse) specifications.Crosse = i.crosse;
+
+  return {
+    reference: i.excelRef,
+    coloris: i.coloris,
+    finition,
+    dimensions,
+    poids: i.weightKg ? `${i.weightKg} kg` : '',
+    price: i.price,
+    delai: i.delai,
+    primary_image_url: i.primaryImage,
+    specifications,
+    label: buildLabel({ coloris: i.coloris, longueur: i.longueur, crosse: i.crosse, structure: i.structure }),
+  };
 }
 
-function slugify(s: string): string {
+/**
+ * Cherche dans les variantes snapshot celles qui matchent (longueur, crosse, structure).
+ * On utilise un matching tolérant car les libellés Excel/Procity peuvent différer
+ * ("800 mm" vs "800", "SIMPLE CROSSE" vs "Simple crosse", etc.)
+ */
+function findMatchingColors(
+  snapshotVariants: VariantSnapshot[],
+  target: { longueur: string; crosse: string; structure: string },
+): VariantSnapshot[] {
+  const normLong = normalizeToken(target.longueur);
+  const normCrosse = normalizeToken(target.crosse);
+  const normStruct = normalizeToken(target.structure);
+
+  return snapshotVariants.filter((sv) => {
+    const svLong = normalizeToken(
+      sv.attributes['Longueur'] || sv.attributes['Longueur (mm)'] || '',
+    );
+    const svCrosse = normalizeToken(
+      sv.attributes['Structure autre'] || sv.attributes['Crosse'] || '',
+    );
+    const svStruct = normalizeToken(sv.attributes['Structure'] || '');
+
+    // Longueur : match tolérant (800 dans "800 mm" etc.)
+    if (normLong && svLong && !tokensMatch(normLong, svLong)) return false;
+    // Crosse : match si présent des deux côtés
+    if (normCrosse && svCrosse && !tokensMatch(normCrosse, svCrosse)) return false;
+    // Structure : match si présent des deux côtés
+    if (normStruct && svStruct && !tokensMatch(normStruct, svStruct)) return false;
+    return true;
+  });
+}
+
+function normalizeToken(s: string | undefined): string {
+  if (!s) return '';
   return s
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function tokensMatch(a: string, b: string): boolean {
+  if (a === b) return true;
+  return a.includes(b) || b.includes(a);
+}
+
+/** Extrait la longueur depuis les champs Excel (ex: "800 mm" → "800 mm"). */
+function extractLongueur(ev: TarifVariantRow): string {
+  if (!ev.dimensions) return '';
+  // Si dimensions contient mm, c'est déjà une longueur ; sinon on garde tel quel
+  return ev.dimensions.trim();
+}
+
+/** Extrait la crosse depuis la colonne finition Excel. */
+function extractCrosse(ev: TarifVariantRow): string {
+  if (!ev.finition) return '';
+  const t = ev.finition.trim();
+  if (t === '-' || t === '') return '';
+  // Harmonise la casse : "SIMPLE CROSSE" → "Simple crosse"
+  if (/crosse/i.test(t)) return toTitleCase(t);
+  return toTitleCase(t);
+}
+
+/** Extrait la structure depuis le suffixe de designationFull Excel. */
+function extractStructure(_excel: ProductFromExcel, ev: TarifVariantRow): string {
+  const full = (ev.designationFull || '').toUpperCase();
+  const short = (ev.designationShort || '').toUpperCase();
+  // Le suffixe après le nom court
+  const suffix = full.replace(short, '').trim();
+  if (!suffix) return '';
+  // Harmoniser les appellations les plus courantes
+  if (/AVEC\s+ROSACE/.test(suffix)) return 'Avec rosace';
+  if (/SIMPLE\s+CROIX/.test(suffix)) return 'Simple croix';
+  if (/DOUBLE\s+CROIX/.test(suffix)) return 'Double croix';
+  if (/GRILLAG/.test(suffix)) return 'Grillagée';
+  if (/BARREAUD/.test(suffix)) return 'Barreaudée';
+  return toTitleCase(suffix);
+}
+
+function toTitleCase(s: string): string {
+  return s
+    .toLowerCase()
+    .split(/\s+/)
+    .map((w) => (w.length > 0 ? w[0].toUpperCase() + w.slice(1) : ''))
+    .join(' ');
+}
+
+function canonicalTitle(canonical: ProductFromExcel, snapshot: ProductSnapshot | null): string {
+  if (snapshot?.title) return snapshot.title;
+  // Titre = designationShort en Title Case, sans suffixe de structure
+  if (canonical.designationShort) {
+    return toTitleCase(canonical.designationShort);
+  }
+  return `Produit ${canonical.reference}`;
+}
+
+function slugifyCanonical(title: string): string {
+  return title
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
@@ -321,63 +418,67 @@ function slugify(s: string): string {
     .slice(0, 100);
 }
 
-/**
- * Mapping Excel productType/universe → catégorie SAPAL existante.
- * On match par mots-clés dans productType/category, et par universe en fallback.
- * Les slugs SAPAL existants : mobilier-urbain, signalisation, abris-et-cycles,
- * amenagement-securite, espaces-verts, amenagement-rue, aires-de-jeux,
- * equipements-sportifs, miroirs-securite, jalonnement-bornes-potelets,
- * balisage-permanent, balisage-temporaire, balisage-lumineux,
- * equipements-securite-sol, autres-produits-securite.
- */
+function normalizeColoris(raw: string | undefined): string {
+  if (!raw) return '';
+  const trimmed = raw.trim();
+  if (trimmed === 'Standard' || trimmed === '-') return trimmed === '-' ? '' : trimmed;
+  const ral = trimmed.match(/^RAL\s*(\d{4})$/i);
+  if (ral) return ral[1];
+  return trimmed;
+}
+
+function buildLabel(i: { coloris: string; longueur: string; crosse: string; structure: string }): string {
+  const parts: string[] = [];
+  if (i.structure) parts.push(i.structure);
+  if (i.crosse) parts.push(i.crosse);
+  if (i.longueur) parts.push(i.longueur);
+  if (i.coloris) {
+    const display = /^\d{4}$/.test(i.coloris) ? `RAL ${i.coloris}` : i.coloris;
+    parts.push(display);
+  }
+  return parts.join(' — ') || '—';
+}
+
+/* -------------------------------------------------------------------------- */
+/* Resolution catégorie Procity (niveau 3 de la taxonomie seedée)              */
+/* -------------------------------------------------------------------------- */
+
+import { makeTypeId, slugify, makeCategoryId, makeUniverseId } from './seed-categories';
+import { makeComboKey } from './variant-keys';
+
 const categoryCache = new Map<string, string>();
 
+/**
+ * Résout l'ID de catégorie niveau 3 (Type de produit) depuis les colonnes Excel.
+ * Chaîne de fallback : type → catégorie parent → univers (toujours trouvé car seedé).
+ */
 async function resolveCategoryId(
   supabase: SupabaseClient,
   excel: ProductFromExcel,
 ): Promise<string> {
-  const slug = chooseCategorySlug(excel);
-  const cached = categoryCache.get(slug);
-  if (cached) return cached;
+  const universe = excel.universe;
+  const catName = (excel.category || '').trim();
+  const typeName = (excel.productType || '').trim();
 
-  const { data } = await supabase
-    .from('categories')
-    .select('id')
-    .eq('slug', slug)
-    .maybeSingle();
-
-  // Fallback sur mobilier-urbain si le slug choisi n'existe pas
-  let finalId = data?.id as string | undefined;
-  if (!finalId) {
-    const { data: fallback } = await supabase
-      .from('categories')
-      .select('id')
-      .eq('slug', 'mobilier-urbain')
-      .single();
-    finalId = fallback!.id;
+  const candidates: string[] = [];
+  if (catName && typeName) {
+    candidates.push(makeTypeId(universe, slugify(catName), slugify(typeName)));
   }
-  categoryCache.set(slug, finalId!);
-  return finalId!;
-}
+  if (catName) {
+    candidates.push(makeCategoryId(universe, slugify(catName)));
+  }
+  candidates.push(makeUniverseId(universe));
 
-function chooseCategorySlug(excel: ProductFromExcel): string {
-  const type = (excel.productType || '').toUpperCase();
-  const family = (excel.category || '').toUpperCase();
-
-  // Univers Excel
-  if (excel.universe === 'aires-de-jeux') return 'aires-de-jeux';
-  if (excel.universe === 'equipements-sportifs') return 'equipements-sportifs';
-  if (excel.universe === 'miroirs') return 'miroirs-securite';
-
-  // Mobilier urbain : sous-catégorisation par productType
-  const typeOrFamily = `${type} ${family}`;
-  if (/ABRI|STATION BUS|ABRIS FUMEURS|ABRI V[ÉE]LO/.test(typeOrFamily)) return 'abris-et-cycles';
-  if (/POTELET|BORNE|JALONNEUR|CATADIOPTRE/.test(typeOrFamily)) return 'jalonnement-bornes-potelets';
-  if (/BARRI[ÈE]RE|ARCEAU|GLISSI[ÈE]RE|PORTIQUE/.test(typeOrFamily)) return 'amenagement-rue';
-  if (/CORBEILLE|CENDRIER|COMPOSTEUR|JARDINI[ÈE]RE|BANC|BANQUETTE|TABLE/.test(typeOrFamily)) return 'espaces-verts';
-  if (/MIROIR/.test(typeOrFamily)) return 'miroirs-securite';
-  if (/PANNEAU|SIGNAL/.test(typeOrFamily)) return 'signalisation';
-
-  // Défaut
-  return 'mobilier-urbain';
+  for (const id of candidates) {
+    const cached = categoryCache.get(id);
+    if (cached) return cached;
+    const { data } = await supabase.from('categories').select('id').eq('id', id).maybeSingle();
+    if (data?.id) {
+      categoryCache.set(id, data.id);
+      return data.id;
+    }
+  }
+  throw new Error(
+    `categorie introuvable pour universe=${universe} cat=${catName} type=${typeName}`,
+  );
 }
