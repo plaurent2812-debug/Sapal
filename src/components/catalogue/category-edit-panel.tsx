@@ -82,6 +82,7 @@ export function CategoryEditPanel({ category, isOpen, onClose, onSaved }: Catego
       description: description.trim(),
       image_url: imageUrl.trim(),
       sort_order: sortOrder,
+      previous_slug: category.slug,
       ...(category.level === 1 ? { universe: universe.trim() || null } : {}),
     }
     try {

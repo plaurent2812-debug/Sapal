@@ -10,6 +10,7 @@ export interface UpdateCategoryPayload {
   image_url: string
   sort_order: number
   universe?: string | null
+  previous_slug?: string
 }
 
 export async function updateCategory(
@@ -29,6 +30,9 @@ export async function updateCategory(
   if (!payload.name.trim() || !payload.slug.trim()) {
     return { error: 'Le nom et le slug sont requis' }
   }
+  if (!/^[a-z0-9-]+$/.test(payload.slug.trim())) {
+    return { error: 'Slug invalide (lettres minuscules, chiffres et tirets uniquement)' }
+  }
   if (!Number.isInteger(payload.sort_order) || payload.sort_order < 0) {
     return { error: 'Ordre d\'affichage invalide' }
   }
@@ -47,7 +51,6 @@ export async function updateCategory(
 
   if (error) return { error: error.message }
 
-  // Fetch the updated universe value to return to client
   const { data: updated } = await supabase
     .from('categories')
     .select('universe')
@@ -56,6 +59,9 @@ export async function updateCategory(
 
   revalidatePath(`/catalogue/${payload.slug}`, 'page')
   revalidatePath('/catalogue', 'page')
+  if (payload.previous_slug && payload.previous_slug !== payload.slug) {
+    revalidatePath(`/catalogue/${payload.previous_slug}`, 'page')
+  }
 
   return { universe: updated?.universe ?? null }
 }
