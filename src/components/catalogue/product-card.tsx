@@ -7,8 +7,6 @@ import { ArrowRight } from "lucide-react";
 import type { ClientProduct } from "@/lib/data";
 
 export function ProductCard({ product, categorySlug, index = 0 }: { product: ClientProduct; categorySlug: string; index?: number }) {
-  const specifications = Object.entries(product.specifications).slice(0, 2);
-
   return (
       <Link
         href={`/catalogue/${categorySlug}/${product.slug}`}
@@ -40,24 +38,9 @@ export function ProductCard({ product, categorySlug, index = 0 }: { product: Cli
         </div>
 
         <div className="flex flex-1 flex-col p-4 sm:p-5">
-          <h3 className="font-heading text-base sm:text-lg text-foreground group-hover:text-accent transition-colors leading-snug mb-1.5">
+          <h3 className="font-heading text-base sm:text-lg text-foreground group-hover:text-accent transition-colors leading-snug mb-3">
             {product.name}
           </h3>
-
-          <p className="text-muted-foreground text-xs mb-3 flex-1 line-clamp-2">
-            {product.description}
-          </p>
-
-          {specifications.length > 0 && (
-            <div className="mb-4 space-y-1.5 bg-secondary/20 p-3 rounded-lg text-[11px] font-medium text-muted-foreground">
-              {specifications.map(([key, value]) => (
-                <div key={key} className="flex justify-between items-center">
-                  <span>{key}:</span>
-                  <span className="text-foreground text-right truncate max-w-[70%]">{value}</span>
-                </div>
-              ))}
-            </div>
-          )}
 
           <div className="flex flex-col mt-auto pt-2">
             {product.price > 0 ? (

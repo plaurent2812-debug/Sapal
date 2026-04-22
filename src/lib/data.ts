@@ -100,50 +100,330 @@ export interface ClientCategory {
   slug: string
   description: string
   imageUrl: string
+  parentId: string | null
+  level: number
+  universe: string | null
+  sortOrder: number
 }
 
-export function toClientCategory(c: Category): ClientCategory {
+export function toClientCategory(c: Category & { parent_id?: string | null; level?: number; universe?: string | null; sort_order?: number }): ClientCategory {
   return {
     id: c.id,
     name: c.name,
     slug: c.slug,
     description: c.description,
     imageUrl: c.image_url,
+    parentId: c.parent_id ?? null,
+    level: c.level ?? 1,
+    universe: c.universe ?? null,
+    sortOrder: c.sort_order ?? 0,
   }
 }
 
 // ---------- Fonctions de fetch ----------
 
+/**
+ * Retourne les 4 univers Procity (niveau 1 avec `universe` non null).
+ * Les catégories SAPAL historiques sans univers (balisage, jalonnement, etc.) sont
+ * volontairement masquées du catalogue public — elles restent en DB pour ne pas perdre
+ * les produits legacy rattachés, mais n'apparaissent plus dans la navigation.
+ */
 export const getCategories = unstable_cache(
   async (): Promise<ClientCategory[]> => {
     const supabase = createBrowserClient()
     const { data, error } = await supabase
       .from('categories')
       .select('*')
-      .order('name')
+      .is('parent_id', null)
+      .not('universe', 'is', null)
+      .order('sort_order', { ascending: true })
+      .order('name', { ascending: true })
 
     if (error) throw error
     return (data ?? []).map(toClientCategory)
   },
-  ['categories'],
+  ['categories-roots-v3'],
   { revalidate: 3600, tags: ['categories'] }
 )
 
 export const getCategoryBySlug = unstable_cache(
   async (slug: string): Promise<ClientCategory | null> => {
     const supabase = createBrowserClient()
-    const { data, error } = await supabase
+    // Plusieurs catégories peuvent partager le même slug (ex: `espaces-verts` existe
+    // comme cat SAPAL legacy niveau 1 ET comme sous-cat Procity niveau 2).
+    // On retourne celle qui contient le plus de produits dans son arbre (la plus
+    // utile pour l'utilisateur final).
+    const { data: candidates } = await supabase
       .from('categories')
       .select('*')
       .eq('slug', slug)
-      .single()
+    if (!candidates || candidates.length === 0) return null
+    if (candidates.length === 1) return toClientCategory(candidates[0])
 
-    if (error) return null
-    return toClientCategory(data)
+    let best = candidates[0]
+    let bestCount = -1
+    for (const cat of candidates) {
+      const descendantIds = await getCategoryAndDescendantIds(supabase, cat.id)
+      const { count } = await supabase
+        .from('products')
+        .select('*', { count: 'exact', head: true })
+        .in('category_id', descendantIds)
+      const n = count || 0
+      if (n > bestCount) {
+        best = cat
+        bestCount = n
+      }
+    }
+    return toClientCategory(best)
   },
-  ['category-by-slug'],
+  ['category-by-slug-v3'],
   { revalidate: 3600, tags: ['categories'] }
 )
+
+/** Retourne les enfants directs d'une catégorie (triés par sort_order puis nom). */
+export const getCategoryChildren = unstable_cache(
+  async (parentId: string): Promise<ClientCategory[]> => {
+    const supabase = createBrowserClient()
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('parent_id', parentId)
+      .order('sort_order', { ascending: true })
+      .order('name', { ascending: true })
+    if (error) return []
+    return (data ?? []).map(toClientCategory)
+  },
+  ['category-children'],
+  { revalidate: 3600, tags: ['categories'] }
+)
+
+/**
+ * Pour chaque catégorie fournie, retourne l'URL d'une image représentative (image
+ * d'un produit au hasard dans l'arbre). Les catégories sans image sont omises.
+ * Lookup en 2 étapes : pour les non-feuilles, chercher récursivement dans descendants.
+ */
+export const getCategoryThumbnails = unstable_cache(
+  async (categoryIds: string[]): Promise<Record<string, string>> => {
+    if (categoryIds.length === 0) return {}
+    const supabase = createBrowserClient()
+    const result: Record<string, string> = {}
+
+    // Étape 1 : récupérer tous les descendants (y compris eux-mêmes) de chaque catégorie
+    const descendantsOf = new Map<string, string[]>()
+    for (const id of categoryIds) descendantsOf.set(id, [id])
+
+    // BFS : niveau par niveau jusqu'à ce qu'il n'y ait plus d'enfants
+    let frontier = categoryIds.slice()
+    const parentChain = new Map<string, string>() // child_id -> ancestor_root_id
+    for (const id of categoryIds) parentChain.set(id, id)
+
+    while (frontier.length > 0) {
+      const { data } = await supabase
+        .from('categories')
+        .select('id, parent_id')
+        .in('parent_id', frontier)
+      const next: string[] = []
+      for (const row of data ?? []) {
+        const ancestor = parentChain.get(row.parent_id)
+        if (!ancestor) continue
+        parentChain.set(row.id, ancestor)
+        descendantsOf.get(ancestor)!.push(row.id)
+        next.push(row.id)
+      }
+      frontier = next
+    }
+
+    // Étape 2 : pour chaque catégorie, récupérer une image produit
+    for (const [rootId, allIds] of descendantsOf) {
+      const { data } = await supabase
+        .from('products')
+        .select('image_url')
+        .in('category_id', allIds)
+        .not('image_url', 'is', null)
+        .neq('image_url', '')
+        .limit(1)
+      const img = data?.[0]?.image_url
+      if (img) result[rootId] = img
+    }
+    return result
+  },
+  ['category-thumbnails'],
+  { revalidate: 3600, tags: ['categories', 'products'] }
+)
+
+/**
+ * Retourne tous les IDs descendants d'une catégorie (y compris elle-même).
+ * Utile pour afficher tous les produits d'un univers/catégorie agrégés.
+ */
+async function getCategoryAndDescendantIds(
+  supabase: ReturnType<typeof createBrowserClient>,
+  rootId: string,
+): Promise<string[]> {
+  const all: string[] = [rootId]
+  let frontier = [rootId]
+  while (frontier.length > 0) {
+    const { data } = await supabase
+      .from('categories')
+      .select('id')
+      .in('parent_id', frontier)
+    const next = (data ?? []).map((r: { id: string }) => r.id)
+    if (next.length === 0) break
+    all.push(...next)
+    frontier = next
+  }
+  return all
+}
+
+/** Produits dans une catégorie et toutes ses descendantes. */
+export async function getProductsInCategoryTree(rootCategoryId: string): Promise<ClientProduct[]> {
+  const supabase = createBrowserClient()
+  const ids = await getCategoryAndDescendantIds(supabase, rootCategoryId)
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, categories(slug)')
+    .in('category_id', ids)
+    .order('name')
+  if (error) return []
+  return (data ?? []).map((p: Product & { categories?: { slug: string } }) => toClientProduct(p, p.categories?.slug))
+}
+
+/* ========================================================================== */
+/* Variantes filtrées par fournisseur (Catalogue Procity, Catalogue Vialux...) */
+/* Ces helpers permettent d'afficher la même hiérarchie catégorielle que       */
+/* "Tous nos produits" mais en ne montrant que les produits d'un fournisseur   */
+/* donné et les catégories qui en contiennent.                                 */
+/* ========================================================================== */
+
+/**
+ * Résout un slug de catégorie dans le contexte d'un fournisseur.
+ *
+ * Plusieurs catégories peuvent partager le même slug (ex: `espaces-verts` existe
+ * à la fois comme catégorie SAPAL legacy niveau 1 et comme sous-cat Procity niveau 2).
+ * Pour la navigation `/catalogue/fournisseurs/<supplier>/<slug>`, on cherche la
+ * catégorie qui contient effectivement des produits du fournisseur dans son arbre.
+ */
+export async function getCategoryBySlugForSupplier(
+  slug: string,
+  supplier: string,
+): Promise<ClientCategory | null> {
+  const supabase = createBrowserClient()
+  const { data: candidates } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('slug', slug)
+    .order('level', { ascending: false }) // commence par les plus profondes
+  if (!candidates || candidates.length === 0) return null
+
+  for (const cat of candidates) {
+    const descendantIds = await getCategoryAndDescendantIds(supabase, cat.id)
+    const { count } = await supabase
+      .from('products')
+      .select('*', { count: 'exact', head: true })
+      .in('category_id', descendantIds)
+      .eq('supplier', supplier)
+    if ((count || 0) > 0) return toClientCategory(cat)
+  }
+  return toClientCategory(candidates[0])
+}
+
+/**
+ * Renvoie les catégories racine (niveau 1) contenant AU MOINS un produit du
+ * fournisseur donné. Utilisé pour `/catalogue/fournisseurs/procity`.
+ */
+export async function getCategoriesBySupplier(supplier: string): Promise<ClientCategory[]> {
+  const supabase = createBrowserClient()
+  const { data: roots, error } = await supabase
+    .from('categories')
+    .select('*')
+    .is('parent_id', null)
+    .not('universe', 'is', null)
+    .order('sort_order', { ascending: true })
+    .order('name', { ascending: true })
+  if (error) return []
+
+  // Ne garder que les univers qui ont au moins 1 produit du supplier dans leur arbre
+  const withProducts: ClientCategory[] = []
+  for (const root of roots ?? []) {
+    const descendantIds = await getCategoryAndDescendantIds(supabase, root.id)
+    const { count } = await supabase
+      .from('products')
+      .select('*', { count: 'exact', head: true })
+      .in('category_id', descendantIds)
+      .eq('supplier', supplier)
+    if ((count || 0) > 0) withProducts.push(toClientCategory(root))
+  }
+  return withProducts
+}
+
+/** Enfants d'une catégorie qui contiennent au moins 1 produit du supplier. */
+export async function getCategoryChildrenBySupplier(
+  parentId: string,
+  supplier: string,
+): Promise<ClientCategory[]> {
+  const supabase = createBrowserClient()
+  const { data: children, error } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('parent_id', parentId)
+    .order('sort_order', { ascending: true })
+    .order('name', { ascending: true })
+  if (error) return []
+
+  const withProducts: ClientCategory[] = []
+  for (const child of children ?? []) {
+    const descendantIds = await getCategoryAndDescendantIds(supabase, child.id)
+    const { count } = await supabase
+      .from('products')
+      .select('*', { count: 'exact', head: true })
+      .in('category_id', descendantIds)
+      .eq('supplier', supplier)
+    if ((count || 0) > 0) withProducts.push(toClientCategory(child))
+  }
+  return withProducts
+}
+
+/** Produits d'une catégorie (et descendants) filtrés par fournisseur. */
+export async function getProductsInCategoryTreeBySupplier(
+  rootCategoryId: string,
+  supplier: string,
+): Promise<ClientProduct[]> {
+  const supabase = createBrowserClient()
+  const ids = await getCategoryAndDescendantIds(supabase, rootCategoryId)
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, categories(slug)')
+    .in('category_id', ids)
+    .eq('supplier', supplier)
+    .order('name')
+  if (error) return []
+  return (data ?? []).map((p: Product & { categories?: { slug: string } }) =>
+    toClientProduct(p, p.categories?.slug),
+  )
+}
+
+/** Vignettes catégorie (image produit descendant) filtrées par fournisseur. */
+export async function getCategoryThumbnailsBySupplier(
+  categoryIds: string[],
+  supplier: string,
+): Promise<Record<string, string>> {
+  if (categoryIds.length === 0) return {}
+  const supabase = createBrowserClient()
+  const result: Record<string, string> = {}
+  for (const rootId of categoryIds) {
+    const allIds = await getCategoryAndDescendantIds(supabase, rootId)
+    const { data } = await supabase
+      .from('products')
+      .select('image_url')
+      .in('category_id', allIds)
+      .eq('supplier', supplier)
+      .not('image_url', 'is', null)
+      .neq('image_url', '')
+      .limit(1)
+    const img = data?.[0]?.image_url
+    if (img) result[rootId] = img
+  }
+  return result
+}
 
 export const getProductsByCategory = unstable_cache(
   async (categoryId: string): Promise<ClientProduct[]> => {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getCategories } from "@/lib/data";
+import { getCategories, getCategoryThumbnails } from "@/lib/data";
 import { ChevronRight, ArrowRight, ShieldCheck, Truck, Clock } from "lucide-react";
 import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
 
@@ -11,6 +11,7 @@ export const metadata = {
 
 export default async function CataloguePage() {
   const categories = await getCategories();
+  const thumbs = await getCategoryThumbnails(categories.map((c) => c.id));
 
   return (
     <div className="flex flex-col min-h-screen pb-20">
@@ -75,9 +76,9 @@ export default async function CataloguePage() {
                 className="group flex items-center bg-white border border-border/60 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 rounded-xl p-4 overflow-hidden hover:-translate-y-1"
               >
                 <div className="w-20 h-20 flex-shrink-0 bg-gradient-to-br from-secondary/40 to-secondary/10 rounded-lg flex items-center justify-center overflow-hidden mr-4 border border-border/30 relative">
-                  {category.imageUrl ? (
+                  {(category.imageUrl || thumbs[category.id]) ? (
                     <Image
-                      src={category.imageUrl}
+                      src={category.imageUrl || thumbs[category.id]}
                       alt={category.name}
                       fill
                       sizes="80px"
