@@ -18,9 +18,19 @@ export async function updateCategory(
 ): Promise<{ error?: string }> {
   const supabase = await createServerSupabaseClient()
 
-  const { data: { session } } = await supabase.auth.getSession()
-  if (!session || session.user.user_metadata?.role !== 'admin') {
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user || user.user_metadata?.role !== 'admin') {
     return { error: 'Non autorisé' }
+  }
+
+  if (!id || typeof id !== 'string') {
+    return { error: 'ID invalide' }
+  }
+  if (!payload.name.trim() || !payload.slug.trim()) {
+    return { error: 'Le nom et le slug sont requis' }
+  }
+  if (!Number.isInteger(payload.sort_order) || payload.sort_order < 0) {
+    return { error: 'Ordre d\'affichage invalide' }
   }
 
   const { error } = await supabase
