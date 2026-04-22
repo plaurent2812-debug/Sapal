@@ -17,7 +17,7 @@ export function CategoryPageClient({ initialCategory, children }: CategoryPageCl
 
   return (
     <>
-      <div className="fixed top-4 right-4 z-30">
+      <div className="fixed top-20 right-4 z-[60]">
         <CategoryEditButton onEdit={() => setIsEditing(true)} />
       </div>
 
