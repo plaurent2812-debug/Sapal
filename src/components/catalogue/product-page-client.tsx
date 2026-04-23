@@ -85,9 +85,18 @@ export function ProductPageClient({ product, variants, options, category, catego
       }
     }
 
-    // "Type" = nom de la catégorie → redondant avec le breadcrumb, on masque.
-    // Les couples redondants (Finition = Crosse) sont déduplicés par valeur.
-    const blacklistedKeys = new Set(['Type'])
+    // Keys masquées :
+    //  - "Type" : toujours égal à la catégorie (déjà affichée dans le breadcrumb)
+    //  - "Finition" / "Crosse" : doublonnent "Structure" (matériau) sur les produits
+    //    Procity ; une vraie finition distincte apparaîtra dans une autre clé.
+    //  - "Dimensions" : redondant quand Longueur/Hauteur/Diamètre sont présents
+    //    (on le garde uniquement si pas d'autre dimension chiffrée).
+    const blacklistedKeys = new Set(['Type', 'Finition', 'Crosse'])
+    const hasExplicitDimensions = Object.keys(specs).some(
+      k => /Longueur|Hauteur|Diamètre|Largeur|Profondeur/i.test(k)
+    )
+    if (hasExplicitDimensions) blacklistedKeys.add('Dimensions')
+
     const seenValues = new Map<string, string>() // valeur normalisée → première clé
 
     return Object.entries(specs)
