@@ -9,7 +9,7 @@ export async function POST() {
     return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   }
 
-  revalidateTag('categories')
+  revalidateTag('categories', 'default')
   revalidatePath('/catalogue', 'layout')
   return NextResponse.json({ ok: true })
 }
