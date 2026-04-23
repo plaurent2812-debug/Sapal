@@ -85,8 +85,22 @@ export function ProductPageClient({ product, variants, options, category, catego
       }
     }
 
-    // Supprimer les entrées vides ou génériques
-    return Object.entries(specs).filter(([, v]) => v && v !== '-' && v !== '')
+    // "Type" = nom de la catégorie → redondant avec le breadcrumb, on masque.
+    // Les couples redondants (Finition = Crosse) sont déduplicés par valeur.
+    const blacklistedKeys = new Set(['Type'])
+    const seenValues = new Map<string, string>() // valeur normalisée → première clé
+
+    return Object.entries(specs)
+      .filter(([k, v]) => {
+        if (!v || v === '-' || v === '') return false
+        if (blacklistedKeys.has(k)) return false
+        // Déduplication : si la même valeur existe déjà pour une autre clé, on skip
+        const norm = v.trim().toLowerCase()
+        const existingKey = seenValues.get(norm)
+        if (existingKey && existingKey !== k) return false
+        seenValues.set(norm, k)
+        return true
+      })
   }, [currentProduct.specifications, selectedVariant])
 
   // Délai affiché : variante sélectionnée > majorité des variantes > fallback
