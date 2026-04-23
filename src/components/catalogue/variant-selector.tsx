@@ -127,6 +127,10 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
 
   // Fallback si aucun axe ne différencie
   if (activeAxes.length === 0) {
+    // Si une seule variante (produit simple) : pas de sélecteur — la variante est
+    // déjà auto-sélectionnée par le parent.
+    if (variants.length <= 1) return null
+
     return (
       <div className="mb-6">
         <p className="text-sm font-semibold text-muted-foreground mb-2">Déclinaison</p>
