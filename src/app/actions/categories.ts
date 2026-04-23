@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { generateSlug } from '@/lib/utils'
 
@@ -68,6 +68,7 @@ export async function updateCategory(
     .eq('id', id)
     .single()
 
+  revalidateTag('categories', 'default')
   revalidatePath(`/catalogue/${payload.slug}`, 'page')
   revalidatePath('/catalogue', 'page')
   if (payload.previous_slug && payload.previous_slug !== payload.slug) {
@@ -138,6 +139,7 @@ export async function createSubcategory(
 
   if (insertErr) return { error: insertErr.message }
 
+  revalidateTag('categories', 'default')
   revalidatePath(`/catalogue/${parent.slug}`, 'page')
   revalidatePath('/catalogue', 'page')
 
@@ -187,6 +189,7 @@ export async function deleteSubcategory(
   const { error: delErr } = await supabase.from('categories').delete().eq('id', id)
   if (delErr) return { error: delErr.message }
 
+  revalidateTag('categories', 'default')
   if (cat.parent_id) {
     const { data: parent } = await supabase
       .from('categories')
@@ -222,6 +225,7 @@ export async function reorderSubcategories(
   const firstErr = results.find(r => r.error)
   if (firstErr?.error) return { error: firstErr.error.message }
 
+  revalidateTag('categories', 'default')
   const { data: parent } = await supabase
     .from('categories')
     .select('slug')

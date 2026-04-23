@@ -39,6 +39,16 @@ const nextConfig: NextConfig = {
         destination: '/catalogue/panneaux-age/panneau-animal',
         permanent: true,
       },
+      {
+        source: '/catalogue/jeux-a-grimper/jeux-a-grimper-pago-pago-804000',
+        destination: '/catalogue/jeux-a-grimper/jeux-a-grimper-pago-pago',
+        permanent: true,
+      },
+      {
+        source: '/catalogue/fournisseurs/procity/jeux-a-grimper/jeux-a-grimper-pago-pago-804000',
+        destination: '/catalogue/fournisseurs/procity/jeux-a-grimper/jeux-a-grimper-pago-pago',
+        permanent: true,
+      },
     ]
   },
 };
