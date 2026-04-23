@@ -458,16 +458,19 @@ export function InlineEditOverlay({
 
                         {/* Delai */}
                         <div className="space-y-1">
-                          <label className="text-xs text-muted-foreground">Délai</label>
+                          <label className="text-xs text-muted-foreground">Délai de livraison</label>
                           <input
                             type="text"
                             value={v.delai}
                             onChange={e =>
                               updateVariantField(v.id, 'delai', e.target.value)
                             }
-                            placeholder="Ex: 14"
+                            placeholder='Ex : "6 semaines" ou "En stock"'
                             className="flex h-8 w-full rounded-md border border-input bg-transparent px-2 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                           />
+                          <p className="text-[10px] text-muted-foreground/80 leading-tight">
+                            Inclure l&apos;unité : « 6 semaines », « 3 jours », « En stock »…
+                          </p>
                         </div>
                       </div>
 
