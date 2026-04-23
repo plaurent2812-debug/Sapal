@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf'
+import { formatDelai } from '@/lib/utils'
 
 // ---------- Types ----------
 
@@ -188,8 +189,7 @@ export function generateQuotePDF(data: QuotePDFData): jsPDF {
       doc.setFontSize(7)
       doc.setFont('helvetica', 'italic')
       doc.setTextColor(...COLORS.secondary)
-      const delaiText = /^\d+(\.\d+)?$/.test(item.delai) ? (Number(item.delai) >= 14 ? `${Math.ceil(Number(item.delai) / 7)} semaines` : `${item.delai} jours`) : item.delai
-      doc.text(`Délai : ${delaiText}`, TABLE_X + cols.name.x + 3, y + 3)
+      doc.text(`Délai : ${formatDelai(item.delai)}`, TABLE_X + cols.name.x + 3, y + 3)
       doc.setFontSize(8)
       doc.setFont('helvetica', 'normal')
       y += 5
@@ -251,7 +251,6 @@ export function generateQuotePDF(data: QuotePDFData): jsPDF {
     doc.setFontSize(9)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(...COLORS.primary)
-    const formatDelai = (d: string) => /^\d+(\.\d+)?$/.test(d) ? (Number(d) >= 14 ? `${Math.ceil(Number(d) / 7)} semaines` : `${d} jours`) : d
     doc.text(`Délai de livraison : ${[...new Set(delais)].map(formatDelai).join(', ')}`, MARGIN_LEFT, y)
     y += 8
   }

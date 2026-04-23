@@ -4,6 +4,7 @@ import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { Resend } from 'resend'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
+import { formatDelai } from '@/lib/utils'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -164,7 +165,7 @@ async function sendNotifications(params: {
         line += ` (${subtotal} € HT)`
       }
       if (i.delai) {
-        line += ` — Délai: ${/^\d+(\.\d+)?$/.test(i.delai) ? (Number(i.delai) >= 14 ? `${Math.ceil(Number(i.delai) / 7)} semaines` : `${i.delai} jours`) : i.delai}`
+        line += ` — Délai: ${formatDelai(i.delai)}`
       }
       return line
     })

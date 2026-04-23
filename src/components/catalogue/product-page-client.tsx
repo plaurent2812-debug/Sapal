@@ -9,6 +9,7 @@ import { VariantSelector } from "./variant-selector"
 import { AddToQuoteSection } from "./add-to-quote-section"
 import { ProductOptionsSection } from "./product-options-section"
 import { InlineEditOverlay } from "./inline-edit-overlay"
+import { formatDelai } from "@/lib/utils"
 
 interface Props {
   product: ClientProduct
@@ -84,24 +85,37 @@ export function ProductPageClient({ product, variants, options, category, catego
       }
     }
 
-    // Supprimer les entrées vides ou génériques
-    return Object.entries(specs).filter(([, v]) => v && v !== '-' && v !== '')
+    // Keys masquées :
+    //  - "Type" : toujours égal à la catégorie (déjà affichée dans le breadcrumb)
+    //  - "Finition" / "Crosse" : doublonnent "Structure" (matériau) sur les produits
+    //    Procity ; une vraie finition distincte apparaîtra dans une autre clé.
+    //  - "Dimensions" : redondant quand Longueur/Hauteur/Diamètre sont présents
+    //    (on le garde uniquement si pas d'autre dimension chiffrée).
+    const blacklistedKeys = new Set(['Type', 'Finition', 'Crosse'])
+    const hasExplicitDimensions = Object.keys(specs).some(
+      k => /Longueur|Hauteur|Diamètre|Largeur|Profondeur/i.test(k)
+    )
+    if (hasExplicitDimensions) blacklistedKeys.add('Dimensions')
+
+    const seenValues = new Map<string, string>() // valeur normalisée → première clé
+
+    return Object.entries(specs)
+      .filter(([k, v]) => {
+        if (!v || v === '-' || v === '') return false
+        if (blacklistedKeys.has(k)) return false
+        // Déduplication : si la même valeur existe déjà pour une autre clé, on skip
+        const norm = v.trim().toLowerCase()
+        const existingKey = seenValues.get(norm)
+        if (existingKey && existingKey !== k) return false
+        seenValues.set(norm, k)
+        return true
+      })
   }, [currentProduct.specifications, selectedVariant])
 
   // Délai affiché : variante sélectionnée > majorité des variantes > fallback
   const displayDelai = useMemo(() => {
-    const normalize = (raw: string): string => {
-      if (!raw || raw === '-') return ''
-      // Si c'est juste un nombre (semaines d'après Procity), on affiche "N semaines"
-      if (/^\d+(\.\d+)?$/.test(raw)) {
-        const n = Number(raw)
-        return n >= 14 ? `${Math.ceil(n / 7)} semaines` : `${raw} jours`
-      }
-      return raw
-    }
-
     if (selectedVariant?.delai) {
-      const out = normalize(selectedVariant.delai)
+      const out = formatDelai(selectedVariant.delai)
       if (out) return out
     }
 
@@ -109,7 +123,7 @@ export function ProductPageClient({ product, variants, options, category, catego
     if (currentVariants.length > 0) {
       const counts = new Map<string, number>()
       for (const v of currentVariants) {
-        const out = normalize(v.delai)
+        const out = formatDelai(v.delai)
         if (!out) continue
         counts.set(out, (counts.get(out) ?? 0) + 1)
       }
