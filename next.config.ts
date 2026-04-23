@@ -27,6 +27,20 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/catalogue/panneaux-age/panneau-animal-814011',
+        destination: '/catalogue/panneaux-age/panneau-animal',
+        permanent: true,
+      },
+      {
+        source: '/catalogue/panneaux-age/panneau-animal-814012',
+        destination: '/catalogue/panneaux-age/panneau-animal',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 export default nextConfig;

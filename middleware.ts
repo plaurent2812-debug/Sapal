@@ -32,6 +32,45 @@ export async function middleware(request: NextRequest) {
   const { data: { session } } = await supabase.auth.getSession()
   const role = session?.user?.user_metadata?.role ?? session?.user?.app_metadata?.role
 
+  // Category redirect lookup : si une URL /catalogue/<slug> ou /catalogue/fournisseurs/<supplier>/<slug>
+  // pointe vers un slug qui n'existe plus en catégorie, on cherche dans category_redirects.
+  if (pathname.startsWith('/catalogue/')) {
+    const segments = pathname.split('/').filter(Boolean) // ['catalogue', ...]
+    const lastSlug = segments[segments.length - 1]
+
+    if (lastSlug && segments.length >= 2) {
+      // On ne vérifie que les chemins purement "catégorie" (pas les fiches produit qui ont 3+ segments après 'catalogue')
+      // Format catégorie : /catalogue/<slug> ou /catalogue/fournisseurs/procity/<slug>
+      const isCategoryPath =
+        segments.length === 2 ||
+        (segments.length === 4 && segments[1] === 'fournisseurs')
+
+      if (isCategoryPath) {
+        const { data: activeCat } = await supabase
+          .from('categories')
+          .select('id')
+          .eq('slug', lastSlug)
+          .maybeSingle()
+
+        if (!activeCat) {
+          const { data: redirect } = await supabase
+            .from('category_redirects')
+            .select('categories(slug)')
+            .eq('old_slug', lastSlug)
+            .maybeSingle()
+
+          const newSlug = (redirect?.categories as { slug?: string } | null)?.slug
+          if (newSlug) {
+            const newSegments = [...segments.slice(0, -1), newSlug]
+            const url = request.nextUrl.clone()
+            url.pathname = '/' + newSegments.join('/')
+            return NextResponse.redirect(url, 301)
+          }
+        }
+      }
+    }
+  }
+
   // Protected admin pages (except login)
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     if (!user) {
@@ -124,5 +163,6 @@ export const config = {
     '/api/supplier-orders/:path*',
     '/api/invoices/:path*',
     '/api/clients/:path*',
+    '/catalogue/:path*',
   ],
 }

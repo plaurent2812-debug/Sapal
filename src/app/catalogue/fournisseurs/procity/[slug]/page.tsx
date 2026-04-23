@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import Image from "next/image"
 import {
   getCategoryBySlugForSupplier,
   getCategoryChildrenBySupplier,
@@ -9,10 +8,11 @@ import {
   getProductsInCategoryTreeBySupplier,
 } from "@/lib/data"
 import { Button } from "@/components/ui/button"
-import { AnimatedSection, AnimatedItem } from "@/components/ui/motion"
+import { AnimatedSection } from "@/components/ui/motion"
 import { ArrowLeft, ChevronRight } from "lucide-react"
 import { ProductCard } from "@/components/catalogue/product-card"
 import { CategoryPageClient } from "@/components/catalogue/category-page-client"
+import { SubcategoriesManager } from "@/components/catalogue/subcategories-manager"
 
 const SUPPLIER = "procity"
 const BASE_PATH = "/catalogue/fournisseurs/procity"
@@ -113,40 +113,13 @@ export default async function ProcityCategoryPage({
 
       {hasChildren && (
         <section className="container px-4 md:px-6 mx-auto mt-8 md:mt-10">
-          <h2 className="font-heading text-xl sm:text-2xl mb-6">Sous-catégories</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {children.map((child, i) => (
-              <AnimatedItem key={child.id} delay={i * 0.03}>
-                <Link
-                  href={`${BASE_PATH}/${child.slug}`}
-                  className="group flex items-center bg-white border border-border/60 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 rounded-xl p-4 overflow-hidden hover:-translate-y-1"
-                >
-                  <div className="w-20 h-20 flex-shrink-0 bg-gradient-to-br from-secondary/40 to-secondary/10 rounded-lg flex items-center justify-center overflow-hidden mr-4 border border-border/30 relative">
-                    {(child.imageUrl || childThumbs[child.id]) ? (
-                      <Image
-                        src={child.imageUrl || childThumbs[child.id]}
-                        alt={child.name}
-                        fill
-                        sizes="80px"
-                        className="object-contain p-1 group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-8 h-8 rounded bg-border text-muted-foreground" />
-                    )}
-                  </div>
-                  <div className="flex-1 flex items-center justify-between">
-                    <h3 className="font-bold text-sm md:text-base leading-tight pr-2 group-hover:text-accent transition-colors">
-                      {child.name}
-                    </h3>
-                    <ChevronRight
-                      size={20}
-                      className="text-accent flex-shrink-0 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-                    />
-                  </div>
-                </Link>
-              </AnimatedItem>
-            ))}
-          </div>
+          <SubcategoriesManager
+            parentId={category.id}
+            parentSlug={category.slug}
+            basePath={BASE_PATH}
+            children={children}
+            thumbnails={childThumbs}
+          />
         </section>
       )}
 
