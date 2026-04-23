@@ -1,19 +1,45 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { Pencil, X, Save, Loader2, Plus, Trash2 } from 'lucide-react'
+import { Pencil, X, Save, Loader2, Plus, Trash2, GripVertical } from 'lucide-react'
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+  useSortable,
+  sortableKeyboardCoordinates,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { useAdminRole } from '@/hooks/useAdminRole'
 import type { ClientProduct, ClientVariant } from '@/lib/data'
 
 // -- Types --
+
+interface SpecDraft {
+  _id: string // id stable pour DnD
+  key: string
+  value: string
+}
 
 interface ProductDraft {
   name: string
   description: string
   price: number
   image_url: string
-  specifications: { key: string; value: string }[]
+  specifications: SpecDraft[]
 }
+
+let specIdCounter = 0
+const newSpecId = () => `spec-${++specIdCounter}-${Date.now()}`
 
 interface VariantDraft {
   id: string
@@ -112,9 +138,25 @@ export function InlineEditOverlay({
   const addSpec = useCallback(() => {
     setProductDraft(prev => ({
       ...prev,
-      specifications: [...prev.specifications, { key: '', value: '' }],
+      specifications: [...prev.specifications, { _id: newSpecId(), key: '', value: '' }],
     }))
   }, [])
+
+  const reorderSpecs = useCallback((event: DragEndEvent) => {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+    setProductDraft(prev => {
+      const oldIdx = prev.specifications.findIndex(s => s._id === active.id)
+      const newIdx = prev.specifications.findIndex(s => s._id === over.id)
+      if (oldIdx === -1 || newIdx === -1) return prev
+      return { ...prev, specifications: arrayMove(prev.specifications, oldIdx, newIdx) }
+    })
+  }, [])
+
+  const dndSensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  )
 
   const removeSpec = useCallback((index: number) => {
     setProductDraft(prev => ({
@@ -380,33 +422,37 @@ export function InlineEditOverlay({
                 </button>
               </div>
 
-              {productDraft.specifications.length === 0 && (
+              {productDraft.specifications.length === 0 ? (
                 <p className="text-xs text-muted-foreground">Aucune spécification.</p>
-              )}
-
-              {productDraft.specifications.map((spec, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <input
-                    placeholder="Clé"
-                    value={spec.key}
-                    onChange={e => updateSpec(i, 'key', e.target.value)}
-                    className="flex h-8 flex-1 rounded-md border border-input bg-transparent px-2 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                  />
-                  <input
-                    placeholder="Valeur"
-                    value={spec.value}
-                    onChange={e => updateSpec(i, 'value', e.target.value)}
-                    className="flex h-8 flex-1 rounded-md border border-input bg-transparent px-2 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeSpec(i)}
-                    className="text-destructive hover:text-destructive hover:bg-destructive/10 p-1 rounded cursor-pointer"
+              ) : (
+                <>
+                  <p className="text-[11px] text-muted-foreground/80">
+                    Glisse les lignes pour changer l&apos;ordre d&apos;affichage sur la fiche.
+                  </p>
+                  <DndContext
+                    sensors={dndSensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={reorderSpecs}
                   >
-                    <Trash2 size={13} />
-                  </button>
-                </div>
-              ))}
+                    <SortableContext
+                      items={productDraft.specifications.map(s => s._id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <div className="space-y-2">
+                        {productDraft.specifications.map((spec, i) => (
+                          <SortableSpecRow
+                            key={spec._id}
+                            spec={spec}
+                            onKeyChange={(v) => updateSpec(i, 'key', v)}
+                            onValueChange={(v) => updateSpec(i, 'value', v)}
+                            onRemove={() => removeSpec(i)}
+                          />
+                        ))}
+                      </div>
+                    </SortableContext>
+                  </DndContext>
+                </>
+              )}
             </div>
 
             {/* -- Variants section -- */}
@@ -510,6 +556,7 @@ function productToDraft(p: ClientProduct): ProductDraft {
     price: p.price,
     image_url: p.imageUrl,
     specifications: Object.entries(p.specifications).map(([key, value]) => ({
+      _id: newSpecId(),
       key,
       value: String(value),
     })),
@@ -527,4 +574,60 @@ function variantToDraft(v: ClientVariant): VariantDraft {
     images: [...v.images],
     dirty: false,
   }
+}
+
+function SortableSpecRow({
+  spec,
+  onKeyChange,
+  onValueChange,
+  onRemove,
+}: {
+  spec: SpecDraft
+  onKeyChange: (v: string) => void
+  onValueChange: (v: string) => void
+  onRemove: () => void
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: spec._id,
+  })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  }
+
+  return (
+    <div ref={setNodeRef} style={style} className="flex items-center gap-2">
+      <button
+        type="button"
+        {...attributes}
+        {...listeners}
+        className="flex-shrink-0 p-1 text-muted-foreground hover:text-foreground cursor-grab active:cursor-grabbing"
+        aria-label="Réordonner cette spécification"
+        title="Glisser pour réordonner"
+      >
+        <GripVertical size={14} />
+      </button>
+      <input
+        placeholder="Clé"
+        value={spec.key}
+        onChange={e => onKeyChange(e.target.value)}
+        className="flex h-8 flex-1 rounded-md border border-input bg-transparent px-2 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+      />
+      <input
+        placeholder="Valeur"
+        value={spec.value}
+        onChange={e => onValueChange(e.target.value)}
+        className="flex h-8 flex-1 rounded-md border border-input bg-transparent px-2 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        className="text-destructive hover:text-destructive hover:bg-destructive/10 p-1 rounded cursor-pointer"
+      >
+        <Trash2 size={13} />
+      </button>
+    </div>
+  )
 }
