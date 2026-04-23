@@ -106,6 +106,9 @@ export default function NouveauProduitPage() {
       return
     }
 
+    // Invalide les caches unstable_cache pour voir le nouveau produit dans les listings
+    fetch('/api/admin/revalidate-categories?tags=products,categories', { method: 'POST' }).catch(() => {})
+
     router.push('/admin/produits')
   }
 

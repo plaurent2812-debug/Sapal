@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { revalidateTag } from 'next/cache'
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 
 const variantPatchSchema = z.object({
@@ -64,6 +65,8 @@ export async function PATCH(
       console.error('Error updating variant:', error)
       return Response.json({ error: 'Erreur lors de la mise à jour de la variante' }, { status: 500 })
     }
+
+    revalidateTag('products', 'default')
 
     return Response.json({ variant })
   } catch (err) {

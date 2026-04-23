@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { revalidateTag } from 'next/cache'
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 
 const productPatchSchema = z.object({
@@ -68,6 +69,10 @@ export async function PATCH(
       console.error('Error updating product:', error)
       return Response.json({ error: 'Erreur lors de la mise à jour du produit' }, { status: 500 })
     }
+
+    // Invalide les listings catalogue (grid, catégories, pages) — fiche produit
+    // mise à jour via state client, mais les listings sont cachés via unstable_cache.
+    revalidateTag('products', 'default')
 
     return Response.json({ product })
   } catch (err) {
