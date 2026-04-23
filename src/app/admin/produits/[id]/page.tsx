@@ -135,6 +135,9 @@ export default function EditProduitPage({ params }: { params: Promise<{ id: stri
       return
     }
 
+    // Invalide les caches unstable_cache pour que la liste catalogue reflète le changement
+    fetch('/api/admin/revalidate-categories?tags=products,categories', { method: 'POST' }).catch(() => {})
+
     router.push('/admin/produits')
   }
 
