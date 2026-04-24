@@ -8,7 +8,6 @@ import { createBrowserClient } from "@/lib/supabase/client";
 const NAV_LINKS = [
   { href: "/catalogue", label: "Tous nos produits" },
   { href: "/catalogue/fournisseurs/procity", label: "Catalogue Procity" },
-  { href: "/realisations", label: "Réalisations" },
   { href: "/contact", label: "Contact" },
 ];
 

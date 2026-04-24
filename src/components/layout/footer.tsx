@@ -60,7 +60,6 @@ export function Footer() {
               <h3 className="font-heading text-lg text-white mb-5">Entreprise</h3>
               <ul className="space-y-2.5 text-sm">
                 <li><Link href="/qui-sommes-nous" className="text-white/50 hover:text-accent transition-colors">Qui sommes-nous</Link></li>
-                <li><Link href="/realisations" className="text-white/50 hover:text-accent transition-colors">Réalisations</Link></li>
                 <li><Link href="/contact" className="text-white/50 hover:text-accent transition-colors">Contact</Link></li>
                 <li><Link href="/cgv" className="text-white/50 hover:text-accent transition-colors">Conditions de vente</Link></li>
               </ul>

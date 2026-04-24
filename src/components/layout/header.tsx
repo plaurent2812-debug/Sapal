@@ -8,7 +8,6 @@ import { CatalogueDropdown } from '@/components/layout/catalogue-dropdown'
 // Catalogue est géré séparément via CatalogueDropdown (menu déroulant)
 const NAV_ITEMS = [
   { href: '/catalogue', label: 'Solutions' },
-  { href: '/realisations', label: 'Réalisations' },
   { href: '/qui-sommes-nous', label: 'Entreprise' },
   { href: '/contact', label: 'Contact' },
 ]
@@ -47,14 +46,8 @@ export function Header() {
         {/* Desktop : logo + nav + actions */}
         <div className="hidden md:flex items-center gap-8 py-4">
           <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
-            <div className="w-10 h-10 bg-primary rounded-md flex items-center justify-center transition-all group-hover:scale-105">
-              <span className="font-heading text-primary-foreground text-xl leading-none">S</span>
-            </div>
             <div className="leading-tight">
-              <div className="font-heading text-xl text-primary tracking-tight">Sapal</div>
-              <div className="text-[10px] uppercase tracking-[0.16em] text-foreground/60 font-semibold">
-                Mobilier urbain · Cannes
-              </div>
+              <div className="font-heading text-3xl text-primary tracking-tight">Sapal</div>
             </div>
           </Link>
 
@@ -83,12 +76,8 @@ export function Header() {
           {/* Spacer invisible — même largeur que le logo */}
           <div className="flex-shrink-0 invisible" aria-hidden="true">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10" />
               <div className="leading-tight">
-                <div className="font-heading text-xl tracking-tight">Sapal</div>
-                <div className="text-[10px] uppercase tracking-[0.16em] font-semibold">
-                  Mobilier urbain · Cannes
-                </div>
+                <div className="font-heading text-3xl tracking-tight">Sapal</div>
               </div>
             </div>
           </div>
