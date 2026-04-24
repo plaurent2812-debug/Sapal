@@ -30,21 +30,34 @@ function toDate(value?: string | null): Date | undefined {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createBrowserClient()
 
+  // PostgREST plafonne à 1000 lignes par requête. On pagine pour tout récupérer.
+  async function fetchAllProducts(): Promise<ProductRow[]> {
+    const PAGE = 1000
+    const all: ProductRow[] = []
+    for (let from = 0; ; from += PAGE) {
+      const { data } = await supabase
+        .from("products")
+        .select("id, slug, category_id, supplier, created_at")
+        .range(from, from + PAGE - 1)
+      const batch = (data ?? []) as ProductRow[]
+      all.push(...batch)
+      if (batch.length < PAGE) break
+    }
+    return all
+  }
+
   // Tout récupérer en parallèle
-  const [allCatsRes, allProductsFull, rootCategories, featuredProducts] =
+  const [allCatsRes, allProducts, rootCategories, featuredProducts] =
     await Promise.all([
       supabase
         .from("categories")
         .select("id, slug, parent_id, level, created_at"),
-      supabase
-        .from("products")
-        .select("id, slug, category_id, supplier, created_at"),
+      fetchAllProducts(),
       getCategories(),
       getAllProducts(),
     ])
 
   const allCategories = (allCatsRes.data ?? []) as CategoryRow[]
-  const allProducts = (allProductsFull.data ?? []) as ProductRow[]
 
   const categoryById = new Map(allCategories.map((c) => [c.id, c]))
   const rootCategorySlugById = new Map(rootCategories.map((c) => [c.id, c.slug]))
