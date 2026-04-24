@@ -479,13 +479,24 @@ export const getProductsByCategory = unstable_cache(
 export const getAllProducts = unstable_cache(
   async (): Promise<ClientProduct[]> => {
     const supabase = createBrowserClient()
-    const { data, error } = await supabase
-      .from('products')
-      .select('*, categories(slug)')
-      .order('name')
-
-    if (error) throw error
-    return (data ?? []).map((p: Product & { categories?: { slug: string } }) => toClientProduct(p, p.categories?.slug))
+    // PostgREST plafonne à 1000 lignes par requête côté Supabase (db.max_rows).
+    // On a 1300+ produits → il faut paginer en boucle côté client pour tout
+    // récupérer, sinon ~300 fiches sont silencieusement exclues du sitemap
+    // et de la recherche publique.
+    const PAGE = 1000
+    const all: (Product & { categories?: { slug: string } })[] = []
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*, categories(slug)')
+        .order('name')
+        .range(from, from + PAGE - 1)
+      if (error) throw error
+      const batch = data ?? []
+      all.push(...(batch as typeof all))
+      if (batch.length < PAGE) break
+    }
+    return all.map((p) => toClientProduct(p, p.categories?.slug))
   },
   ['all-products'],
   { revalidate: 3600, tags: ['products'] }

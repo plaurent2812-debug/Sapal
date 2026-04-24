@@ -33,14 +33,23 @@ export default function AdminProduitsPage() {
   async function fetchProducts() {
     setLoading(true)
     const supabase = createBrowserClient()
-    const { data, error } = await supabase
-      .from('products')
-      .select('id, name, slug, reference, price, image_url, category_id, categories(name)')
-      .order('name')
-
-    if (!error && data) {
-      setProducts(data as unknown as ProductWithCategory[])
+    // PostgREST plafonne à 1000 lignes par requête (paramètre db.max_rows
+    // côté Supabase). Avec 1300+ produits, ~300 étaient silencieusement
+    // exclus de la recherche admin — on pagine en boucle pour tout récupérer.
+    const PAGE = 1000
+    const all: ProductWithCategory[] = []
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabase
+        .from('products')
+        .select('id, name, slug, reference, price, image_url, category_id, categories(name)')
+        .order('name')
+        .range(from, from + PAGE - 1)
+      if (error || !data) break
+      const batch = data as unknown as ProductWithCategory[]
+      all.push(...batch)
+      if (batch.length < PAGE) break
     }
+    setProducts(all)
     setLoading(false)
   }
 
