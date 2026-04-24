@@ -5,8 +5,10 @@ import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
 import { ShieldCheck, Users, Award, Truck, ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Qui sommes-nous | SAPAL Signalisation",
-  description: "Découvrez SAPAL Signalisation, expert en mobilier urbain, signalisation et aménagement de sécurité pour les collectivités.",
+  title: "Qui sommes-nous — SAPAL Signalisation Cannes",
+  description:
+    "SAPAL Signalisation, expert en mobilier urbain, signalisation et aménagement de sécurité pour les collectivités. Basés à Cannes (06), nous livrons partout en France métropolitaine.",
+  alternates: { canonical: "/qui-sommes-nous" },
 };
 
 const VALEURS = [
@@ -69,6 +71,9 @@ export default function QuiSommesNousPage() {
             <div className="space-y-3 sm:space-y-4 text-muted-foreground text-sm sm:text-base leading-relaxed">
               <p>
                 SAPAL Signalisation est une entreprise spécialisée dans la vente de panneaux de signalisation, de mobilier urbain et de matériel de sécurité à destination des collectivités, entreprises BTP, syndics de copropriétés et grandes enseignes.
+              </p>
+              <p>
+                Basés à Cannes (Alpes-Maritimes), nous livrons et accompagnons nos clients partout en France métropolitaine. Notre ancrage sur la Côte d'Azur nous permet une réactivité forte en PACA, tout en servant chaque jour des collectivités et entreprises sur l'ensemble du territoire national.
               </p>
               <p>
                 Notre mission est simple : vous fournir des équipements fiables, durables et conformes aux normes, avec un service d'accompagnement personnalisé à chaque étape de votre projet.

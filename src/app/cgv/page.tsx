@@ -1,6 +1,8 @@
 export const metadata = {
-  title: "Conditions Générales de Vente | SAPAL Signalisation",
-  description: "Conditions générales de vente de SAPAL Signalisation.",
+  title: "Conditions Générales de Vente",
+  description: "Conditions générales de vente de SAPAL Signalisation, fournisseur B2B de mobilier urbain et signalétique pour collectivités françaises.",
+  alternates: { canonical: "/cgv" },
+  robots: { index: true, follow: true },
 };
 
 export default function CGVPage() {

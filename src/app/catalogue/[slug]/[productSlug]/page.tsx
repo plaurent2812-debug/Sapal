@@ -6,6 +6,7 @@ import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { ProductPageClient } from "@/components/catalogue/product-page-client";
 import { ProductCard } from "@/components/catalogue/product-card";
+import { BreadcrumbStructuredData } from "@/components/seo/structured-data";
 
 
 export async function generateMetadata({
@@ -36,7 +37,16 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      ...(product.imageUrl ? { images: [{ url: product.imageUrl }] } : {}),
+      type: "website",
+      ...(product.imageUrl
+        ? { images: [{ url: product.imageUrl, width: 1200, height: 630, alt: product.name }] }
+        : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(product.imageUrl ? { images: [product.imageUrl] } : {}),
     },
   };
 }
@@ -99,6 +109,14 @@ export default async function ProductPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Accueil", url: "/" },
+          { name: "Catalogue", url: "/catalogue" },
+          { name: category.name, url: `/catalogue/${slug}` },
+          { name: product.name, url: `/catalogue/${slug}/${productSlug}` },
+        ]}
       />
       {/* Breadcrumb */}
       <div className="border-b border-border/50 bg-secondary/10">

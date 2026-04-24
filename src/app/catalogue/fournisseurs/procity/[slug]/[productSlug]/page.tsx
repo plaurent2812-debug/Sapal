@@ -12,6 +12,7 @@ import { AnimatedSection, AnimatedItem } from "@/components/ui/motion"
 import { ArrowLeft, ChevronRight } from "lucide-react"
 import { ProductPageClient } from "@/components/catalogue/product-page-client"
 import { ProductCard } from "@/components/catalogue/product-card"
+import { BreadcrumbStructuredData } from "@/components/seo/structured-data"
 
 const SUPPLIER = "procity"
 const BASE_PATH = "/catalogue/fournisseurs/procity"
@@ -43,7 +44,16 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      ...(product.imageUrl ? { images: [{ url: product.imageUrl }] } : {}),
+      type: "website",
+      ...(product.imageUrl
+        ? { images: [{ url: product.imageUrl, width: 1200, height: 630, alt: product.name }] }
+        : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(product.imageUrl ? { images: [product.imageUrl] } : {}),
     },
   }
 }
@@ -117,6 +127,15 @@ export default async function ProcityProductPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Accueil", url: "/" },
+          { name: "Catalogue", url: "/catalogue" },
+          { name: "Catalogue Procity", url: BASE_PATH },
+          { name: category.name, url: `${BASE_PATH}/${slug}` },
+          { name: product.name, url: `${BASE_PATH}/${slug}/${productSlug}` },
+        ]}
       />
       <div className="border-b border-border/50 bg-secondary/10">
         <div className="container px-4 md:px-6 mx-auto py-3 md:py-4">

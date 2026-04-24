@@ -13,6 +13,7 @@ import { ArrowLeft } from "lucide-react";
 import { ProductCard } from "@/components/catalogue/product-card"
 import { CategoryPageClient } from '@/components/catalogue/category-page-client';
 import { SubcategoriesManager } from '@/components/catalogue/subcategories-manager';
+import { BreadcrumbStructuredData } from '@/components/seo/structured-data';
 
 export async function generateMetadata({
   params,
@@ -66,6 +67,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
   return (
     <CategoryPageClient initialCategory={category}>
+    <BreadcrumbStructuredData
+      items={[
+        { name: "Accueil", url: "/" },
+        { name: "Catalogue", url: "/catalogue" },
+        { name: category.name, url: `/catalogue/${slug}` },
+      ]}
+    />
     <div className="flex flex-col min-h-screen bg-background pb-20">
       {/* Hero */}
       <section className="relative w-full py-10 md:py-14 lg:py-20 bg-secondary/20 border-b border-border/50">
