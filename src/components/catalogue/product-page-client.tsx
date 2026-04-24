@@ -41,23 +41,38 @@ export function ProductPageClient({ product, variants, options, category, catego
   const displayReference = selectedVariant?.reference || currentProduct.reference
   const displayPrice = selectedVariant ? selectedVariant.price : currentProduct.price
 
-  // Galerie : si la variante a ses propres images, on affiche UNIQUEMENT celles-là
-  // (sinon on pollue la page avec toutes les déclinaisons). Sans variante, on
-  // affiche la galerie produit complète (ou l'image principale en fallback).
+  // Galerie : images de la variante sélectionnée en priorité. Si elle n'en a
+  // pas, on cherche une variante voisine de même couleur (Procity fournit des
+  // photos par couleur mais pas pour toutes les combinaisons dimension/vitrage).
+  // Dernier fallback : galerie produit / image principale.
   const galleryImages = useMemo(() => {
-    const variantImages = selectedVariant?.images ?? []
-    const variantPrimary = selectedVariant?.primaryImageUrl
-    const variantAll = variantPrimary
-      ? [variantPrimary, ...variantImages.filter(u => u !== variantPrimary)]
-      : variantImages
+    const takeImages = (v: ClientVariant) => {
+      const imgs = v.images ?? []
+      return v.primaryImageUrl
+        ? [v.primaryImageUrl, ...imgs.filter(u => u !== v.primaryImageUrl)]
+        : imgs
+    }
 
-    if (variantAll.length > 0) return variantAll
+    if (selectedVariant) {
+      const own = takeImages(selectedVariant)
+      if (own.length > 0) return own
+
+      // Fallback : même couleur, autre dimension/vitrage/structure
+      if (selectedVariant.coloris) {
+        const sibling = currentVariants.find(
+          v => v.id !== selectedVariant.id &&
+               v.coloris === selectedVariant.coloris &&
+               (v.images?.length > 0 || v.primaryImageUrl)
+        )
+        if (sibling) return takeImages(sibling)
+      }
+    }
 
     const gallery = currentProduct.galleryImageUrls ?? []
     if (gallery.length > 0) return gallery
 
     return currentProduct.imageUrl ? [currentProduct.imageUrl] : []
-  }, [selectedVariant, currentProduct.imageUrl, currentProduct.galleryImageUrls])
+  }, [selectedVariant, currentVariants, currentProduct.imageUrl, currentProduct.galleryImageUrls])
 
   // Quand on change de variante, revenir à l'image 0
   const handleVariantSelect = (v: ClientVariant) => {

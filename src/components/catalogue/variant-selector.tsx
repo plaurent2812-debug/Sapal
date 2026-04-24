@@ -133,13 +133,10 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
     const compatible = variants.filter(v => matches(v, newSelections))
     if (compatible.length === 0) return
 
-    const allAxesSelected = activeAxes.every(({ key }) => newSelections[key])
-    if (compatible.length === 1 || allAxesSelected) {
-      onSelect(compatible[0])
-    } else if (axisKey === 'coloris') {
-      // Maj image immédiate si coloris changé mais autres axes incomplets
-      onSelect(compatible[0])
-    }
+    // Sélectionner la première variante compatible dès qu'un axe change — garantit
+    // que l'image / le prix / la ref correspondent aux sélections en cours,
+    // même quand tous les axes ne sont pas encore renseignés.
+    onSelect(compatible[0])
   }
 
   // Fallback si aucun axe ne différencie
