@@ -81,13 +81,18 @@ async function buildComposedVariants(
     : baseLink.component_product_id === '410002' ? '402900'
     : null
 
-  const [baseResult, pietementResult, bandeauResult] = await Promise.all([
+  const [baseResult, pietementResult, bandeauResult, composedImagesResult] = await Promise.all([
     supabase.from('product_variants').select('*').eq('product_id', baseLink.component_product_id).order('label'),
     supabase.from('product_variants').select('*').eq('product_id', pietementLink.component_product_id).order('label'),
     bandeauProductId
       ? supabase.from('product_variants').select('*').eq('product_id', bandeauProductId)
       : Promise.resolve({ data: [] }),
+    supabase.from('composed_product_images').select('reference_composed, image_url'),
   ])
+  const composedImages = new Map<string, string>(
+    ((composedImagesResult.data as Array<{ reference_composed: string; image_url: string }>) ?? [])
+      .map(r => [r.reference_composed, r.image_url])
+  )
   const baseVariants = (baseResult.data ?? []).map(toClientVariant)
   const pietementVariants = (pietementResult.data ?? []).map(toClientVariant)
   const bandeauVariants = ((bandeauResult as { data: unknown[] | null }).data ?? []).map(toClientVariant)
@@ -143,11 +148,11 @@ async function buildComposedVariants(
       if (!piet) continue
 
       // Variante "sans bandeau titre"
-      composed.push(makeComposed(b, piet, null, pt.label + ' - sans bandeau titre', colorSuffix))
+      composed.push(makeComposed(b, piet, null, pt.label + ' - sans bandeau titre', colorSuffix, composedImages))
 
       // Variante "avec bandeau titre" (seulement pour types initial/complémentaire scellement, cf Procity)
       if (bandeau && (pt.key === 'initial-scellement' || pt.key === 'complementaire-scellement')) {
-        composed.push(makeComposed(b, piet, bandeau, pt.label + ' - avec bandeau titre', colorSuffix))
+        composed.push(makeComposed(b, piet, bandeau, pt.label + ' - avec bandeau titre', colorSuffix, composedImages))
       }
     }
   }
@@ -183,12 +188,34 @@ function makeComposed(
   bandeau: ClientVariant | null,
   pietementLabel: string,
   colorSuffix: string,
+  composedImages: Map<string, string>,
 ): ClientVariant {
   const refParts = [base.reference, pietement.reference]
   if (bandeau) refParts.push(bandeau.reference)
   const reference = refParts.join('+') + (colorSuffix ? '.' + colorSuffix : '')
   const price = (base.price || 0) + (pietement.price || 0) + (bandeau?.price || 0)
   const delai = mergeDelais(mergeDelais(base.delai, pietement.delai), bandeau?.delai ?? '')
+
+  // Chercher une image composée dédiée (ex: 410070+416401_5010).
+  // Fallback 1 : même base + même pietement mais autre couleur.
+  // Fallback 2 : même base + autre piètement de même famille + même couleur.
+  // Sinon : image de la base (vitrine seule).
+  const lowerColor = colorSuffix.toLowerCase()
+  const candidateKeys = [
+    `${base.reference}+${pietement.reference}_${lowerColor}`,  // exact
+    // Fallback : on cherche toute entrée commençant par base+pietement_
+    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+${pietement.reference}_`)),
+    // Fallback : base + autre piètement même couleur
+    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+`) && k.endsWith(`_${lowerColor}`)),
+    // Fallback : même base, n'importe quelle photo composée
+    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+`)),
+  ]
+  const composedImage = candidateKeys
+    .map(k => composedImages.get(k))
+    .find(url => !!url) ?? null
+
+  const images = composedImage ? [composedImage] : base.images
+  const primary = composedImage ?? base.primaryImageUrl
 
   return {
     id: `${base.id}__${pietement.id}${bandeau ? '__' + bandeau.id : ''}`,
@@ -208,8 +235,8 @@ function makeComposed(
       'Référence piètement': pietement.reference,
       ...(bandeau ? { 'Référence bandeau-titre': bandeau.reference } : {}),
     },
-    images: base.images,
-    primaryImageUrl: base.primaryImageUrl,
+    images,
+    primaryImageUrl: primary,
   }
 }
 
