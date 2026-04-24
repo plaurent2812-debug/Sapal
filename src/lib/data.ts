@@ -194,6 +194,34 @@ export const getCategoryChildren = unstable_cache(
 )
 
 /**
+ * Enfants d'une catégorie qui contiennent au moins 1 produit (tout fournisseur
+ * confondu). Utilisé sur la route catalogue public pour masquer les sous-catégories
+ * vides — pendant SAPAL de `getCategoryChildrenBySupplier`.
+ * Les admins peuvent les voir via le mode édition qui appelle `getCategoryChildren`.
+ */
+export const getCategoryChildrenWithProducts = unstable_cache(
+  async (parentId: string): Promise<ClientCategory[]> => {
+    const supabase = createBrowserClient()
+    const { data: children, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('parent_id', parentId)
+      .order('sort_order', { ascending: true })
+      .order('name', { ascending: true })
+    if (error) return []
+
+    const childIds = (children ?? []).map((c: { id: string }) => c.id)
+    // fetchProductCounts sans filter supplier → compte tous les produits
+    const counts = await fetchProductCounts(supabase, childIds, null)
+    return (children ?? [])
+      .filter((c: { id: string }) => (counts.get(c.id) || 0) > 0)
+      .map(toClientCategory)
+  },
+  ['category-children-with-products-v1'],
+  { revalidate: 300, tags: ['categories', 'products'] },
+)
+
+/**
  * Pour chaque catégorie fournie, retourne l'URL d'une image représentative (image
  * d'un produit au hasard dans l'arbre). Utilise la RPC Supabase `category_thumbnails`
  * pour tout résoudre en 1 seule requête au lieu d'un BFS côté client.

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import {
   getCategoryBySlug,
-  getCategoryChildren,
+  getCategoryChildrenWithProducts,
   getCategoryThumbnails,
   getCategoryProductCount,
   getProductsInCategoryTree,
@@ -54,7 +54,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
   // Si la catégorie a des enfants, on affiche d'abord les sous-catégories (mode navigation).
   // Sinon on affiche directement les produits (feuille de la taxonomie).
-  const children = await getCategoryChildren(category.id);
+  // On masque les sous-catégories vides en front public — les admins peuvent
+  // toujours les créer/gérer via l'édition inline (SubcategoriesManager).
+  const children = await getCategoryChildrenWithProducts(category.id);
 
   // Si la catégorie racine a exactement un enfant portant le même nom, on saute
   // l'étape intermédiaire (ex. /catalogue/equipements-sportifs redirige vers
