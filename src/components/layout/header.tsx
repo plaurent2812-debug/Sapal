@@ -1,90 +1,112 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { CartButton } from '@/components/ui/cart-button'
 import { SearchButton } from '@/components/layout/search-button'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { AccountLink } from '@/components/layout/account-link'
-import { Phone, Mail, FileText, ChevronDown } from 'lucide-react'
+import { CatalogueDropdown } from '@/components/layout/catalogue-dropdown'
+
+// Catalogue est géré séparément via CatalogueDropdown (menu déroulant)
+const NAV_ITEMS = [
+  { href: '/catalogue', label: 'Solutions' },
+  { href: '/realisations', label: 'Réalisations' },
+  { href: '/qui-sommes-nous', label: 'Entreprise' },
+  { href: '/contact', label: 'Contact' },
+]
 
 export function Header() {
   return (
-    <header className="w-full bg-white/95 backdrop-blur-md border-b border-border/50 shadow-sm sticky top-0 z-50">
+    <header className="w-full bg-background border-b border-border sticky top-0 z-50">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded">
         Aller au contenu principal
       </a>
-      {/* Top Bar — desktop only */}
-      <div className="bg-primary text-primary-foreground text-xs py-2 hidden md:block">
-        <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
-              <Phone size={13} className="text-accent" /> 06 22 90 28 54
-            </span>
-            <span className="flex items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity">
-              <Mail size={13} className="text-accent" /> societe@sapal.fr
-            </span>
-          </div>
-          <Link href="/contact" className="hover:text-accent transition-colors flex items-center gap-1.5 cursor-pointer font-medium">
-            <FileText size={13} /> Demander un devis sur mesure
-          </Link>
-        </div>
-      </div>
 
-      {/* Main Header */}
-      <div className="container mx-auto px-4 sm:px-6 py-3 md:py-5">
-        {/* Mobile: logo + cart + hamburger on one line */}
-        <div className="flex items-center justify-between gap-3 md:hidden">
-          <Link href="/" className="flex-shrink-0 transition-all hover:opacity-80 duration-300">
-            <Image src="/logo.png" alt="SAPAL Signalisation" width={200} height={64} className="h-10 w-auto object-contain" priority />
+      <div className="mx-auto max-w-[1600px] px-4 md:px-8 lg:px-12">
+
+        {/* Mobile : logo + actions */}
+        <div className="flex items-center justify-between gap-3 md:hidden py-3">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-9 h-9 bg-primary rounded-md flex items-center justify-center">
+              <span className="font-heading text-primary-foreground text-lg leading-none">S</span>
+            </div>
+            <div className="leading-tight">
+              <div className="font-heading text-lg text-primary">Sapal</div>
+              <div className="text-[9px] uppercase tracking-[0.14em] text-foreground/60 font-medium">
+                Mobilier urbain
+              </div>
+            </div>
           </Link>
           <div className="flex items-center gap-2">
             <CartButton />
             <MobileNav />
           </div>
         </div>
-
-        {/* Mobile: search bar below logo row */}
-        <div className="mt-3 md:hidden">
+        <div className="md:hidden pb-3">
           <SearchButton />
         </div>
 
-        {/* Desktop: original layout */}
-        <div className="hidden md:flex items-center gap-8 justify-between">
-          <Link href="/" className="flex-shrink-0 transition-all hover:opacity-80 hover:scale-[0.98] duration-300">
-            <Image src="/logo.png" alt="SAPAL Signalisation" width={200} height={64} className="h-16 w-auto object-contain" priority />
+        {/* Desktop : logo + nav + actions */}
+        <div className="hidden md:flex items-center gap-8 py-4">
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
+            <div className="w-10 h-10 bg-primary rounded-md flex items-center justify-center transition-all group-hover:scale-105">
+              <span className="font-heading text-primary-foreground text-xl leading-none">S</span>
+            </div>
+            <div className="leading-tight">
+              <div className="font-heading text-xl text-primary tracking-tight">Sapal</div>
+              <div className="text-[10px] uppercase tracking-[0.16em] text-foreground/60 font-semibold">
+                Mobilier urbain · Cannes
+              </div>
+            </div>
           </Link>
 
-          {/* Search Bar */}
-          <div className="flex-1 max-w-3xl">
-            <SearchButton />
-          </div>
+          <nav aria-label="Navigation principale" className="flex items-center gap-1 flex-1 justify-center">
+            <CatalogueDropdown />
+            {NAV_ITEMS.map(({ href, label }) => (
+              <Link
+                key={label}
+                href={href}
+                className="text-sm font-semibold text-foreground hover:text-primary transition-colors px-3 py-2 rounded-md hover:bg-white"
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
 
-          {/* Actions */}
-          <div className="flex items-center gap-4 flex-shrink-0">
-            <div className="hidden lg:flex flex-col items-end mr-4">
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">Besoin d&apos;aide ?</span>
-              <span className="text-sm font-bold text-foreground">06 22 90 28 54</span>
-            </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
             <CartButton />
             <AccountLink />
           </div>
         </div>
-      </div>
 
-      {/* Navigation — desktop only */}
-      <div className="border-t border-border/40 bg-secondary/10 hidden md:block">
-        <div className="container mx-auto px-4 sm:px-6">
-          <nav aria-label="Navigation principale" className="flex items-center gap-0 text-[13px] xl:text-[14px] font-bold uppercase tracking-wide">
-            <Link href="/catalogue" className="relative py-3.5 px-5 hover:text-accent transition-colors flex items-center gap-1 group">
-              Tous nos produits
-              <ChevronDown size={14} className="opacity-50 group-hover:opacity-100 transition-opacity" />
-              <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </Link>
-            <Link href="/catalogue/fournisseurs/procity" className="relative py-3.5 px-5 text-muted-foreground hover:text-foreground transition-colors group">
-              Catalogue Procity
-              <span className="absolute bottom-0 left-5 right-5 h-[2px] bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-            </Link>
-            <div className="flex-1"></div>
-          </nav>
+        {/* Barre de recherche — 2ème ligne sous la nav (desktop).
+            Alignée sur le même centre que la nav (entre logo et actions droites). */}
+        <div className="hidden md:flex items-center gap-8 pb-4">
+          {/* Spacer invisible — même largeur que le logo */}
+          <div className="flex-shrink-0 invisible" aria-hidden="true">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10" />
+              <div className="leading-tight">
+                <div className="font-heading text-xl tracking-tight">Sapal</div>
+                <div className="text-[10px] uppercase tracking-[0.16em] font-semibold">
+                  Mobilier urbain · Cannes
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Zone de recherche, partage le flex-1 avec la nav au-dessus */}
+          <div className="flex-1 flex justify-center">
+            <div className="w-full max-w-2xl">
+              <SearchButton />
+            </div>
+          </div>
+
+          {/* Spacer invisible — même largeur que CartButton + AccountLink */}
+          <div className="flex-shrink-0 invisible" aria-hidden="true">
+            <div className="flex items-center gap-2">
+              <CartButton />
+              <AccountLink />
+            </div>
+          </div>
         </div>
       </div>
     </header>
