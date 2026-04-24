@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { permanentRedirect } from "next/navigation"
 import {
   getCategoryBySlugForSupplier,
   getCategoryChildrenBySupplier,
@@ -54,6 +55,18 @@ export default async function ProcityCategoryPage({
   }
 
   const children = await getCategoryChildrenBySupplier(category.id, SUPPLIER)
+
+  // Si la catégorie a exactement un enfant Procity de même nom, on saute l'étape
+  // intermédiaire (ex. /procity/equipements-sportifs redirige vers /procity/equipements-sportifs-procity).
+  const normalize = (s: string) => s.trim().toLocaleLowerCase("fr")
+  if (
+    children.length === 1 &&
+    children[0].slug !== slug &&
+    normalize(children[0].name) === normalize(category.name)
+  ) {
+    permanentRedirect(`${BASE_PATH}/${children[0].slug}`)
+  }
+
   const hasChildren = children.length > 0
   const products = hasChildren
     ? []
