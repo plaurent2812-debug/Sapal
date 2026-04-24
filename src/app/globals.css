@@ -3,39 +3,47 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Fonds très clairs et fonctionnels (E-commerce standard) */
-  --background: oklch(0.995 0 0); 
-  --foreground: oklch(0.15 0.02 260); /* Texte presque noir très lisible */
-  
-  --card: oklch(1 0 0); /* Pur blanc */
-  --card-foreground: oklch(0.15 0.02 260);
-  
+  /* =====================================================
+     Palette SAPAL — 3 couleurs max (+ blanc pour cards)
+     --background : gris clair  #ececea  (fond général)
+     --foreground : gris foncé  #4a4a4a  (texte courant)
+     --primary    : noir        #0a0a0a  (Sapal + titres + CTA)
+     --card       : blanc       #ffffff  (cards pour détacher les photos)
+     ===================================================== */
+
+  --background: oklch(0.92 0.002 60);      /* #ececea gris clair */
+  --foreground: oklch(0.42 0 0);            /* #4a4a4a gris foncé texte */
+
+  --card: oklch(1 0 0);                     /* Blanc pur — détache les photos */
+  --card-foreground: oklch(0.42 0 0);       /* gris foncé sur card blanche */
+
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.02 260);
-  
-  /* Primary : Bleu foncé technique / institutionnel */
-  --primary: oklch(0.25 0.08 260); 
-  --primary-foreground: oklch(0.98 0 0); 
-  
-  /* Secondary : Gris très pâle pour les zones de fond (Headers top, sidebars) */
-  --secondary: oklch(0.96 0.01 260); 
-  --secondary-foreground: oklch(0.3 0.05 260); 
-  
-  --muted: oklch(0.94 0.01 260);
-  --muted-foreground: oklch(0.5 0.02 260);
-  
-  /* Accent : Orange/Rouge de conversion (Type Signals.fr / Prozon) */
-  --accent: oklch(0.65 0.22 35);
+  --popover-foreground: oklch(0.42 0 0);
+
+  /* Primary : NOIR — pour Sapal, titres, CTA principaux */
+  --primary: oklch(0.12 0 0);               /* #0a0a0a noir */
+  --primary-foreground: oklch(1 0 0);       /* blanc sur noir */
+
+  /* Secondary : teinte gris clair très légèrement plus chaude */
+  --secondary: oklch(0.95 0.002 60);
+  --secondary-foreground: oklch(0.12 0 0);
+
+  /* Muted : gris intermédiaire — pour les zones secondaires */
+  --muted: oklch(0.94 0.002 60);
+  --muted-foreground: oklch(0.5 0 0);
+
+  /* Accent : NOIR aussi (plus d'orange) — reste dans les 3 couleurs */
+  --accent: oklch(0.12 0 0);                /* #0a0a0a noir */
   --accent-foreground: oklch(1 0 0);
-  
-  --destructive: oklch(0.6 0.2 20);
+
+  --destructive: oklch(0.55 0.18 25);       /* rouge destructif — garde cassé */
   --destructive-foreground: oklch(0.98 0 0);
-  
-  --border: oklch(0.92 0.01 260); /* Bordures plus douces bleutées */
-  --input: oklch(0.92 0.01 260);
-  --ring: oklch(0.35 0.1 260); /* Anneau de focus saphir */
-  
-  --radius: 0.75rem; /* Cartes plus rondes et douces (12px) */
+
+  --border: oklch(0.85 0.002 60);           /* gris bord, entre background et foreground */
+  --input: oklch(0.85 0.002 60);
+  --ring: oklch(0.12 0 0);                  /* focus ring en noir */
+
+  --radius: 0.75rem;
 }
 
 .dark {
