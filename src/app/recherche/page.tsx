@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { searchProducts, getCategories } from "@/lib/data";
+import { searchProducts, getCategories, getAllCategoriesFlat } from "@/lib/data";
 import type { SearchFilters } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Search, ArrowLeft } from "lucide-react";
@@ -40,10 +40,21 @@ export default async function RecherchePage({
   const hasFilters = !!(category || minPrice || maxPrice || (sort && sort !== "name-asc"));
 
   const results = query || hasFilters ? await searchProducts(query, filters) : [];
-  const categories = await getCategories();
+  const [categories, allCategories] = await Promise.all([
+    getCategories(),
+    getAllCategoriesFlat(),
+  ]);
 
-  // Build a slug lookup for categories
-  const categoryMap = new Map(categories.map((c) => [c.id, c.slug]));
+  // Lookup id → URL path (intègre toutes les catégories, pas juste les racines,
+  // et préfixe /fournisseurs/procity/ quand la catégorie vient de Procity)
+  const categoryPathMap = new Map(
+    allCategories.map((c) => {
+      const path = c.id.startsWith('proc-')
+        ? `fournisseurs/procity/${c.slug}`
+        : c.slug
+      return [c.id, path]
+    })
+  )
 
   return (
     <div className="flex flex-col min-h-screen bg-background pb-20">
@@ -101,7 +112,7 @@ export default async function RecherchePage({
               <SearchResultCard
                 key={product.id}
                 product={product}
-                categorySlug={categoryMap.get(product.categoryId) || "catalogue"}
+                categorySlug={categoryPathMap.get(product.categoryId) || "catalogue"}
               />
             ))}
           </div>

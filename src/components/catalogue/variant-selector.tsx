@@ -10,15 +10,16 @@ interface Props {
   hasVariants: boolean
 }
 
-type AxisKey = 'coloris' | 'dimensions' | 'finition' | 'structure'
+type AxisKey = 'coloris' | 'dimensions' | 'finition' | 'structure' | 'pietement'
 
-// `structure` vit dans specifications.Structure (ou .Crosse fallback) — on l'extrait
-// à la volée via accessor. Les 3 autres sont des colonnes directes.
+// `structure` et `pietement` vivent dans specifications, les autres sont des
+// colonnes directes.
 const AXIS_DEFAULT_LABELS: Record<AxisKey, string> = {
   coloris:    'Couleur',
   dimensions: 'Dimension',
   finition:   'Finition',
   structure:  'Structure',
+  pietement:  'Piètement',
 }
 
 const AXES: Array<{ key: AxisKey; label: string; get: (v: ClientVariant) => string }> = [
@@ -26,6 +27,7 @@ const AXES: Array<{ key: AxisKey; label: string; get: (v: ClientVariant) => stri
   { key: 'dimensions', label: AXIS_DEFAULT_LABELS.dimensions, get: (v) => v.dimensions },
   { key: 'finition',   label: AXIS_DEFAULT_LABELS.finition,   get: (v) => v.finition },
   { key: 'structure',  label: AXIS_DEFAULT_LABELS.structure,  get: (v) => v.specifications?.Structure || '' },
+  { key: 'pietement',  label: AXIS_DEFAULT_LABELS.pietement,  get: (v) => v.specifications?.Piètement || '' },
 ]
 
 // Mapping RAL / nom → couleur hex pour les swatches

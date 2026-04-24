@@ -40,6 +40,19 @@ export function toClientVariant(v: ProductVariantRow): ClientVariant {
 
 export async function getVariantsByProduct(productId: string): Promise<ClientVariant[]> {
   const supabase = createBrowserClient()
+
+  // Vérifier si le produit est composé (product_component_links) — ex vitrines
+  // sur poteaux = vitrine + piètement. Si oui, on calcule les variantes combinées
+  // à la volée au lieu de les matérialiser en base (éviterait des milliers de lignes).
+  const { data: links } = await supabase
+    .from('product_component_links')
+    .select('component_product_id, component_role')
+    .eq('product_id', productId)
+
+  if (links && links.length > 0) {
+    return buildComposedVariants(links as Array<{ component_product_id: string; component_role: string }>)
+  }
+
   const { data, error } = await supabase
     .from('product_variants')
     .select('*')
@@ -48,6 +61,196 @@ export async function getVariantsByProduct(productId: string): Promise<ClientVar
 
   if (error) return []
   return (data ?? []).map(toClientVariant)
+}
+
+// Compose les variantes "sur poteaux" : pour chaque variante base (vitrine),
+// on déduit la hauteur piètement selon la hauteur de la vitrine, puis on crée
+// les N variantes composées (une par type de piètement, ± bandeau titre).
+// La ref finale suit le format Procity : `vitrine+pietement[+bandeau].COULEUR`
+async function buildComposedVariants(
+  links: Array<{ component_product_id: string; component_role: string }>
+): Promise<ClientVariant[]> {
+  const supabase = createBrowserClient()
+
+  const baseLink = links.find(l => l.component_role === 'base')
+  const pietementLink = links.find(l => l.component_role === 'pietement')
+  if (!baseLink || !pietementLink) return []
+
+  // Bandeau-titre : on le cherche par convention. 407002 → 402910, 410002 → 402900
+  const bandeauProductId = baseLink.component_product_id === '407002' ? '402910'
+    : baseLink.component_product_id === '410002' ? '402900'
+    : null
+
+  const [baseResult, pietementResult, bandeauResult, composedImagesResult] = await Promise.all([
+    supabase.from('product_variants').select('*').eq('product_id', baseLink.component_product_id).order('label'),
+    supabase.from('product_variants').select('*').eq('product_id', pietementLink.component_product_id).order('label'),
+    bandeauProductId
+      ? supabase.from('product_variants').select('*').eq('product_id', bandeauProductId)
+      : Promise.resolve({ data: [] }),
+    supabase.from('composed_product_images').select('reference_composed, image_url'),
+  ])
+  const composedImages = new Map<string, string>(
+    ((composedImagesResult.data as Array<{ reference_composed: string; image_url: string }>) ?? [])
+      .map(r => [r.reference_composed, r.image_url])
+  )
+  const baseVariants = (baseResult.data ?? []).map(toClientVariant)
+  const pietementVariants = (pietementResult.data ?? []).map(toClientVariant)
+  const bandeauVariants = ((bandeauResult as { data: unknown[] | null }).data ?? []).map(toClientVariant)
+  if (baseVariants.length === 0 || pietementVariants.length === 0) return []
+
+  // Regrouper les piètements par type (initial-scellement, initial-platines,
+  // complementaire-scellement, complementaire-platine), par hauteur et finition
+  type PKey = { type: string; hauteur: string; coloris: string }
+  const pietByKey = (k: PKey): ClientVariant | null =>
+    pietementVariants.find(p =>
+      p.specifications?.PietementType === k.type &&
+      p.dimensions === k.hauteur &&
+      p.coloris === k.coloris
+    ) ?? null
+
+  const composed: ClientVariant[] = []
+
+  for (const b of baseVariants) {
+    // Déduire la hauteur piètement selon la hauteur vitrine (vitrine 1000 = H min, etc.)
+    const hVitrine = parseInt((b.dimensions.match(/H\s*(\d+)/)?.[1] ?? '0'), 10)
+    const heights = inferPoleHeights(hVitrine, pietementLink.component_product_id)
+    const pColoris = b.coloris === 'Anodisé' ? 'Anodisé' : 'Couleurs vitrine'
+    const bandeauColoris = pColoris
+    const colorSuffix = colorCodeFromRal(b.coloris)
+
+    // Récupérer largeur vitrine pour matcher bandeau
+    const lgVitrine = parseInt((b.dimensions.match(/x\s*(\d+)/)?.[1] ?? '0'), 10)
+    const bandeau = bandeauVariants.find(bd =>
+      bd.coloris === bandeauColoris &&
+      parseInt((bd.dimensions.match(/LG\s*(\d+)/)?.[1] ?? '0'), 10) === lgVitrine
+    ) ?? null
+
+    // Types de piètement possibles pour la famille
+    const isO76 = pietementLink.component_product_id === '416410'
+    const pietementTypes = isO76
+      ? [{ key: 'initial-scellement', label: 'Poteaux initiaux scellement direct', fixation: 'scellement' }]
+      : [
+          { key: 'initial-scellement', label: 'Poteaux initiaux scellement direct', fixation: 'scellement' },
+          { key: 'initial-platines',   label: 'Poteaux initiaux sur platines',     fixation: 'platines' },
+          { key: 'complementaire-scellement', label: 'Poteau complémentaire scellement direct', fixation: 'scellement' },
+          { key: 'complementaire-platine',    label: 'Poteau complémentaire sur platine',      fixation: 'platines' },
+        ]
+
+    for (const pt of pietementTypes) {
+      const hauteur = pt.fixation === 'scellement' ? heights.scellement : heights.platines
+      if (!hauteur) continue
+
+      const piet = pietByKey({
+        type: `${pt.key}-sans-bandeau`,
+        hauteur,
+        coloris: pColoris,
+      })
+      if (!piet) continue
+
+      // Variante "sans bandeau titre"
+      composed.push(makeComposed(b, piet, null, pt.label + ' - sans bandeau titre', colorSuffix, composedImages))
+
+      // Variante "avec bandeau titre" (seulement pour types initial/complémentaire scellement, cf Procity)
+      if (bandeau && (pt.key === 'initial-scellement' || pt.key === 'complementaire-scellement')) {
+        composed.push(makeComposed(b, piet, bandeau, pt.label + ' - avec bandeau titre', colorSuffix, composedImages))
+      }
+    }
+  }
+  return composed
+}
+
+// Détermine hauteurs (scellement, platines) selon hauteur vitrine et famille
+function inferPoleHeights(hVitrine: number, pietementProductId: string): { scellement: string | null; platines: string | null } {
+  if (pietementProductId === '416410') {
+    // Piètement Ø76 : 3 hauteurs H2475 / H2700 / H3000
+    if (hVitrine <= 1000) return { scellement: 'H 2475 mm', platines: null }
+    if (hVitrine <= 1050) return { scellement: 'H 2700 mm', platines: null }
+    return { scellement: 'H 3000 mm', platines: null }
+  }
+  // Piètement Quatro
+  if (hVitrine <= 1050) return { scellement: 'H 2475 mm', platines: 'H 2058 mm' }
+  if (hVitrine === 1350) return { scellement: 'H 2700 mm', platines: 'H 2208 mm' }
+  return { scellement: 'H 3000 mm', platines: 'H 2208 mm' }
+}
+
+// Code couleur Procity pour le suffixe de ref
+function colorCodeFromRal(coloris: string): string {
+  const c = coloris.toLowerCase()
+  if (c.includes('anodis')) return 'ANOD'
+  if (c.includes('gris procity')) return 'GPRO'
+  const m = c.match(/(\d{4})/)
+  return m ? m[1] : ''
+}
+
+function makeComposed(
+  base: ClientVariant,
+  pietement: ClientVariant,
+  bandeau: ClientVariant | null,
+  pietementLabel: string,
+  colorSuffix: string,
+  composedImages: Map<string, string>,
+): ClientVariant {
+  const refParts = [base.reference, pietement.reference]
+  if (bandeau) refParts.push(bandeau.reference)
+  const reference = refParts.join('+') + (colorSuffix ? '.' + colorSuffix : '')
+  const price = (base.price || 0) + (pietement.price || 0) + (bandeau?.price || 0)
+  const delai = mergeDelais(mergeDelais(base.delai, pietement.delai), bandeau?.delai ?? '')
+
+  // Chercher une image composée dédiée (ex: 410070+416401_5010).
+  // Fallback 1 : même base + même pietement mais autre couleur.
+  // Fallback 2 : même base + autre piètement de même famille + même couleur.
+  // Sinon : image de la base (vitrine seule).
+  const lowerColor = colorSuffix.toLowerCase()
+  const candidateKeys = [
+    `${base.reference}+${pietement.reference}_${lowerColor}`,  // exact
+    // Fallback : on cherche toute entrée commençant par base+pietement_
+    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+${pietement.reference}_`)),
+    // Fallback : base + autre piètement même couleur
+    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+`) && k.endsWith(`_${lowerColor}`)),
+    // Fallback : même base, n'importe quelle photo composée
+    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+`)),
+  ]
+  const composedImage = candidateKeys
+    .map(k => composedImages.get(k))
+    .find(url => !!url) ?? null
+
+  const images = composedImage ? [composedImage] : base.images
+  const primary = composedImage ?? base.primaryImageUrl
+
+  return {
+    id: `${base.id}__${pietement.id}${bandeau ? '__' + bandeau.id : ''}`,
+    productId: base.productId,
+    reference,
+    label: `${base.label} + ${pietementLabel}`,
+    dimensions: base.dimensions,
+    finition: base.finition,
+    coloris: base.coloris,
+    poids: base.poids,
+    price,
+    delai,
+    specifications: {
+      ...base.specifications,
+      'Piètement': pietementLabel,
+      'Référence vitrine': base.reference,
+      'Référence piètement': pietement.reference,
+      ...(bandeau ? { 'Référence bandeau-titre': bandeau.reference } : {}),
+    },
+    images,
+    primaryImageUrl: primary,
+  }
+}
+
+// Prend deux délais (ex: "2 semaines", "En stock") et renvoie le plus long.
+// "En stock" < N semaines.
+function mergeDelais(a: string, b: string): string {
+  const toWeeks = (s: string): number => {
+    if (!s) return 0
+    const m = s.match(/(\d+)\s*semaine/i)
+    if (m) return parseInt(m[1], 10)
+    if (/stock/i.test(s)) return 0
+    return 0
+  }
+  return toWeeks(a) >= toWeeks(b) ? a : b
 }
 
 export interface ClientProduct {
@@ -143,6 +346,29 @@ export const getCategories = unstable_cache(
     return (data ?? []).map(toClientCategory)
   },
   ['categories-roots-v3'],
+  { revalidate: 3600, tags: ['categories'] }
+)
+
+/** Toutes les catégories (toutes profondeurs), pour construire un lookup id → slug
+ *  côté recherche / résultats. */
+export const getAllCategoriesFlat = unstable_cache(
+  async (): Promise<Array<{ id: string; slug: string }>> => {
+    const supabase = createBrowserClient()
+    const PAGE = 1000
+    const all: Array<{ id: string; slug: string }> = []
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('id, slug')
+        .range(from, from + PAGE - 1)
+      if (error) return all
+      const batch = (data ?? []) as typeof all
+      all.push(...batch)
+      if (batch.length < PAGE) break
+    }
+    return all
+  },
+  ['categories-flat-v1'],
   { revalidate: 3600, tags: ['categories'] }
 )
 
