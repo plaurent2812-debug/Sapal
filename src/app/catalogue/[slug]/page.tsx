@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { permanentRedirect } from "next/navigation";
 import {
   getCategoryBySlug,
   getCategoryChildren,
@@ -54,6 +55,19 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   // Si la catégorie a des enfants, on affiche d'abord les sous-catégories (mode navigation).
   // Sinon on affiche directement les produits (feuille de la taxonomie).
   const children = await getCategoryChildren(category.id);
+
+  // Si la catégorie racine a exactement un enfant portant le même nom, on saute
+  // l'étape intermédiaire (ex. /catalogue/equipements-sportifs redirige vers
+  // /catalogue/equipements-sportifs-procity). Même pattern que pour la route Procity.
+  const normalize = (s: string) => s.trim().toLocaleLowerCase("fr");
+  if (
+    children.length === 1 &&
+    children[0].slug !== slug &&
+    normalize(children[0].name) === normalize(category.name)
+  ) {
+    permanentRedirect(`/catalogue/${children[0].slug}`);
+  }
+
   const hasChildren = children.length > 0;
   const products = hasChildren ? [] : await getProductsInCategoryTree(category.id);
   const childThumbs = hasChildren
