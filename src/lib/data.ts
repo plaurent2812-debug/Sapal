@@ -295,7 +295,7 @@ export const getProductsInCategoryTree = unstable_cache(
     const ids = (descendants ?? []).map((d: { id: string }) => d.id)
     if (ids.length === 0) return []
     const { data, error } = await supabase
-      .from('products')
+      .from('catalog_products')
       .select('*, categories(slug)')
       .in('category_id', ids)
       .order('name')
@@ -427,7 +427,7 @@ export const getProductsInCategoryTreeBySupplier = unstable_cache(
     const ids = (descendants ?? []).map((d: { id: string }) => d.id)
     if (ids.length === 0) return []
     const { data, error } = await supabase
-      .from('products')
+      .from('catalog_products')
       .select('*, categories(slug)')
       .in('category_id', ids)
       .eq('supplier', supplier)
@@ -464,7 +464,7 @@ export const getProductsByCategory = unstable_cache(
   async (categoryId: string): Promise<ClientProduct[]> => {
     const supabase = createBrowserClient()
     const { data, error } = await supabase
-      .from('products')
+      .from('catalog_products')
       .select('*, categories(slug)')
       .eq('category_id', categoryId)
       .order('name')
@@ -521,7 +521,7 @@ export const getFeaturedProducts = unstable_cache(
   async (limit: number = 4): Promise<ClientProduct[]> => {
     const supabase = createBrowserClient()
     const { data, error } = await supabase
-      .from('products')
+      .from('catalog_products')
       .select('*, categories(slug)')
       .order('price', { ascending: false })
       .limit(limit)
@@ -552,7 +552,7 @@ export const getProductBySlug = unstable_cache(
 export async function getRelatedProducts(categoryId: string, excludeId: string, limit: number = 4): Promise<ClientProduct[]> {
   const supabase = createBrowserClient()
   const { data, error } = await supabase
-    .from('products')
+    .from('catalog_products')
     .select('*, categories(slug)')
     .eq('category_id', categoryId)
     .neq('id', excludeId)
@@ -573,7 +573,7 @@ export async function searchProducts(query: string, filters?: SearchFilters): Pr
   const supabase = createBrowserClient()
 
   let q = supabase
-    .from('products')
+    .from('catalog_products')
     .select('*, categories(slug)')
 
   // Text search fuzzy (pg_trgm) — si pas de filtres, utiliser la RPC
@@ -724,7 +724,7 @@ export const getProcityProducts = unstable_cache(
   async (): Promise<ClientProduct[]> => {
     const supabase = createBrowserClient()
     const { data, error } = await supabase
-      .from('products')
+      .from('catalog_products')
       .select('*, categories(slug)')
       .eq('supplier', 'procity')
       .order('name')
