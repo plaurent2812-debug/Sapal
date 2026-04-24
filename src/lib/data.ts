@@ -197,23 +197,31 @@ function makeComposed(
   const delai = mergeDelais(mergeDelais(base.delai, pietement.delai), bandeau?.delai ?? '')
 
   // Chercher une image composée dédiée (ex: 410070+416401_5010).
-  // Fallback 1 : même base + même pietement mais autre couleur.
-  // Fallback 2 : même base + autre piètement de même famille + même couleur.
-  // Sinon : image de la base (vitrine seule).
+  // Recherche stricte : la couleur DOIT toujours matcher pour éviter
+  // d'afficher une photo de mauvaise couleur.
+  //   1) combo exact (base + piètement + couleur)
+  //   2) même base + même couleur + n'importe quel piètement de la même famille
+  //   3) même famille base (vitrine) + même couleur + n'importe quel piètement
+  //   4) image de la variante base seule (fallback final, même couleur garantie)
   const lowerColor = colorSuffix.toLowerCase()
+  const baseFamily = base.reference.slice(0, 3) // "407", "410", etc.
   const candidateKeys = [
     `${base.reference}+${pietement.reference}_${lowerColor}`,  // exact
-    // Fallback : on cherche toute entrée commençant par base+pietement_
-    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+${pietement.reference}_`)),
-    // Fallback : base + autre piètement même couleur
+    // Même vitrine (même ref base) + même couleur + n'importe quel piètement
     ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+`) && k.endsWith(`_${lowerColor}`)),
-    // Fallback : même base, n'importe quelle photo composée
-    ...Array.from(composedImages.keys()).filter(k => k.startsWith(`${base.reference}+`)),
+    // Même famille de vitrine (407xxx / 410xxx / 414xxx / 412xxx) + même couleur
+    ...Array.from(composedImages.keys()).filter(k => {
+      const m = k.match(/^(\d{6})\+.+_(.+)$/)
+      return m && m[1].startsWith(baseFamily) && m[2] === lowerColor
+    }),
   ]
   const composedImage = candidateKeys
     .map(k => composedImages.get(k))
     .find(url => !!url) ?? null
 
+  // Si pas de photo "sur poteaux" dans la bonne couleur, on utilise l'image
+  // de la vitrine murale (qui est déjà de la bonne couleur grâce à l'import
+  // par ref+color qu'on a fait pour Vitrine 1000/2000).
   const images = composedImage ? [composedImage] : base.images
   const primary = composedImage ?? base.primaryImageUrl
 
