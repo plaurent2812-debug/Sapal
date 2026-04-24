@@ -146,6 +146,29 @@ export const getCategories = unstable_cache(
   { revalidate: 3600, tags: ['categories'] }
 )
 
+/** Toutes les catégories (toutes profondeurs), pour construire un lookup id → slug
+ *  côté recherche / résultats. */
+export const getAllCategoriesFlat = unstable_cache(
+  async (): Promise<Array<{ id: string; slug: string }>> => {
+    const supabase = createBrowserClient()
+    const PAGE = 1000
+    const all: Array<{ id: string; slug: string }> = []
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabase
+        .from('categories')
+        .select('id, slug')
+        .range(from, from + PAGE - 1)
+      if (error) return all
+      const batch = (data ?? []) as typeof all
+      all.push(...batch)
+      if (batch.length < PAGE) break
+    }
+    return all
+  },
+  ['categories-flat-v1'],
+  { revalidate: 3600, tags: ['categories'] }
+)
+
 export const getCategoryBySlug = unstable_cache(
   async (slug: string): Promise<ClientCategory | null> => {
     const supabase = createBrowserClient()
