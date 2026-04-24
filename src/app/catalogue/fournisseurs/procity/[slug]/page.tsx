@@ -68,10 +68,28 @@ export default async function ProcityCategoryPage({
     permanentRedirect(`${BASE_PATH}/${children[0].slug}`)
   }
 
-  const hasChildren = children.length > 0
-  const products = hasChildren
-    ? []
-    : await getProductsInCategoryTreeBySupplier(category.id, SUPPLIER)
+  // Cas plate : catégorie avec un unique enfant Procity (nom différent) qui est
+  // lui-même une feuille (pas d'enfants Procity). On conserve l'URL de la
+  // catégorie parent mais on affiche directement les produits de l'enfant,
+  // comme s'il n'y avait qu'un seul niveau. Évite l'étape « cliquer sur l'unique
+  // tuile » (ex: structures-multi-activites → jeux-multifonctions).
+  let flattenedFromChild = false
+  if (children.length === 1) {
+    const grandChildren = await getCategoryChildrenBySupplier(
+      children[0].id,
+      SUPPLIER,
+    )
+    if (grandChildren.length === 0) {
+      flattenedFromChild = true
+    }
+  }
+
+  const hasChildren = children.length > 0 && !flattenedFromChild
+  const productSourceId = flattenedFromChild ? children[0].id : category.id
+  const products =
+    hasChildren && !flattenedFromChild
+      ? []
+      : await getProductsInCategoryTreeBySupplier(productSourceId, SUPPLIER)
   const childThumbs = hasChildren
     ? await getCategoryThumbnailsBySupplier(children.map((c) => c.id), SUPPLIER)
     : {}
