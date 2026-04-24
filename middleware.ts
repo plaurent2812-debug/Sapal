@@ -32,6 +32,36 @@ export async function middleware(request: NextRequest) {
   const { data: { session } } = await supabase.auth.getSession()
   const role = session?.user?.user_metadata?.role ?? session?.user?.app_metadata?.role
 
+  // Product redirect lookup : si une URL /catalogue/<catSlug>/<productSlug> pointe vers un slug supprimé
+  if (pathname.startsWith('/catalogue/')) {
+    const segments = pathname.split('/').filter(Boolean)
+    // Format fiche produit : /catalogue/<cat>/<product> ou /catalogue/fournisseurs/procity/<cat>/<product>
+    const isProductPath =
+      segments.length === 3 ||
+      (segments.length === 5 && segments[1] === 'fournisseurs')
+    if (isProductPath) {
+      const productSlug = segments[segments.length - 1]
+      const { data: activeProd } = await supabase
+        .from('products')
+        .select('id')
+        .eq('slug', productSlug)
+        .maybeSingle()
+      if (!activeProd) {
+        const { data: redirect } = await supabase
+          .from('product_redirects')
+          .select('new_product_id, products(slug, categories(slug))')
+          .eq('old_slug', productSlug)
+          .maybeSingle()
+        const newProduct = redirect?.products as { slug?: string; categories?: { slug?: string } } | null
+        if (newProduct?.slug && newProduct?.categories?.slug) {
+          const url = request.nextUrl.clone()
+          url.pathname = `/catalogue/${newProduct.categories.slug}/${newProduct.slug}`
+          return NextResponse.redirect(url, 301)
+        }
+      }
+    }
+  }
+
   // Category redirect lookup : si une URL /catalogue/<slug> ou /catalogue/fournisseurs/<supplier>/<slug>
   // pointe vers un slug qui n'existe plus en catégorie, on cherche dans category_redirects.
   if (pathname.startsWith('/catalogue/')) {
