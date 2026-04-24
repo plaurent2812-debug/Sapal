@@ -95,7 +95,7 @@ async function buildComposedVariants(
   )
   const baseVariants = (baseResult.data ?? []).map(toClientVariant)
   const pietementVariants = (pietementResult.data ?? []).map(toClientVariant)
-  const bandeauVariants = ((bandeauResult as { data: unknown[] | null }).data ?? []).map(toClientVariant)
+  const bandeauVariants = ((bandeauResult as { data: ProductVariantRow[] | null }).data ?? []).map(toClientVariant)
   if (baseVariants.length === 0 || pietementVariants.length === 0) return []
 
   // Regrouper les piètements par type (initial-scellement, initial-platines,
