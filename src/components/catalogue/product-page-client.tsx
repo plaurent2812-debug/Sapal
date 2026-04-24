@@ -212,6 +212,12 @@ export function ProductPageClient({ product, variants, options, category, catego
           {currentProduct.name}
         </h1>
 
+        {currentProduct.description?.trim() && (
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed whitespace-pre-line mb-5 sm:mb-6">
+            {currentProduct.description}
+          </p>
+        )}
+
         {displayPrice > 0 && (
           <div className="mb-5 sm:mb-6 flex items-baseline gap-2 flex-wrap">
             <span className="text-2xl sm:text-3xl font-extrabold text-foreground">
