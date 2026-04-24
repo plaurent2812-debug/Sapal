@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ShieldCheck, Truck, Clock, Package, FileDown, Calendar } from "lucide-react"
+import { ShieldCheck, Truck, Clock, Package, FileDown, Calendar, ChevronDown } from "lucide-react"
 import type { ClientProduct, ClientVariant, ClientCategory, ProductOption } from "@/lib/data"
 import { VariantSelector } from "./variant-selector"
 import { AddToQuoteSection } from "./add-to-quote-section"
@@ -28,6 +28,7 @@ export function ProductPageClient({ product, variants, options, category, catego
     currentVariants.length === 1 ? currentVariants[0] : null
   )
   const [activeImageIdx, setActiveImageIdx] = useState(0)
+  const [techOpen, setTechOpen] = useState(false)
 
   // Sync selectedVariant when variants are updated via inline edit
   useEffect(() => {
@@ -111,6 +112,40 @@ export function ProductPageClient({ product, variants, options, category, catego
         return true
       })
   }, [currentProduct.specifications, selectedVariant])
+
+  // Scinde les specs en 2 blocs calqués sur Procity :
+  //  - « Caractéristiques » : vue synthèse (matériau, âge, dimensions, surface,
+  //    hauteur de chute, capacité).
+  //  - « Caractéristiques techniques » : tout le reste (finition, éléments,
+  //    montage, options, poids…).
+  const { specsOverview, specsTechnical } = useMemo(() => {
+    const isOverview = (key: string) => {
+      const k = key
+        .toLocaleLowerCase("fr")
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+      return (
+        k.includes("materiau structure") ||
+        k === "materiau" ||
+        k.includes("tranche d'age") ||
+        k.includes("tranche d age") ||
+        k.includes("dimension du jeu") ||
+        k === "dimensions" ||
+        k.includes("surface d'impact") ||
+        k.includes("surface d impact") ||
+        k.includes("hauteur de chute") ||
+        k.includes("capacite d'accueil") ||
+        k.includes("capacite d accueil")
+      )
+    }
+    const overview: Array<[string, string]> = []
+    const technical: Array<[string, string]> = []
+    for (const entry of specifications) {
+      if (isOverview(entry[0])) overview.push(entry)
+      else technical.push(entry)
+    }
+    return { specsOverview: overview, specsTechnical: technical }
+  }, [specifications])
 
   // Délai affiché : variante sélectionnée > majorité des variantes > fallback
   const displayDelai = useMemo(() => {
@@ -269,11 +304,11 @@ export function ProductPageClient({ product, variants, options, category, catego
           </div>
         )}
 
-        {specifications.length > 0 && (
+        {specsOverview.length > 0 && (
           <div className="mt-6 sm:mt-8">
             <h2 className="font-heading text-lg sm:text-xl mb-3 sm:mb-4">Caractéristiques</h2>
             <div className="rounded-xl border border-border/50 overflow-hidden">
-              {specifications.map(([key, value], i) => (
+              {specsOverview.map(([key, value], i) => (
                 <div
                   key={key}
                   className={`flex justify-between gap-3 px-4 sm:px-5 py-3 sm:py-3.5 text-sm ${
@@ -285,6 +320,44 @@ export function ProductPageClient({ product, variants, options, category, catego
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {specsTechnical.length > 0 && (
+          <div className="mt-6 sm:mt-8">
+            <button
+              type="button"
+              onClick={() => setTechOpen((v) => !v)}
+              aria-expanded={techOpen}
+              aria-controls="specs-technical-list"
+              className="w-full flex items-center justify-between gap-3 py-2 text-left group"
+            >
+              <h2 className="font-heading text-lg sm:text-xl">Caractéristiques techniques</h2>
+              <ChevronDown
+                size={20}
+                className={`text-muted-foreground flex-shrink-0 transition-transform duration-200 group-hover:text-foreground ${
+                  techOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {techOpen && (
+              <div
+                id="specs-technical-list"
+                className="mt-3 sm:mt-4 rounded-xl border border-border/50 overflow-hidden"
+              >
+                {specsTechnical.map(([key, value], i) => (
+                  <div
+                    key={key}
+                    className={`flex justify-between gap-3 px-4 sm:px-5 py-3 sm:py-3.5 text-sm ${
+                      i % 2 === 0 ? "bg-muted/20" : "bg-background"
+                    }`}
+                  >
+                    <span className="text-muted-foreground font-medium flex-shrink-0">{key}</span>
+                    <span className="font-semibold text-right break-words min-w-0">{value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
