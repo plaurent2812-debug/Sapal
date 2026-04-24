@@ -41,25 +41,22 @@ export function ProductPageClient({ product, variants, options, category, catego
   const displayReference = selectedVariant?.reference || currentProduct.reference
   const displayPrice = selectedVariant ? selectedVariant.price : currentProduct.price
 
-  // Galerie : image variante (primary) en tête + galerie produit, dédupliquée.
-  // Si pas de variante sélectionnée, on affiche la galerie produit complète
-  // (ou l'image principale en fallback).
+  // Galerie : si la variante a ses propres images, on affiche UNIQUEMENT celles-là
+  // (sinon on pollue la page avec toutes les déclinaisons). Sans variante, on
+  // affiche la galerie produit complète (ou l'image principale en fallback).
   const galleryImages = useMemo(() => {
+    const variantImages = selectedVariant?.images ?? []
+    const variantPrimary = selectedVariant?.primaryImageUrl
+    const variantAll = variantPrimary
+      ? [variantPrimary, ...variantImages.filter(u => u !== variantPrimary)]
+      : variantImages
+
+    if (variantAll.length > 0) return variantAll
+
     const gallery = currentProduct.galleryImageUrls ?? []
-    const productGallery = gallery.length > 0
-      ? gallery
-      : (currentProduct.imageUrl ? [currentProduct.imageUrl] : [])
+    if (gallery.length > 0) return gallery
 
-    if (selectedVariant?.primaryImageUrl) {
-      const rest = productGallery.filter(u => u !== selectedVariant.primaryImageUrl)
-      return [selectedVariant.primaryImageUrl, ...rest]
-    }
-
-    if (selectedVariant?.images && selectedVariant.images.length > 0) {
-      return selectedVariant.images
-    }
-
-    return productGallery
+    return currentProduct.imageUrl ? [currentProduct.imageUrl] : []
   }, [selectedVariant, currentProduct.imageUrl, currentProduct.galleryImageUrls])
 
   // Quand on change de variante, revenir à l'image 0

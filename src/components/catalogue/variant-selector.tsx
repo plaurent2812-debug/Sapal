@@ -14,11 +14,18 @@ type AxisKey = 'coloris' | 'dimensions' | 'finition' | 'structure'
 
 // `structure` vit dans specifications.Structure (ou .Crosse fallback) — on l'extrait
 // à la volée via accessor. Les 3 autres sont des colonnes directes.
+const AXIS_DEFAULT_LABELS: Record<AxisKey, string> = {
+  coloris:    'Couleur',
+  dimensions: 'Dimension',
+  finition:   'Finition',
+  structure:  'Structure',
+}
+
 const AXES: Array<{ key: AxisKey; label: string; get: (v: ClientVariant) => string }> = [
-  { key: 'coloris',    label: 'Couleur',   get: (v) => v.coloris },
-  { key: 'dimensions', label: 'Longueur',  get: (v) => v.dimensions },
-  { key: 'finition',   label: 'Crosse',    get: (v) => v.finition },
-  { key: 'structure',  label: 'Structure', get: (v) => v.specifications?.Structure || '' },
+  { key: 'coloris',    label: AXIS_DEFAULT_LABELS.coloris,    get: (v) => v.coloris },
+  { key: 'dimensions', label: AXIS_DEFAULT_LABELS.dimensions, get: (v) => v.dimensions },
+  { key: 'finition',   label: AXIS_DEFAULT_LABELS.finition,   get: (v) => v.finition },
+  { key: 'structure',  label: AXIS_DEFAULT_LABELS.structure,  get: (v) => v.specifications?.Structure || '' },
 ]
 
 // Mapping RAL / nom → couleur hex pour les swatches
@@ -77,7 +84,7 @@ const RAL_COLORS: Record<string, string> = {
 }
 
 function getColorHex(coloris: string): string | null {
-  const key = coloris.toLowerCase().trim()
+  const key = coloris.toLowerCase().trim().replace(/^ral\s+/, '')
   return RAL_COLORS[key] ?? null
 }
 
@@ -97,11 +104,21 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
 
   if (variants.length === 0) return null
 
+  // Auto-détection du label pour l'axe `finition` selon les valeurs présentes.
+  // Permet d'afficher « Vitrage » pour Vitrine 2000 et « Crosse » pour les panneaux
+  // sans casser les autres familles.
+  const finitionValues = variants.map(v => v.finition).filter(Boolean).join(' ').toLowerCase()
+  const finitionLabel = /plexichocs|verre sécurisé/.test(finitionValues)
+    ? 'Vitrage'
+    : /crosse/.test(finitionValues)
+    ? 'Crosse'
+    : AXIS_DEFAULT_LABELS.finition
+
   // Axes actifs = ceux qui ont au moins 2 valeurs distinctes non vides
   const activeAxes = AXES.filter(({ get }) => {
     const uniqueValues = new Set(variants.map(v => get(v)).filter(Boolean))
     return uniqueValues.size > 1
-  })
+  }).map(axis => axis.key === 'finition' ? { ...axis, label: finitionLabel } : axis)
 
   const colorisActive = activeAxes.find(a => a.key === 'coloris')
   const dropdownAxes  = activeAxes.filter(a => a.key !== 'coloris')
