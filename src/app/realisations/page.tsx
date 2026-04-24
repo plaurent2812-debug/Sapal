@@ -5,8 +5,10 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 export const metadata = {
-  title: "Réalisations | SAPAL Signalisation",
-  description: "Découvrez nos projets d'aménagement urbain et de signalisation réalisés pour les collectivités.",
+  title: "Réalisations — Projets d'aménagement urbain",
+  description:
+    "Découvrez nos projets d'aménagement urbain et de signalisation réalisés pour les collectivités françaises : mobilier urbain, panneaux, abris voyageurs, sécurisation. Basés à Cannes, livraison partout en France.",
+  alternates: { canonical: "/realisations" },
 };
 
 const REALISATIONS = [

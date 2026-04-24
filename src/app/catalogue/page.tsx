@@ -5,8 +5,10 @@ import { ChevronRight, ArrowRight, ShieldCheck, Truck, Clock } from "lucide-reac
 import { AnimatedSection, AnimatedItem } from "@/components/ui/motion";
 
 export const metadata = {
-  title: "Catalogue | SAPAL Signalisation",
-  description: "Découvrez notre gamme complète d'équipements urbains.",
+  title: "Catalogue — Mobilier urbain, signalisation & équipements publics",
+  description:
+    "Catalogue complet SAPAL : mobilier urbain, panneaux de signalisation routière, aires de jeux, miroirs, barrières, équipements sportifs. Fournisseur B2B basé à Cannes, livraison partout en France.",
+  alternates: { canonical: "/catalogue" },
 };
 
 export default async function CataloguePage() {
@@ -32,7 +34,7 @@ export default async function CataloguePage() {
                   Spécial Collectivités &<br />Aménagement Public
                 </h1>
                 <p className="text-white/70 text-base md:text-xl mb-6 md:mb-8 max-w-xl leading-relaxed">
-                  Découvrez nos nouvelles gammes de mobilier urbain et de signalisation aux normes. Sur devis en 24h.
+                  Découvrez nos nouvelles gammes de mobilier urbain et de signalisation aux normes. Basés à Cannes, livraison dans toute la France. Sur devis en 24h.
                 </p>
                 <Link href="/catalogue/mobilier-urbain" className="btn-fill inline-flex items-center gap-2 bg-accent text-accent-foreground hover:bg-accent/90 transition-all px-6 sm:px-8 py-3 sm:py-3.5 font-bold rounded-lg shadow-lg shadow-accent/20 hover:-translate-y-0.5 duration-300">
                   Explorer la gamme <ArrowRight size={18} />

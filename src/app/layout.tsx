@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ServiceWorkerRegister } from "@/components/pwa/sw-register";
+import { GlobalStructuredData } from "@/components/seo/structured-data";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -29,11 +30,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   manifest: "/manifest.json",
   title: {
-    default: "SAPAL Signalisation | Expert en Mobilier Urbain & Signalétique",
+    default: "SAPAL Signalisation | Mobilier urbain & signalétique — Livraison France",
     template: "%s | SAPAL Signalisation",
   },
   description:
-    "SAPAL Signalisation, fournisseur B2B de mobilier urbain, signalétique et équipements d'espaces publics pour les collectivités françaises. Devis gratuit sous 3h.",
+    "SAPAL Signalisation, fournisseur B2B de mobilier urbain, signalétique routière et équipements d'espaces publics. Basés à Cannes, nous livrons et accompagnons les collectivités partout en France métropolitaine. Devis gratuit sous 3h.",
+  keywords: [
+    "mobilier urbain",
+    "signalisation routière",
+    "panneaux de signalisation",
+    "barrière ville",
+    "aire de jeux collectivité",
+    "fournisseur collectivités",
+    "Cannes",
+    "PACA",
+    "France",
+  ],
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -43,9 +55,19 @@ export const metadata: Metadata = {
     siteName: "SAPAL Signalisation",
     locale: "fr_FR",
     type: "website",
+    url: siteUrl,
+    title: "SAPAL Signalisation | Mobilier urbain & signalétique — Livraison France",
+    description:
+      "Fournisseur B2B de mobilier urbain, signalétique et équipements publics. Basés à Cannes, livraison partout en France métropolitaine.",
   },
   twitter: {
     card: "summary_large_image",
+    title: "SAPAL Signalisation | Mobilier urbain & signalétique",
+    description:
+      "Fournisseur B2B de mobilier urbain, signalétique et équipements publics. Basés à Cannes, livraison partout en France.",
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 
@@ -62,6 +84,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <GlobalStructuredData />
         <ServiceWorkerRegister />
         <Analytics />
         <SpeedInsights />

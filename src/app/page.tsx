@@ -7,9 +7,9 @@ import { ProductCard } from "@/components/catalogue/product-card";
 import { AnimatedSection, AnimatedItem, AnimatedCounter } from "@/components/ui/motion";
 
 export const metadata: Metadata = {
-  title: "SAPAL Signalisation | Mobilier Urbain & Signalétique pour Collectivités",
+  title: "SAPAL Signalisation | Mobilier urbain & signalétique — Livraison France",
   description:
-    "Découvrez le catalogue SAPAL : mobilier urbain, panneaux de signalisation, aires de jeux et équipements d'espaces publics. Fournisseur B2B pour collectivités. Devis gratuit sous 3h.",
+    "Catalogue SAPAL : mobilier urbain, panneaux de signalisation, aires de jeux et équipements publics. Fournisseur B2B basé à Cannes, livraison partout en France métropolitaine. Devis gratuit sous 3h.",
   alternates: { canonical: "/" },
 };
 
@@ -18,27 +18,8 @@ export default async function Home() {
   const featuredProducts = await getFeaturedProducts(4);
   const productsCount = await getProductsCount();
 
-  const organizationJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "SAPAL Signalisation",
-    url: "https://www.sapal.fr",
-    email: "societe@sapal.fr",
-    description:
-      "Fournisseur B2B de mobilier urbain, signalétique et équipements d'espaces publics pour les collectivités françaises.",
-    areaServed: {
-      "@type": "Country",
-      name: "France",
-    },
-  };
-
   return (
     <div className="flex flex-col min-h-screen w-full">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-      />
-
       {/* 1. HERO — Asymétrique, distinctif */}
       <section className="relative w-full bg-primary overflow-hidden">
         {/* Pattern de fond subtil */}
@@ -68,6 +49,9 @@ export default async function Home() {
               <p className="max-w-xl text-white/70 text-base sm:text-lg md:text-xl mb-8 sm:mb-10 leading-relaxed">
                 Plus de {productsCount} références conformes aux normes routières.
                 Mobilier urbain, signalisation et sécurité au meilleur prix.
+                <span className="block mt-2 text-white/60 text-sm sm:text-base">
+                  Basés à Cannes, nous livrons partout en France métropolitaine.
+                </span>
               </p>
             </AnimatedSection>
 
