@@ -30,7 +30,7 @@ interface SubcategoriesManagerProps {
   parentId: string
   parentSlug: string
   basePath: string // "/catalogue" ou "/catalogue/fournisseurs/procity"
-  children: ClientCategory[]
+  categories: ClientCategory[]
   thumbnails: Record<string, string>
 }
 
@@ -38,7 +38,7 @@ export function SubcategoriesManager({
   parentId,
   parentSlug: _parentSlug,
   basePath,
-  children: initialChildren,
+  categories: initialChildren,
   thumbnails,
 }: SubcategoriesManagerProps) {
   const { isAdmin, loading } = useAdminRole()

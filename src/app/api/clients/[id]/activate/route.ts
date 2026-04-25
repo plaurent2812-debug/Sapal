@@ -1,9 +1,7 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { sendTelegramMessage } from '@/lib/telegram'
-import { Resend } from 'resend'
+import { getResendClient } from '@/lib/resend-client'
 import type { NextRequest } from 'next/server'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(
   _req: NextRequest,
@@ -53,7 +51,8 @@ export async function POST(
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal.fr'
 
     // Send welcome email via Resend (non-blocking on failure)
-    if (process.env.RESEND_API_KEY && clientEmail) {
+    const resend = getResendClient()
+    if (resend && clientEmail) {
       resend.emails.send({
         from: 'noreply@opti-pro.fr',
         to: clientEmail,

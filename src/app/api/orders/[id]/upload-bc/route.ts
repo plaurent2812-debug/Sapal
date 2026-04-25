@@ -1,9 +1,8 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
 import { generateBdcPDF } from '@/lib/pdf/generate-bdc-pdf'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { validateBcFile } from '@/lib/security-utils'
+import { getResendClient } from '@/lib/resend-client'
 
 export async function POST(
   request: Request,
@@ -33,6 +32,11 @@ export async function POST(
       return Response.json({ error: 'Le fichier du bon de commande est requis' }, { status: 400 })
     }
 
+    const fileValidation = await validateBcFile(bcFile)
+    if (!fileValidation.ok) {
+      return Response.json({ error: fileValidation.error }, { status: 400 })
+    }
+
     if (!deliveryAddress || !deliveryPostalCode || !deliveryCity) {
       return Response.json({ error: 'L\'adresse de livraison est requise' }, { status: 400 })
     }
@@ -58,13 +62,12 @@ export async function POST(
 
     // 4. Upload BC file to Supabase Storage
     const fileBuffer = Buffer.from(await bcFile.arrayBuffer())
-    const fileExt = bcFile.name.split('.').pop() || 'pdf'
-    const storagePath = `${user.id}/${orderId}/bc.${fileExt}`
+    const storagePath = `${user.id}/${orderId}/bc.${fileValidation.extension}`
 
     const { error: uploadError } = await serviceClient.storage
       .from('client-bdc')
       .upload(storagePath, fileBuffer, {
-        contentType: bcFile.type,
+        contentType: fileValidation.contentType,
         upsert: true,
       })
 
@@ -73,10 +76,10 @@ export async function POST(
       return Response.json({ error: 'Erreur lors de l\'upload du fichier' }, { status: 500 })
     }
 
-    // Get signed URL (valid 10 years — effectively permanent for admin access)
+    // Keep links short-lived; regenerate a signed URL from the storage path when needed.
     const { data: signedUrlData } = await serviceClient.storage
       .from('client-bdc')
-      .createSignedUrl(storagePath, 60 * 60 * 24 * 365 * 10)
+      .createSignedUrl(storagePath, 60 * 60)
 
     const bcFileUrl = signedUrlData?.signedUrl || storagePath
 
@@ -261,6 +264,12 @@ export async function POST(
             const emailSent = supplier.email
               ? await (async () => {
                   try {
+                    const resend = getResendClient()
+                    if (!resend) {
+                      console.warn('RESEND_API_KEY not configured')
+                      return false
+                    }
+
                     await resend.emails.send({
                       from: process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>',
                       to: supplier.email!,
@@ -337,7 +346,8 @@ export async function POST(
     }
 
     // Email gérant
-    if (gerantEmail) {
+    const resend = getResendClient()
+    if (gerantEmail && resend) {
       const sentHtml = sentSuppliers.length > 0
         ? `<p style="margin:8px 0 0">✅ <strong>BDC envoyé${sentSuppliers.length > 1 ? 's' : ''} au fournisseur :</strong> ${sentSuppliers.join(', ')}</p>`
         : ''

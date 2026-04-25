@@ -1,7 +1,8 @@
 import { createServiceRoleClient } from '@/lib/supabase/server'
 import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { sendTelegramMessage } from '@/lib/telegram'
-import { Resend } from 'resend'
+import { escapeTelegramMarkdown } from '@/lib/security-utils'
+import { getResendClient } from '@/lib/resend-client'
 import { z } from 'zod'
 
 function escapeHtml(str: string): string {
@@ -12,8 +13,6 @@ function escapeHtml(str: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
 }
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
   name: z.string().min(1),
@@ -47,7 +46,7 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       console.error('Validation error:', parsed.error.flatten())
       return Response.json(
-        { error: 'Données invalides', details: parsed.error.flatten() },
+        { error: 'Données invalides' },
         { status: 400 }
       )
     }
@@ -71,7 +70,8 @@ export async function POST(request: Request) {
     }
 
     // Envoi email via Resend
-    if (process.env.RESEND_API_KEY) {
+    const resend = getResendClient()
+    if (resend) {
       try {
         const emailResult = await resend.emails.send({
           from: 'noreply@opti-pro.fr',
@@ -100,13 +100,13 @@ export async function POST(request: Request) {
     const telegramText = [
       `📩 *Nouveau message de contact*`,
       ``,
-      `*Nom :* ${name}`,
-      `*Email :* ${email}`,
-      phone ? `*Tél :* ${phone}` : '',
-      `*Sujet :* ${subject}`,
+      `*Nom :* ${escapeTelegramMarkdown(name)}`,
+      `*Email :* ${escapeTelegramMarkdown(email)}`,
+      phone ? `*Tél :* ${escapeTelegramMarkdown(phone)}` : '',
+      `*Sujet :* ${escapeTelegramMarkdown(subject)}`,
       ``,
       `*Message :*`,
-      message,
+      escapeTelegramMarkdown(message),
     ].filter(Boolean).join('\n')
 
     sendTelegramMessage(telegramText).catch(e => {

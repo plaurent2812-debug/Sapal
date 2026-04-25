@@ -1,9 +1,7 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
 import { generateBdcPDF } from '@/lib/pdf/generate-bdc-pdf'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResendClient } from '@/lib/resend-client'
 
 export async function POST(
   _request: Request,
@@ -155,7 +153,8 @@ export async function POST(
     const filename = `BDC-${supplierOrder.bdc_number}.pdf`
 
     // 9. Send payment confirmation email to supplier (sans BDC — déjà envoyé avec la demande de proforma)
-    if (supplier.email && process.env.RESEND_API_KEY) {
+    const resend = getResendClient()
+    if (supplier.email && resend) {
       resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>',
         to: supplier.email,

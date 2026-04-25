@@ -11,6 +11,8 @@ export const metadata = {
   alternates: { canonical: "/catalogue" },
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function CataloguePage() {
   const categories = await getCategories();
   const thumbs = await getCategoryThumbnails(categories.map((c) => c.id));

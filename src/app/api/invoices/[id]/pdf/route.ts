@@ -1,18 +1,7 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { generateChorusPDF, type ChorusInvoiceItem } from '@/lib/pdf/generate-chorus-pdf'
+import { getSapalSupplierDetails } from '@/lib/security-utils'
 import type { NextRequest } from 'next/server'
-
-// SAPAL supplier details (placeholders — replace with real data in production)
-const SUPPLIER = {
-  name: 'SAPAL Signalisation',
-  siret: 'XXX XXX XXX XXXXX',
-  tvaIntracom: 'FRXXXXXXXXXX',
-  address: '260 Av. Michel Jourdan',
-  postalCode: '06150',
-  city: 'Cannes',
-  phone: '06 22 90 28 54',
-  email: 'societe@sapal.fr',
-}
 
 export async function GET(
   _req: NextRequest,
@@ -106,7 +95,7 @@ export async function GET(
     const doc = generateChorusPDF({
       invoiceNumber,
       date: invoiceDate,
-      supplier: SUPPLIER,
+      supplier: getSapalSupplierDetails(),
       client: {
         entity: clientProfile?.company_name ?? clientEmail,
         contactName: clientEmail,

@@ -1,6 +1,7 @@
 import { createServiceRoleClient } from '@/lib/supabase/server'
 import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { sendTelegramMessage } from '@/lib/telegram'
+import { escapeTelegramMarkdown } from '@/lib/security-utils'
 import { z } from 'zod'
 
 const registerSchema = z.object({
@@ -88,10 +89,10 @@ export async function POST(request: Request) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sapal.fr'
     sendTelegramMessage(
       `🆕 *Nouveau client à valider*\n\n` +
-      `📧 ${data.email}\n` +
-      `🏢 ${data.company_name}\n` +
-      `📋 SIRET: ${data.siret}\n` +
-      `📂 Type: ${data.client_type}\n\n` +
+      `📧 ${escapeTelegramMarkdown(data.email)}\n` +
+      `🏢 ${escapeTelegramMarkdown(data.company_name)}\n` +
+      `📋 SIRET: ${escapeTelegramMarkdown(data.siret)}\n` +
+      `📂 Type: ${escapeTelegramMarkdown(data.client_type)}\n\n` +
       `➡️ [Valider dans l'admin](${siteUrl}/admin/clients)`,
       {
         inline_keyboard: [[

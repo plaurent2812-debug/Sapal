@@ -1,10 +1,8 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { generateQuotePDF, type QuotePDFItem } from '@/lib/pdf/generate-quote-pdf'
 import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
-import { Resend } from 'resend'
+import { getResendClient } from '@/lib/resend-client'
 import type { NextRequest } from 'next/server'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(
   _req: NextRequest,
@@ -117,6 +115,11 @@ export async function POST(
       process.env.RESEND_FROM_QUOTES_EMAIL ??
       process.env.RESEND_FROM_EMAIL ??
       'SAPAL Signalisation <devis@sapal.fr>'
+    const resend = getResendClient()
+
+    if (!resend) {
+      return Response.json({ error: 'Service email non configuré' }, { status: 500 })
+    }
 
     // Send email with PDF attachment
     const { error: emailError } = await resend.emails.send({

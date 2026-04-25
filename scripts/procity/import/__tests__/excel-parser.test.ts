@@ -1,10 +1,16 @@
 import { describe, it, expect } from 'vitest';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { parseTarifExcel, groupByProduct } from '../excel-parser';
 
-const EXCEL_PATH =
-  '/Users/pierrelaurent/Desktop/OptiPro/Clients/SAPAL/Fournisseurs/Procity/tarifprocityvialux2026-fr.v1.7-699.xlsx';
+const DEFAULT_EXCEL_PATH = path.resolve(
+  __dirname,
+  '../../../../../Fournisseurs/Procity/tarifprocityvialux2026-fr.v1.7-699.xlsx'
+);
+const EXCEL_PATH = process.env.PROCITY_TARIF_EXCEL_PATH || DEFAULT_EXCEL_PATH;
+const describeWithExcel = existsSync(EXCEL_PATH) ? describe : describe.skip;
 
-describe('parseTarifExcel — fichier réel', () => {
+describeWithExcel('parseTarifExcel — fichier réel', () => {
   it('parse plus de 1500 lignes variantes', async () => {
     const rows = await parseTarifExcel(EXCEL_PATH);
     expect(rows.length).toBeGreaterThan(1500);
@@ -30,7 +36,7 @@ describe('parseTarifExcel — fichier réel', () => {
   });
 });
 
-describe('groupByProduct', () => {
+describeWithExcel('groupByProduct', () => {
   it('regroupe plus de 1500 produits uniques avec leurs variantes', async () => {
     const rows = await parseTarifExcel(EXCEL_PATH);
     const products = groupByProduct(rows);

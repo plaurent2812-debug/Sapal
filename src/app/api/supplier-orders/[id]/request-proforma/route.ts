@@ -1,8 +1,6 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { generateBdcPDF } from '@/lib/pdf/generate-bdc-pdf'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResendClient } from '@/lib/resend-client'
 
 export async function POST(
   _request: Request,
@@ -121,6 +119,11 @@ export async function POST(
         <td style="padding:6px;border:1px solid #ddd;text-align:right;">${i.unit_price.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</td>
       </tr>`
     ).join('')
+    const resend = getResendClient()
+
+    if (!resend) {
+      return Response.json({ error: 'Service email non configuré' }, { status: 500 })
+    }
 
     await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>',
