@@ -1,8 +1,6 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { sendTelegramMessage } from '@/lib/telegram'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResendClient } from '@/lib/resend-client'
 
 const TVA_RATE = 0.20
 
@@ -149,6 +147,7 @@ export async function POST(
       const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
       const formattedTotal = totalHT.toLocaleString('fr-FR', { minimumFractionDigits: 2 })
       const formattedTTC = (totalHT * (1 + TVA_RATE)).toLocaleString('fr-FR', { minimumFractionDigits: 2 })
+      const resend = getResendClient()
 
       const itemsHtml = quoteItems.map((item: { product_name: string; quantity: number; unit_price?: number; products?: { price?: number } | null }) => {
         const price = (item.unit_price && item.unit_price > 0) ? item.unit_price : (item.products?.price ?? 0)
@@ -159,59 +158,61 @@ export async function POST(
         </tr>`
       }).join('')
 
-      await resend.emails.send({
-        from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
-        to: quote.email,
-        subject: `Commande ${order.order_number} — Bon de commande requis`,
-        html: `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
-            <div style="background:#1e293b;color:white;padding:24px;border-radius:8px 8px 0 0">
-              <h1 style="margin:0;font-size:20px">SAPAL Signalisation</h1>
-              <p style="margin:4px 0 0;opacity:0.7;font-size:14px">Confirmation de commande</p>
+      if (resend) {
+        await resend.emails.send({
+          from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <ne-pas-repondre@sapal.fr>',
+          to: quote.email,
+          subject: `Commande ${order.order_number} — Bon de commande requis`,
+          html: `
+            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+              <div style="background:#1e293b;color:white;padding:24px;border-radius:8px 8px 0 0">
+                <h1 style="margin:0;font-size:20px">SAPAL Signalisation</h1>
+                <p style="margin:4px 0 0;opacity:0.7;font-size:14px">Confirmation de commande</p>
+              </div>
+              <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
+                <p>Bonjour ${quote.contact_name},</p>
+                <p>Votre commande <strong>${order.order_number}</strong> a bien été enregistrée suite à votre acceptation du devis.</p>
+
+                <div style="background:#f8fafc;border-radius:8px;padding:16px;margin:20px 0">
+                  <table style="width:100%;border-collapse:collapse;font-size:14px">
+                    <thead>
+                      <tr style="border-bottom:2px solid #e5e7eb">
+                        <th style="padding:8px 12px;text-align:left">Produit</th>
+                        <th style="padding:8px 12px;text-align:center">Qté</th>
+                        <th style="padding:8px 12px;text-align:right">Total HT</th>
+                      </tr>
+                    </thead>
+                    <tbody>${itemsHtml}</tbody>
+                  </table>
+                </div>
+
+                <div style="background:#1e293b;color:white;border-radius:8px;padding:16px;margin:20px 0">
+                  <p style="margin:0;font-size:14px">Total HT : <strong>${formattedTotal} €</strong></p>
+                  <p style="margin:4px 0 0;font-size:14px">TVA (20%) : ${(totalHT * TVA_RATE).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</p>
+                  <p style="margin:4px 0 0;font-size:16px">Total TTC : <strong>${formattedTTC} €</strong></p>
+                </div>
+
+                <div style="background:#fefce8;border:1px solid #fde047;border-radius:8px;padding:16px;margin:20px 0">
+                  <p style="margin:0;font-size:14px;color:#713f12"><strong>Action requise</strong></p>
+                  <p style="margin:8px 0 0;font-size:14px;color:#713f12">Pour finaliser votre commande, merci de :</p>
+                  <ol style="margin:8px 0 0;padding-left:20px;font-size:14px;color:#713f12">
+                    <li>Déposer votre <strong>bon de commande</strong> dans votre espace client</li>
+                    <li>Confirmer votre <strong>adresse de livraison</strong></li>
+                  </ol>
+                </div>
+
+                <div style="text-align:center;margin:28px 0">
+                  <a href="${siteUrl}/mon-compte/commandes" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Accéder à mes commandes</a>
+                </div>
+
+                <p style="color:#6b7280;font-size:13px;margin-top:24px">Votre commande sera traitée dès réception de votre bon de commande. Pour toute question, n'hésitez pas à nous contacter.</p>
+
+                <p>Cordialement,<br><strong>L'équipe SAPAL Signalisation</strong></p>
+              </div>
             </div>
-            <div style="padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
-              <p>Bonjour ${quote.contact_name},</p>
-              <p>Votre commande <strong>${order.order_number}</strong> a bien été enregistrée suite à votre acceptation du devis.</p>
-
-              <div style="background:#f8fafc;border-radius:8px;padding:16px;margin:20px 0">
-                <table style="width:100%;border-collapse:collapse;font-size:14px">
-                  <thead>
-                    <tr style="border-bottom:2px solid #e5e7eb">
-                      <th style="padding:8px 12px;text-align:left">Produit</th>
-                      <th style="padding:8px 12px;text-align:center">Qté</th>
-                      <th style="padding:8px 12px;text-align:right">Total HT</th>
-                    </tr>
-                  </thead>
-                  <tbody>${itemsHtml}</tbody>
-                </table>
-              </div>
-
-              <div style="background:#1e293b;color:white;border-radius:8px;padding:16px;margin:20px 0">
-                <p style="margin:0;font-size:14px">Total HT : <strong>${formattedTotal} €</strong></p>
-                <p style="margin:4px 0 0;font-size:14px">TVA (20%) : ${(totalHT * TVA_RATE).toLocaleString('fr-FR', { minimumFractionDigits: 2 })} €</p>
-                <p style="margin:4px 0 0;font-size:16px">Total TTC : <strong>${formattedTTC} €</strong></p>
-              </div>
-
-              <div style="background:#fefce8;border:1px solid #fde047;border-radius:8px;padding:16px;margin:20px 0">
-                <p style="margin:0;font-size:14px;color:#713f12"><strong>Action requise</strong></p>
-                <p style="margin:8px 0 0;font-size:14px;color:#713f12">Pour finaliser votre commande, merci de :</p>
-                <ol style="margin:8px 0 0;padding-left:20px;font-size:14px;color:#713f12">
-                  <li>Déposer votre <strong>bon de commande</strong> dans votre espace client</li>
-                  <li>Confirmer votre <strong>adresse de livraison</strong></li>
-                </ol>
-              </div>
-
-              <div style="text-align:center;margin:28px 0">
-                <a href="${siteUrl}/mon-compte/commandes" style="background:#1e293b;color:white;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:15px;font-weight:bold">Accéder à mes commandes</a>
-              </div>
-
-              <p style="color:#6b7280;font-size:13px;margin-top:24px">Votre commande sera traitée dès réception de votre bon de commande. Pour toute question, n'hésitez pas à nous contacter.</p>
-
-              <p>Cordialement,<br><strong>L'équipe SAPAL Signalisation</strong></p>
-            </div>
-          </div>
-        `,
-      }).catch((err) => console.error('Confirmation email error:', err))
+          `,
+        }).catch((err) => console.error('Confirmation email error:', err))
+      }
 
       // 11. Telegram + Email gérant (await pour Vercel serverless)
       const identifier = quote.entity || quote.contact_name || quote.email
@@ -230,7 +231,7 @@ export async function POST(
 
       // 12. Email au gérant — devis accepté
       const gerantEmail = process.env.SAPAL_GERANT_EMAIL
-      if (gerantEmail) {
+      if (gerantEmail && resend) {
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
           to: gerantEmail,

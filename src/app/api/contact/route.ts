@@ -2,7 +2,7 @@ import { createServiceRoleClient } from '@/lib/supabase/server'
 import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { sendTelegramMessage } from '@/lib/telegram'
 import { escapeTelegramMarkdown } from '@/lib/security-utils'
-import { Resend } from 'resend'
+import { getResendClient } from '@/lib/resend-client'
 import { z } from 'zod'
 
 function escapeHtml(str: string): string {
@@ -13,8 +13,6 @@ function escapeHtml(str: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
 }
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
   name: z.string().min(1),
@@ -72,7 +70,8 @@ export async function POST(request: Request) {
     }
 
     // Envoi email via Resend
-    if (process.env.RESEND_API_KEY) {
+    const resend = getResendClient()
+    if (resend) {
       try {
         const emailResult = await resend.emails.send({
           from: 'noreply@opti-pro.fr',

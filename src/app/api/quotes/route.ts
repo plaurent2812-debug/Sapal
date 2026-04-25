@@ -1,12 +1,10 @@
 import { createServiceRoleClient, createServerSupabaseClient } from '@/lib/supabase/server'
 import { generateQuotePDF } from '@/lib/pdf/generate-quote-pdf'
 import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
-import { Resend } from 'resend'
+import { getResendClient } from '@/lib/resend-client'
 import { z } from 'zod'
 import { randomUUID } from 'crypto'
 import { formatDelai } from '@/lib/utils'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 const quoteSchema = z.object({
   entity: z.string().min(1),
@@ -174,6 +172,12 @@ async function sendNotifications(params: {
   // 1. Email au client avec le devis PDF
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sapal-site.vercel.app'
   const fromAddress = process.env.RESEND_FROM_QUOTES_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <devis@sapal.fr>'
+  const resend = getResendClient()
+
+  if (!resend) {
+    console.warn('RESEND_API_KEY not configured')
+    return
+  }
 
   try {
     await resend.emails.send({

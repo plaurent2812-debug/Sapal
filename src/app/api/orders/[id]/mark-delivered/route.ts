@@ -7,9 +7,7 @@ import {
   createCustomer,
   getInvoicePDF,
 } from '@/lib/pennylane'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResendClient } from '@/lib/resend-client'
 
 export async function POST(
   _request: Request,
@@ -192,7 +190,8 @@ export async function POST(
     }
 
     // 7. Send email to client (non-blocking)
-    if (order.user_id && process.env.RESEND_API_KEY) {
+    const resend = getResendClient()
+    if (order.user_id && resend) {
       try {
         const { data: authUserData } = await serviceClient.auth.admin.getUserById(order.user_id)
         const clientEmail = authUserData?.user?.email

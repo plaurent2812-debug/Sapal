@@ -2,9 +2,7 @@ import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supab
 import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
 import { generateBdcPDF } from '@/lib/pdf/generate-bdc-pdf'
 import { validateBcFile } from '@/lib/security-utils'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResendClient } from '@/lib/resend-client'
 
 export async function POST(
   request: Request,
@@ -266,6 +264,12 @@ export async function POST(
             const emailSent = supplier.email
               ? await (async () => {
                   try {
+                    const resend = getResendClient()
+                    if (!resend) {
+                      console.warn('RESEND_API_KEY not configured')
+                      return false
+                    }
+
                     await resend.emails.send({
                       from: process.env.RESEND_FROM_EMAIL ?? 'SAPAL Signalisation <commandes@sapal.fr>',
                       to: supplier.email!,
@@ -342,7 +346,8 @@ export async function POST(
     }
 
     // Email gérant
-    if (gerantEmail) {
+    const resend = getResendClient()
+    if (gerantEmail && resend) {
       const sentHtml = sentSuppliers.length > 0
         ? `<p style="margin:8px 0 0">✅ <strong>BDC envoyé${sentSuppliers.length > 1 ? 's' : ''} au fournisseur :</strong> ${sentSuppliers.join(', ')}</p>`
         : ''

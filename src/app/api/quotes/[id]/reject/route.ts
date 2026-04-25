@@ -1,8 +1,6 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { sendTelegramMessage } from '@/lib/telegram'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResendClient } from '@/lib/resend-client'
 
 export async function POST(
   _request: Request,
@@ -70,7 +68,8 @@ export async function POST(
     ]
 
     const gerantEmail = process.env.SAPAL_GERANT_EMAIL
-    if (gerantEmail) {
+    const resend = getResendClient()
+    if (gerantEmail && resend) {
       notifPromises.push(
         resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'SAPAL Signalisation <noreply@opti-pro.fr>',
