@@ -28,34 +28,48 @@ function toDate(value?: string | null): Date | undefined {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const supabase = createBrowserClient()
+  const now = new Date()
 
-  // PostgREST plafonne à 1000 lignes par requête. On pagine pour tout récupérer.
-  async function fetchAllProducts(): Promise<ProductRow[]> {
-    const PAGE = 1000
-    const all: ProductRow[] = []
-    for (let from = 0; ; from += PAGE) {
-      const { data } = await supabase
-        .from("products")
-        .select("id, slug, category_id, supplier, created_at")
-        .range(from, from + PAGE - 1)
-      const batch = (data ?? []) as ProductRow[]
-      all.push(...batch)
-      if (batch.length < PAGE) break
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/catalogue`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/catalogue/fournisseurs/procity`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/devis`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/qui-sommes-nous`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/realisations`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
+  ]
+
+  try {
+    const supabase = createBrowserClient()
+
+    // PostgREST plafonne à 1000 lignes par requête. On pagine pour tout récupérer.
+    async function fetchAllProducts(): Promise<ProductRow[]> {
+      const PAGE = 1000
+      const all: ProductRow[] = []
+      for (let from = 0; ; from += PAGE) {
+        const { data } = await supabase
+          .from("products")
+          .select("id, slug, category_id, supplier, created_at")
+          .range(from, from + PAGE - 1)
+        const batch = (data ?? []) as ProductRow[]
+        all.push(...batch)
+        if (batch.length < PAGE) break
+      }
+      return all
     }
-    return all
-  }
 
-  // Tout récupérer en parallèle
-  const [allCatsRes, allProducts, rootCategories, featuredProducts] =
-    await Promise.all([
-      supabase
-        .from("categories")
-        .select("id, slug, parent_id, level, created_at"),
-      fetchAllProducts(),
-      getCategories(),
-      getAllProducts(),
-    ])
+    // Tout récupérer en parallèle
+    const [allCatsRes, allProducts, rootCategories, featuredProducts] =
+      await Promise.all([
+        supabase
+          .from("categories")
+          .select("id, slug, parent_id, level, created_at"),
+        fetchAllProducts(),
+        getCategories(),
+        getAllProducts(),
+      ])
 
   const allCategories = (allCatsRes.data ?? []) as CategoryRow[]
 
@@ -72,19 +86,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
     return current ? current.slug : undefined
   }
-
-  const now = new Date()
-
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${SITE_URL}/catalogue`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${SITE_URL}/catalogue/fournisseurs/procity`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/devis`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/qui-sommes-nous`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/realisations`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-  ]
 
   // Catégories SAPAL (racines + enfants sous un univers SAPAL)
   const categorySapalPages: MetadataRoute.Sitemap = rootCategories.map((cat) => ({
@@ -156,11 +157,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     .filter(Boolean) as MetadataRoute.Sitemap
 
-  return [
-    ...staticPages,
-    ...categorySapalPages,
-    ...categoryProcityPages,
-    ...productSapalPages,
-    ...productProcityPages,
-  ]
+    return [
+      ...staticPages,
+      ...categorySapalPages,
+      ...categoryProcityPages,
+      ...productSapalPages,
+      ...productProcityPages,
+    ]
+  } catch (error) {
+    console.error("Sitemap dynamic entries unavailable:", error)
+    return staticPages
+  }
 }

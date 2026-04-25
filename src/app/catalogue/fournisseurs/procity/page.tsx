@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/catalogue/fournisseurs/procity" },
 }
 
+export const dynamic = "force-dynamic"
+
 export default async function CatalogueProcityPage() {
   const universes = await getCategoriesBySupplier(SUPPLIER)
   const thumbs = await getCategoryThumbnailsBySupplier(universes.map((u) => u.id), SUPPLIER)

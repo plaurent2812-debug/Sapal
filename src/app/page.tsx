@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const categories = await getCategories();
   const featuredProducts = await getFeaturedProducts(4);
