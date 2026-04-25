@@ -1,8 +1,11 @@
 import { describe, it, expect } from 'vitest';
+import path from 'node:path';
 import { parseTarifExcel, groupByProduct } from '../excel-parser';
 
-const EXCEL_PATH =
-  '/Users/pierrelaurent/Desktop/OptiPro/Clients/SAPAL/Fournisseurs/Procity/tarifprocityvialux2026-fr.v1.7-699.xlsx';
+const EXCEL_PATH = path.resolve(
+  __dirname,
+  '../../../../../Fournisseurs/Procity/tarifprocityvialux2026-fr.v1.7-699.xlsx'
+);
 
 describe('parseTarifExcel — fichier réel', () => {
   it('parse plus de 1500 lignes variantes', async () => {

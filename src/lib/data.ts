@@ -1,6 +1,7 @@
 import { createBrowserClient } from '@/lib/supabase/client'
 import { unstable_cache } from 'next/cache'
 import type { Category, Product, ProductVariantRow, ProductOptionRow } from '@/lib/supabase/types'
+import { escapePostgrestLikePattern } from '@/lib/security-utils'
 
 export type { Category, Product }
 
@@ -835,7 +836,8 @@ export async function searchProducts(query: string, filters?: SearchFilters): Pr
 
   // Fallback : text search ILIKE (quand des filtres sont appliqués)
   if (query) {
-    q = q.or(`name.ilike.%${query}%,description.ilike.%${query}%,reference.ilike.%${query}%`)
+    const escapedQuery = escapePostgrestLikePattern(query)
+    q = q.or(`name.ilike.%${escapedQuery}%,description.ilike.%${escapedQuery}%,reference.ilike.%${escapedQuery}%`)
   }
 
   // Category filter

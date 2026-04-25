@@ -49,7 +49,7 @@ export async function POST(request: Request) {
 
     if (!parsed.success) {
       return Response.json(
-        { error: 'Données invalides', details: parsed.error.flatten() },
+        { error: 'Données invalides' },
         { status: 400 }
       )
     }
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
 
     if (itemsError) {
       console.error('Supabase quote items insertion error:', itemsError)
-      return Response.json({ error: `Erreur lors de l'enregistrement des articles: ${itemsError.message}` }, { status: 500 })
+      return Response.json({ error: 'Erreur lors de l\'enregistrement des articles' }, { status: 500 })
     }
 
     // Associer le devis au compte client connecté si disponible

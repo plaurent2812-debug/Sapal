@@ -1,6 +1,7 @@
 import { createServiceRoleClient } from '@/lib/supabase/server'
 import { limitByIP, getClientIP } from '@/lib/rate-limit-upstash'
 import { sendTelegramMessage } from '@/lib/telegram'
+import { escapeTelegramMarkdown } from '@/lib/security-utils'
 import { Resend } from 'resend'
 import { z } from 'zod'
 
@@ -47,7 +48,7 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       console.error('Validation error:', parsed.error.flatten())
       return Response.json(
-        { error: 'Données invalides', details: parsed.error.flatten() },
+        { error: 'Données invalides' },
         { status: 400 }
       )
     }
@@ -100,13 +101,13 @@ export async function POST(request: Request) {
     const telegramText = [
       `📩 *Nouveau message de contact*`,
       ``,
-      `*Nom :* ${name}`,
-      `*Email :* ${email}`,
-      phone ? `*Tél :* ${phone}` : '',
-      `*Sujet :* ${subject}`,
+      `*Nom :* ${escapeTelegramMarkdown(name)}`,
+      `*Email :* ${escapeTelegramMarkdown(email)}`,
+      phone ? `*Tél :* ${escapeTelegramMarkdown(phone)}` : '',
+      `*Sujet :* ${escapeTelegramMarkdown(subject)}`,
       ``,
       `*Message :*`,
-      message,
+      escapeTelegramMarkdown(message),
     ].filter(Boolean).join('\n')
 
     sendTelegramMessage(telegramText).catch(e => {

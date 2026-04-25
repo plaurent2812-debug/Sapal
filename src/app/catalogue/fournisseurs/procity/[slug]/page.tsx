@@ -157,7 +157,7 @@ export default async function ProcityCategoryPage({
             parentId={category.id}
             parentSlug={category.slug}
             basePath={BASE_PATH}
-            children={children}
+            categories={children}
             thumbnails={childThumbs}
           />
         </section>

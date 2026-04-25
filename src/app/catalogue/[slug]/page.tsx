@@ -123,7 +123,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             parentId={category.id}
             parentSlug={category.slug}
             basePath="/catalogue"
-            children={children}
+            categories={children}
             thumbnails={childThumbs}
           />
         </section>

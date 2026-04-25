@@ -1,6 +1,7 @@
 import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server'
 import { sendTelegramMessage, sendTelegramDocument } from '@/lib/telegram'
 import { generateBdcPDF } from '@/lib/pdf/generate-bdc-pdf'
+import { validateBcFile } from '@/lib/security-utils'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -33,6 +34,11 @@ export async function POST(
       return Response.json({ error: 'Le fichier du bon de commande est requis' }, { status: 400 })
     }
 
+    const fileValidation = await validateBcFile(bcFile)
+    if (!fileValidation.ok) {
+      return Response.json({ error: fileValidation.error }, { status: 400 })
+    }
+
     if (!deliveryAddress || !deliveryPostalCode || !deliveryCity) {
       return Response.json({ error: 'L\'adresse de livraison est requise' }, { status: 400 })
     }
@@ -58,13 +64,12 @@ export async function POST(
 
     // 4. Upload BC file to Supabase Storage
     const fileBuffer = Buffer.from(await bcFile.arrayBuffer())
-    const fileExt = bcFile.name.split('.').pop() || 'pdf'
-    const storagePath = `${user.id}/${orderId}/bc.${fileExt}`
+    const storagePath = `${user.id}/${orderId}/bc.${fileValidation.extension}`
 
     const { error: uploadError } = await serviceClient.storage
       .from('client-bdc')
       .upload(storagePath, fileBuffer, {
-        contentType: bcFile.type,
+        contentType: fileValidation.contentType,
         upsert: true,
       })
 
@@ -73,10 +78,10 @@ export async function POST(
       return Response.json({ error: 'Erreur lors de l\'upload du fichier' }, { status: 500 })
     }
 
-    // Get signed URL (valid 10 years — effectively permanent for admin access)
+    // Keep links short-lived; regenerate a signed URL from the storage path when needed.
     const { data: signedUrlData } = await serviceClient.storage
       .from('client-bdc')
-      .createSignedUrl(storagePath, 60 * 60 * 24 * 365 * 10)
+      .createSignedUrl(storagePath, 60 * 60)
 
     const bcFileUrl = signedUrlData?.signedUrl || storagePath
 
