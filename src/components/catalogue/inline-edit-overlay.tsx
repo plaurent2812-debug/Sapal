@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useCallback } from 'react'
-import { Pencil, X, Save, Loader2, Plus, Trash2 } from 'lucide-react'
+import { useState, useCallback, useRef } from 'react'
+import { Pencil, X, Save, Loader2, Plus, Trash2, Upload } from 'lucide-react'
+import { createBrowserClient } from '@/lib/supabase/client'
 import { useAdminRole } from '@/hooks/useAdminRole'
 import type { ClientProduct, ClientVariant } from '@/lib/data'
 
@@ -67,7 +68,9 @@ export function InlineEditOverlay({
   // Edit mode state
   const [editMode, setEditMode] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [uploadingImage, setUploadingImage] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null)
+  const imageInputRef = useRef<HTMLInputElement>(null)
 
   // Product draft
   const [productDraft, setProductDraft] = useState<ProductDraft>(() =>
@@ -131,6 +134,32 @@ export function InlineEditOverlay({
       ),
     }))
   }, [])
+
+  // -- Image upload --
+
+  const handleImageUpload = useCallback(async (file: File) => {
+    const allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'avif']
+    const ext = file.name.split('.').pop()?.toLowerCase()
+    if (!ext || !allowedExts.includes(ext)) {
+      showToast('Format non supporté. Utilisez JPG, PNG, WEBP ou AVIF.', 'error')
+      return
+    }
+    setUploadingImage(true)
+    try {
+      const supabase = createBrowserClient()
+      const path = `${product.id}/${Date.now()}.${ext}`
+      const { error } = await supabase.storage.from('product-images').upload(path, file, { upsert: true })
+      if (error) throw error
+      const { data } = supabase.storage.from('product-images').getPublicUrl(path)
+      updateProductField('image_url', data.publicUrl)
+      showToast('Image uploadée', 'success')
+    } catch (e) {
+      showToast(e instanceof Error ? e.message : 'Erreur upload', 'error')
+    } finally {
+      setUploadingImage(false)
+      if (imageInputRef.current) imageInputRef.current.value = ''
+    }
+  }, [product.id, updateProductField])
 
   // -- Variant field updaters --
 
@@ -355,16 +384,40 @@ export function InlineEditOverlay({
               />
             </div>
 
-            {/* Image URL */}
-            <div className="space-y-1.5">
-              <label className="text-sm font-semibold">URL image principale</label>
-              <input
-                type="text"
-                value={productDraft.image_url}
-                onChange={e => updateProductField('image_url', e.target.value)}
-                placeholder="https://..."
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring font-mono text-xs"
-              />
+            {/* Image principale */}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold">Image principale</label>
+              {productDraft.image_url && (
+                <div className="relative w-full h-28 rounded-lg overflow-hidden border border-border bg-secondary/20">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={productDraft.image_url} alt="Aperçu" className="w-full h-full object-contain p-2" />
+                </div>
+              )}
+              <div className="flex gap-2 items-center">
+                <button
+                  type="button"
+                  onClick={() => imageInputRef.current?.click()}
+                  disabled={uploadingImage}
+                  className="flex items-center gap-2 px-3 py-1.5 border border-border rounded-lg text-sm hover:bg-secondary/40 transition-colors disabled:opacity-50 flex-shrink-0"
+                >
+                  {uploadingImage ? <Loader2 size={13} className="animate-spin" /> : <Upload size={13} />}
+                  {uploadingImage ? 'Upload…' : 'Choisir'}
+                </button>
+                <input
+                  ref={imageInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={e => { const f = e.target.files?.[0]; if (f) handleImageUpload(f) }}
+                />
+                <input
+                  type="text"
+                  value={productDraft.image_url}
+                  onChange={e => updateProductField('image_url', e.target.value)}
+                  placeholder="https://… ou coller une URL"
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring font-mono text-xs"
+                />
+              </div>
             </div>
 
             {/* Specifications */}
@@ -410,7 +463,14 @@ export function InlineEditOverlay({
             </div>
 
             {/* -- Variants section -- */}
-            {variantDrafts.length > 0 && (
+            {/* Masquer si 1 seule variante sans attribut distinctif (coloris/finition non génériques) */}
+            {(() => {
+              const GENERIC = new Set(['standard', 'défaut', 'default', ''])
+              const isDistinct = (v: VariantDraft) =>
+                (v.coloris && !GENERIC.has(v.coloris.toLowerCase())) ||
+                (v.finition && !GENERIC.has(v.finition.toLowerCase()))
+              return variantDrafts.length > 1 || (variantDrafts.length === 1 && isDistinct(variantDrafts[0]))
+            })() ? (
               <>
                 <div className="border-t border-border pt-5 mt-5">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
@@ -477,27 +537,158 @@ export function InlineEditOverlay({
                       {/* Images */}
                       <div className="space-y-1.5">
                         <label className="text-xs text-muted-foreground">
-                          Images (URLs, une par ligne)
+                          Images — clic pour définir la principale, glisser pour réordonner
                         </label>
-                        <textarea
-                          value={v.images.join('\n')}
-                          onChange={e =>
-                            updateVariantImages(v.id, e.target.value.split('\n'))
-                          }
-                          rows={2}
-                          placeholder="https://..."
-                          className="flex w-full rounded-md border border-input bg-transparent px-2 py-1.5 text-xs font-mono shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring resize-y"
+                        <ImageGalleryEditor
+                          productId={product.id}
+                          images={v.images.filter(Boolean)}
+                          primaryImageUrl={productDraft.image_url}
+                          onChange={imgs => updateVariantImages(v.id, imgs)}
+                          onPrimaryChange={url => updateProductField('image_url', url)}
                         />
                       </div>
                     </div>
                   ))}
                 </div>
               </>
-            )}
+            ) : null}
           </div>
         </div>
       )}
     </>
+  )
+}
+
+// -- ImageGalleryEditor component --
+
+function ImageGalleryEditor({
+  productId,
+  images,
+  primaryImageUrl,
+  onChange,
+  onPrimaryChange,
+}: {
+  productId: string
+  images: string[]
+  primaryImageUrl: string
+  onChange: (images: string[]) => void
+  onPrimaryChange: (url: string) => void
+}) {
+  const [uploading, setUploading] = useState(false)
+  const [dragOver, setDragOver] = useState(false)
+  const [draggingIdx, setDraggingIdx] = useState<number | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  async function uploadFiles(files: FileList | File[]) {
+    const supabase = createBrowserClient()
+    setUploading(true)
+    const newUrls: string[] = []
+    for (const file of Array.from(files)) {
+      const ext = file.name.split('.').pop()?.toLowerCase()
+      if (!ext || !['jpg','jpeg','png','webp','avif'].includes(ext)) continue
+      const path = `${productId}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+      const { error } = await supabase.storage.from('product-images').upload(path, file, { upsert: true })
+      if (!error) {
+        const { data } = supabase.storage.from('product-images').getPublicUrl(path)
+        newUrls.push(data.publicUrl)
+      }
+    }
+    setUploading(false)
+    if (newUrls.length === 0) return
+    const merged = [...images, ...newUrls]
+    onChange(merged)
+    // Si pas encore d'image principale, définir la première uploadée
+    if (!primaryImageUrl) onPrimaryChange(newUrls[0])
+  }
+
+  function handleDrop(e: React.DragEvent) {
+    e.preventDefault()
+    setDragOver(false)
+    if (e.dataTransfer.files.length > 0) {
+      uploadFiles(e.dataTransfer.files)
+    }
+  }
+
+  function removeImage(idx: number) {
+    const removed = images[idx]
+    const next = images.filter((_, i) => i !== idx)
+    onChange(next)
+    if (removed === primaryImageUrl) {
+      onPrimaryChange(next[0] ?? '')
+    }
+  }
+
+  function moveImage(from: number, to: number) {
+    const next = [...images]
+    const [item] = next.splice(from, 1)
+    next.splice(to, 0, item)
+    onChange(next)
+  }
+
+  return (
+    <div className="space-y-2">
+      {/* Drop zone + bouton */}
+      <div
+        onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={handleDrop}
+        className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 border-dashed transition-colors ${
+          dragOver ? 'border-accent bg-accent/5' : 'border-border'
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading}
+          className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-border rounded-md text-xs hover:bg-secondary/40 transition-colors disabled:opacity-50 flex-shrink-0"
+        >
+          {uploading ? <Loader2 size={12} className="animate-spin" /> : <Upload size={12} />}
+          {uploading ? 'Upload…' : 'Choisir'}
+        </button>
+        <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden"
+          onChange={e => { if (e.target.files) { uploadFiles(e.target.files); e.target.value = '' } }} />
+        <span className="text-xs text-muted-foreground">ou glisser des images ici</span>
+      </div>
+
+      {/* Grille de miniatures */}
+      {images.length > 0 && (
+        <div className="grid grid-cols-4 gap-1.5">
+          {images.map((url, idx) => {
+            const isPrimary = url === primaryImageUrl
+            return (
+              <div
+                key={url + idx}
+                draggable
+                onDragStart={() => setDraggingIdx(idx)}
+                onDragOver={e => { e.preventDefault() }}
+                onDrop={e => { e.preventDefault(); e.stopPropagation(); if (draggingIdx !== null && draggingIdx !== idx) { moveImage(draggingIdx, idx); setDraggingIdx(null) } }}
+                className={`relative group rounded-md overflow-hidden border-2 cursor-grab active:cursor-grabbing transition-all ${
+                  isPrimary ? 'border-accent' : 'border-transparent hover:border-border'
+                }`}
+                style={{ aspectRatio: '1' }}
+                title={isPrimary ? 'Image principale' : 'Cliquer pour définir comme principale'}
+                onClick={() => onPrimaryChange(url)}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={url} alt="" className="w-full h-full object-cover" />
+                {isPrimary && (
+                  <div className="absolute bottom-0 left-0 right-0 bg-accent/80 text-white text-[9px] text-center py-0.5 font-semibold">
+                    Principale
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={e => { e.stopPropagation(); removeImage(idx) }}
+                  className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <X size={9} />
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
   )
 }
 

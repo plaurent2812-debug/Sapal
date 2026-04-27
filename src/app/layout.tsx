@@ -5,6 +5,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ServiceWorkerRegister } from "@/components/pwa/sw-register";
 import { GlobalStructuredData } from "@/components/seo/structured-data";
+import { EditModeProvider } from "@/components/edit-mode/EditModeProvider";
+import { EditModeBar } from "@/components/edit-mode/EditModeBar";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -79,11 +81,14 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${spaceGrotesk.variable} ${dmSans.variable} antialiased`}>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
-        <Header />
-        <main id="main-content" className="flex-1 w-full">
-          {children}
-        </main>
-        <Footer />
+        <EditModeProvider>
+          <EditModeBar />
+          <Header />
+          <main id="main-content" className="flex-1 w-full">
+            {children}
+          </main>
+          <Footer />
+        </EditModeProvider>
         <GlobalStructuredData />
         <ServiceWorkerRegister />
         <Analytics />

@@ -651,6 +651,32 @@ export const getCategoryChildrenBySupplier = unstable_cache(
   { revalidate: 300, tags: ['categories', 'products'] },
 )
 
+/**
+ * Tous les enfants d'une catégorie (vides inclus) + leur count produits.
+ * Utilisé côté admin pour afficher les catégories sans produits.
+ */
+export const getCategoryChildrenWithCountsBySupplier = unstable_cache(
+  async (parentId: string, supplier: string): Promise<{ category: ClientCategory; count: number }[]> => {
+    const supabase = createBrowserClient()
+    const { data: children, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('parent_id', parentId)
+      .order('sort_order', { ascending: true })
+      .order('name', { ascending: true })
+    if (error) return []
+
+    const childIds = (children ?? []).map((c) => c.id)
+    const counts = await fetchProductCounts(supabase, childIds, supplier)
+    return (children ?? []).map((c) => ({
+      category: toClientCategory(c),
+      count: counts.get(c.id) || 0,
+    }))
+  },
+  ['category-children-with-counts-by-supplier-v1'],
+  { revalidate: 300, tags: ['categories', 'products'] },
+)
+
 /** Produits d'une catégorie (et descendants) filtrés par fournisseur. */
 export const getProductsInCategoryTreeBySupplier = unstable_cache(
   async (rootCategoryId: string, supplier: string): Promise<ClientProduct[]> => {

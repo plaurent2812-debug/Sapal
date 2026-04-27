@@ -4,6 +4,7 @@ import { SearchButton } from '@/components/layout/search-button'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { AccountLink } from '@/components/layout/account-link'
 import { CatalogueDropdown } from '@/components/layout/catalogue-dropdown'
+import { EditModeToggle } from '@/components/edit-mode/EditModeToggle'
 
 // Catalogue est géré séparément via CatalogueDropdown (menu déroulant)
 const NAV_ITEMS = [
@@ -35,6 +36,7 @@ export function Header() {
             </div>
           </Link>
           <div className="flex items-center gap-2">
+            <EditModeToggle />
             <CartButton />
             <MobileNav />
           </div>
@@ -65,6 +67,7 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2 flex-shrink-0">
+            <EditModeToggle />
             <CartButton />
             <AccountLink />
           </div>

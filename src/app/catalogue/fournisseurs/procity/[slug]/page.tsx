@@ -4,6 +4,7 @@ import { permanentRedirect } from "next/navigation"
 import {
   getCategoryBySlugForSupplier,
   getCategoryChildrenBySupplier,
+  getCategoryChildrenWithCountsBySupplier,
   getCategoryThumbnailsBySupplier,
   getCategoryProductCount,
   getProductsInCategoryTreeBySupplier,
@@ -56,6 +57,10 @@ export default async function ProcityCategoryPage({
   }
 
   const children = await getCategoryChildrenBySupplier(category.id, SUPPLIER)
+  const allChildrenWithCounts = await getCategoryChildrenWithCountsBySupplier(category.id, SUPPLIER)
+  const productCounts: Record<string, number> = Object.fromEntries(
+    allChildrenWithCounts.map(({ category: c, count }) => [c.id, count])
+  )
 
   // Si la catégorie a exactement un enfant Procity de même nom, on saute l'étape
   // intermédiaire (ex. /procity/equipements-sportifs redirige vers /procity/equipements-sportifs-procity).
@@ -158,6 +163,8 @@ export default async function ProcityCategoryPage({
             parentSlug={category.slug}
             basePath={BASE_PATH}
             categories={children}
+            allCategories={allChildrenWithCounts.map(({ category: c }) => c)}
+            productCounts={productCounts}
             thumbnails={childThumbs}
           />
         </section>

@@ -300,6 +300,7 @@ export function ProductPageClient({ product, variants, options, category, catego
           selectedVariant={selectedVariant}
           hasVariants={currentVariants.length > 0}
           categorySlug={categorySlug}
+          options={options}
         />
 
         {currentProduct.techSheetUrl && (
