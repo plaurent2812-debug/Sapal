@@ -666,14 +666,14 @@ export const getCategoryChildrenWithCountsBySupplier = unstable_cache(
       .order('name', { ascending: true })
     if (error) return []
 
-    const childIds = (children ?? []).map((c: { id: string }) => c.id)
+    const childIds = (children ?? []).map((c) => c.id)
     const counts = await fetchProductCounts(supabase, childIds, supplier)
-    return (children ?? []).map((c: { id: string }) => ({
+    return (children ?? []).map((c) => ({
       category: toClientCategory(c),
       count: counts.get(c.id) || 0,
     }))
   },
-  (parentId, supplier) => [`category-children-with-counts-by-supplier-v1-${parentId}-${supplier}`],
+  ['category-children-with-counts-by-supplier-v1'],
   { revalidate: 300, tags: ['categories', 'products'] },
 )
 
