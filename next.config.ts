@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: '*.supabase.co' },
       { protocol: 'https', hostname: 'www.procity.eu' },
+      { protocol: 'https', hostname: 'pimprocity.spl-group.eu' },
+      { protocol: 'https', hostname: 'procity.eu' },
     ],
   },
   async headers() {
