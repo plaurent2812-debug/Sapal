@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Pencil, Trash2, Plus, GripVertical, Loader2, X, Check } from 'lucide-react'
@@ -31,6 +31,8 @@ interface SubcategoriesManagerProps {
   parentSlug: string
   basePath: string // "/catalogue" ou "/catalogue/fournisseurs/procity"
   categories: ClientCategory[]
+  allCategories?: ClientCategory[] // toutes catégories, vides incluses (admin)
+  productCounts?: Record<string, number>
   thumbnails: Record<string, string>
 }
 
@@ -39,10 +41,16 @@ export function SubcategoriesManager({
   parentSlug: _parentSlug,
   basePath,
   categories: initialChildren,
+  allCategories,
+  productCounts = {},
   thumbnails,
 }: SubcategoriesManagerProps) {
   const { isAdmin, loading } = useAdminRole()
+  const [mounted, setMounted] = useState(false)
+  // Admin voit toutes les catégories (vides incluses), public voit seulement celles avec produits
   const [items, setItems] = useState(initialChildren)
+
+  useEffect(() => { setMounted(true) }, [])
   const [editMode, setEditMode] = useState(false)
   const [editing, setEditing] = useState<ClientCategory | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -83,13 +91,20 @@ export function SubcategoriesManager({
     setItems(prev => prev.filter(i => i.id !== cat.id))
   }
 
-  if (loading || !isAdmin) {
-    // Rendu public (non-admin) : identique à l'existant
+  // Avant montage (SSR + hydration) : rendu neutre identique côté serveur et client
+  // Après montage : on sait si l'utilisateur est admin
+  const resolvedAdmin = mounted && !loading && isAdmin
+  const adminItems = allCategories ?? items
+
+  if (!resolvedAdmin) {
+    // Rendu public : uniquement les catégories avec produits, sans counts
     return (
       <StaticSubcategoryGrid
         items={items}
         basePath={basePath}
         thumbnails={thumbnails}
+        productCounts={{}}
+        showCounts={false}
       />
     )
   }
@@ -122,29 +137,34 @@ export function SubcategoriesManager({
 
       {editMode ? (
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={items.map(i => i.id)} strategy={rectSortingStrategy}>
+          <SortableContext items={adminItems.map(i => i.id)} strategy={rectSortingStrategy}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {items.map(child => (
+              {adminItems.map(child => (
                 <SortableCard
                   key={child.id}
                   category={child}
                   thumbnail={thumbnails[child.id]}
+                  productCount={productCounts[child.id] ?? 0}
                   onEdit={() => setEditing(child)}
                   onDelete={() => handleDelete(child)}
                 />
               ))}
               <AddCard
                 parentId={parentId}
-                onCreated={(created) => setItems(prev => [...prev, created])}
+                onCreated={(created) => {
+                  setItems(prev => [...prev, created])
+                }}
               />
             </div>
           </SortableContext>
         </DndContext>
       ) : (
         <StaticSubcategoryGrid
-          items={items}
+          items={adminItems}
           basePath={basePath}
           thumbnails={thumbnails}
+          productCounts={productCounts}
+          showCounts={true}
         />
       )}
 
@@ -174,43 +194,62 @@ function StaticSubcategoryGrid({
   items,
   basePath,
   thumbnails,
+  productCounts,
+  showCounts,
 }: {
   items: ClientCategory[]
   basePath: string
   thumbnails: Record<string, string>
+  productCounts: Record<string, number>
+  showCounts: boolean
 }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {items.map((child) => (
-        <Link
-          key={child.id}
-          href={`${basePath}/${child.slug}`}
-          className="group flex items-center bg-white border border-border/60 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300 rounded-xl p-4 overflow-hidden hover:-translate-y-1"
-        >
-          <div className="w-20 h-20 flex-shrink-0 bg-gradient-to-br from-secondary/40 to-secondary/10 rounded-lg flex items-center justify-center overflow-hidden mr-4 border border-border/30 relative">
-            {(child.imageUrl || thumbnails[child.id]) ? (
-              <Image
-                src={child.imageUrl || thumbnails[child.id]}
-                alt={child.name}
-                fill
-                sizes="80px"
-                className="object-contain p-1 group-hover:scale-110 transition-transform duration-500"
+      {items.map((child) => {
+        const count = productCounts[child.id] ?? 0
+        const isEmpty = showCounts && count === 0
+        return (
+          <Link
+            key={child.id}
+            href={`${basePath}/${child.slug}`}
+            className={`group flex items-center bg-white border transition-all duration-300 rounded-xl p-4 overflow-hidden hover:-translate-y-1 ${
+              isEmpty
+                ? 'border-dashed border-border/40 opacity-60 hover:opacity-100 hover:border-accent/40'
+                : 'border-border/60 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5'
+            }`}
+          >
+            <div className="w-20 h-20 flex-shrink-0 bg-gradient-to-br from-secondary/40 to-secondary/10 rounded-lg flex items-center justify-center overflow-hidden mr-4 border border-border/30 relative">
+              {(child.imageUrl || thumbnails[child.id]) ? (
+                <Image
+                  src={child.imageUrl || thumbnails[child.id]}
+                  alt={child.name}
+                  fill
+                  sizes="80px"
+                  className="object-contain p-1 group-hover:scale-110 transition-transform duration-500"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded bg-border text-muted-foreground" />
+              )}
+            </div>
+            <div className="flex-1 flex items-center justify-between">
+              <div>
+                <h3 className="font-bold text-sm md:text-base leading-tight pr-2 group-hover:text-accent transition-colors">
+                  {child.name}
+                </h3>
+                {showCounts && (
+                  <span className="text-xs text-muted-foreground mt-0.5 block">
+                    {count} produit{count !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
+              <ChevronRight
+                size={20}
+                className="text-accent flex-shrink-0 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
               />
-            ) : (
-              <div className="w-8 h-8 rounded bg-border text-muted-foreground" />
-            )}
-          </div>
-          <div className="flex-1 flex items-center justify-between">
-            <h3 className="font-bold text-sm md:text-base leading-tight pr-2 group-hover:text-accent transition-colors">
-              {child.name}
-            </h3>
-            <ChevronRight
-              size={20}
-              className="text-accent flex-shrink-0 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-            />
-          </div>
-        </Link>
-      ))}
+            </div>
+          </Link>
+        )
+      })}
     </div>
   )
 }
@@ -218,11 +257,13 @@ function StaticSubcategoryGrid({
 function SortableCard({
   category,
   thumbnail,
+  productCount,
   onEdit,
   onDelete,
 }: {
   category: ClientCategory
   thumbnail?: string
+  productCount: number
   onEdit: () => void
   onDelete: () => void
 }) {
@@ -265,9 +306,12 @@ function SortableCard({
         )}
       </div>
 
-      <h3 className="flex-1 font-bold text-sm leading-tight pr-2">
-        {category.name}
-      </h3>
+      <div className="flex-1 pr-2">
+        <h3 className="font-bold text-sm leading-tight">{category.name}</h3>
+        <span className={`text-xs mt-0.5 block ${productCount === 0 ? 'text-red-400' : 'text-muted-foreground'}`}>
+          {productCount} produit{productCount !== 1 ? 's' : ''}
+        </span>
+      </div>
 
       <div className="flex items-center gap-1 flex-shrink-0">
         <button

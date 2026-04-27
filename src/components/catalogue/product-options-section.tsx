@@ -33,6 +33,9 @@ function OptionRow({ option }: { option: ProductOption }) {
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-foreground leading-tight">{option.product.name}</p>
+          {option.product.description && (
+            <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{option.product.description}</p>
+          )}
           {displayRef && (
             <p className="text-[10px] font-mono text-muted-foreground mt-0.5">Réf. {displayRef}</p>
           )}
