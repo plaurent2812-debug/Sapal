@@ -139,8 +139,8 @@ export default async function Home() {
                     fill
                     sizes="(max-width: 1024px) 100vw, 700px"
                     className="object-cover object-center"
-                    quality={90}
                     priority
+                    unoptimized
                   />
                 </div>
                 <span className="absolute top-6 right-6 bg-primary text-primary-foreground text-[11px] font-bold tracking-wider uppercase px-2.5 py-1 rounded">
