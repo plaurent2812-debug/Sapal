@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
     root: __dirname,
   },
   images: {
+    // Quota Vercel Image Optimization plafonné — désactivé pour servir les images statiques directement.
+    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: '*.supabase.co' },
