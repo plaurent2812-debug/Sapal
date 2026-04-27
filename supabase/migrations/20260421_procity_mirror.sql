@@ -49,7 +49,7 @@ end$$;
 -- 5. Table scrape_runs (observatoire admin)
 create table if not exists public.scrape_runs (
   id uuid primary key default gen_random_uuid(),
-  supplier_id uuid not null references public.suppliers(id),
+  supplier_id text not null references public.suppliers(id),
   started_at timestamptz not null default now(),
   finished_at timestamptz,
   status text not null check (status in ('running','completed','failed','pending_review','applied','rejected')),
