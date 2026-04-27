@@ -52,7 +52,7 @@ export function EditableImage({
   return (
     <>
       <div
-        className={`relative group cursor-pointer ${hasDraft ? 'ring-2 ring-amber-400 ring-offset-1' : ''}`}
+        className={`relative group cursor-pointer w-full h-full ${hasDraft ? 'ring-2 ring-amber-400 ring-offset-1' : ''}`}
         onClick={() => setDialogOpen(true)}
         role="button"
         tabIndex={0}
