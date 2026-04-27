@@ -457,6 +457,35 @@ export const getCategoryChildrenWithProducts = unstable_cache(
 )
 
 /**
+ * Variante admin de `getCategoryChildrenWithProducts` : retourne TOUTES les
+ * sous-catégories (vides incluses) avec le compteur récursif de produits.
+ * Symétrique de `getCategoryChildrenWithCountsBySupplier` mais sans filtre
+ * fournisseur. Le compteur s'appuie sur la RPC `category_product_counts` qui
+ * descend récursivement dans l'arbre.
+ */
+export const getCategoryChildrenWithCounts = unstable_cache(
+  async (parentId: string): Promise<{ category: ClientCategory; count: number }[]> => {
+    const supabase = createBrowserClient()
+    const { data: children, error } = await supabase
+      .from('categories')
+      .select('*')
+      .eq('parent_id', parentId)
+      .order('sort_order', { ascending: true })
+      .order('name', { ascending: true })
+    if (error) return []
+
+    const childIds = (children ?? []).map((c: { id: string }) => c.id)
+    const counts = await fetchProductCounts(supabase, childIds, null)
+    return (children ?? []).map((c) => ({
+      category: toClientCategory(c),
+      count: counts.get(c.id) || 0,
+    }))
+  },
+  ['category-children-with-counts-v1'],
+  { revalidate: 300, tags: ['categories', 'products'] },
+)
+
+/**
  * Pour chaque catégorie fournie, retourne l'URL d'une image représentative (image
  * d'un produit au hasard dans l'arbre). Utilise la RPC Supabase `category_thumbnails`
  * pour tout résoudre en 1 seule requête au lieu d'un BFS côté client.

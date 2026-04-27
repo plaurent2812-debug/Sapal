@@ -4,6 +4,7 @@ import { permanentRedirect } from "next/navigation";
 import {
   getCategoryBySlug,
   getCategoryChildrenWithProducts,
+  getCategoryChildrenWithCounts,
   getCategoryThumbnails,
   getCategoryProductCount,
   getProductsInCategoryTree,
@@ -57,6 +58,10 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   // On masque les sous-catégories vides en front public — les admins peuvent
   // toujours les créer/gérer via l'édition inline (SubcategoriesManager).
   const children = await getCategoryChildrenWithProducts(category.id);
+  const allChildrenWithCounts = await getCategoryChildrenWithCounts(category.id);
+  const productCounts: Record<string, number> = Object.fromEntries(
+    allChildrenWithCounts.map(({ category: c, count }) => [c.id, count])
+  );
 
   // Si la catégorie racine a exactement un enfant portant le même nom, on saute
   // l'étape intermédiaire (ex. /catalogue/equipements-sportifs redirige vers
@@ -124,6 +129,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             parentSlug={category.slug}
             basePath="/catalogue"
             categories={children}
+            allCategories={allChildrenWithCounts.map(({ category: c }) => c)}
+            productCounts={productCounts}
             thumbnails={childThumbs}
           />
         </section>
