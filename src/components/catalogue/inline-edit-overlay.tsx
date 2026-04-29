@@ -13,6 +13,7 @@ interface ProductDraft {
   description: string
   price: number
   image_url: string
+  delai: string
   specifications: { key: string; value: string }[]
 }
 
@@ -201,6 +202,7 @@ export function InlineEditOverlay({
         description: productDraft.description,
         price: productDraft.price,
         image_url: productDraft.image_url,
+        delai: productDraft.delai,
         specifications: specsObj,
       }
 
@@ -250,6 +252,7 @@ export function InlineEditOverlay({
         description: updatedProductRow.description,
         price: Number(updatedProductRow.price) || 0,
         imageUrl: updatedProductRow.image_url,
+        delai: (updatedProductRow.delai as string) ?? '',
         specifications: updatedProductRow.specifications,
       }
 
@@ -382,6 +385,23 @@ export function InlineEditOverlay({
                 onChange={e => updateProductField('price', parseFloat(e.target.value) || 0)}
                 className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               />
+            </div>
+
+            {/* Délai de livraison */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold">Délai de livraison</label>
+              <input
+                type="text"
+                value={productDraft.delai}
+                onChange={e => updateProductField('delai', e.target.value)}
+                placeholder='Ex : "6 semaines", "En stock", "Sur commande"'
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              />
+              {variantDrafts.length > 0 && (
+                <p className="text-[11px] text-muted-foreground/80 leading-tight">
+                  Valeur par défaut — surchargée par le délai de chaque variante
+                </p>
+              )}
             </div>
 
             {/* Image principale */}
@@ -700,6 +720,7 @@ function productToDraft(p: ClientProduct): ProductDraft {
     description: p.description,
     price: p.price,
     image_url: p.imageUrl,
+    delai: p.delai,
     specifications: Object.entries(p.specifications).map(([key, value]) => ({
       key,
       value: String(value),
