@@ -83,18 +83,20 @@ export function ProductPageClient({ product, variants, options, category, catego
   const currentImage = galleryImages[activeImageIdx] ?? null
 
   const specifications = useMemo(() => {
-    const specs: Record<string, string> = { ...currentProduct.specifications }
+    // Priorité totale aux specs de la variante sélectionnée si elle en a.
+    // Sinon, fallback sur les specs du produit principal.
+    const useVariantSpecs =
+      selectedVariant?.specifications &&
+      Object.keys(selectedVariant.specifications).length > 0
+    const specs: Record<string, string> = useVariantSpecs
+      ? { ...selectedVariant!.specifications }
+      : { ...currentProduct.specifications }
 
+    // Compléter avec les attributs structurés de la variante (poids, finition)
+    // — ils ne sont pas dans `specifications` mais comme colonnes propres.
     if (selectedVariant) {
-      if (selectedVariant.poids) specs['Poids'] = selectedVariant.poids
-      if (selectedVariant.finition) specs['Finition'] = selectedVariant.finition
-      if (selectedVariant.specifications && Object.keys(selectedVariant.specifications).length > 0) {
-        // Les attributs variantes ne surchargent PAS les caractéristiques produit,
-        // ils les complètent (ex : "Structure autre" de variante, "Dimensions" de produit).
-        for (const [k, v] of Object.entries(selectedVariant.specifications)) {
-          if (!specs[k] && v) specs[k] = v
-        }
-      }
+      if (selectedVariant.poids && !specs['Poids']) specs['Poids'] = selectedVariant.poids
+      if (selectedVariant.finition && !specs['Finition']) specs['Finition'] = selectedVariant.finition
     }
 
     // Keys masquées :
@@ -112,6 +114,34 @@ export function ProductPageClient({ product, variants, options, category, catego
     if (hasExplicitDimensions) blacklistedKeys.add('Dimensions')
     if (selectedVariant?.dimensions) blacklistedKeys.add('Dimensions')
 
+    // Ordre d'affichage canonique (jsonb PostgreSQL ne préserve pas l'ordre
+    // d'insertion). Les clés non listées suivent dans leur ordre d'apparition.
+    const canonicalOrder = [
+      'Affichage',
+      "Taille de l'affichage",
+      'Dimensions',
+      'Dimensions totales',
+      "Surface d'affichage",
+      'Structure',
+      'Materiau structure',
+      'Materiau',
+      "Tranche d'âge",
+      "Surface d'impact",
+      'Hauteur de chute',
+      "Capacité d'accueil",
+      'Panneau',
+      'Vitrage',
+      'Toiture',
+      'Finition',
+      'Fixation',
+      'Livré',
+      'Poids',
+    ]
+    const orderIdx = (k: string) => {
+      const i = canonicalOrder.indexOf(k)
+      return i === -1 ? canonicalOrder.length + 1 : i
+    }
+
     const seenValues = new Map<string, string>() // valeur normalisée → première clé
 
     return Object.entries(specs)
@@ -125,6 +155,7 @@ export function ProductPageClient({ product, variants, options, category, catego
         seenValues.set(norm, k)
         return true
       })
+      .sort(([a], [b]) => orderIdx(a) - orderIdx(b))
   }, [currentProduct.specifications, selectedVariant])
 
   // Scinde les specs en 2 blocs calqués sur Procity :
