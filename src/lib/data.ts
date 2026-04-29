@@ -36,7 +36,7 @@ export function toClientVariant(v: ProductVariantRow): ClientVariant {
     price: Number(v.price) || 0,
     delai: v.delai,
     specifications: v.specifications,
-    images: v.images ?? [],
+    images: Array.isArray(v.images) ? v.images : [],
     primaryImageUrl: v.primary_image_url ?? null,
     techSheetUrl: v.tech_sheet_url ?? null,
     purchasePrice: v.purchase_price !== null ? Number(v.purchase_price) : null,

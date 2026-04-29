@@ -14,9 +14,9 @@ INSERT INTO product_variants (
    '8 A4 - H 960 x 960 mm', '8 A4 - H 960 x 960 mm', '', '', '60 kg',
    824.00, 576.80, '5 semaines',
    'https://procity.eu/fr/pim-pse/pdf/966130',
-   '{}'::jsonb, '{}', NULL),
+   '{}'::jsonb, '[]'::jsonb, NULL),
   ('307017', '307018',
    '18 A4 - H 1300 x 1300 mm', '18 A4 - H 1300 x 1300 mm', '', '', '110 kg',
    1107.00, 775.90, '5 semaines',
    'https://procity.eu/fr/pim-pse/pdf/966131',
-   '{}'::jsonb, '{}', NULL);
+   '{}'::jsonb, '[]'::jsonb, NULL);
