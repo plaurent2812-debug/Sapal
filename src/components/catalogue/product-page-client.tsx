@@ -41,38 +41,48 @@ export function ProductPageClient({ product, variants, options, category, catego
   const displayReference = selectedVariant?.reference || currentProduct.reference
   const displayPrice = selectedVariant ? selectedVariant.price : currentProduct.price
 
-  // Galerie : images de la variante sélectionnée en priorité. Si elle n'en a
-  // pas, on cherche une variante voisine de même couleur (Procity fournit des
-  // photos par couleur mais pas pour toutes les combinaisons dimension/vitrage).
-  // Dernier fallback : galerie produit / image principale.
+  // Galerie : on n'expose JAMAIS les photos uniques des autres variantes
+  // (sinon l'utilisateur voit la photo "jaune" alors qu'il a sélectionné "noir").
+  //
+  // Construction :
+  //  1. Photo principale de la variante sélectionnée (si elle en a)
+  //  2. Photos additionnelles de la même variante (`images`)
+  //  3. Galerie partagée du produit (vues d'ambiance, schémas) — si disponible
+  //  4. Image principale produit en dernier recours
+  //
+  // Sans variante sélectionnée : on affiche la galerie produit seule, plus
+  // l'image principale produit en fallback.
+  //
+  // Important : on ne récupère PAS les photos des autres variantes. Si la
+  // variante sélectionnée n'a pas de photo, on tombe directement sur la
+  // galerie produit (au lieu de chercher chez les voisines comme avant — ça
+  // créait des incohérences couleur/dimension).
   const galleryImages = useMemo(() => {
-    const takeImages = (v: ClientVariant) => {
-      const imgs = v.images ?? []
-      return v.primaryImageUrl
-        ? [v.primaryImageUrl, ...imgs.filter(u => u !== v.primaryImageUrl)]
-        : imgs
-    }
-
-    if (selectedVariant) {
-      const own = takeImages(selectedVariant)
-      if (own.length > 0) return own
-
-      // Fallback : même couleur, autre dimension/vitrage/structure
-      if (selectedVariant.coloris) {
-        const sibling = currentVariants.find(
-          v => v.id !== selectedVariant.id &&
-               v.coloris === selectedVariant.coloris &&
-               (v.images?.length > 0 || v.primaryImageUrl)
-        )
-        if (sibling) return takeImages(sibling)
+    // URLs déjà incluses pour éviter doublons
+    const seen = new Set<string>()
+    const result: string[] = []
+    const push = (url: string | null | undefined) => {
+      if (url && !seen.has(url)) {
+        seen.add(url)
+        result.push(url)
       }
     }
 
-    const gallery = currentProduct.galleryImageUrls ?? []
-    if (gallery.length > 0) return gallery
+    // 1+2. Photo(s) de la variante sélectionnée
+    if (selectedVariant) {
+      push(selectedVariant.primaryImageUrl)
+      for (const img of selectedVariant.images ?? []) push(img)
+    }
 
-    return currentProduct.imageUrl ? [currentProduct.imageUrl] : []
-  }, [selectedVariant, currentVariants, currentProduct.imageUrl, currentProduct.galleryImageUrls])
+    // 3. Galerie partagée du produit (vues contextuelles, schémas, ambiance)
+    for (const img of currentProduct.galleryImageUrls ?? []) push(img)
+
+    // 4. Image principale produit — uniquement si pas de variante (sinon on
+    //    risque de la dupliquer avec une vue générique qui contredit la variante)
+    if (!selectedVariant) push(currentProduct.imageUrl)
+
+    return result
+  }, [selectedVariant, currentProduct.imageUrl, currentProduct.galleryImageUrls])
 
   // Quand on change de variante, revenir à l'image 0
   const handleVariantSelect = (v: ClientVariant) => {
