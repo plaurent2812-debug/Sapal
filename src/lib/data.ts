@@ -19,6 +19,8 @@ export interface ClientVariant {
   specifications: Record<string, string>
   images: string[]
   primaryImageUrl: string | null
+  techSheetUrl: string | null
+  purchasePrice: number | null
 }
 
 export function toClientVariant(v: ProductVariantRow): ClientVariant {
@@ -36,6 +38,8 @@ export function toClientVariant(v: ProductVariantRow): ClientVariant {
     specifications: v.specifications,
     images: v.images ?? [],
     primaryImageUrl: v.primary_image_url ?? null,
+    techSheetUrl: v.tech_sheet_url ?? null,
+    purchasePrice: v.purchase_price !== null ? Number(v.purchase_price) : null,
   }
 }
 
@@ -246,6 +250,8 @@ function makeComposed(
     },
     images,
     primaryImageUrl: primary,
+    techSheetUrl: null,
+    purchasePrice: null,
   }
 }
 
