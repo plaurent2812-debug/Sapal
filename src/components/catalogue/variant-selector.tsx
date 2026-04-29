@@ -107,13 +107,15 @@ export function VariantSelector({ variants, selectedVariant, onSelect }: Props) 
   if (variants.length === 0) return null
 
   // Auto-détection du label pour l'axe `finition` selon les valeurs présentes.
-  // Permet d'afficher « Vitrage » pour Vitrine 2000 et « Crosse » pour les panneaux
-  // sans casser les autres familles.
+  // Permet d'afficher « Vitrage » pour Vitrine 2000, « Crosse » pour les panneaux,
+  // « Fixation » pour les arceaux/poteaux (scellement/platines) sans casser les autres familles.
   const finitionValues = variants.map(v => v.finition).filter(Boolean).join(' ').toLowerCase()
   const finitionLabel = /plexichocs|verre sécurisé/.test(finitionValues)
     ? 'Vitrage'
     : /crosse/.test(finitionValues)
     ? 'Crosse'
+    : /scellement|platine/.test(finitionValues)
+    ? 'Fixation'
     : AXIS_DEFAULT_LABELS.finition
 
   // Axes actifs = ceux qui ont au moins 2 valeurs distinctes non vides
