@@ -86,7 +86,6 @@ export function ProductPageClient({ product, variants, options, category, catego
     const specs: Record<string, string> = { ...currentProduct.specifications }
 
     if (selectedVariant) {
-      if (selectedVariant.dimensions) specs['Dimensions'] = selectedVariant.dimensions
       if (selectedVariant.poids) specs['Poids'] = selectedVariant.poids
       if (selectedVariant.finition) specs['Finition'] = selectedVariant.finition
       if (selectedVariant.specifications && Object.keys(selectedVariant.specifications).length > 0) {
@@ -103,12 +102,15 @@ export function ProductPageClient({ product, variants, options, category, catego
     //  - "Finition" / "Crosse" : doublonnent "Structure" (matériau) sur les produits
     //    Procity ; une vraie finition distincte apparaîtra dans une autre clé.
     //  - "Dimensions" : redondant quand Longueur/Hauteur/Diamètre sont présents
-    //    (on le garde uniquement si pas d'autre dimension chiffrée).
+    //    (on le garde uniquement si pas d'autre dimension chiffrée). Aussi
+    //    masqué quand une variante avec dimensions est sélectionnée — la valeur
+    //    est déjà visible dans le menu déroulant Dimension du VariantSelector.
     const blacklistedKeys = new Set(['Type', 'Finition', 'Crosse'])
     const hasExplicitDimensions = Object.keys(specs).some(
       k => /Longueur|Hauteur|Diamètre|Largeur|Profondeur/i.test(k)
     )
     if (hasExplicitDimensions) blacklistedKeys.add('Dimensions')
+    if (selectedVariant?.dimensions) blacklistedKeys.add('Dimensions')
 
     const seenValues = new Map<string, string>() // valeur normalisée → première clé
 
