@@ -8,6 +8,7 @@ const productPatchSchema = z.object({
   price: z.number().min(0, 'Le prix doit être positif').optional(),
   image_url: z.string().optional(),
   specifications: z.record(z.string(), z.string()).optional(),
+  delai: z.string().optional(),
 })
 
 async function checkAdmin() {
@@ -52,6 +53,7 @@ export async function PATCH(
     if (data.price !== undefined) updatePayload.price = data.price
     if (data.image_url !== undefined) updatePayload.image_url = data.image_url.trim()
     if (data.specifications !== undefined) updatePayload.specifications = data.specifications
+    if (data.delai !== undefined) updatePayload.delai = data.delai.trim()
 
     if (Object.keys(updatePayload).length === 0) {
       return Response.json({ error: 'Aucun champ à mettre à jour' }, { status: 400 })

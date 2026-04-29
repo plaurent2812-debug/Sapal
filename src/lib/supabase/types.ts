@@ -62,6 +62,7 @@ export interface ProductRow {
   procity_url: string | null
   tech_sheet_url: string | null
   gallery_image_urls: string[] | null
+  delai: string
   last_scraped_at: string | null
   created_at: string
 }

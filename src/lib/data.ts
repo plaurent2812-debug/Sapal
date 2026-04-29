@@ -281,6 +281,7 @@ export interface ClientProduct {
   procitySheet?: string
   procityFamily?: string
   procityType?: string
+  delai: string
 }
 
 export function toClientProduct(p: Product, categorySlug?: string): ClientProduct {
@@ -303,6 +304,7 @@ export function toClientProduct(p: Product, categorySlug?: string): ClientProduc
     procitySheet: p.procity_sheet ?? undefined,
     procityFamily: p.procity_family ?? undefined,
     procityType: p.procity_type ?? undefined,
+    delai: p.delai ?? '',
   }
 }
 

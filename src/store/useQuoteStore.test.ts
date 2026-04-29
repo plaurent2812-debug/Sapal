@@ -17,6 +17,7 @@ const mockProduct: ClientProduct = {
   procityUrl: null,
   price: 120,
   reference: 'REF-001',
+  delai: 'En stock',
 }
 
 describe('useQuoteStore', () => {

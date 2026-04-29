@@ -159,7 +159,7 @@ export function ProductPageClient({ product, variants, options, category, catego
     return { specsOverview: overview, specsTechnical: technical }
   }, [specifications])
 
-  // Délai affiché : variante sélectionnée > majorité des variantes > fallback
+  // Délai affiché : variante sélectionnée > majorité des variantes > délai produit > fallback
   const displayDelai = useMemo(() => {
     if (selectedVariant?.delai) {
       const out = formatDelai(selectedVariant.delai)
@@ -180,8 +180,14 @@ export function ProductPageClient({ product, variants, options, category, catego
       }
     }
 
+    // Fallback : délai au niveau produit (nouveau)
+    if (currentProduct.delai) {
+      const out = formatDelai(currentProduct.delai)
+      if (out) return out
+    }
+
     return 'Délai selon stock'
-  }, [selectedVariant, currentVariants])
+  }, [selectedVariant, currentVariants, currentProduct.delai])
 
 
   return (
