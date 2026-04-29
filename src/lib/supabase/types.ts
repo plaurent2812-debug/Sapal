@@ -21,6 +21,8 @@ export interface ProductVariantRow {
   specifications: Record<string, string>
   images: string[]
   primary_image_url: string | null
+  tech_sheet_url: string | null
+  purchase_price: number | null
   created_at: string
 }
 

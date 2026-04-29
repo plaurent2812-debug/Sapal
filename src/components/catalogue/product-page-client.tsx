@@ -83,19 +83,20 @@ export function ProductPageClient({ product, variants, options, category, catego
   const currentImage = galleryImages[activeImageIdx] ?? null
 
   const specifications = useMemo(() => {
-    const specs: Record<string, string> = { ...currentProduct.specifications }
+    // Priorité totale aux specs de la variante sélectionnée si elle en a.
+    // Sinon, fallback sur les specs du produit principal.
+    const useVariantSpecs =
+      selectedVariant?.specifications &&
+      Object.keys(selectedVariant.specifications).length > 0
+    const specs: Record<string, string> = useVariantSpecs
+      ? { ...selectedVariant!.specifications }
+      : { ...currentProduct.specifications }
 
+    // Compléter avec les attributs structurés de la variante (poids, finition)
+    // — ils ne sont pas dans `specifications` mais comme colonnes propres.
     if (selectedVariant) {
-      if (selectedVariant.dimensions) specs['Dimensions'] = selectedVariant.dimensions
-      if (selectedVariant.poids) specs['Poids'] = selectedVariant.poids
-      if (selectedVariant.finition) specs['Finition'] = selectedVariant.finition
-      if (selectedVariant.specifications && Object.keys(selectedVariant.specifications).length > 0) {
-        // Les attributs variantes ne surchargent PAS les caractéristiques produit,
-        // ils les complètent (ex : "Structure autre" de variante, "Dimensions" de produit).
-        for (const [k, v] of Object.entries(selectedVariant.specifications)) {
-          if (!specs[k] && v) specs[k] = v
-        }
-      }
+      if (selectedVariant.poids && !specs['Poids']) specs['Poids'] = selectedVariant.poids
+      if (selectedVariant.finition && !specs['Finition']) specs['Finition'] = selectedVariant.finition
     }
 
     // Keys masquées :
@@ -103,12 +104,43 @@ export function ProductPageClient({ product, variants, options, category, catego
     //  - "Finition" / "Crosse" : doublonnent "Structure" (matériau) sur les produits
     //    Procity ; une vraie finition distincte apparaîtra dans une autre clé.
     //  - "Dimensions" : redondant quand Longueur/Hauteur/Diamètre sont présents
-    //    (on le garde uniquement si pas d'autre dimension chiffrée).
+    //    (on le garde uniquement si pas d'autre dimension chiffrée). Aussi
+    //    masqué quand une variante avec dimensions est sélectionnée — la valeur
+    //    est déjà visible dans le menu déroulant Dimension du VariantSelector.
     const blacklistedKeys = new Set(['Type', 'Finition', 'Crosse'])
     const hasExplicitDimensions = Object.keys(specs).some(
       k => /Longueur|Hauteur|Diamètre|Largeur|Profondeur/i.test(k)
     )
     if (hasExplicitDimensions) blacklistedKeys.add('Dimensions')
+    if (selectedVariant?.dimensions) blacklistedKeys.add('Dimensions')
+
+    // Ordre d'affichage canonique (jsonb PostgreSQL ne préserve pas l'ordre
+    // d'insertion). Les clés non listées suivent dans leur ordre d'apparition.
+    const canonicalOrder = [
+      'Affichage',
+      "Taille de l'affichage",
+      'Dimensions',
+      'Dimensions totales',
+      "Surface d'affichage",
+      'Structure',
+      'Materiau structure',
+      'Materiau',
+      "Tranche d'âge",
+      "Surface d'impact",
+      'Hauteur de chute',
+      "Capacité d'accueil",
+      'Panneau',
+      'Vitrage',
+      'Toiture',
+      'Finition',
+      'Fixation',
+      'Livré',
+      'Poids',
+    ]
+    const orderIdx = (k: string) => {
+      const i = canonicalOrder.indexOf(k)
+      return i === -1 ? canonicalOrder.length + 1 : i
+    }
 
     const seenValues = new Map<string, string>() // valeur normalisée → première clé
 
@@ -123,6 +155,7 @@ export function ProductPageClient({ product, variants, options, category, catego
         seenValues.set(norm, k)
         return true
       })
+      .sort(([a], [b]) => orderIdx(a) - orderIdx(b))
   }, [currentProduct.specifications, selectedVariant])
 
   // Scinde les specs en 2 blocs calqués sur Procity :
@@ -309,19 +342,23 @@ export function ProductPageClient({ product, variants, options, category, catego
           options={options}
         />
 
-        {currentProduct.techSheetUrl && (
-          <div className="mt-4">
-            <a
-              href={currentProduct.techSheetUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 border border-border/50 rounded-lg text-sm font-medium text-foreground hover:bg-secondary/20 transition-colors"
-            >
-              <FileDown size={16} className="text-accent" />
-              Télécharger la fiche technique
-            </a>
-          </div>
-        )}
+        {(() => {
+          const techSheetUrl = selectedVariant?.techSheetUrl ?? currentProduct.techSheetUrl
+          if (!techSheetUrl) return null
+          return (
+            <div className="mt-4">
+              <a
+                href={techSheetUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-border/50 rounded-lg text-sm font-medium text-foreground hover:bg-secondary/20 transition-colors"
+              >
+                <FileDown size={16} className="text-accent" />
+                Télécharger la fiche technique
+              </a>
+            </div>
+          )
+        })()}
 
         {specsOverview.length > 0 && (
           <div className="mt-6 sm:mt-8">
