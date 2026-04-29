@@ -309,19 +309,23 @@ export function ProductPageClient({ product, variants, options, category, catego
           options={options}
         />
 
-        {currentProduct.techSheetUrl && (
-          <div className="mt-4">
-            <a
-              href={currentProduct.techSheetUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 border border-border/50 rounded-lg text-sm font-medium text-foreground hover:bg-secondary/20 transition-colors"
-            >
-              <FileDown size={16} className="text-accent" />
-              Télécharger la fiche technique
-            </a>
-          </div>
-        )}
+        {(() => {
+          const techSheetUrl = selectedVariant?.techSheetUrl ?? currentProduct.techSheetUrl
+          if (!techSheetUrl) return null
+          return (
+            <div className="mt-4">
+              <a
+                href={techSheetUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-border/50 rounded-lg text-sm font-medium text-foreground hover:bg-secondary/20 transition-colors"
+              >
+                <FileDown size={16} className="text-accent" />
+                Télécharger la fiche technique
+              </a>
+            </div>
+          )
+        })()}
 
         {specsOverview.length > 0 && (
           <div className="mt-6 sm:mt-8">
